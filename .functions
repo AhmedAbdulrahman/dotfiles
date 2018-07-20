@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Create a new directory and enter it
+function new-dir() {
+	mkdir -p "$@" && cd "$@"
+}
+
+# Get a fresh copy of Webpack Boilerplate
+function webpack-boilerplate(){
+  git clone git@github.com:jesperorb/webpack-boilerplate.git $1 && cd $1 && yarn && npm run dev
+}
+
+# find shorthand
+function find-shorthand() {
+	find . -name "$1" 2>&1 | grep -v 'Permission denied'
+}
