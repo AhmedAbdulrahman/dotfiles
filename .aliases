@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# --- Filesystem aliases ---
+# --- Moving around ---
 alias ..="cd .."
 alias ...="cd ../.."
 alias oo='open .'
@@ -18,11 +18,33 @@ function clone-repo() {
     cd $(basename ${1%.*})
     yarn install
 }
-alias push="git push"
+alias gs='git status'
+alias gsh='git stash'
+alias gsl='git stash list'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gci='git commit'
+alias gcia='git commit -am'
+alias grb='git rebase'
+alias gbr='git branch'
+alias gbra='git branch -a'
+alias gpl='git pull'
+alias gpu='git push'
+alias gfpu='git push --force'
+alias gad='git add -A'
+alias gmt='git mergetool'
+alias bdf='git diff --color --color-words --abbrev'
 
-# Undo a `git push`
+alias glg='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
+alias glg2='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
+
+alias gla='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
+alias glf='git log --graph --decorate --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset --abbrev-commit --date=relative --all"'
+
+alias undocommit='git reset HEAD~'
 alias undopush="git push -f origin HEAD^:master"
-
+alias hreset='git reset --hard'
+alias gbd='git branch --edit-description'
 # git root
 alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
 alias master="git checkout master"
@@ -32,10 +54,8 @@ alias gist-paste="gist --private --copy --paste --filename"
 # gist-file filename.ext -- create private Gist from a file
 alias gist-file="gist --private --copy"  										
 
-
 # --- Shortcuts ---
 alias zcfg="vim ~/.zshrc"
-alias zrld="source ~/.zshrc"
 alias refresh='source ~/.zshrc; echo "Reloaded .zshrc."'
 alias chmox='chmod -x'
 alias bye='sudo shutdown -h now'
@@ -48,6 +68,14 @@ alias clean='sudo apt-get autoclean && sudo apt-get autoremove'
 alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
+
+# Common shell functions
+alias less='less -r'
+alias tf='tail -f'
+alias l='less'
+alias lh='ls -alt | head' # see the last modified files
+alias screen='TERM=screen screen'
+alias cl='clear'
 
 # Trim new lines and copy to clipboard
 alias c="tr -d '\n' | pbcopy"										
