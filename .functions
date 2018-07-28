@@ -14,3 +14,19 @@ function webpack-boilerplate(){
 function find-shorthand() {
 	find . -name "$1" 2>&1 | grep -v 'Permission denied'
 }
+
+# Search google from command line!
+function gsearch() {
+    open "http://www.google.com/search?q=$*"
+}
+
+# Google's "I'm feeling lucky" search shortcut
+function lucky() {
+    open "https://www.google.com/search?btnI=1&q=$*"
+}
+
+function crepo() {
+    git clone --depth=1 $1
+    cd $(basename ${1%.*})
+    yarn install
+}
