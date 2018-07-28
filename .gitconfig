@@ -1,25 +1,4 @@
 [alias]
-	ci = commit -am
-	co = checkout
-	nb = checkout -b
-	s = status
-	ps = push
-	b = branch
-	ba = branch -a
-
-	fpush = push --force
-	sclone = clone --depth=1
-	amend = commit --amend --all
-	undocommit = reset HEAD~
-	hreset = reset --hard
-	db = branch --edit-description
-	df = diff --color --color-words --abbrev
-
-	l = log --graph --decorate --pretty=oneline --abbrev-commit
-	la = log --graph --decorate --pretty=oneline --abbrev-commit --all
-	lg = log --graph --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all
-	lp = log -p
-
 	cherrypick = cherry-pick
 	cherry = cherry-pick
 	cp = cherry-pick
