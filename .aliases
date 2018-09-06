@@ -61,7 +61,8 @@ alias drop5='git stash drop stash@{5}'
 alias drop6='git stash drop stash@{6}'
 
 alias undocommit='git reset HEAD~'
-alias undopush="git push -f origin HEAD^:master"
+alias undopush='git push -f origin HEAD^:master'
+alias unstage='git reset --'
 alias hreset='git reset --hard'
 alias branchd='git branch --edit-description'
 

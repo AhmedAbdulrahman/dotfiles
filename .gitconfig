@@ -17,6 +17,9 @@
 	reup = rebase-update # depot_tools specific
 	git = !exec git
 
+	# run git rename old_branch new_branch, and it's done.
+	rename = "!change() { git branch -m $1 $2; git push origin :$1; git push --set-upstream origin $2; }; change"
+
 [core]
 	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes

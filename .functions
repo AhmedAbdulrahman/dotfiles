@@ -30,3 +30,22 @@ function crepo() {
     cd $(basename ${1%.*})
     yarn install
 }
+
+# Docker Stuff
+#stop all containers:
+function scontainers () {
+    docker kill $(docker ps -q)
+}
+
+#remove all containers
+function rcontainers () {
+    docker rm $(docker ps -a -q)
+}
+
+#remove all docker images
+function rimages () {
+    docker rmi $(docker images -a -q)
+}
+function killall () {
+    docker kill $(docker ps -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -q)
+}
