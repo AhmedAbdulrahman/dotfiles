@@ -1,31 +1,35 @@
 #!/bin/bash
 
 # Create a new directory and enter it
-function new-dir() {
+new-dir() {
 	mkdir -p "$@" && cd "$@"
 }
 
 # Get a fresh copy of Webpack Boilerplate
-function webpack-boilerplate(){
-  git clone git@github.com:jesperorb/webpack-boilerplate.git $1 && cd $1 && yarn && npm run dev
+webpack-boilerplate(){
+    git clone git@github.com:jesperorb/webpack-boilerplate.git $1 && cd $1 && yarn && npm run dev
+}
+
+gi() {
+    curl -s "https://www.gitignore.io/api/$*"
 }
 
 # find shorthand
-function find-shorthand() {
+find-shorthand() {
 	find . -name "$1" 2>&1 | grep -v 'Permission denied'
 }
 
 # Search google from command line!
-function gsearch() {
+gsearch() {
     open "http://www.google.com/search?q=$*"
 }
 
 # Google's "I'm feeling lucky" search shortcut
-function lucky() {
+lucky() {
     open "https://www.google.com/search?btnI=1&q=$*"
 }
 
-function crepo() {
+crepo() {
     git clone --depth=1 $1
     cd $(basename ${1%.*})
     yarn install
@@ -33,19 +37,19 @@ function crepo() {
 
 # Docker Stuff
 #stop all containers:
-function scontainers () {
+scontainers () {
     docker kill $(docker ps -q)
 }
 
 #remove all containers
-function rcontainers () {
+rcontainers () {
     docker rm $(docker ps -a -q)
 }
 
 #remove all docker images
-function rimages () {
+rimages () {
     docker rmi $(docker images -a -q)
 }
-function killall () {
+killall () {
     docker kill $(docker ps -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -q)
 }
