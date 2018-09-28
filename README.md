@@ -8,10 +8,20 @@ The color scheme is [**iTerm2 - Snazzy**](https://github.com/sindresorhus/iterm2
 
 ## Installation
 
-1.  Clone the repository wherever you want
+Zsh Dotfiles are installed by running one of the following commands in your terminal
 
-    ```bash
-    git clone git@github.com:AhmedAbdulrahman/zsh-dotfiles.git
-    ```
+via `curl`
 
-2.  Then just copy any of the dotfiles you like into your home directory.
+```bash
+  bash -c "$(curl -fsSL https://raw.githubusercontent.com/AhmedAbdulrahman/zsh-dotfiles/master/installer.sh)"
+```
+
+via `wget`
+
+````bash
+  bash -c "$(wget https://raw.githubusercontent.com/AhmedAbdulrahman/zsh-dotfiles/master/installer.sh -O -)"
+
+  ```
+
+1.  Then just copy any of the dotfiles you like into your home directory.
+````
