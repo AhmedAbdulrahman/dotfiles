@@ -12,21 +12,9 @@ alias p="cd ~/Projects"
 
 # alias react-reddit='cd ~/Projects/_Playground/reddit-feed && code . && yarn start'
 
-# --- Git Stuff ---
-alias status='git status'
-alias checkout='git checkout'
-alias checkoutb='git checkout -b'
-alias commit='git commit'
-alias rebase='git rebase'
-alias branch='git branch'
-alias brancha='git branch -a'
-alias pull='git pull'
-alias push='git push'
-alias pushf='git push --force'
-alias add='git add'
-alias adda='git add -A'
-alias mergetool='git mergetool'
-alias diff='git diff --color --color-words --abbrev'
+# --- Git  ---
+alias g='git'
+alias gc="git commit -a"
 
 # Logging aliases
 alias logf='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
@@ -44,31 +32,13 @@ alias drop="git stash drop"
 alias pop='git stash pop'
 alias aply='git stash apply'
 
-# hardcore-stashing aliases
-alias spit0='git stash show -p stash@{0}'
-alias spit1='git stash show -p stash@{1}'
-alias spit2='git stash show -p stash@{2}'
-alias spit3='git stash show -p stash@{3}'
-alias spit4='git stash show -p stash@{4}'
-alias spit5='git stash show -p stash@{5}'
-alias spit6='git stash show -p stash@{6}'
-alias drop0='git stash drop stash@{0}'
-alias drop1='git stash drop stash@{1}'
-alias drop2='git stash drop stash@{2}'
-alias drop3='git stash drop stash@{3}'
-alias drop4='git stash drop stash@{4}'
-alias drop5='git stash drop stash@{5}'
-alias drop6='git stash drop stash@{6}'
-
 alias undocommit='git reset HEAD~'
 alias undopush='git push -f origin HEAD^:master'
 alias unstage='git reset --'
-alias hreset='git reset --hard'
 alias branchd='git branch --edit-description'
 
 # git root
 alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
-alias master="git checkout master"
 
 # gist-paste filename.ext -- create private Gist from the clipboard contents
 alias gist-paste="gist --private --copy --paste --filename"  
@@ -162,19 +132,28 @@ fi
 
 alias l="ls -lF ${colorflag}"																	# long format
 alias la="ls -laF ${colorflag}"																# long format, including dot files
-alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"			# only directories
+# alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"			# only directories
 alias ls="command ls ${colorflag}"														# Always use color output for `ls`
+# List only directories
+alias lsd='ls -l | grep "^d"'
 
 # --- IP Addresses ---
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en1"
+# Get public ip
+alias wmip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias public-ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias local-ip="ipconfig getifaddr en1"
 alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 alias myip="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \$2}'"
 alias lsof-tcp='lsof -iTCP'
 alias lsof-tcp-listen='lsof -iTCP -sTCP:LISTEN -P'
+alias hosts='sudo $EDITOR /etc/hosts'
 
 alias nr="npm run --silent"																		# Run npm script without annoying noise
 alias j="npx jest --watch"																		# Jest watch
+
+# Trim new lines and copy to clipboard
+alias trimcopy="tr -d '\n' | pbcopy"
 
 # One of @janmoesen’s ProTip™s HTTP requests
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do

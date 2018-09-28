@@ -1,8 +1,44 @@
 #!/bin/bash
 
 # Create a new directory and enter it
-ndir() {
+function md() {
 	mkdir -p "$@" && cd "$@"
+}
+
+
+# Change dir to active Finder window, else ~/
+function cdf() {
+  local fPath=`osascript -e '
+  tell app "finder"
+  try
+    set folderPath to (folder of the front window as alias)
+  on error
+    set folderPath to (path to home folder as alias)
+  end try
+  POSIX path of folderPath
+  end tell'◊
+  `;
+  echo "cd $fPath";
+  cd "$fPath" > /dev/null
+}
+
+# Start an HTTP server from a directory, optionally specifying the port
+function server() {
+  local port="${1:-8000}"
+  open "http://localhost:${port}/"
+  # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+  # And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
+  python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+}
+
+function phpserver() {
+  local port="${2:-8888}"
+  if [ -z $1 ]; then
+    php -S localhost:${port}
+  else
+    open "http://localhost:${port}/"
+    php -S localhost:${port} -t $1
+  fi
 }
 
 # Get a fresh copy of Webpack Boilerplate
@@ -10,46 +46,166 @@ webpack-boilerplate(){
     git clone git@github.com:jesperorb/webpack-boilerplate.git $1 && cd $1 && yarn && npm run dev
 }
 
-gi() {
+# Get gitignore preset
+function gi() {
     curl -s "https://www.gitignore.io/api/$*"
 }
 
-# find shorthand
-find-shorthand() {
-	find . -name "$1" 2>&1 | grep -v 'Permission denied'
+# Syntax-highlight JSON strings or files
+function json() {
+  if [ -p /dev/stdin ]; then
+    # piping, e.g. `echo '{"foo":42}' | json`
+    python -mjson.tool | pygmentize -l javascript
+  else
+    # e.g. `json '{"foo":42}'`
+    python -mjson.tool <<< "$*" | pygmentize -l javascript
+  fi
 }
 
 # Search google from command line!
-gsearch() {
+function gsearch() {
     open "http://www.google.com/search?q=$*"
 }
 
 # Google's "I'm feeling lucky" search shortcut
-lucky() {
+function lucky() {
     open "https://www.google.com/search?btnI=1&q=$*"
 }
 
-crepo() {
-    git clone --depth=1 $1
-    cd $(basename ${1%.*})
-    yarn install
+# function clone() {
+#     git clone --depth=1 $1
+#     cd $(basename ${1%.*})
+#     yarn install
+# }
+
+# whois a domain or a URL
+function whois() {
+  local domain=$(echo "$1" | awk -F/ '{print $3}') # get domain from URL
+  if [ -z $domain ] ; then
+    domain=$1
+  fi
+  echo "Getting whois record for: $domain …"
+
+  # avoid recursion
+  # this is the best whois server
+  # strip extra fluff
+  /usr/bin/whois -h whois.internic.net $domain | sed '/NOTICE:/q'
+}
+
+# animated gifs from any video
+# from alex sexton   gist.github.com/SlexAxton/4989674
+function gifify() {
+  if [[ -n "$1" ]]; then
+    if [[ $2 == '--good' ]]; then
+      ffmpeg -i $1 -r 10 -vcodec png out-static-%05d.png
+      time convert -verbose +dither -layers Optimize -resize 900x900\> out-static*.png  GIF:- | gifsicle --colors 128 --delay=5 --loop --optimize=3 --multifile - > $1.gif
+      rm out-static*.png
+    else
+      ffmpeg -i $1 -s 600x400 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $1.gif
+    fi
+  else
+    echo "proper usage: gifify <input_movie.mov>. You DO need to include extension."
+  fi
+}
+
+# turn that video into webm.
+# brew reinstall ffmpeg --with-libvpx
+function webmify(){
+  ffmpeg -i $1 -vcodec libvpx -acodec libvorbis -isync -copyts -aq 80 -threads 3 -qmax 30 -y $2 $1.webm
+}
+
+# example: rename-multiple *.svg abc cba
+function rename() {
+  for file in $1; do mv $file ${file//$2/$3} ; done
+}
+
+# Download all images from website to current dir.
+function getAllImagesFromWebsite() {
+  wget -r -l 1 -A jpeg,jpg,bmp,gif,png "$@"
+}
+
+# Combining cd command and z
+function c() {
+  if [ -z "$1" ]; then
+    cd ..
+  elif [ -d "$1" ]; then
+    cd "$@"
+  else
+    z -c "$@"
+  fi
+}
+
+# Combining cd command and z, longer range
+# I have an alias for cc (= "../..")
+function cc() {
+  if [ -d "$1" ]; then
+    cd $@
+  else
+    z $@
+  fi
+}
+
+# generates a unique 192.168.X.X ip adress.
+function ipgen() {
+  local current=($(grep "192.168.*.*" /etc/hosts | cut -c12-13))
+  local gen=$(echo $RANDOM % 99 + 1 | bc)
+  local gen2=$(echo $RANDOM % 99 + 1 | bc)
+  if [[ $gen != ${current[*]} ]]; then
+    echo -e "192.168.$gen.$gen2"
+  else
+    !!
+  fi
 }
 
 # Docker Stuff
+
 #stop all containers:
-scontainers () {
+function docker-stop () {
     docker kill $(docker ps -q)
 }
 
 #remove all containers
-rcontainers () {
+function rc () {
     docker rm $(docker ps -a -q)
 }
 
 #remove all docker images
-rimages () {
+function ri () {
     docker rmi $(docker images -a -q)
 }
-killall () {
+
+#remove everything in Docker
+function killall () {
     docker kill \$(docker ps -q) && docker rm \$(docker ps -a -q) && docker rmi \$(docker images -q)
+}
+
+# open up process in new tab: "$ ntab process"
+function ntab() {
+  osascript -e "
+  activate application \"iTerm\"
+  tell application \"System Events\" to keystroke \"t\" using command down
+  tell application \"iTerm\" to tell session -1 of current terminal to write text \"$@\""
+}
+
+# Halt all active virtualboxes
+function haltvms() {
+    for VM in `VBoxManage list runningvms | awk '{ print $2; }'`; do VBoxManage controlvm $VM poweroff; done
+}
+
+# Halt all active virtualboxes except the one of this directory
+function halt-all-except-current() {
+  vmBOX=(`VBoxManage list runningvms --long | grep "vagrant', Host path:" | awk '{print $5}' | cut -d "'" -f 2`)
+  vmBOXId=(`VBoxManage list runningvms --long | grep "Hardware UUID:" | awk '{print $3}'`)
+
+  for ((i=1;i<=${#vmBOX[@]};++i)); do
+    if [[ "${PWD}" =~ "${vmBOX[i]}" ]]; then
+      echo "No other VM than the one of this directory is running."
+    else
+      echo -e "Halting ${vmBOX[i]}"
+      VBoxManage controlvm {${vmBOXId[i]}} poweroff
+    fi
+  done
+
+  unset vmBOX
+  unset vmBOXId
 }
