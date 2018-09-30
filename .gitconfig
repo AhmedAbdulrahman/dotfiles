@@ -20,6 +20,10 @@
 	# run git rename old_branch new_branch, and it's done.
 	rename = "!change() { git branch -m $1 $2; git push origin :$1; git push --set-upstream origin $2; }; change"
 
+  # list commited files name
+  # Usage: git cf <COMMIT_ID>
+  cf = "!show_commited_files() {git diff-tree --no-commit-id --name-only -r $1}; show_commited_files"
+
 [core]
 	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
