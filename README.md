@@ -8,7 +8,7 @@ The color scheme is [**iTerm2 - Snazzy**](https://github.com/sindresorhus/iterm2
 
 ## Installation
 
-Zsh Dotfiles are installed by running one of the following commands in your terminal
+ZSH Dotfiles are installed by running one of the following commands in your terminal
 
 via `curl`
 
@@ -18,10 +18,6 @@ via `curl`
 
 via `wget`
 
-````bash
+```bash
   bash -c "$(wget https://raw.githubusercontent.com/AhmedAbdulrahman/zsh-dotfiles/master/installer.sh -O -)"
-
-  ```
-
-1.  Then just copy any of the dotfiles you like into your home directory.
-````
+ ```

@@ -41,12 +41,13 @@ on_start() {
     exit 1
   fi
 
-  info '                             ____  _____ '
-  info '    ____ ___   ____ _ _____ / __ \/ ___/ '
-  info '   / __ `__ \ / __ `// ___// / / /\__ \  '
-  info '  / / / / / // /_/ // /__ / /_/ /___/ /  '
-  info ' /_/ /_/ /_/ \__,_/ \___/ \____//____/   '
-  info '                                         '
+  info "                        ____   _____   "
+  info "                        / __ \ / ____| "
+  info "  _ __ ___   __ _  ___| |  | | (___    "
+  info "  | '_ ` _ \ / _` |/ __| |  | |\___ \  "
+  info "  | | | | | | (_| | (__| |__| |____) | "
+  info "  |_| |_| |_|\__,_|\___|\____/|_____/  "
+  info "                                       "
   info "This script will guide you through installing macOS applications and cli tools."
   echo "It will not install anything without your direct agreement!"
   echo

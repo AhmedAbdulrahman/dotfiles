@@ -38,13 +38,13 @@ finish() {
 }
 
 on_start() {
-  info '     _   __            __            _       '
-  info '    / | / /____   ____/ /___        (_)_____ '
-  info '   /  |/ // __ \ / __  // _ \      / // ___/ '
-  info '  / /|  // /_/ // /_/ //  __/_    / /(__  )  '
-  info ' /_/ |_/ \____/ \__,_/ \___/(_)__/ //____/   '
-  info '                              /___/          '
-  info '                                             '
+  info "   _   _           _           _  _____  "
+  info "  | \ | |         | |         | |/ ____| "
+  info "  |  \| | ___   __| | ___     | | (___   "
+  info "  | . ` |/ _ \ / _` |/ _ \_   | |\___ \  "
+  info "  | |\  | (_) | (_| |  __/ |__| |____) | "
+  info "  |_| \_|\___/ \__,_|\___|\____/|_____/  "
+  info "                                         "
   info "This script will guide you through installing Node.js, nvm, etc."
   echo
   ask "Do you want to proceed with installation?" && read answer

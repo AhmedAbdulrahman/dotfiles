@@ -42,18 +42,20 @@ GITHUB_REPO_URL_BASE="https://github.com/AhmedAbdulrahman/zsh-dotfiles"
 HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
 
 # list of files/folders to symlink in $HOME
-FILES="aliases functions gitconfig vimrc zshrc zshenv tmux.conf"
+FILES="aliases functions gitconfig vimrc zshrc zshenv tmux.conf hammerspoon"
 
 on_start() {
-  info "           __        __   ____ _  __           "
-  info "      ____/ /____   / /_ / __/(_)/ /___   _____"
-  info "     / __  // __ \ / __// /_ / // // _ \ / ___/"
-  info "  _ / /_/ // /_/ // /_ / __// // //  __/(__  ) "
-  info " (_)\__,_/ \____/ \__//_/  /_//_/ \___//____/  "
-  info "                                               "
-  info "              by @AhmedAbdulrahman             "
-  info "                                               "
 
+  info "   ______  _____ _    _ _____   ____ _______ ______ _____ _      ______  _____  "
+  info "  |___   // ____| |  | |  __ \ / __ \__   __|  ____|_   _| |    |  ____|/ ____| "
+  info "      / /| (___ | |__| | |  | | |  | | | |  | |__    | | | |    | |__  | (___   "
+  info "     / /  \___ \|  __  | |  | | |  | | | |  |  __|   | | | |    |  __|  \___ \  "
+  info "    / /__ ____) | |  | | |__| | |__| | | |  | |     _| |_| |____| |____ ____) | "
+  info "   /_____|_____/|_|  |_|_____/ \____/  |_|  |_|    |_____|______|______|_____/  "
+  info "                                                                                "
+  info "                            by @AhmedAbdulrahman                                "
+
+  
   info "This script will guide you through installing git, zsh and dofiles itself."
   echo "It will not install anything without your direct agreement!"
   echo
@@ -65,7 +67,7 @@ on_start() {
 
 }
 
-get_cli_tools() {
+install_cli_tools() {
   # Install Cli Tools. 
   # Note:There's not need to install XCode tools on Linux
   if [ `uname` == 'Linux' ]; then
@@ -93,7 +95,7 @@ get_cli_tools() {
   finish
 }
 
-get_homebrew() {
+install_homebrew() {
   # Install Homebrew 
   # There's not need to install Homebrew on Linux ;)
   if [ `uname` != 'Darwin' ]; then
@@ -112,8 +114,10 @@ get_homebrew() {
 
     info "Installing Homebrew..."
     ruby -e "$(curl -fsSL ${HOMEBREW_INSTALLER_URL})"
+    # Make sure we’re using the latest Homebrew.
     brew update
-    brew upgrade
+    # Upgrade any already-installed formulae.
+    brew upgrade --all
   else
     success "You already have Homebrew installed. Skipping..."
   fi
@@ -121,7 +125,7 @@ get_homebrew() {
   finish
 }
 
-get_git() {
+install_git() {
 
   # Install Git 
   info "Trying to detect installed Git..."
@@ -151,7 +155,7 @@ get_git() {
   finish
 }
 
-get_zsh() {
+install_zsh() {
   
   #Install ZSH
   info "Trying to detect installed Zsh..."
@@ -167,7 +171,7 @@ get_zsh() {
     info "Installing Zsh..."
 
     if [ `uname` == 'Darwin' ]; then
-      brew install zsh zsh-completions zsh-syntax-highlighting zsh-autosuggestions
+      brew install zsh sudo zsh-completions zsh-syntax-highlighting zsh-autosuggestions
     elif [ `uname` == 'Linux' ]; then
       sudo apt-get install zsh
     else
@@ -194,7 +198,7 @@ get_zsh() {
   finish
 }
 
-get_dotfiles() {
+install_dotfiles() {
   info "Trying to detect installed zsh dotfiles in $ZSH_DOTFILES..."
 
   if [ ! -d $ZSH_DOTFILES ]; then
@@ -216,7 +220,7 @@ get_dotfiles() {
   cd $ZSH_DOTFILES
   for file in $FILES; do
     echo "Creating symlink to $file in home directory."
-    ln -sf $HOME/.$file $ZSH_DOTFILES/.$file
+    ln -sf $ZSH_DOTFILES/.$file $HOME/.$file 
   done
 
   finish
@@ -252,7 +256,7 @@ on_finish() {
   echo
 }
 
-onError() {
+on_error() {
   echo
   error "Wow... Something serious happened!"
   error "In case if you need any help, raise an issue -> ${CYAN}${GITHUB_REPO_URL_BASE}issues/new${RESET}"
@@ -270,3 +274,5 @@ main() {
   bootstrap "$*"
   on_finish "$*"
 }
+
+main "$*"
