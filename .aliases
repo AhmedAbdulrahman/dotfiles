@@ -50,6 +50,7 @@ alias rm_modules="find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
 # --- Git ---
 alias g='git'
 alias gc="git commit -a"
+alias status="git status"
 alias logf='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias logs='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias loga='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
