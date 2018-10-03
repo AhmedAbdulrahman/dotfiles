@@ -22,7 +22,7 @@
 
   # list commited files name
   # Usage: git cf <COMMIT_ID>
-  cf = "!show_commited_files() {git diff-tree --no-commit-id --name-only -r $1}; show_commited_files"
+  cf = "!show_commited_files() { git diff-tree --no-commit-id --name-only -r $1; }; show_commited_files"
 
 [core]
 	excludesfile = ~/.gitignore

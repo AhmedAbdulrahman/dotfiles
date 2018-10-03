@@ -42,7 +42,7 @@ GITHUB_REPO_URL_BASE="https://github.com/AhmedAbdulrahman/zsh-dotfiles"
 HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
 
 # list of files/folders to symlink in $HOME
-FILES="aliases functions gitconfig vimrc zshrc zshenv tmux.conf hammerspoon"
+FILES="aliases functions gitconfig vimrc zshrc zshenv tmux.conf hammerspoon vim"
 
 on_start() {
 
