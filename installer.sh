@@ -220,7 +220,7 @@ install_dotfiles() {
   cd $ZSH_DOTFILES
   for file in $FILES; do
     echo "Creating symlink to $file in home directory."
-    ln -sf $ZSH_DOTFILES/.$file $HOME/.$file 
+    ln -s -f $ZSH_DOTFILES/.$file $HOME/.$file 
   done
 
   finish
