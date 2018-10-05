@@ -103,10 +103,10 @@ which ggrep > /dev/null 2>&1 &&\
   alias gp='ggrep -r -P --color' ||\
   alias gp='grep -r -P --color'
 
-alias gg='git grep --untracked'																# Grep git repo.
-alias gil='grep -w -i -r -l --color'													# Grep only files
-alias grc='grep -win -C 2 --color'														# Grep with Lines Before and After
-alias gdc='grep -wirc --color'																# Grep in directory with count
+alias greprepo='git grep --untracked'																# Grep git repo.
+alias grepfiles='grep -w -i -r -l --color'													# Grep only files
+alias greplines='grep -win -C 2 --color'														# Grep with Lines Before and After
+alias grepdir='grep -wirc --color'																  # Grep in directory with count
 
 # --- Applications ---
 alias vs="code"

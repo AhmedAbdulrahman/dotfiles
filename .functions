@@ -175,17 +175,17 @@ function docker-stop () {
 }
 
 #remove all containers
-function rc () {
+function rcontainers () {
     docker rm $(docker ps -a -q)
 }
 
 #remove all docker images
-function ri () {
+function rimages () {
     docker rmi $(docker images -a -q)
 }
 
 #remove everything in Docker
-function killall () {
+function killdocker () {
     docker kill \$(docker ps -q) && docker rm \$(docker ps -a -q) && docker rmi \$(docker images -q)
 }
 
