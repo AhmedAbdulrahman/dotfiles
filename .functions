@@ -72,11 +72,21 @@ function lucky() {
     open "https://www.google.com/search?btnI=1&q=$*"
 }
 
-# function clone() {
-#     git clone --depth=1 $1
-#     cd $(basename ${1%.*})
-#     yarn install
-# }
+# Usage: clone <GITHUB_REPO_URL>
+function clone() {
+    git clone --depth=1 $1
+    cd $(basename ${1%.*})
+    # For Yarn
+    if [ -f ./yarn.lock ]; then
+      yarn install
+    # For Laravel
+    elif [ -f ./composer.json ]; then
+      npm install && composer install
+    else
+    # For NPM
+      npm install
+    fi
+}
 
 # whois a domain or a URL
 function whois() {

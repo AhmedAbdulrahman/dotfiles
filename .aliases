@@ -43,14 +43,19 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
 
-# --- NPM ---
+# --- Cleaners ---
 alias rm_modules="find . -name "node_modules" -type d -prune -exec rm -rf '{}' +"
-
+# Recursively delete `.DS_Store` files
+alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
 
 # --- Git ---
 alias g='git'
-alias gc="git commit -a"
+alias add="git add"
+alias commit="git commit -a"
 alias status="git status"
+alias amend="git commit --amend"
+alias push="git push"
+alias master="git checkout master"
 alias logf='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias logs='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias loga='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
@@ -135,6 +140,12 @@ alias hosts='sudo $EDITOR /etc/hosts'
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
 	alias "${method}"="lwp-request -m '${method}'"
 done
+
+# File size
+alias fs="stat -f \"%z bytes\""
+
+alias diskspace_report="df -P -kHl"
+alias free_diskspace_report="diskspace_report"
 
 # --- LiveStream ---
 # Get Prepared for LiveStream
