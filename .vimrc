@@ -1,11 +1,19 @@
 "Settings"
-set nobackup
+so ~/.vim/plugins.vim
+"Retro groove color scheme for Vim"
+colorscheme gruvbox
+hi CursorLineNr ctermfg=white
+" TODO: Pick a leader key "
+"yep - the space bar is my leader keyset"
+let mapleader = "\<Space>"           
+set shell=zsh                         " Set bash as the prompt for Vim"
+set backupskip=/tmp/*,/private/tmp/*  " Don’t create backups when editing files in certain directories"
 set nowb
 set noswapfile
 set noerrorbells
 set ttymouse=xterm2
 set so=999
-set wildmenu
+set wildignore+=*/tmp/*,/dist/*,/node_modules/*,*.so,*.swp,*.zip " to limit ctrlp search"
 set nocompatible											"Make Vim more useful"
 set wildmenu													"Enhance command-line completion"
 set esckeys														"Allow cursor keys in insert mode"
@@ -23,7 +31,6 @@ set shortmess=atI											"Don’t show the intro message when starting Vim"
 set showcmd														"Show the (partial) command as it’s being typed"
 set scrolloff=3												"Start scrolling three lines before the horizontal window border"
 set backspace=indent,eol,start				"Allow backspace in insert mode"
-let mapleader=","											"Change mapleader"
 set exrc                              "Enable per-directory .vimrc files and disable unsafe commands in them"
 set secure
 
@@ -90,18 +97,89 @@ set backspace=indent,eol,start          "Set Interactive file tree view"
 map <F6> :setlocal spell!<CR>
 map <F12> :Goyo<CR>
 map <C-o> :NERDTreeToggle<CR>
+map <C-p> :FZF<CR>                      " Launch FZF with CTRL P"
 
-map <Leader> <Plug>(easymotion-prefix)
-
-" Plugins "
+" Plugins Configuration "
+" Gruvbox"
 let g:gruvbox_vert_split = 'bg1'
 let g:gruvbox_sign_column = 'bg0'
+
+" Enable JSDoc highlighting "
+let g:javascript_plugin_jsdoc = 1
+" Enable Flow syntax highlighting "
 let g:javascript_plugin_flow = 1
+" Allow JSX syntax in JS files "
 
-so ~/.vim/plugins.vim
+"Emmet"
+" lets emmet use jsx shortcuts"
+let g:jsx_ext_required = 0
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+"Set Emmet to apply jsx settings to javascript.jsx filetype"
+let g:user_emmet_settings = {
+\  'javascript.jsx' : {
+\      'extends' : 'jsx',
+\      'quote_char': "'",
+\  },
+\}
+autocmd FileType html,css,javascript,jsx EmmetInstall
 
-colorscheme gruvbox
-hi CursorLineNr ctermfg=white
+"Prettier"
+nmap <Leader>p <Plug>(Prettier)
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+
+"UiSnippets"
+let g:UltiSnipsExpandTrigger="<C-l>"
+let g:UltiSnipsJumpForwardTrigger="<C-b>"
+let g:UltiSnipsJumpBackwardTrigger="<C-z>"
+
+"Tagged Template"
+"NOTE: Tag on the left, filetype on the right "
+let g:taggedtemplate#tagSyntaxMap = {
+  \ "html": "html",
+  \ "md":   "markdown",
+  \ "css":  "css" }
+autocmd FileType javascript,javascript.jsx,typescript : call taggedtemplate#applySyntaxMap()
+
+"---ALE---"
+nmap <Leader>d <Plug>(ale_fix)
+let local_eslint = finddir(getcwd() . '/node_modules') . '/.bin/eslint'
+if matchstr(local_eslint, "^\/\\w") == ''
+    let local_eslint = local_eslint
+endif
+
+let g:ale_javascript_eslint_executable = local_eslint
+
+"enable completion where available."
+let g:ale_completion_enabled = 1
+
+let g:ale_fixers = {
+\   'javascript': ['eslint']
+\   'typescript': ['eslint']
+\   'typescriptreact': ['eslint']
+\}
+
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'typescript': ['eslint'],
+\   'jsx': ['eslint'],
+\   'html': [],
+\}
+
+let g:ale_linter_aliases = {'jsx': 'css'}
+
+"use a slightly slimmer error pointer"
+let g:ale_sign_error = '✖'
+hi ALEErrorSign guifg=#DF8C8C
+let g:ale_sign_warning = '⚠'
+hi ALEWarningSign guifg=#F2C38F
+
+highlight ALEErrorSign ctermfg=18 ctermbg=73 cterm=bold
+highlight ALEWarningSign ctermfg=18 ctermbg=73 cterm=bold
+
+"ale error shortcuts"
+nmap <silent> <Leader>k <Plug>(ale_previous_wrap)
+nmap <silent> <Leader>j <Plug>(ale_next_wrap)
 
 let g:lightline = {
   \     'active': {
