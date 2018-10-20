@@ -125,7 +125,6 @@ main() {
   brew install woff2
   # Install other useful binaries
   brew install the_silver_searcher
-  brew install fzf
   brew install zsh
   brew install git
   brew install imagemagick --with-webp
