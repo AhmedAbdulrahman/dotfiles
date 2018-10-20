@@ -154,8 +154,8 @@ let g:ale_javascript_eslint_executable = local_eslint
 let g:ale_completion_enabled = 1
 
 let g:ale_fixers = {
-\   'javascript': ['eslint']
-\   'typescript': ['eslint']
+\   'javascript': ['eslint'],
+\   'typescript': ['eslint'],
 \   'typescriptreact': ['eslint']
 \}
 

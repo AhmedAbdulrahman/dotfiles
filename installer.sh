@@ -39,6 +39,7 @@ finish() {
 
 export ZSH_DOTFILES=${1:-"$HOME/.zsh-dotfiles"}
 GITHUB_REPO_URL_BASE="https://github.com/AhmedAbdulrahman/zsh-dotfiles"
+VUNDLE_REPO_URL_BASE="https://github.com/VundleVim/Vundle.vim"
 HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
 
 # list of files/folders to symlink in $HOME
@@ -222,6 +223,9 @@ install_dotfiles() {
     echo "Creating symlink to $file in home directory."
     ln -s -f $ZSH_DOTFILES/.$file $HOME/.$file 
   done
+
+  info "Installing Vundle..."
+  git clone --recursive "$VUNDLE_REPO_URL_BASE.git" $ZSH_DOTFILES/.vim/bundle/Vundle.vim
 
   finish
 }
