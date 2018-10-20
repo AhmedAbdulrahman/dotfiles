@@ -16,12 +16,20 @@ Plugin 'junegunn/goyo.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+Plugin 'cdata/vim-tagged-template'
 Plugin 'reedes/vim-colors-pencil'
 Plugin 'scrooloose/nerdtree'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-surround'
 Plugin 'w0rp/ale'
+Plugin 'reedes/vim-pencil'
+Plugin 'epilande/vim-react-snippets'
+Plugin 'SirVer/ultisnips'
+Plugin 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'chrisbra/Colorizer'
 
 call vundle#end()
 
