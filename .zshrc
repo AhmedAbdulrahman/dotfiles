@@ -1,4 +1,6 @@
 # Load Theme and disable extra stuff
+## to pass Ctrl+S through to the application for vim CTRL+S
+stty -ixon
 ZSH_THEME="spaceship"
 SPACESHIP_CHAR_SYMBOL="❯"
 SPACESHIP_PACKAGE_SHOW=false

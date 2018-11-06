@@ -1,9 +1,21 @@
-"Settings"
+"--------------"
+"Source Plugins"
+"--------------"
 so ~/.vim/plugins.vim
+
+"---------"
+"VIM Theme"
+"---------"
 "Retro groove color scheme for Vim"
 colorscheme gruvbox
 hi CursorLineNr ctermfg=white
-" TODO: Pick a leader key "
+
+"--------"
+"Settings"
+"--------"
+"1 General"
+"---------"
+
 "yep - the space bar is my leader keyset"
 let mapleader = "\<Space>"           
 set shell=zsh                         " Set bash as the prompt for Vim"
@@ -33,14 +45,29 @@ set scrolloff=3												"Start scrolling three lines before the horizontal wi
 set backspace=indent,eol,start				"Allow backspace in insert mode"
 set exrc                              "Enable per-directory .vimrc files and disable unsafe commands in them"
 set secure
-
 set clipboard=unnamedplus
+
+"Persistent Undo"
+if has('persistent_undo')
+  let target_path = expand('~/.vim/vim-persisted-undo/')
+
+  if !isdirectory(target_path)
+    call system('mkdir -p ' . target_path)
+  endif
+
+  let &undodir = target_path
+  set undofile
+endif
+
 "use default clipboard on MAC"
 if has('mac')
     set clipboard=unnamed
 endif
 
-" Appearance "
+"-------------"
+"2 Appearance "
+"-------------"
+
 syntax enable 												"Enable syntax highlighting"
 set number														"Enable line numbers"
 set linespace=12     									"Sets line spacing but only in gui"
@@ -89,17 +116,124 @@ set ignorecase		 " Ignore case of searches"
 set splitbelow
 set splitright
 
+"--------"
 "Bindings"
+"--------"
 map q <Nop>
-map ; :Files<CR>                        "For search pane"
-set backspace=indent,eol,start          "Set Interactive file tree view"
+"For search pane"
+map ; :Files<CR>
+"Set Interactive file tree view"
+set backspace=indent,eol,start
 
 map <F6> :setlocal spell!<CR>
 map <F12> :Goyo<CR>
 map <C-o> :NERDTreeToggle<CR>
-map <C-p> :FZF<CR>                      " Launch FZF with CTRL P"
+" Launch FZF with CTRL P"
+map <C-p> :FZF<CR>
+nmap <Leader>n <Plug>NERDTreeTabsToggle<CR>
 
+"save using <C-s> in every mode"
+"when in operator-pending or insert, takes you to normal mode"
+nnoremap <C-s> :write<Cr>
+vnoremap <C-s> <C-c>:write<Cr>
+inoremap <C-s> <Esc>:write<Cr>
+onoremap <C-s> <Esc>:write<Cr>
+
+" I like things that wrap back to start after end, quickfix stops at last error but if I specify cn again, I want to definitely go to the next error (I can see line numbers in sidebar to track where I am anyway)"
+fun! s:__qfnxt()
+  try
+    cnext
+  catch
+    crewind
+  endtry
+endfun
+
+fun! s:__qfprv()
+  try
+    cprev
+  catch
+    clast
+  endtry
+endfun
+
+"shortcuts for quickfix list"
+nnoremap <silent> <C-n> :call <SID>__qfnxt()<Cr>
+nnoremap <silent> <C-b> :call <SID>__qfprv()<Cr>
+
+"close pane using <C-w>"
+fun! s:__bclose()
+  if (len(getbufinfo({'buflisted': 1})) > 1)
+    bdelete
+  endif
+endfun
+
+" since I know it from Chrome / Atom (cmd+w) and do not use the <C-w> mappings anyway"
+noremap <silent> <C-w> :call <SID>__bclose()<Cr>
+
+"when pairing some braces or quotes, put cursor between them"
+inoremap <>   <><Left>
+inoremap ()   ()<Left>
+inoremap {}   {}<Left>
+inoremap []   []<Left>
+inoremap ""   ""<Left>
+inoremap ''   ''<Left>
+inoremap ``   ``<Left>
+
+"use tab and shift tab to indent and de-indent code"
+nnoremap <Tab>   >>
+nnoremap <S-Tab> <<
+vnoremap <Tab>   >><Esc>gv
+vnoremap <S-Tab> <<<Esc>gv
+
+"Codi Config"
+let g:codi#width         = 50.0
+let s:codi_filetype_tabs = {}
+
+function! s:FullscreenScratch()
+  " store filetype and bufnr of current buffer for later reference"
+  let current_buf_ft  = &ft
+  let current_buf_num = bufnr('%')
+
+  " check if a scratch buffer for this filetype already exists"
+  let saved_scratch = get(s:codi_filetype_tabs, current_buf_ft, -1)
+
+  " if a tabpage exists for current_buf_ft, go to it instead of creating a new scratch buffer"
+  if saved_scratch != -1
+    if index(map(gettabinfo(), 'v:val.tabnr'), saved_scratch) == -1
+      unlet s:codi_filetype_tabs[current_buf_ft]
+    else
+      exe 'tabn' saved_scratch
+      return
+    endif
+  endif
+
+  "create a new empty tab, set scratch options and give it a name"
+  tabe
+  setlocal buftype=nofile noswapfile modifiable buflisted bufhidden=hide
+  exe ':file scratch::' . current_buf_ft
+
+  " set filetype to that of original source file e.g. ruby / python / w/e Codi supports"
+  let &filetype = current_buf_ft
+
+  " store the tabpagenr per filetype so we can return to it later when re-opening from the same filetype"
+  let s:codi_filetype_tabs[&filetype] = tabpagenr()
+
+  " create a buffer local mapping"
+  nmap <silent><buffer> <Leader><Leader> :tabprevious<Cr>
+
+  " everything is setup, filetype is set let Codi do the rest :)"
+  Codi
+endfunction
+
+"create a mapping to call the fullscreen scratch wrapper"
+nmap <silent> <Leader>c :call <SID>FullscreenScratch()<Cr>
+
+" Highlighted yank"
+let g:highlightedyank_highlight_duration = 300
+
+"-----------------------"
 " Plugins Configuration "
+"-----------------------"
 " Gruvbox"
 let g:gruvbox_vert_split = 'bg1'
 let g:gruvbox_sign_column = 'bg0'

@@ -227,6 +227,9 @@ install_dotfiles() {
   info "Installing Vundle..."
   git clone --recursive "$VUNDLE_REPO_URL_BASE.git" $ZSH_DOTFILES/.vim/bundle/Vundle.vim
 
+  info "Creating new dir for presisted undo"
+  mkdir $ZSH_DOTFILES/.vim/vim-persisted-undo
+  
   finish
 }
 
