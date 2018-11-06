@@ -30,6 +30,9 @@ Plugin 'SirVer/ultisnips'
 Plugin 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'chrisbra/Colorizer'
+Plugin 'wincent/terminus'   "Better vim + tmux"
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'metakirby5/codi.vim'
 
 call vundle#end()
 
