@@ -107,28 +107,44 @@ main() {
   brew_install tree
   brew_install wget
   brew_install yarn
+  # Alternative to 'find' command
+  brew install fd
+  brew install ripgrep
+
+  # brew install ctags
+
+  #A code-searching tool similar to ack, but faster. 
+  brew install the_silver_searcher
+  
   # Install `wget` with IRI support.
   brew install wget --with-iri
+  
   # Install GnuPG to enable PGP-signing commits.
   brew install gnupg
+  
   # Install more recent versions of some macOS tools.
   brew install vim --with-override-system-vi
   brew install grep
   brew install openssh
   brew install screen
+  
   # z hopping around folders
   brew install z
+  
   # Install font tools.
   brew tap bramstein/webfonttools
   brew install sfnt2woff
   brew install sfnt2woff-zopfli
   brew install woff2
+  
   # Install other useful binaries
   brew install the_silver_searcher
   brew install zsh
   brew install git
   brew install imagemagick --with-webp
-  brew install node # This installs `npm` too using the recommended installation method
+  # This installs `npm` too using the recommended installation method
+  brew install node 
+  
   brew install pv
   brew install rename
   brew install tree
@@ -145,11 +161,12 @@ main() {
   brew install nmap
   brew install gzip
   brew install terminal-notifier
+  
   # find where your diskspace went
   brew install ncdu 
 
   # Desktop applications
-    brew_install cask java
+  brew cask java
 
   # daily used
   brew cask install slack
@@ -193,6 +210,7 @@ main() {
 
   # Remove outdated versions from the cellar
   brew cleanup
+  
   # Finish
   on_finish
 }

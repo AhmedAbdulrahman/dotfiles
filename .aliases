@@ -50,22 +50,32 @@ alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
 
 # --- Git ---
 alias g='git'
-alias add="git add"
-alias commit="git commit -a"
-alias status="git status"
-alias amend="git commit --amend"
-alias push="git push"
+alias ga="git add"
+alias g.="git add ."
+alias gb="git branch"
+alias gc='git commit -m'
+alias gco="git checkout"
 alias master="git checkout master"
+alias develop="git checkout develop"
+alias status="git status"
+alias gp="git push"
+alias gpu='git push upstream'
+alias gpl='git pull'
+alias gplu='git pull upstream'
+alias gr='git remote'
+alias gs='git stash'
+alias gsave='git stash save -u'
+alias gsp='git stash pop'
+alias gamend="git commit --amend"
+
 alias logf='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias logs='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias loga='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
 alias logd='git log --graph --decorate --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset --abbrev-commit --date=relative --all"'
-# Undo commit and unstage all files
-alias undo='git reset HEAD~'
-# Undo commit and keep all files staged
-alias undosoft='git reset --soft HEAD~'
-# Undo the commit and completely remove all changes
-alias undohard='git reset --hard HEAD~'
+
+alias undo='git reset HEAD~'											# Undo commit and unstage all files
+alias undosoft='git reset --soft HEAD~'									# Undo commit and keep all files staged
+alias undohard='git reset --hard HEAD~'									# Undo the commit and completely remove all changes
 alias undopush='git push -f origin HEAD^:master'
 alias unstage='git reset --'
 alias branchd='git branch --edit-description'

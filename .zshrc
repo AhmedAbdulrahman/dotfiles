@@ -1,6 +1,5 @@
 # Load Theme and disable extra stuff
-## to pass Ctrl+S through to the application for vim CTRL+S
-stty -ixon
+stty -ixon	                                                # byPass Ctrl+S through iTerm for VIM
 ZSH_THEME="spaceship"
 SPACESHIP_CHAR_SYMBOL="❯"
 SPACESHIP_PACKAGE_SHOW=false
@@ -41,3 +40,9 @@ setopt hist_ignore_space
 setopt hist_verify
 setopt inc_append_history
 setopt share_history # share command history data
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export FZF_DEFAULT_OPS="--extended"
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden --follow --smart-case --glob "!.git/*"'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
