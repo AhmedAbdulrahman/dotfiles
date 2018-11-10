@@ -13,14 +13,12 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'editorconfig/editorconfig-vim'
-Plugin 'itchyny/lightline.vim'
 Plugin 'itchyny/vim-gitbranch'
 Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plugin 'junegunn/fzf.vim'
 Plugin 'reedes/vim-colors-pencil'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'google/vim-searchindex'
 Plugin 'haya14busa/incsearch.vim'
 
 " Programming Support (Formatter, Linter, Snippets) "
@@ -35,6 +33,7 @@ Plugin 'reedes/vim-pencil'
 Plugin 'chrisbra/Colorizer'
 Plugin 'wincent/terminus'                                 "Better vim + tmux"
 Plugin 'metakirby5/codi.vim'                              "The interactive scratchpad Quakkejs"
+Plugin 'sheerun/vim-polyglot'                             "A solid language pack for Vim."
 
 " Language Support (Highlighting)"
 Plugin 'pangloss/vim-javascript'                          "Javascript"
@@ -47,26 +46,12 @@ Plugin 'SirVer/ultisnips'                                 "snippets"
 Plugin 'epilande/vim-react-snippets'                      "snippets"
 
 " Theme / Interface "
-Plugin 'AnsiEsc.vim'
-Plugin 'ryanoasis/vim-devicons'
 Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'sjl/badwolf'
-Plugin 'tomasr/molokai'
+Plugin 'dempfi/vim-airline-neka'
 Plugin 'morhetz/gruvbox'
-Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
-Plugin 'junegunn/limelight.vim'
-Plugin 'mkarmona/colorsbox'
-Plugin 'romainl/Apprentice'
-Plugin 'Lokaltog/vim-distinguished'
-Plugin 'chriskempson/base16-vim'
-Plugin 'w0ng/vim-hybrid'
-Plugin 'AlessandroYorba/Sierra'
-Plugin 'daylerees/colour-schemes'
-Plugin 'effkay/argonaut.vim'
-Plugin 'ajh17/Spacegray.vim'
-Plugin 'atelierbram/Base2Tone-vim'
-Plugin 'colepeters/spacemacs-theme.vim'
+Plugin 'ayu-theme/ayu-vim'
+Plugin 'Yggdroot/indentLine'
+Plugin 'ryanoasis/vim-devicons'
 
 
 call vundle#end()

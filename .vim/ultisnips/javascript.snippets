@@ -1,0 +1,256 @@
+snippet license "license" b
+/**
+ * Copyright 2018-present Ahmed Abdulrahman. All rights reserved.
+ * Licensed under the terms of the MIT license.
+ */
+$1
+endsnippet
+
+#
+# Flow
+#
+
+snippet flow "flow" b
+/**
+ * @flow
+ */
+
+'use strict';
+
+${1:`!p snip.rv = snip.basename or 'ModuleName'`}$0
+
+module.exports = $1;
+endsnippet
+
+snippet pretty "pretty-print JSON-able data" b
+console.log(
+  JSON.stringify({
+    $1
+  }, null, 2)
+);
+endsnippet
+
+#
+# React
+#
+
+snippet reactClass "Create React Class" b
+import React from 'react'
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
+import styles from './${2:$1}.css'
+
+class ${1:`!v expand('%:t:r')`} extends React.Component {
+    render() {
+        const {
+            className,
+            children,
+            ...other
+        } = this.props
+
+        return (
+            <div
+                className={classnames(styles.root, className)}
+                {...other}
+            >
+                {children}
+            </div>
+        )
+    }
+}
+
+$1.propTypes = {
+    children: PropTypes.node.isRequired,
+    classes: PropTypes.object.isRequired,
+    className: PropTypes.string,
+}
+
+export default $1
+endsnippet
+
+snippet reactClassJSS "Create Class JSS" b
+import React from 'react'
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
+import withStyles from '../styles/withStyles'
+
+export const styles = theme => ({
+    root: {
+
+    },
+})
+
+class ${1:`!v expand('%:t:r')`} extends React.Component {
+    render() {
+        const {
+            children,
+            classes,
+            className,
+            ...other
+        } = this.props
+
+        return (
+            <div
+                className={classnames(classes.root, className)}
+                {...other}
+            >
+                {children}
+            </div>
+        )
+    }
+}
+
+$1.propTypes = {
+    children: PropTypes.node.isRequired,
+    classes: PropTypes.object.isRequired,
+    className: PropTypes.string,
+}
+
+export default withStyles(styles)($1)
+endsnippet
+
+snippet reactStatelessJSS "Create Stateless JSS Component" b
+import React from 'react'
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
+import withStyles from '../styles/withStyles'
+
+export const styles = theme => ({
+  root: {},
+})
+
+const $1 = props => {
+  const { children, classes, className, ...other } = props
+  return (
+    <div
+      className={classnames(classes.root, className)}
+      {...other}
+    >
+      {children}
+    </div>
+  )
+}
+
+$1.propTypes = {
+  children: PropTypes.node.isRequired,
+  classes: PropTypes.object.isRequired,
+  className: PropTypes.string,
+}
+
+export default withStyles(styles)($1)
+endsnippet
+
+snippet reactStateless "Create Stateless Component" b
+import React from 'react'
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
+import styles from './${2:$1}.css'
+
+const ${1:`!v expand('%:t:r')`} = (props) => {
+  const { className, children, ...other } = props
+  return (
+    <div
+      className={classnames(styles.root, className)}
+      {...other}
+    >
+      {children}
+    </div>
+  )
+}
+
+$1.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+}
+
+export default $1
+endsnippet
+
+snippet story "Create Storybook" b
+import React from 'react'
+import { storiesOf } from '@storybook/react'
+import { text, boolean } from '@storybook/addon-knobs'
+import $1 from '.'
+const stories = storiesOf('Components/$1', module)
+
+export const Default = () => (
+    <$1
+        disabled={boolean('disabled', false)}
+    >
+        {text('children', 'Just a ${1}')}
+    </$1>
+)
+
+stories.add('Default', Default)
+
+export default Default
+endsnippet
+
+snippet reactStyled "Create Styled Component" b
+snippet rsc "React Styled Component" b
+import styled from 'styled-components';
+
+const ${1:`!v expand('%:t:r')`} = styled.${2:div}\`
+	$3
+\`;
+endsnippet
+#
+# console methods
+#
+
+snippet dir "console.dir"
+console.dir(${1});
+endsnippet
+
+snippet log "console.log"
+console.log(${1});
+endsnippet
+
+snippet time "console.time"
+console.time('${1}');
+endsnippet
+
+snippet end "console.timeEnd"
+console.timeEnd('${1}');
+endsnippet
+
+snippet warn "console.warn"
+console.warn(${1});
+endsnippet
+
+#
+# other
+#
+
+snippet ** "docblock" b
+/**
+${VISUAL:/((?m)^)/ * /g}$0
+ */
+endsnippet
+
+snippet "func?" "function" !r
+function${1: name}(${2:arg}) {
+	$0
+}
+endsnippet
+
+
+snippet "imp(ort)?" "import" !br
+import ${1:Module} from '${2}$1${3}';
+endsnippet
+
+snippet "array(from)" "New Array Instance" !br
+Array.from(new Array(${1}), (val, index) => (${2}))
+endsnippet
+
+snippet "exp(ort)?" "destructuring export" !br
+export { ${1:Module} } from '${3}$2${4}'
+endsnippet
+
+snippet "req(u|ui|uir|uire)?" "require" !br
+const ${1:ModuleName} = require('$1${2}');
+endsnippet
+
+snippet "(use|strict)" "'use strict' declaration" br
+'use strict';
+endsnippet

@@ -2,10 +2,15 @@
 "Theme and Styling"
 "----------------"
 
-colorscheme gruvbox
 hi CursorLineNr ctermfg=white
-set t_Co=256
 set background=dark
+set fillchars=vert:\ ,stl:\ ,stlnc:\ 
+set termguicolors     " enable true colors support"
+let ayucolor="mirage" " for mirage version of theme"
+colorscheme ayu
+set showmatch
+set confirm
+
 
 "--------"
 "1.Settings"
@@ -169,8 +174,8 @@ set title
 
 set titlestring=%F\ -\ vim
 
-set fillchars=vert:\ ,stl:\ ,stlnc:\ 
-set laststatus=2                                        "Always display the status line"
+"Always display the status line"
+set laststatus=2
 
 " Show the current mode"
 set showmode
@@ -197,7 +202,7 @@ highlight EndOfBuffer ctermfg=black
 hi! VertSplit ctermfg=2 ctermbg=NONE term=NONE
 
 set foldenable
-set foldlevel=10
+set foldlevel=20
 
 " Enable extended regexes "
 set magic 
@@ -319,3 +324,6 @@ function! s:FullscreenScratch()
   " everything is setup, filetype is set let Codi do the rest :)"
   Codi
 endfunction
+
+"Codi: create a mapping to call the fullscreen scratch wrapper"
+nmap <silent> <Leader>c :call <SID>FullscreenScratch()<Cr>
