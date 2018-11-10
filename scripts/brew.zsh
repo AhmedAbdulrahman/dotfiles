@@ -111,6 +111,8 @@ main() {
   brew install fd
   brew install ripgrep
 
+  # A cat(1) clone with syntax highlighting and Git integration.
+  brew install bat
   # brew install ctags
 
   #A code-searching tool similar to ack, but faster. 
@@ -186,6 +188,7 @@ main() {
   brew cask install zeplin
   brew tap caskroom/fonts 
   brew cask install font-fira-code
+  brew cask install font-hack-nerd-font
 
   # Less often
   brew cask install zoom
