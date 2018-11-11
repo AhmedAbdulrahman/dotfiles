@@ -227,7 +227,10 @@ install_dotfiles() {
   info "Installing Vundle..."
   git clone --recursive "$VUNDLE_REPO_URL_BASE.git" $ZSH_DOTFILES/.vim/bundle/Vundle.vim
 
-  info "Creating new dir for presisted undo"
+  info "Installing Nerd Fonts..."
+  cd ~/Library/Fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+  
+  info "Creating Presisted VIM undo dir..."
   mkdir $ZSH_DOTFILES/.vim/vim-persisted-undo
   
   finish
