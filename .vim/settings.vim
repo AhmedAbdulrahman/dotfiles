@@ -8,7 +8,6 @@ set fillchars=vert:\ ,stl:\ ,stlnc:\
 set termguicolors     " enable true colors support"
 let ayucolor="mirage" " for mirage version of theme"
 colorscheme ayu
-set showmatch
 set confirm
 
 
@@ -107,7 +106,10 @@ if has('mac')
 endif
 
 " Markers are used to specify folds. "
-set foldmethod=syntax 
+set foldmethod=syntax                                     " fold based on indent"
+set foldnestmax=10                                        " deepest fold is 10 levels"
+set nofoldenable                                          " don't fold by default"
+set foldlevel=1
 
 " Allow folding single lines "
 set foldminlines=0 
@@ -201,13 +203,6 @@ highlight EndOfBuffer ctermfg=black
 " Border colour "
 hi! VertSplit ctermfg=2 ctermbg=NONE term=NONE
 
-set foldenable
-set foldlevel=20
-
-" Enable extended regexes "
-set magic 
-
-
 "Strip trailing whitespace (,ss)"
 function! StripWhitespace()
 	let save_cursor = getpos(".")
@@ -253,7 +248,7 @@ set report=0
 set smartcase 
 
 " do not highlight searches, incsearch plugin does this"
-set nohlsearch
+set hlsearch
 
 " Incremental highlight term as pattern is typed "
 set incsearch
@@ -261,13 +256,30 @@ set incsearch
 " Ignore case of searches "
 set ignorecase
 
+" don't redraw while executing macros "
+set nolazyredraw 
+
 " Searches wrap around end of file"
 set wrapscan
 
 " match to be used with %"
 set matchpairs+=<:> 
 
-" 1.5 Panes "
+" Enable extended regexes "
+set magic
+
+" show matching braces "
+set showmatch
+
+" how many tenths of a second to blink "
+set mat=2
+
+" automatically set indent of new line "
+set autoindent 
+set smartindent
+
+"-----------"
+"   Panes	  "
 "-----------"
 
 " New window goes below"
@@ -284,6 +296,30 @@ set linespace=0
 
 set scrolljump=5
 set scrolloff=3
+
+"-----------"
+" Functions "
+"-----------"
+
+map <C-h> :call WinMove('h')<cr>
+map <C-j> :call WinMove('j')<cr>
+map <C-k> :call WinMove('k')<cr>
+map <C-l> :call WinMove('l')<cr>
+
+" Window movement shortcuts
+" move to the window in the direction shown, or create a new window
+function! WinMove(key)
+    let t:curwin = winnr()
+    exec "wincmd ".a:key
+    if (t:curwin == winnr())
+        if (match(a:key,'[jk]'))
+            wincmd v
+        else
+            wincmd s
+        endif
+        exec "wincmd ".a:key
+    endif
+endfunction
 
 "Codi Config"
 let g:codi#width         = 50.0
