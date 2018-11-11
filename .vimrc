@@ -76,8 +76,8 @@ cmap cd. lcd %:p:h
 
 " Status Line"
 set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %{strlen(&fenc)?&fenc:'none'}\ %P
-"hi StatusLine ctermbg=0 ctermfg=7"
-"hi StatusLineNC ctermbg=0 ctermfg=2"
+hi StatusLine ctermbg=0 ctermfg=7
+hi StatusLineNC ctermbg=0 ctermfg=2
 let g:Powerline_symbols = 'fancy'
 
 "autocomplete window colours"
@@ -213,32 +213,15 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"          "<TAB>: comple
 "------------------------"
 
 "NerdTree"
-let NERDTreeShowHidden=1
-let g:NERDTreeWinSize=40	                                        "The default of 31 is just a little too narrow."
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+let g:NERDTreeShowHidden=1	                                      "Show hidden files in NERDTree"
 let g:NERDTreeMinimalUI=1	                                        "Disable display of '?' text and 'Bookmarks' label."
-let g:NERDTreeCreatePrefix='silent keepalt keepjumps'             "Let <Leader><Leader> (^#) return from NERDTree window."
 let g:NERDTreeMouseMode=2	                                        "Single-click to toggle directory nodes, double-click to open non-directory nodes."
-let g:NERDTreeDirArrowExpandable = ''
-let g:NERDTreeDirArrowCollapsible = ''
-map <Leader>n :NERDTreeToggle<CR>                                 "NERDTree"
-nmap <Leader>nt <Plug>NERDTreeTabsToggle<CR>                      "NERDTreeTabs"
+let g:NERDTreeQuitOnOpen=1	                                      "Close NERDTree after a file is opened"
 
-function! AttemptSelectLastFile() abort
-  let l:previous=expand('#:t')
-  if l:previous !=# ''
-    call search('\v<' . l:previous . '>')
-  endif
-endfunction
-
-if has('autocmd')
-  augroup AhmedNERDTree
-    autocmd!
-    autocmd User NERDTreeInit call AttemptSelectLastFile()
-  augroup END
-endif
-
-" Undotree toggle"
-nnoremap <Leader>u :UndotreeToggle<cr>
 
 "TagBar"
 map <C-m> :TagbarToggle<CR>
@@ -403,29 +386,27 @@ let g:lightline = {
   command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
   nnoremap <leader>/ :Rg<cr>
 
-" Incsearch {{{"
-"--------------"
-let g:incsearch#auto_nohlsearch = 1	                                      " auto unhighlight after searching"
-let g:incsearch#do_not_save_error_message_history = 1                     " do not store incsearch errors in history"
-let g:incsearch#consistent_n_direction = 1                                " when searching backward, do not invert meaning of n and N"
-map / <Plug>(incsearch-forward)
-map ? <Plug>(incsearch-backward)
-
-" IndentLine {{"
-let g:indentLine_char = ''
-let g:indentLine_first_char = ''
-let g:indentLine_showFirstIndentLevel = 1
-let g:indentLine_setColors = 0
-" }}"
-
 " Airline {{"
-let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'powerlineish'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 set laststatus=2
 set ttimeoutlen=50
-set noshowmode
 let g:airline#extensions#branch#enabled=1
 " }}"
 
+"Fugitive"
+"--------"
+nnoremap <silent> <leader>ga :Git add %:p<CR><CR>
+nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gc :Gcommit -a<cr>
+nnoremap <silent> <Leader>gb :Gblame<CR>
+nnoremap <silent> <leader>gd :Gdiff<CR>
+nnoremap <silent> <leader>gl :GV<CR>
+
+
 set guifont=<FONT_NAME>:h<FONT_SIZE>
+" Setting Font"
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 14
