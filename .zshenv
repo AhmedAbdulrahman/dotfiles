@@ -2,7 +2,6 @@ skip_global_compinit=1
 
 # - Exports
 export ZSH=$HOME/.oh-my-zsh
-export NVM_DIR=$HOME/.nvm
 export VISUAL=vim
 export EDITOR="$VISUAL"
 

@@ -1,22 +1,34 @@
 # Load Theme and disable extra stuff
-stty -ixon	                                                # byPass Ctrl+S through iTerm for VIM
+
+# byPass Ctrl+S through iTerm for VIM
+stty -ixon
+
+#Inject profiling cod (for Debugging measure startup time)
+zmodload zsh/zprof
+
+# Theme Setting
 ZSH_THEME="spaceship"
-SPACESHIP_CHAR_SYMBOL="❯"
-SPACESHIP_PACKAGE_SHOW=false
+echo -e "\033]6;1;bg;red;brightness;40\a"
+echo -e "\033]6;1;bg;green;brightness;44\a"
+echo -e "\033]6;1;bg;blue;brightness;52\a"
+
+SPACESHIP_CHAR_SYMBOL='❯'
+SPACESHIP_CHAR_SUFFIX=' '
+SPACESHIP_PACKAGE_SHOW=true
+SPACESHIP_NODE_SHOW=false
 SPACESHIP_BATTERY_SHOW='always'
 DEFAULT_USER=$USER
 
-# Plugins to load
-plugins=(git sudo zsh-syntax-highlighting zsh-autosuggestions)
 
 # --- Source 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.functions
 source $HOME/.aliases
-source $HOME/.nvm/nvm.sh
 
+# Plugins to load
+plugins=(git sudo zsh-syntax-highlighting zsh-autosuggestions)
 
-## Command history configuration
+# Configures history options
 if [ -z "$HISTFILE" ]; then
     HISTFILE=$HOME/.zsh_history
 fi
