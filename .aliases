@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # --- Moving around ---
 alias ..="cd .."
@@ -25,6 +25,8 @@ alias bye='sudo shutdown -h now'
 alias update='sudo apt-get update && sudo apt-get upgrade'
 alias upgrade='sudo apt-get upgrade'
 alias clean='sudo apt-get autoclean && sudo apt-get autoremove'
+# System monitoring
+alias top-cpu='top -n 10 -o cpu -O time -stats pid,command,cpu,cpu_me,time,threads,ports'
 # Trim new lines and copy to clipboard
 alias trimcopy="tr -d '\n' | pbcopy"										
 # Recursively delete `.DS_Store` files
@@ -50,32 +52,34 @@ alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
 
 # --- Git ---
 alias g='git'
-alias ga="git add"
-alias g.="git add ."
+alias add="git add"
 alias gb="git branch"
-alias gc='git commit -m'
+alias commit='git commit -m'
 alias gco="git checkout"
 alias master="git checkout master"
 alias develop="git checkout develop"
 alias status="git status"
-alias gp="git push"
-alias gpu='git push upstream'
-alias gpl='git pull'
-alias gplu='git pull upstream'
-alias gr='git remote'
-alias gs='git stash'
-alias gsave='git stash save -u'
+alias push="git push"
+alias pushu='git push upstream'
+alias pull='git pull'
+alias pullu='git pull upstream'
+alias remote='git remote'
+alias stash='git stash'
+alias save='git stash save -u'
 alias gsp='git stash pop'
-alias gamend="git commit --amend"
+alias amend="git commit --amend"
 
 alias logf='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias logs='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias loga='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
 alias logd='git log --graph --decorate --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset --abbrev-commit --date=relative --all"'
 
-alias undo='git reset HEAD~'											# Undo commit and unstage all files
-alias undosoft='git reset --soft HEAD~'									# Undo commit and keep all files staged
-alias undohard='git reset --hard HEAD~'									# Undo the commit and completely remove all changes
+# Undo commit and unstage all files
+alias undo='git reset HEAD~'
+# Undo commit and keep all files staged
+alias undosoft='git reset --soft HEAD~'
+# Undo the commit and completely remove all changes
+alias undohard='git reset --hard HEAD~'
 alias undopush='git push -f origin HEAD^:master'
 alias unstage='git reset --'
 alias branchd='git branch --edit-description'
@@ -93,34 +97,37 @@ alias less='less -r'
 alias tf='tail -f'
 alias l='less'
 alias lh='ls -alt | head' # see the last modified files
-alias screen='TERM=screen screen'
+alias tmux="TERM=screen-256color-bce tmux"
 alias cl='clear'
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec ${SHELL} -l"
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
-# show human friendly numbers and colors
+# show disk human friendly numbers
 alias df='df -h'
 alias du='du -h -d 2'
 
 # --- Grep ---
 # Always enable colored `grep` output
-alias gi='grep -r -i --color'																	# Sensible defaults for grep (recursive, case-insensitive)
+# Sensible defaults for grep (recursive, case-insensitive)
+alias gi='grep -r -i --color'
+# Add line numbers.
 alias gin='grep -r -i -n --color'	
-														# Add line numbers.
 # Grep with perl regex.
 which ggrep > /dev/null 2>&1 &&\
   alias gp='ggrep -r -P --color' ||\
   alias gp='grep -r -P --color'
 
-alias greprepo='git grep --untracked'																# Grep git repo.
-alias grepfiles='grep -w -i -r -l --color'													# Grep only files
-alias greplines='grep -win -C 2 --color'														# Grep with Lines Before and After
-alias grepdir='grep -wirc --color'																  # Grep in directory with count
+# Grep git repo.
+alias greprepo='git grep --untracked'
+# Grep only files
+alias grepfiles='grep -w -i -r -l --color'
+# Grep with Lines Before and After
+alias greplines='grep -win -C 2 --color'
+ # Grep in directory with count
+alias grepdir='grep -wirc --color'
 
 # --- Applications ---
-alias vs="code"
-alias vsc="code ."
 alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 alias ios='open -a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
 
@@ -132,10 +139,14 @@ else # macOS `ls`
 	export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
 fi
 
-alias l="ls -lF ${colorflag}"																	# long format
-alias la="ls -laF ${colorflag}"																# long format, including dot files
-# alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"			# only directories
-alias ls="command ls ${colorflag}"														# Always use color output for `ls`
+# long format
+alias l="ls -lF ${colorflag}"
+# long format, including dot files
+alias la="ls -laF ${colorflag}"
+# only directories
+# alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
+# Always use color output for `ls`
+alias ls="command ls ${colorflag}"
 # List only directories
 alias lsd='ls -l | grep "^d"'
 
