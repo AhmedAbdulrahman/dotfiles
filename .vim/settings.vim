@@ -2,12 +2,13 @@
 "Theme and Styling"
 "----------------"
 
+" for mirage version of theme"
+let ayucolor="mirage" 
+colorscheme ayu
+
 hi CursorLineNr ctermfg=white
 set background=dark
 set fillchars=vert:\ ,stl:\ ,stlnc:\ 
-set termguicolors     " enable true colors support"
-let ayucolor="mirage" " for mirage version of theme"
-colorscheme ayu
 set confirm
 
 
