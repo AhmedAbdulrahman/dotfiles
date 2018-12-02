@@ -1,6 +1,9 @@
 "Use UTF-8 without BOM"
 set encoding=UTF-8
 
+" enable true colors support"
+set termguicolors
+
 "Make Vim more useful"
 set nocompatible
 
@@ -96,6 +99,16 @@ nmap <C-j> 5j
 xmap <C-j> 5j
 nmap <C-k> 5k
 xmap <C-k> 5k
+
+"Move lines"
+nnoremap <S-j> :m .+1<CR>==
+nnoremap <S-k> :m .-2<CR>==
+
+inoremap <S-j> <Esc>:m .+1<CR>==gi
+inoremap <S-k> <Esc>:m .-2<CR>==gi
+
+vnoremap <S-j> :m '<-2'<CR>gv=gv
+vnoremap <S-k> :m '>+1'<CR>gv=gv
 
 "copy line and leave a marker"
 nnoremap yy yymy
@@ -211,6 +224,14 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"          "<TAB>: comple
 
 " Plugins Configuration "
 "------------------------"
+let c='a'
+while c <= 'z'
+  exec "set <A-".c.">=\e".c
+  exec "imap \e".c." <A-".c.">"
+  let c = nr2char(1+char2nr(c))
+endw
+
+set timeout ttimeoutlen=50
 
 "NerdTree"
 
@@ -221,7 +242,6 @@ let g:NERDTreeShowHidden=1	                                      "Show hidden fi
 let g:NERDTreeMinimalUI=1	                                        "Disable display of '?' text and 'Bookmarks' label."
 let g:NERDTreeMouseMode=2	                                        "Single-click to toggle directory nodes, double-click to open non-directory nodes."
 let g:NERDTreeQuitOnOpen=1	                                      "Close NERDTree after a file is opened"
-
 
 "TagBar"
 map <C-m> :TagbarToggle<CR>
@@ -406,7 +426,5 @@ nnoremap <silent> <Leader>gb :Gblame<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gl :GV<CR>
 
-
-set guifont=<FONT_NAME>:h<FONT_SIZE>
 " Setting Font"
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 14
