@@ -18,6 +18,10 @@ if filereadable(expand("$HOME/.vim/settings.vim"))
   source $HOME/.vim/settings.vim
 endif
 
+if filereadable(expand("$HOME/.vim/custom.vim"))
+  source $HOME/.vim/custom.vim
+endif
+
 "--------"
 "Settings"
 "--------"
@@ -64,6 +68,9 @@ if ! has('gui_running')
     au InsertLeave * set timeoutlen=1000
   augroup END
 endif
+
+"Enable filetype plugins"
+filetype plugin indent on
 
 "------------------------"
 " Mappings configurationn"
@@ -126,7 +133,69 @@ nnoremap <Left>  <NOP>
 inoremap <Right> <NOP>
 nnoremap <Right> <NOP>
 
-"split current window"
+" tab managment "
+map <leader>t :NERDTreeToggle<CR>
+"Useful mappings for managing tabs "
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+
+" purple "
+call NERDTreeHighlightFile('exs', '098', 'none', '#9E6FCE', '#26292c')
+call NERDTreeHighlightFile('ex', '098', 'none', '#9E6FCE', '#26292c')
+" green  "
+call NERDTreeHighlightFile('jade', '034', 'none', '#61AE63', '#26292c')
+call NERDTreeHighlightFile('hbs', '034', 'none', '#61AE63', '#26292c')
+call NERDTreeHighlightFile('md', '034', 'none', '#61AE63', '#26292c')
+" light green  "
+call NERDTreeHighlightFile('html', '076', 'none', '#AAD364', '#26292c')
+call NERDTreeHighlightFile('eex', '076', 'none', '#AAD364', '#26292c')
+call NERDTreeHighlightFile('vue', '076', 'none', '#AAD364', '#26292c')
+" dark green  "
+call NERDTreeHighlightFile('php', '028', 'none', '#65AE63', '#26292c')
+call NERDTreeHighlightFile('pl', '028', 'none', '#65AE63', '#26292c')
+call NERDTreeHighlightFile('py', '028', 'none', '#65AE63', '#26292c')
+" gold  "
+call NERDTreeHighlightFile('config', '220', 'none', '#FED04E', '#26292c')
+call NERDTreeHighlightFile('conf', '220', 'none', '#FED04E', '#26292c')
+call NERDTreeHighlightFile('json', '220', 'none', '#FED04E', '#26292c')
+call NERDTreeHighlightFile('ini', '220', 'none', '#FED04E', '#26292c')
+call NERDTreeHighlightFile('yml', '220', 'none', '#FED04E', '#26292c')
+" orange  "
+call NERDTreeHighlightFile('scss', '214', 'none', '#F68838', '#26292c')
+call NERDTreeHighlightFile('sass', '214', 'none', '#F68838', '#26292c')
+call NERDTreeHighlightFile('styl', '214', 'none', '#F68838', '#26292c')
+call NERDTreeHighlightFile('css', '214', 'none', '#F68838', '#26292c')
+" cyan  "
+call NERDTreeHighlightFile('coffee', '081', 'none', '#86C1E6', '#26292c')
+call NERDTreeHighlightFile('ts', '081', 'none', '#86C1E6', '#26292c')
+call NERDTreeHighlightFile('js', '081', 'none', '#86C1E6', '#26292c')
+call NERDTreeHighlightFile('go', '081', 'none', '#86C1E6', '#26292c')
+" red  "
+call NERDTreeHighlightFile('xml', '160', 'none', '#D02A22', '#26292c')
+call NERDTreeHighlightFile('svg', '160', 'none', '#D02A22', '#26292c')
+" pink  "
+call NERDTreeHighlightFile('rb', '168', 'none', '#e68590', '#26292c')
+" grey  "
+call NERDTreeHighlightFile('DS_Store', '242', 'none', '#6c6c6c', '#26292c')
+call NERDTreeHighlightFile('jar', '242', 'none', '#6c6c6c', '#26292c')
+call NERDTreeHighlightFile('pkg', '242', 'none', '#6c6c6c', '#26292c')
+call NERDTreeHighlightFile('dmg', '242', 'none', '#6c6c6c', '#26292c')
+call NERDTreeHighlightFile('zip', '242', 'none', '#6c6c6c', '#26292c')
+call NERDTreeHighlightFile('jpg', '242', 'none', '#6c6c6c', '#26292c')
+call NERDTreeHighlightFile('png', '242', 'none', '#6c6c6c', '#26292c')
+call NERDTreeHighlightFile('gif', '242', 'none', '#6c6c6c', '#26292c')
+call NERDTreeHighlightFile('pdf', '242', 'none', '#6c6c6c', '#26292c')
+call NERDTreeHighlightFile('swp', '242', 'none', '#6c6c6c', '#26292c')
+call NERDTreeHighlightFile('swo', '242', 'none', '#6c6c6c', '#26292c')
+call NERDTreeHighlightFile('gz', '242', 'none', '#6c6c6c', '#26292c')
+call NERDTreeHighlightFile('xz', '242', 'none', '#6c6c6c', '#26292c')
+" silver  "
+call NERDTreeHighlightFile('txt', '251', 'none', '#c6c6c6', '#26292c')
+call NERDTreeHighlightFile('log', '251', 'none', '#c6c6c6', '#26292c')
+
+"Split current window"
 nnoremap <C-w>- :split file<CR>
 nnoremap <C-w>\ :vsplit file<CR>
 nnoremap <leader>- :split file<CR>
@@ -180,15 +249,11 @@ nnoremap <C-s> :write<Cr>
 vnoremap <C-s> <C-c>:write<Cr>
 inoremap <C-s> <Esc>:write<Cr>
 onoremap <C-s> <Esc>:write<Cr>
-"Fast saves"
-nmap <leader>w :w!<cr>
 
-"close pane using <C-w>"
-fun! s:__bclose()
-  if (len(getbufinfo({'buflisted': 1})) > 1)
-    bdelete
-  endif
-endfun
+"Fast save/exiting"
+nnoremap <leader>q :q!<CR>
+nnoremap <leader>z ZZ
+nnoremap <leader>w :w<CR>
 
 " since I know it from Chrome / Atom (cmd+w) and do not use the <C-w> mappings anyway"
 noremap <silent> <C-w> :call <SID>__bclose()<Cr>
@@ -245,6 +310,10 @@ let g:NERDTreeQuitOnOpen=1	                                      "Close NERDTree
 
 "TagBar"
 map <C-m> :TagbarToggle<CR>
+let g:tagbar_autofocus=1
+let g:tagbar_compact = 1
+let g:tagbar_usearrows = 1
+let g:tagbar_autoshowtag = 1
 
 "Gruvbox"
 "-------"
@@ -278,9 +347,9 @@ nmap <Leader>p <Plug>(Prettier)
 
 "UiSnippets"
 "----------"
-let g:UltiSnipsExpandTrigger="<Tab>"
-let g:UltiSnipsJumpForwardTrigger="<Tab>"
-let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsSnippetsDir="~/.vim/ultisnips"
 let g:UltiSnipsSnippetDirectories=['ultisnips']
 
@@ -425,6 +494,15 @@ nnoremap <silent> <leader>gc :Gcommit -a<cr>
 nnoremap <silent> <Leader>gb :Gblame<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gl :GV<CR>
+
+"All Functions"
+"Visual mode related"
+" Visual mode pressing * or # searches for the current selection "
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> \# :call VisualSelection('b')<CR>
+
+"Rename"
+map <leader>n :call RenameFile()<cr>
 
 " Setting Font"
 set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 14
