@@ -1,3 +1,6 @@
+set nocompatible
+filetype off
+
 "set the runtime path to include Vundle and initialize"
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -35,6 +38,7 @@ Plugin 'edkolev/tmuxline.vim'                             " tmux line"
 
 " Programming Support (Formatter, Linter,Highlighting, Snippets) "
 Plugin 'pangloss/vim-javascript'                          " Javascript"
+Plugin 'zxqfl/tabnine-vim'                                " All-language autocompleter uses machine learning"
 Plugin 'heavenshell/vim-jsdoc'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'leafgarland/typescript-vim'                       " TypeScript"
@@ -66,6 +70,7 @@ Plugin 'ayu-theme/ayu-vim'
 Plugin 'ryanoasis/vim-devicons'
 
 
-call vundle#end()
-
-filetype plugin indent on
+" All #of your Plugins must be added before the following line
+call vundle#end()            "required"
+filetype plugin indent on    "required"
+filetype plugin on
