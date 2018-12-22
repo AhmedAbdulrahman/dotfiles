@@ -6,11 +6,24 @@
 let ayucolor="mirage" 
 colorscheme ayu
 
-hi CursorLineNr ctermfg=white
 set background=dark
 set fillchars=vert:\ ,stl:\ ,stlnc:\ 
 set confirm
 
+hi VertSplit         ctermbg=NONE guibg=NONE
+hi Normal            ctermbg=NONE guibg=NONE
+hi LineNr            ctermbg=NONE guibg=NONE
+hi CursorLineNr ctermfg=white
+
+"Show changes since last save"
+function! s:DiffSaved()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setl bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+command! DS call s:DiffSaved()
 
 "--------"
 "1.Settings"
@@ -62,7 +75,7 @@ set cursorline                                            " Enable highlighting 
 "Enable mouse in all modes"
 set mouse=a
 
-"Show the cursor position"
+"Always show current position"
 set ruler
 
 "Don’t show the intro message when starting Vim"
