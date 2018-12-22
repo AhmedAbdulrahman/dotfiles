@@ -144,8 +144,6 @@ main() {
   brew install zsh
   brew install git
   brew install imagemagick --with-webp
-  # This installs `npm` too using the recommended installation method
-  brew install node 
   
   brew install pv
   brew install rename
@@ -163,6 +161,7 @@ main() {
   brew install nmap
   brew install gzip
   brew install terminal-notifier
+  brew install jq
   
   # find where your diskspace went
   brew install ncdu 
