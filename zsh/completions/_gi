@@ -1,0 +1,5 @@
+#compdef gi
+# vim fg=zsh
+
+set -A list $(cat ~/.giCache/.list 2>/dev/null)
+_alternative "arguments:project type:($list)"

@@ -1,0 +1,78 @@
+#!/usr/bin/env zsh
+#===============================================================================
+#  Author: Ahmed Abdulrahman
+#  Email: a.kasapbashi@gmail.com
+#  Created: 2018-12-16 16:20
+#===============================================================================
+
+# ------------------------------------------------------------------------------
+# Configuration
+# ------------------------------------------------------------------------------
+
+# REACT
+SPACESHIP_REACT_SHOW="${SPACESHIP_REACT_SHOW:=true}"
+SPACESHIP_REACT_PREFIX="${SPACESHIP_REACT_PREFIX:="in "}"
+SPACESHIP_REACT_SUFFIX="${SPACESHIP_REACT_SUFFIX:="$SPACESHIP_PROMPT_DEFAULT_SUFFIX"}"
+SPACESHIP_REACT_SYMBOL="${SPACESHIP_REACT_SYMBOL:="⚛️ "}"
+SPACESHIP_REACT_DEFAULT_VERSION="${SPACESHIP_REACT_DEFAULT_VERSION:=""}"
+SPACESHIP_REACT_COLOR="${SPACESHIP_REACT_COLOR:="cyan"}"
+
+# ------------------------------------------------------------------------------
+# Section
+# ------------------------------------------------------------------------------
+
+_is_react_project() {
+  # node -p "r=require('./package.json'); r.dependencies['$1']" 2>/dev/null
+  # node -p "require('./package.json').dependencies['$1']"
+  jq -r ".dependencies.$1" package.json 2>/dev/null
+}
+
+spaceship_react() {
+  # If SPACESHIP_REACT_SHOW is false, don't show React section
+  [[ $SPACESHIP_REACT_SHOW == false ]] && return
+
+  # Show REACT status only inside an NODE/NPM project
+  # [[ -f package.json || -d node_modules ]] && return
+  
+  local react_version=$(_is_react_project "react")
+
+  [[ $react_version == "undefined" || $react_version == "" ]] && return
+
+  # Display REACT section
+  spaceship::section \
+    "$SPACESHIP_REACT_COLOR" \
+    "$SPACESHIP_REACT_PREFIX" \
+    "${SPACESHIP_REACT_SYMBOL} ${react_version}" \
+    "$SPACESHIP_REACT_SUFFIX"
+}
+
+  SPACESHIP_PROMPT_ORDER=(
+    time
+    dir
+    git
+    react
+    php
+    line_sep
+    battery
+    char
+  )
+
+# Format Time
+TIME_FORMAT="%D{%H:%M}"
+
+SPACESHIP_BATTERY_SHOW='always'
+SPACESHIP_VI_MODE_SHOW=false
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_TIME_FORMAT="$TIME_FORMAT"
+SPACESHIP_CHAR_SYMBOL='❯'
+SPACESHIP_CHAR_SUFFIX=' '
+SPACESHIP_PACKAGE_SHOW=false
+SPACESHIP_NODE_SHOW=false
+SPACESHIP_PHP_SHOW=true
+
+# EXIT CODE
+SPACESHIP_EXIT_CODE_SHOW=true
+SPACESHIP_EXIT_CODE_PREFIX="("
+SPACESHIP_EXIT_CODE_SUFFIX=") "
+SPACESHIP_EXIT_CODE_SYMBOL="✘ "
+SPACESHIP_EXIT_CODE_COLOR="red"
