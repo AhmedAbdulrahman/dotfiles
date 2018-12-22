@@ -3,6 +3,6 @@
 # However, in order to prevent issues. We also ignore editors' files here.
 .idea
 .vscode
-
+.vim/vim-persisted-undo
 *.log
 .DS_STORE
