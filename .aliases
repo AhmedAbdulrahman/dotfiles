@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # --- Moving around ---
 alias ..="cd .."
@@ -54,8 +54,11 @@ alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
 alias g='git'
 alias add="git add"
 alias gb="git branch"
+alias gba="git branch -a"
 alias commit='git commit -m'
+alias amend="git commit --amend"
 alias gco="git checkout"
+alias gcb='gco -b'
 alias master="git checkout master"
 alias develop="git checkout develop"
 alias status="git status"
@@ -67,7 +70,6 @@ alias remote='git remote'
 alias stash='git stash'
 alias save='git stash save -u'
 alias gsp='git stash pop'
-alias amend="git commit --amend"
 
 alias logf='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias logs='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
@@ -89,6 +91,12 @@ alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup 
 alias gist-paste="gist --private --copy --paste --filename"  
 # gist-file filename.ext -- create private Gist from a file
 alias gist-file="gist --private --copy"  										
+
+# --- Docker ---
+# alias dacker="docker-compose build && docker-compose up"
+# alias dacker-down="docker-compose down && docker-compose rm"
+# alias dacker-stop="docker-compose kill"
+# alias dacker-clean="docker volume rm $(docker volume ls -qf dangling=true) && docker rmi $(docker images -f dangling=true -q)"
 
 # --- Shell ---
 alias zcfg="vim ~/.zshrc"
