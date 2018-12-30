@@ -36,7 +36,7 @@ spaceship_react() {
   
   local react_version=$(_is_react_project "react")
 
-  [[ $react_version == "undefined" || $react_version == "" ]] && return
+  [[ $react_version == "undefined" || $react_version == "" || $react_version == "null" ]] && return
 
   # Display REACT section
   spaceship::section \
