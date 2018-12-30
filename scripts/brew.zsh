@@ -162,9 +162,22 @@ main() {
   brew install gzip
   brew install terminal-notifier
   brew install jq
-  
+  brew install exa
+  # corrects your previous console command
+  brew install thefuck
   # find where your diskspace went
-  brew install ncdu 
+  brew install ncdu
+  # Mysql CLI autoCompletion and syntax highlighting
+  brew install mycli
+  # Postgres CLI autocompletion and syntax highlighting
+  brew install pgcli
+  # Universal command-line interface for SQL databases
+  # 1- Add xo tap
+  brew tap xo/xo
+  # 2- Install usql with "most" drivers
+  brew install usql
+  # In order for tmux-yank to work on MacOS, we need to install reattach-to-user-namespace
+  brew install reattach-to-user-namespace
 
   # Desktop applications
   brew cask java
@@ -190,7 +203,6 @@ main() {
   brew cask install font-hack-nerd-font
 
   # Less often
-  brew cask install zoom
   brew cask install vlc
   brew cask install kap
   brew cask install utorrent
