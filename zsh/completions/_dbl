@@ -1,19 +1,15 @@
-#compdef pet
+#compdef dbl
 # vim: ft=zsh
 
-_pet () {
+_dbl () {
     local -a _1st_arguments
-    _1st_arguments=(
-    'configure:Edit config file'
-    'edit:Edit snippet file'
-    'exec:Run the selected commands'
-    'help:Help about any command'
-    'list:Show all snippets'
-    'new:Create a new snippet'
-    'search:Search snippets'
-    'sync:Sync snippets'
-    'version:Print the version number'
-    )
+    local root file desc
+    root=${^path}/dbl(N-.:A)
+    for file in $root/action/*.zsh(N-.)
+    do
+        desc="$(sed -n '2p' "$p" | sed -E 's/^.*[Dd]esc(ription)?: ?//')"
+        _1st_arguments+=("${file:t:r}:${desc:-"nothing"}")
+    done
 
     _arguments \
         '(--help)--help[show this help message]' \
@@ -72,4 +68,4 @@ _pet () {
     esac
 }
 
-_pet "$@"
+_dbl "$@"
