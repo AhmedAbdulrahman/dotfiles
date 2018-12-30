@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+#!/usr/bin/env zsh
 
 # --- Moving around ---
 alias ..="cd .."
@@ -7,6 +8,7 @@ alias cd..="cd .."
 alias oo='open .'
 
 # --- Shortcust ---
+alias dot='cd ~/.zsh-dotfiles'
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/Projects"
@@ -19,6 +21,9 @@ alias cp='cp -i'
 
 # --- Permission ---
 alias chmox='chmod -x'
+
+# Exa
+alias l='exa'
 
 # --- System ---
 alias bye='sudo shutdown -h now'
@@ -75,7 +80,6 @@ alias logf='git log --date-order --all --graph --format="%C(green)%h%Creset %C(y
 alias logs='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias loga='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
 alias logd='git log --graph --decorate --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset --abbrev-commit --date=relative --all"'
-
 # Undo commit and unstage all files
 alias undo='git reset HEAD~'
 # Undo commit and keep all files staged
@@ -93,18 +97,37 @@ alias gist-paste="gist --private --copy --paste --filename"
 alias gist-file="gist --private --copy"  										
 
 # --- Docker ---
+alias dps='docker ps'
+alias dpsa='dps -a'
+alias drun='docker run'
+alias drm='docker rm'
+alias drmi='docker rmi'
+alias da='docker attach'
+alias dim='docker images'
+alias dp='docker pull'
+alias dstop='docker stop'
+alias dstart='docker start'
+alias dexec='docker exec'
+alias ds='docker service'
+alias dm='docker-machine'
+alias k='kubectl'
+alias mks='tmux kill-session -t'
+alias mkS='tmux kill-server'
+alias tn='tmux new-session -s'
+alias tl='tmux list-sessions'
+
 # alias dacker="docker-compose build && docker-compose up"
 # alias dacker-down="docker-compose down && docker-compose rm"
 # alias dacker-stop="docker-compose kill"
 # alias dacker-clean="docker volume rm $(docker volume ls -qf dangling=true) && docker rmi $(docker images -f dangling=true -q)"
 
 # --- Shell ---
+alias vv='vim $(fzf)'
+alias vi=vim
 alias zcfg="vim ~/.zshrc"
 alias refresh='source ~/.zshrc; echo "Reloaded .zshrc."'
 alias less='less -r'
 alias tf='tail -f'
-alias l='less'
-alias lh='ls -alt | head' # see the last modified files
 alias tmux="TERM=screen-256color-bce tmux"
 alias cl='clear'
 # Reload the shell (i.e. invoke as a login shell)
@@ -146,17 +169,6 @@ else # macOS `ls`
 	colorflag="-G"
 	export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
 fi
-
-# long format
-alias l="ls -lF ${colorflag}"
-# long format, including dot files
-alias la="ls -laF ${colorflag}"
-# only directories
-# alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
-# Always use color output for `ls`
-alias ls="command ls ${colorflag}"
-# List only directories
-alias lsd='ls -l | grep "^d"'
 
 # --- IP Addresses ---
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
