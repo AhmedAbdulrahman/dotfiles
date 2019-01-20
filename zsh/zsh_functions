@@ -32,7 +32,7 @@ function npx() {
 
 # Create a new directory and enter it
 function md() {
-	mkdir -p "$@" && cd "$@"
+	mkdir -p "$@" && cd "$@" || exit
 }
 
 # Open Visual Studio Code
