@@ -65,10 +65,6 @@ zplug 'wfxr/forgit', defer:1
 FORGIT_FZF_DEFAULT_OPTS="
 --height '80%'
 "
-zplug "wfxr/emoji-cli", as:plugin
-zplug "wfxr/emoji-cli", as:command, use:'emojify|fuzzy-emoji'
-EMOJI_CLI_KEYBIND='^[m'
-zplug 'wfxr/epoch-cli', as:plugin
 
 # jq is a lightweight and flexible command-line JSON processor.
 (( $+commands[jq] )) || zplug "stedolan/jq", as:command, from:gh-r, rename-to:jq
