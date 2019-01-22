@@ -2,7 +2,7 @@ set nocompatible
 filetype off
 
 "set the runtime path to include Vundle and initialize"
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=${HOME}/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 "let Vundle manage Vundle, required"
@@ -37,8 +37,9 @@ Plugin 'sunaku/vim-hicterm'                               " Displays cterm color
 Plugin 'edkolev/tmuxline.vim'                             " tmux line"
 
 " Programming Support (Formatter, Linter,Highlighting, Snippets) "
+Plugin 'Valloric/YouCompleteMe'                           " Smart autocompleter
 Plugin 'pangloss/vim-javascript'                          " Javascript"
-Plugin 'zxqfl/tabnine-vim'                                " All-language autocompleter uses machine learning"
+"Plugin 'zxqfl/tabnine-vim'"                                " All-language autocompleter uses machine learning"
 Plugin 'heavenshell/vim-jsdoc'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'leafgarland/typescript-vim'                       " TypeScript"
@@ -63,14 +64,15 @@ Plugin 'sheerun/vim-polyglot'                             " A solid language pac
 
 " Theme / Interface "
 Plugin 'vim-airline/vim-airline'
-"Plugin 'vim-airline/vim-airline-themes'"
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'dempfi/vim-airline-neka'
 Plugin 'morhetz/gruvbox'
 Plugin 'ayu-theme/ayu-vim'
+Plugin 'connorholyday/vim-snazzy'
 Plugin 'ryanoasis/vim-devicons'
 
 
-" All #of your Plugins must be added before the following line
+"All #of your Plugins must be added before the following line"
 call vundle#end()            "required"
 filetype plugin indent on    "required"
 filetype plugin on

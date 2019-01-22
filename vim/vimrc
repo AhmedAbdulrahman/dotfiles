@@ -10,21 +10,25 @@ set nocompatible
 "--------------"
 "Vundle Plugins"
 "--------------"
-if filereadable(expand("$HOME/.vim/plugins.vim"))
-  source $HOME/.vim/plugins.vim
+if filereadable(expand("$HOME/.vim_plugins"))
+  source $HOME/.vim_plugins
 endif
 
-if filereadable(expand("$HOME/.vim/settings.vim"))
-  source $HOME/.vim/settings.vim
-endif
-
-if filereadable(expand("$HOME/.vim/custom.vim"))
-  source $HOME/.vim/custom.vim
+if filereadable(expand("$HOME/.vim_settings"))
+  source $HOME/.vim_settings
 endif
 
 "--------"
 "Settings"
 "--------"
+
+" Change to English version. (Replaced 'en_US' by 'zh_CN' for Chinese)"
+let $LANG = 'en_US'
+set langmenu=en_US
+
+" For YouCompleteMe messes"
+set shortmess+=c
+
 
 " Set relative line numbers"
 if exists("&relativenumber")
@@ -37,13 +41,6 @@ au BufRead,BufNewFile *.json set ft=json syntax=javascript
 if executable('jq')
   autocmd BufRead *.json :%!jq .
 endif
-
-"Enable omni completion"
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 "LESS"
 au BufNewFile,BufRead *.less set filetype=css
@@ -85,10 +82,14 @@ cmap cwd lcd %:p:h
 cmap cd. lcd %:p:h
 
 " Status Line"
-set statusline=%<%f\ %{fugitive#statusline()}\ %h%m%r%=%-14.(%l,%c%V%)\ %{strlen(&fenc)?&fenc:'none'}\ %P
-hi StatusLine ctermbg=0 ctermfg=7
-hi StatusLineNC ctermbg=0 ctermfg=2
-let g:Powerline_symbols = 'fancy'
+set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+if exists("*fugitive#statusline")
+  set statusline+=%{fugitive#statusline()}
+endif
+
+"# hi StatusLine ctermbg=0 ctermfg=7
+""# hi StatusLineNC ctermbg=0 ctermfg=2
+""let g:Powerline_symbols = 'fancy'"
 
 "autocomplete window colours"
 highlight Pmenu ctermfg=15 ctermbg=239
@@ -133,67 +134,11 @@ nnoremap <Left>  <NOP>
 inoremap <Right> <NOP>
 nnoremap <Right> <NOP>
 
-" tab managment "
-map <leader>t :NERDTreeToggle<CR>
-"Useful mappings for managing tabs "
+" tab managment - Useful mappings for managing tabs "
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
-
-" purple "
-call NERDTreeHighlightFile('exs', '098', 'none', '#9E6FCE', '#26292c')
-call NERDTreeHighlightFile('ex', '098', 'none', '#9E6FCE', '#26292c')
-" green  "
-call NERDTreeHighlightFile('jade', '034', 'none', '#61AE63', '#26292c')
-call NERDTreeHighlightFile('hbs', '034', 'none', '#61AE63', '#26292c')
-call NERDTreeHighlightFile('md', '034', 'none', '#61AE63', '#26292c')
-" light green  "
-call NERDTreeHighlightFile('html', '076', 'none', '#AAD364', '#26292c')
-call NERDTreeHighlightFile('eex', '076', 'none', '#AAD364', '#26292c')
-call NERDTreeHighlightFile('vue', '076', 'none', '#AAD364', '#26292c')
-" dark green  "
-call NERDTreeHighlightFile('php', '028', 'none', '#65AE63', '#26292c')
-call NERDTreeHighlightFile('pl', '028', 'none', '#65AE63', '#26292c')
-call NERDTreeHighlightFile('py', '028', 'none', '#65AE63', '#26292c')
-" gold  "
-call NERDTreeHighlightFile('config', '220', 'none', '#FED04E', '#26292c')
-call NERDTreeHighlightFile('conf', '220', 'none', '#FED04E', '#26292c')
-call NERDTreeHighlightFile('json', '220', 'none', '#FED04E', '#26292c')
-call NERDTreeHighlightFile('ini', '220', 'none', '#FED04E', '#26292c')
-call NERDTreeHighlightFile('yml', '220', 'none', '#FED04E', '#26292c')
-" orange  "
-call NERDTreeHighlightFile('scss', '214', 'none', '#F68838', '#26292c')
-call NERDTreeHighlightFile('sass', '214', 'none', '#F68838', '#26292c')
-call NERDTreeHighlightFile('styl', '214', 'none', '#F68838', '#26292c')
-call NERDTreeHighlightFile('css', '214', 'none', '#F68838', '#26292c')
-" cyan  "
-call NERDTreeHighlightFile('coffee', '081', 'none', '#86C1E6', '#26292c')
-call NERDTreeHighlightFile('ts', '081', 'none', '#86C1E6', '#26292c')
-call NERDTreeHighlightFile('js', '081', 'none', '#86C1E6', '#26292c')
-call NERDTreeHighlightFile('go', '081', 'none', '#86C1E6', '#26292c')
-" red  "
-call NERDTreeHighlightFile('xml', '160', 'none', '#D02A22', '#26292c')
-call NERDTreeHighlightFile('svg', '160', 'none', '#D02A22', '#26292c')
-" pink  "
-call NERDTreeHighlightFile('rb', '168', 'none', '#e68590', '#26292c')
-" grey  "
-call NERDTreeHighlightFile('DS_Store', '242', 'none', '#6c6c6c', '#26292c')
-call NERDTreeHighlightFile('jar', '242', 'none', '#6c6c6c', '#26292c')
-call NERDTreeHighlightFile('pkg', '242', 'none', '#6c6c6c', '#26292c')
-call NERDTreeHighlightFile('dmg', '242', 'none', '#6c6c6c', '#26292c')
-call NERDTreeHighlightFile('zip', '242', 'none', '#6c6c6c', '#26292c')
-call NERDTreeHighlightFile('jpg', '242', 'none', '#6c6c6c', '#26292c')
-call NERDTreeHighlightFile('png', '242', 'none', '#6c6c6c', '#26292c')
-call NERDTreeHighlightFile('gif', '242', 'none', '#6c6c6c', '#26292c')
-call NERDTreeHighlightFile('pdf', '242', 'none', '#6c6c6c', '#26292c')
-call NERDTreeHighlightFile('swp', '242', 'none', '#6c6c6c', '#26292c')
-call NERDTreeHighlightFile('swo', '242', 'none', '#6c6c6c', '#26292c')
-call NERDTreeHighlightFile('gz', '242', 'none', '#6c6c6c', '#26292c')
-call NERDTreeHighlightFile('xz', '242', 'none', '#6c6c6c', '#26292c')
-" silver  "
-call NERDTreeHighlightFile('txt', '251', 'none', '#c6c6c6', '#26292c')
-call NERDTreeHighlightFile('log', '251', 'none', '#c6c6c6', '#26292c')
 
 "Split current window"
 nnoremap <C-w>- :split file<CR>
@@ -298,15 +243,23 @@ endw
 
 set timeout ttimeoutlen=50
 
-"NerdTree"
+"NerdTree configuration"
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+map <leader>t :NERDTreeToggle<CR>
 let g:NERDTreeShowHidden=1	                                      "Show hidden files in NERDTree"
 let g:NERDTreeMinimalUI=1	                                        "Disable display of '?' text and 'Bookmarks' label."
 let g:NERDTreeMouseMode=2	                                        "Single-click to toggle directory nodes, double-click to open non-directory nodes."
-let g:NERDTreeQuitOnOpen=1	                                      "Close NERDTree after a file is opened"
+let g:NERDTreeQuitOnOpen=0	                                      "Close NERDTree after a file is opened"
+let g:NERDTreeChDirMode=2
+let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
+let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+let g:NERDTreeShowBookmarks=1
+let g:nerdtree_tabs_focus_on_files=1
+let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+let g:NERDTreeWinSize = 50
 
 "TagBar"
 map <C-m> :TagbarToggle<CR>
@@ -314,11 +267,6 @@ let g:tagbar_autofocus=1
 let g:tagbar_compact = 1
 let g:tagbar_usearrows = 1
 let g:tagbar_autoshowtag = 1
-
-"Gruvbox"
-"-------"
-let g:gruvbox_vert_split = 'bg1'
-let g:gruvbox_sign_column = 'bg0'
 
 "JSDOC"
 "-----"
@@ -350,8 +298,8 @@ nmap <Leader>p <Plug>(Prettier)
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:UltiSnipsSnippetsDir="~/.vim/ultisnips"
-let g:UltiSnipsSnippetDirectories=['ultisnips']
+let g:UltiSnipsSnippetsDir="~/.vim/Ultisnips"
+let g:UltiSnipsSnippetDirectories=['Ultisnips']
 
 "Tagged Template"
 "---------------"
@@ -402,9 +350,6 @@ highlight ALEWarningSign ctermfg=18 ctermbg=73 cterm=bold
 nmap <silent> <Leader>k <Plug>(ale_previous_wrap)
 nmap <silent> <Leader>j <Plug>(ale_next_wrap)
 "nmap <Leader>d <Plug>(ale_fix)"
-
-set statusline+=%#warningmsg#
-set statusline+=%*
 
 let g:rainbow#max_level = 16
 let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
@@ -476,14 +421,48 @@ let g:lightline = {
   nnoremap <leader>/ :Rg<cr>
 
 " Airline {{"
-let g:airline_powerline_fonts = 1
 let g:airline_theme = 'powerlineish'
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-set laststatus=2
-set ttimeoutlen=50
-let g:airline#extensions#branch#enabled=1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline_skip_empty_sections = 1
+let g:airline#extensions#virtualenv#enabled = 1
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+if !exists('g:airline_powerline_fonts')
+  let g:airline#extensions#tabline#left_sep = ' '
+  let g:airline#extensions#tabline#left_alt_sep = '|'
+  let g:airline_left_sep          = '▶'
+  let g:airline_left_alt_sep      = '»'
+  let g:airline_right_sep         = '◀'
+  let g:airline_right_alt_sep     = '«'
+  let g:airline#extensions#branch#prefix     = '⤴'
+  let g:airline#extensions#readonly#symbol   = '⊘'
+  let g:airline#extensions#linecolumn#prefix = '¶'
+  let g:airline#extensions#paste#symbol      = 'ρ'
+  let g:airline_symbols.linenr    = '␊'
+  let g:airline_symbols.branch    = '⎇'
+  let g:airline_symbols.paste     = 'ρ'
+  let g:airline_symbols.paste     = 'Þ'
+  let g:airline_symbols.paste     = '∥'
+  let g:airline_symbols.whitespace = 'Ξ'
+else
+  let g:airline#extensions#tabline#left_sep = ''
+  let g:airline#extensions#tabline#left_alt_sep = ''
+
+  "powerline symbols"
+  let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  let g:airline_symbols.branch = ''
+  let g:airline_symbols.readonly = ''
+  let g:airline_symbols.linenr = ''
+endif
 " }}"
 
 "Fugitive"
@@ -501,8 +480,64 @@ nnoremap <silent> <leader>gl :GV<CR>
 vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> \# :call VisualSelection('b')<CR>
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Functions"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"Close pane using <C-w>"
+function! s:__bclose()
+  if (len(getbufinfo({'buflisted': 1})) > 1)
+    bdelete
+  endif
+endfunction
+
+" Visual mode related"
+" Visual mode pressing * or # searches for the current selection"
+
+function! VisualSelection(direction) range
+    let l:saved_reg = @
+    execute "normal! vgvy"
+
+    let l:pattern = escape(@, '\\/.*$^~[]')
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    if a:direction == 'b'
+        execute "normal ?" . l:pattern . "^M"
+    elseif a:direction == 'gv'
+        call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    elseif a:direction == 'f'
+        execute "normal /" . l:pattern . "^M"
+    endif
+
+    let @/ = l:pattern
+    let @ = l:saved_reg
+endfunction
+
+" Returns true if paste mode is enabled"
+function! HasPaste()
+    if &paste
+        return 'PASTE MODE  '
+    en
+    return ''
+endfunction
+
+"Rename file name"
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+
 "Rename"
 map <leader>n :call RenameFile()<cr>
 
 " Setting Font"
-set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 14
+"set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 14"
+set guifont=Source\ Code\ Pro\ for\ Powerline\ 10
