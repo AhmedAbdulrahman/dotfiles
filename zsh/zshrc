@@ -12,8 +12,8 @@ export ZSH=$HOME/.oh-my-zsh
 # --- Source
 source ~/.zsh_env
 
-source ~/.fzf.zsh       2>/dev/null
-source ~/.zsh_fzf_extra 2>/dev/null
+source ~/.fzf.zsh      
+source ~/.zsh_fzf_extra
 
 source ~/.zsh_plug
 source ~/.zsh_keybinds
