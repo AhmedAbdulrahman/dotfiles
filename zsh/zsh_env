@@ -83,6 +83,11 @@ _extend_path() {
 [[ -d "$HOME/.rvm/bin" ]] && _extend_path "$HOME/.rvm/bin"
 [[ -d "$HOME/.composer/vendor/bin": ]] && _extend_path "$HOME/.composer/vendor/bin" 
 
+# Extend $NODE_PATH
+if [ -d ~/.npm-global ]; then
+  export NODE_PATH="$NODE_PATH:$HOME/.npm-global/lib/node_modules"
+fi
+
 # SSH
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 
