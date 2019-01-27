@@ -39,11 +39,10 @@ finish() {
 
 export ZSH_DOTFILES=${1:-"$HOME/.zsh-dotfiles"}
 GITHUB_REPO_URL_BASE="https://github.com/AhmedAbdulrahman/zsh-dotfiles"
-VUNDLE_REPO_URL_BASE="https://github.com/VundleVim/Vundle.vim"
 HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
 
-# list of files/folders to symlink in $HOME
-FILES="aliases functions gitconfig vimrc zshrc zshenv tmux.conf hammerspoon vim"
+# get the dir of the current script
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SCRIPT_DIR" || exit 1
 
 on_start() {
 
@@ -57,7 +56,7 @@ on_start() {
   info "                            by @AhmedAbdulrahman                                "
 
   
-  info "This script will guide you through installing git, zsh and dofiles itself."
+  info "This script will guide you through installing essentials for your macOS."
   echo "It will not install anything without your direct agreement!"
   echo
   read -p "Do you want to proceed with installation? [y/N] " -n 1 answer
@@ -186,13 +185,9 @@ install_zsh() {
   if _exists zsh; then
     info "Setting up Zsh as default shell..."
 
-    echo "The script will ask you the password for sudo 2 times:"
-    echo
-    echo "1) When adding fish shell into /etc/shells via tee"
-    echo "2) When changing your default shell via chsh -s"
+    echo "The script will ask you the password for sudo when changing your default shell via chsh -s"
     echo
 
-    echo "$(command -v zsh)" | sudo tee -a /etc/shells
     chsh -s "$(command -v zsh)" || error "Error: Cannot set Zsh as default shell!"
   fi
 
@@ -216,23 +211,15 @@ install_dotfiles() {
     success "You already have zsh dotfiles installed. Skipping..."
   fi
 
-  # create symlinks (will overwrite old dotfiles)
-  info "Linking zsh dotfiles..."
-  cd $ZSH_DOTFILES
-  for file in $FILES; do
-    echo "Creating symlink to $file in home directory."
-    ln -s -f $ZSH_DOTFILES/.$file $HOME/.$file 
+  read -p "Enter files you would like to install separated by 'space' : " input
+
+  for module in ${input[@]}; do
+    info "Installing $module config ..."
+
+    [[ ! -f "$module/setup.sh" ]] && error "$module config not found!" && return
+    "$module/setup.sh"            && info  "$module config installed successfully!"
   done
 
-  info "Installing Vundle..."
-  git clone --recursive "$VUNDLE_REPO_URL_BASE.git" $ZSH_DOTFILES/.vim/bundle/Vundle.vim
-
-  info "Installing Nerd Fonts..."
-  cd ~/Library/Fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
-  
-  info "Creating Presisted VIM undo dir..."
-  mkdir $ZSH_DOTFILES/.vim/vim-persisted-undo
-  
   finish
 }
 
