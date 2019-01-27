@@ -1,37 +1,7 @@
 #!/usr/bin/env zsh
 
-# Lazyload NVM
-function lazynvm() {
-  unset -f nvm node npm npx
-  export NVM_DIR=~/.nvm
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # load nvm
-  if [ -f "$NVM_DIR/bash_completion" ]; then
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # load nvm bash_completion
-  fi
-}
-
-function nvm() {
-  lazynvm 
-  nvm $@
-}
- 
-function node() {
-  lazynvm
-  node $@
-}
- 
-function npm() {
-  lazynvm
-  npm $@
-}
-
-function npx() {
-  lazynvm
-  npx $@
-}
-
 # Create a new directory and enter it
-function md() {
+function mg() {
 	mkdir -p "$@" && cd "$@" || exit
 }
 
