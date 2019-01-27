@@ -50,6 +50,7 @@ spaceship_react() {
     dir
     git
     react
+    node
     php
     line_sep
     battery
@@ -63,10 +64,8 @@ SPACESHIP_DIR_PREFIX="┌─[%b "
 SPACESHIP_CHAR_SYMBOL="└─▪%b"
 SPACESHIP_BATTERY_SHOW='always'
 SPACESHIP_VI_MODE_SHOW=false
-# SPACESHIP_CHAR_SYMBOL='❯'
-# SPACESHIP_CHAR_SUFFIX=' '
 SPACESHIP_PACKAGE_SHOW=false
-SPACESHIP_NODE_SHOW=false
+SPACESHIP_NODE_SHOW=true
 SPACESHIP_PHP_SHOW=true
 
 # EXIT CODE
