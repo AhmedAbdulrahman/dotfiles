@@ -5,11 +5,6 @@ setopt combiningchars
 setopt no_global_rcs
 echo 'zshenv loaded'
 
-# Check if command exists
-# _command_exists () {
-#     type "$1" &> /dev/null ;
-# }
-
 # Get os info
 if (( $+commands[lsb_release] )); then
     export OSNAME=$(lsb_release -si)
@@ -24,8 +19,16 @@ else
 fi
 
 # Path
-export PATH="$PATH:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:$HOME/.local/bin:$HOME/bin"
+export PATH="$PATH:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:$HOME/.local/bin:$HOME/bin:$HOME/.npm-global/bin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin"
 export PATH="/snap/bin:$PATH"
+
+# Extend $NODE_PATH
+if [ -d ~/.npm-global ]; then
+  export NODE_PATH="$NODE_PATH:$HOME/.npm-global/lib/node_modules"
+fi
+
+# SSH
+export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 
 # Rust
 export PATH="$PATH:$HOME/.cargo/bin"
@@ -110,27 +113,6 @@ export WORDCHARS=''
 
 # Custom zsh completions path
 fpath=($fpath ~/.zsh_completions)
-
-# Extend $PATH without duplicates
-_extend_path() {
-  if ! $( echo "$PATH" | tr ":" "\n" | grep -qx "$1" ) ; then
-    export PATH="$1:$PATH"
-  fi
-}
-
-# Add custom bin to $PATH
-[[ -d "$HOME/.bin" ]] && _extend_path "$HOME/.bin"
-[[ -d "$HOME/.npm-global" ]] && _extend_path "$HOME/.npm-global/bin"
-[[ -d "$HOME/.rvm/bin" ]] && _extend_path "$HOME/.rvm/bin"
-[[ -d "$HOME/.composer/vendor/bin": ]] && _extend_path "$HOME/.composer/vendor/bin" 
-
-# Extend $NODE_PATH
-if [ -d ~/.npm-global ]; then
-  export NODE_PATH="$NODE_PATH:$HOME/.npm-global/lib/node_modules"
-fi
-
-# SSH
-export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 
 #  FZF {{{
 FZF_FILE_HIGHLIGHTER='cat'
