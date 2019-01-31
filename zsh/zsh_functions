@@ -178,8 +178,7 @@ function ipgen() {
   fi
 }
 
-# Docker Stuff
-
+# Docker
 #stop all containers:
 function docker-stop () {
     docker kill $(docker ps -q)
@@ -208,6 +207,7 @@ function ntab() {
   tell application \"iTerm\" to tell session -1 of current terminal to write text \"$@\""
 }
 
+# Vagrant
 # Halt all active virtualboxes
 function haltvms() {
     for VM in `VBoxManage list runningvms | awk '{ print $2; }'`; do VBoxManage controlvm $VM poweroff; done
@@ -229,4 +229,17 @@ function halt-all-except-current() {
 
   unset vmBOX
   unset vmBOXId
+}
+
+# PHP
+function artisan {
+    ( php artisan $* )
+}
+
+function phpunit {
+    ( vendor/bin/phpunit $* )
+}
+
+function phpunit-watch {
+    ( watch -t -n 1 -c -x vendor/bin/phpunit --colors=always --no-coverage $2 -d "ls -l $1" )
 }
