@@ -11,7 +11,6 @@ SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SCRIPT_DIR" || 
 mkdir -p ~/.vim
 
 ln -sf  "$SCRIPT_DIR/vimrc"             ~/.vimrc
-ln -sf  "$SCRIPT_DIR/vim_settings"      ~/.vim_settings
 ln -sf  "$SCRIPT_DIR/vim_plugins"       ~/.vim_plugins
 ln -sf  "$SCRIPT_DIR/UltiSnips"         ~/.vim/UltiSnips
 
