@@ -40,23 +40,24 @@ finish() {
 export ZSH_DOTFILES=${1:-"$HOME/.zsh-dotfiles"}
 GITHUB_REPO_URL_BASE="https://github.com/AhmedAbdulrahman/zsh-dotfiles"
 HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
+LINUXBREW_INSTALLER_URL="https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh"
 
 # get the dir of the current script
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SCRIPT_DIR" || exit 1
 
 on_start() {
 
-  info "   ______  _____ _    _ _____   ____ _______ ______ _____ _      ______  _____  "
-  info "  |___   // ____| |  | |  __ \ / __ \__   __|  ____|_   _| |    |  ____|/ ____| "
-  info "      / /| (___ | |__| | |  | | |  | | | |  | |__    | | | |    | |__  | (___   "
-  info "     / /  \___ \|  __  | |  | | |  | | | |  |  __|   | | | |    |  __|  \___ \  "
-  info "    / /__ ____) | |  | | |__| | |__| | | |  | |     _| |_| |____| |____ ____) | "
-  info "   /_____|_____/|_|  |_|_____/ \____/  |_|  |_|    |_____|______|______|_____/  "
+  info "   _____   ____ _______ ______ _____ _      ______  _____  "
+  info "  |  __ \ / __ \__   __|  ____|_   _| |    |  ____|/ ____| "
+  info "  | |  | | |  | | | |  | |__    | | | |    | |__  | (___   "
+  info "  | |  | | |  | | | |  |  __|   | | | |    |  __|  \___ \  "
+  info "  | |__| | |__| | | |  | |     _| |_| |____| |____ ____) | "
+  info "  |_____/ \____/  |_|  |_|    |_____|______|______|_____/  "
   info "                                                                                "
   info "                            by @AhmedAbdulrahman                                "
 
   
-  info "This script will guide you through installing essentials for your macOS."
+  info "This script will guide you through installing essentials for your OS(Mac/Linux/Windows)."
   echo "It will not install anything without your direct agreement!"
   echo
   read -p "Do you want to proceed with installation? [y/N] " -n 1 answer
@@ -95,31 +96,64 @@ install_cli_tools() {
   finish
 }
 
-install_homebrew() {
-  # Install Homebrew 
-  # There's not need to install Homebrew on Linux ;)
-  if [ `uname` != 'Darwin' ]; then
-    return
-  fi
+install_package_manager() {
+  
+  # macOS 
+  if [ `uname` == 'Darwin' ]; then
 
-    info "Trying to detect installed Homebrew..."
+    info "Checking if Homebrew is installed..."
 
-  if ! _exists brew; then
-    echo "Seems like you don't have Homebrew installed!"
-    read -p "Do you agree to proceed with Homebrew installation? [y/N] " -n 1 answer
-    echo
-    if [ ${answer} != "y" ]; then
-      exit 1
+    if ! _exists brew; then
+      echo "Seems like you don't have Homebrew installed!"
+      read -p "Do you agree to proceed with Homebrew installation? [y/N] " -n 1 answer
+      echo
+
+      if [ ${answer} != "y" ]; then
+        exit 1
+      fi
+
+      info "Installing Homebrew..."
+      ruby -e "$(curl -fsSL ${HOMEBREW_INSTALLER_URL})"
+      # Make sure we’re using the latest Homebrew.
+      brew update
+      # Upgrade any already-installed formulae.
+      brew upgrade --all
+    else
+      success "You already have Homebrew installed. Skipping ... 💨"
     fi
 
-    info "Installing Homebrew..."
-    ruby -e "$(curl -fsSL ${HOMEBREW_INSTALLER_URL})"
-    # Make sure we’re using the latest Homebrew.
-    brew update
-    # Upgrade any already-installed formulae.
-    brew upgrade --all
-  else
-    success "You already have Homebrew installed. Skipping..."
+  # Linux 
+  elif [ `uname` == 'Linux' ]; then 
+
+    info "Checking if Linuxbrew is installed..."
+
+    if [! -d "$HOME/.linuxbrew" ]; then
+      echo "Seems like you don't have Linuxbrew installed!"
+      read -p "Do you agree to proceed with Linuxbrew installation? [y/N] " -n 1 answer
+      echo
+
+      if [ ${answer} != "y" ]; then
+        exit 1
+      fi
+
+      info "Installing Linuxbrew..."
+      ruby -e "$(curl -fsSL ${LINUXBREW_INSTALLER_URL})"
+      # Make sure we’re using the latest Homebrew.
+      brew update
+      # Upgrade any already-installed formulae.
+      brew upgrade --all
+      
+      brew doctor || true
+
+      mkdir $HOME/.linuxbrew/lib
+      ln -s lib $HOME/.linuxbrew/lib64
+      ln -s $HOME/.linuxbrew/lib $HOME/.linuxbrew/lib64
+      ln -s /usr/lib64/libstdc++.so.6 /lib64/libgcc_s.so.1 $HOME/.linuxbrew/lib/
+
+    else
+      success "You already have Linuxbrew installed. Skipping... 💨"
+    fi
+  
   fi
 
   finish
@@ -143,7 +177,7 @@ install_git() {
     if [ `uname` == 'Darwin' ]; then
       brew install git
     elif [ `uname` == 'Linux' ]; then
-      sudo apt-get install git
+      sudo apt-get install build-essential curl file git
     else
       error "Error: Failed to install Git!"
       exit 1
@@ -170,10 +204,8 @@ install_zsh() {
 
     info "Installing Zsh..."
 
-    if [ `uname` == 'Darwin' ]; then
-      brew install zsh sudo zsh-completions zsh-syntax-highlighting zsh-autosuggestions
-    elif [ `uname` == 'Linux' ]; then
-      sudo apt-get install zsh
+    if [ `uname` == 'Darwin' ] || [ `uname` == 'Linux' ]; then
+      brew install zsh
     else
       error "Error: Failed to install Zsh!"
       exit 1
