@@ -34,6 +34,14 @@ export CARGO_HOME="$HOME/.cargo"
 export RUST_SRC_PATH="$HOME/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"
 [[ "$OSNAME" == 'Darwin' ]] && export RUST_SRC_PATH="$HOME/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 
+# Linuxbrew PATH
+if [ `uname` == 'Linux' ]; then
+  export PATH="$HOME/.linuxbrew/bin:$PATH"
+  export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
+  export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+  export PKG_CONFIG_PATH="/usr/share/pkgconfig:$PKG_CONFIG_PATH"
+fi
+
 # nvm
 export NVM_DIR="$HOME/.nvm"
 export NVM_LAZY_LOAD=true
