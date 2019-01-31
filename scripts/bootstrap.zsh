@@ -11,6 +11,19 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 export ZSH_DOTFILES=${ZSH_DOTFILES:="$HOME/.zsh-dotfiles"}
 
 cd $ZSH_DOTFILES/scripts
-. ./brew.zsh
-. ./nodejs.zsh
-cd -
+
+# macOS
+if [ `uname` == 'Darwin' ]; then
+    . ./brew.zsh
+    . ./nodejs.zsh
+    cd -
+# linux
+elif [ `uname` == 'Darwin' ]; then
+    . ./linuxbrew.zsh
+    cd -
+# Windows OS
+elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then 
+    info "Checking if Scoop is installed..."
+    $ZSH_DOTFILES/scripts/scoop.ps1
+    cd -
+fi
