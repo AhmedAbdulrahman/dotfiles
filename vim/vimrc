@@ -265,7 +265,7 @@ set langmenu=en_US
   " Don't show the intro message when starting vim"
   set shortmess=atI 
 
-  set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ "Show “invisible” characters"
+  set lcs=tab:·\ ,trail:·,eol:¬,nbsp:_ "Show “invisible” characters"
   set list
 
   " Add vertical spaces to keep right and left aligned "
