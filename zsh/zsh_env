@@ -22,11 +22,6 @@ fi
 export PATH="$PATH:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:$HOME/.local/bin:$HOME/bin:$HOME/.npm-global/bin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin"
 export PATH="/snap/bin:$PATH"
 
-# Extend $NODE_PATH
-if [ -d ~/.npm-global ]; then
-  export NODE_PATH="$NODE_PATH:$HOME/.npm-global/lib/node_modules"
-fi
-
 # SSH
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 
@@ -48,7 +43,7 @@ fi
 # nvm
 export NVM_DIR="$HOME/.nvm"
 export NVM_LAZY_LOAD=true
-export NODEJS_ORG_MIRROR="https://npm.taobao.org/mirrors/node/"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # For pyenv
 export PYENV_ROOT="$HOME/.pyenv"
