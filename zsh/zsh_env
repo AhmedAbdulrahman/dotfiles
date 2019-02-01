@@ -3,7 +3,7 @@
 # skip_global_compinit=1
 setopt combiningchars
 setopt no_global_rcs
-echo 'zshenv loaded'
+echo 'ZSHENV Loaded'
 
 # Get os info
 if (( $+commands[lsb_release] )); then
@@ -38,7 +38,7 @@ export RUST_SRC_PATH="$HOME/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/
 [[ "$OSNAME" == 'Darwin' ]] && export RUST_SRC_PATH="$HOME/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
 
 # Linuxbrew PATH
-if [ `uname` == 'Linux' ]; then
+if [[ "$OSNAME" == 'Linux' ]]; then
   export PATH="$HOME/.linuxbrew/bin:$PATH"
   export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
   export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
@@ -48,7 +48,7 @@ fi
 # nvm
 export NVM_DIR="$HOME/.nvm"
 export NVM_LAZY_LOAD=true
-export NVM_NODEJS_ORG_MIRROR="https://npm.taobao.org/mirrors/node/"
+export NODEJS_ORG_MIRROR="https://npm.taobao.org/mirrors/node/"
 
 # For pyenv
 export PYENV_ROOT="$HOME/.pyenv"
