@@ -2,7 +2,7 @@
 
 > Running [**iTerm2**](https://www.iterm2.com/) with [**oh-my-zsh**](https://github.com/robbyrussell/oh-my-zsh) and [**Spaceship-zsh-theme**](https://github.com/denysdovhan/spaceship-zsh-theme).
 
-The color scheme is [**iTerm2 - Snazzy**](https://github.com/sindresorhus/iterm2-snazzy) for _iTerm2_ and the font is [**Danke Mono**](https://dank.sh/)
+The color scheme is [**Material Design**](https://github.com/MartinSeeler/iterm2-material-design) for _iTerm2_ and the font is [**Danke Mono**](https://dank.sh/) with [**Droid Sans Mono**](https://github.com/ryanoasis/nerd-fonts) as Non-ASCII Font
 
 ![Screenshot](intro.gif)
 
