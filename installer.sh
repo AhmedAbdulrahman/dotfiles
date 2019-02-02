@@ -296,7 +296,7 @@ on_error() {
 main() {
   on_start "$*"
   install_cli_tools "$*"
-  install_homebrew "$*"
+  install_package_manager "$*"
   install_git "$*"
   install_zsh "$*"
   install_dotfiles "$*"
