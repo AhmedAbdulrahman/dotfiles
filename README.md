@@ -34,13 +34,13 @@ Dotfiles are installed by running one of the following commands in your terminal
 via `curl`
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/AhmedAbdulrahman/zsh-dotfiles/master/installer.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh)"
 ```
 
 via `wget`
 
 ```bash
-bash -c "$(wget https://raw.githubusercontent.com/AhmedAbdulrahman/zsh-dotfiles/master/installer.sh -O -)"
+bash -c "$(wget https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh -O -)"
 ```
 
 #### Clone with Git
