@@ -37,7 +37,7 @@ finish() {
   sleep 1
 }
 
-export ZSH_DOTFILES=${1:-"$HOME/.zsh-dotfiles"}
+export ZSH_DOTFILES=${1:-"$HOME/dotfiles"}
 GITHUB_REPO_URL_BASE="https://github.com/AhmedAbdulrahman/zsh-dotfiles"
 HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
 LINUXBREW_INSTALLER_URL="https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh"
