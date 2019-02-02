@@ -126,7 +126,7 @@ alias zcfg="vim ~/.zshrc"
 alias refresh='source ~/.zshrc; echo "Reloaded .zshrc."'
 alias less='less -r'
 alias tf='tail -f'
-alias tmux="TERM=screen-256color-bce tmux"
+alias tmux='tmux -2'
 alias mks='tmux kill-session -t'
 alias mkS='tmux kill-server'
 alias tn='tmux new-session -s'
