@@ -27,7 +27,7 @@ These are **my** dotfiles, so please feel free to take anything you want but do 
 
 Also — and this is just my personal opinion — I can **highly** recommend setting up your own `.files` (instead of forking an existing project) and moving along step by step. There is much to be learned and no better feeling than having full control over the things that are happening and being aware where everything is and what exactly it does. But that’s just me. 🙂
 
-#### Clone via Curl OR Wget
+#### Clone the repo
 
 Dotfiles are installed by running one of the following commands in your terminal:
 
@@ -55,8 +55,8 @@ xcode-select --install
 Then clone the repo and run `installer.sh`:
 
 ```
-git clone git@github.com:AhmedAbdulrahman/zsh-dotfiles.git ~/.dotfiles
-source ~/.dotfiles/installer.sh
+git clone git@github.com:AhmedAbdulrahman/dotfiles.git ~/dotfiles
+source ~/dotfiles/installer.sh
 ```
 
 #### Install Configuration
