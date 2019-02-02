@@ -8,7 +8,7 @@ alias cd..="cd .."
 alias oo='open .'
 
 # --- Shortcust ---
-alias dot='cd ~/.zsh-dotfiles'
+alias dot='cd ~/dotfiles'
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/Projects"
