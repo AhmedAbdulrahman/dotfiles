@@ -85,7 +85,6 @@ zplug "denysdovhan/gitio-zsh", as:command, use:"gitio.zsh", rename-to:"gitio"
 zplug "rauchg/wifi-password", as:command, use:"wifi-password.sh", rename-to:"wifi-password"
 zplug "marzocchi/zsh-notify", from:github
 zplug "rupa/z", use:z.sh
-zplug "supercrabtree/k"
 zplug "djui/alias-tips"
 zplug "Valiev/almostontop"
 
