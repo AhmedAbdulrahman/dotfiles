@@ -1,8 +1,8 @@
-# --theme="zenburn"
---theme="gruvbox (Dark) (Medium) NDC"
+# Set the theme to "TwoDark"
+--theme="TwoDark"
 
 # Show line numbers, Git modifications and file header (but no grid)
---style="numbers,changes"
+--style=plain,changes,numbers
 
 # Use italic text on the terminal (not supported on all terminals)
 --italic-text=always
@@ -16,3 +16,18 @@
 
 # Use "gitignore" highlighting for ".ignore" files
 --map-syntax .ignore:.gitignore
+
+# Always use colors.
+--color=always
+
+# Never use wrapping on code.
+--wrap=never
+
+# Never use a pager utility.
+--paging=never
+
+# Only print first 100 lines.
+--line-range :100
+
+# Use 4 length spaced tabs.
+--tabs=4

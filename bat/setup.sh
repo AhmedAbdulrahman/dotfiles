@@ -13,6 +13,14 @@ ln -sf "$SCRIPT_DIR/config" ~/.config/bat/config
 # Themes
 mkdir -p "$(bat cache --config-dir)/themes"
 cd "$(bat cache --config-dir)/themes" || exit 1
-test ! -d gruvbox &&
-    git clone --depth=1 https://github.com/Briles/gruvbox.git
+test ! -d TwoDark &&
+    git clone --depth=1 https://github.com/erremauro/TwoDark.git
+
+mkdir -p "$(bat cache --config-dir)/syntaxes"
+cd "$(bat cache --config-dir)/syntaxes"
+# Put new '.sublime-syntax' language definition files
+# in this folder (or its subdirectories), for example:
+test ! -d sublime-purescript-syntax &&
+    git clone https://github.com/tellnobody1/sublime-purescript-syntax
+
 bat cache --init
