@@ -10,9 +10,14 @@ SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SCRIPT_DIR" || 
 
 mkdir -p ~/.vim
 
-ln -sf  "$SCRIPT_DIR/vimrc"             ~/.vimrc
-ln -sf  "$SCRIPT_DIR/vim_plugins"       ~/.vim_plugins
-ln -sf  "$SCRIPT_DIR/UltiSnips"         ~/.vim/UltiSnips
+ln -sf  "$SCRIPT_DIR/vimrc"           ~/.vimrc
+ln -sf  "$SCRIPT_DIR/vim_plugins"     ~/.vim_plugins
+
+for dir in "$SCRIPT_DIR"/*/; do
+  # echo "$SCRIPT_DIR/$(basename "$dir")" "$HOME/.vim/$(basename "$dir")"
+  # ln -sf "$dir" "$HOME/.vim/$(basename "$dir")"
+  ln -sf "$SCRIPT_DIR/$(basename "$dir")" "$HOME/.vim/$(basename "$dir")"
+done
 
 # # Check If Vundle doesn't exist, install it
 [[ ! -a ~/.vim/bundle/Vundle.vim ]] && git clone --depth=1 https://github.com/VundleVim/Vundle.vim ~/.vim/bundle/Vundle.vim
