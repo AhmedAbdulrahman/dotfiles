@@ -37,9 +37,7 @@ Plugin 'sunaku/vim-hicterm'                               " Displays cterm color
 Plugin 'edkolev/tmuxline.vim'                             " tmux line"
 
 " Programming Support (Formatter, Linter,Highlighting, Snippets) "
-Plugin 'Valloric/YouCompleteMe'                           " Smart autocompleter"
 Plugin 'pangloss/vim-javascript'                          " Javascript"
-"Plugin 'zxqfl/tabnine-vim'"                                " All-language autocompleter uses machine learning"
 Plugin 'heavenshell/vim-jsdoc'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'leafgarland/typescript-vim'                       " TypeScript"
@@ -47,8 +45,6 @@ Plugin 'mxw/vim-jsx'                                      " JSX (React)"
 Plugin 'othree/html5.vim'                                 " HTML"
 Plugin 'hail2u/vim-css3-syntax'                           " CSS"
 Plugin 'jparise/vim-graphql'                              " GraphQL"
-Plugin 'SirVer/ultisnips'                                 " snippets"
-Plugin 'epilande/vim-react-snippets'                      " snippets"
 Plugin 'prettier/vim-prettier', { 'do': 'yarn install' }  " Prettier"
 Plugin 'w0rp/ale'
 Plugin 'mattn/emmet-vim'
@@ -61,18 +57,16 @@ Plugin 'chrisbra/Colorizer'
 Plugin 'wincent/terminus'                                 " Better vim + tmux"
 Plugin 'metakirby5/codi.vim'                              " The interactive scratchpad Quakkejs"
 Plugin 'sheerun/vim-polyglot'                             " A solid language pack for Vim."
-
+Plugin 'mhinz/vim-signify'                                " ➕ Show a diff using Vim its sign column."
 " Theme / Interface "
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'dempfi/vim-airline-neka'
-Plugin 'morhetz/gruvbox'
-Plugin 'ayu-theme/ayu-vim'
-Plugin 'connorholyday/vim-snazzy'
 Plugin 'ryanoasis/vim-devicons'
+Plugin 'cocopon/iceberg.vim'
 Plugin 'jdkanani/vim-material-theme'
 
-"All #of your Plugins must be added before the following line"
+"All of your Plugins must be added before the following line"
 call vundle#end()            "required"
 filetype plugin indent on    "required"
 filetype plugin on
