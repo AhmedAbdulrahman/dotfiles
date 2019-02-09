@@ -19,8 +19,10 @@ else
 fi
 
 # Path
-export PATH="$PATH:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:$HOME/.local/bin:$HOME/bin:$HOME/.npm-global/bin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin"
-export PATH="/snap/bin:$PATH"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:"
+export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+export PATH="$HOME/.rbenv/bin:$PATH"
 
 # SSH
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
@@ -31,6 +33,9 @@ export RUSTUP_DIST_SERVER="https://mirrors.ustc.edu.cn/rust-static"
 export CARGO_HOME="$HOME/.cargo"
 export RUST_SRC_PATH="$HOME/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"
 [[ "$OSNAME" == 'Darwin' ]] && export RUST_SRC_PATH="$HOME/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src"
+
+# Ruby
+export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # Linuxbrew PATH
 if [[ "$OSNAME" == 'Linux' ]]; then
@@ -47,7 +52,7 @@ export NVM_LAZY_LOAD=true
 
 # For pyenv
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$PATH:$PYENV_ROOT/bin"
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
 
 # For bat
