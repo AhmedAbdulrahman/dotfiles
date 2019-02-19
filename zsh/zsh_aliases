@@ -119,6 +119,13 @@ alias k='kubectl'
 # alias dacker-stop="docker-compose kill"
 # alias dacker-clean="docker volume rm $(docker volume ls -qf dangling=true) && docker rmi $(docker images -f dangling=true -q)"
 
+# --- Timewarrior ---
+alias tw='timew'
+alias "tw sum"='timew summary'
+alias "tws"='timew start'
+alias "twp"='timew stop'
+alias "twt"='timew stop'
+
 # --- Shell ---
 alias vv='vim $(fzf)'
 alias vi=vim
