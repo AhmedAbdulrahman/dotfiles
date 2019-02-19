@@ -39,14 +39,14 @@ highlight! NonText ctermbg=234 ctermfg=236 guibg=#161821 guifg=#242940
 highlight! SpecialKey ctermbg=234 ctermfg=236 guibg=#161821 guifg=#242940
 highlight! Folded ctermbg=235 ctermfg=245 guibg=#1e2132 guifg=#686f9a
 highlight! FoldColumn ctermbg=235 ctermfg=239 guibg=#1e2132 guifg=#444b71
-highlight! Function ctermfg=110 guifg=#84a0c6
+highlight! Function ctermfg=110 guifg=#C792EA
 highlight! Identifier cterm=NONE ctermfg=109 guifg=#89b8c2
-highlight! Include ctermfg=110 guifg=#84a0c6
+highlight! Include ctermfg=110 guifg=#C792EA
 highlight! LineNr ctermbg=235 ctermfg=239 guibg=#1e2132 guifg=#444b71
 highlight! MatchParen ctermbg=237 ctermfg=255 guibg=#3e445e guifg=#ffffff
 highlight! MoreMsg ctermfg=150 guifg=#b4be82
 highlight! Normal ctermbg=234 ctermfg=252 guibg=#161821 guifg=#c6c8d1
-highlight! Operator ctermfg=110 guifg=#84a0c6
+highlight! Operator ctermfg=110 guifg=#C792EA
 highlight! Pmenu ctermbg=236 ctermfg=251 guibg=#3d425b guifg=#c6c8d1
 highlight! PmenuSbar ctermbg=236 guibg=#3d425b
 highlight! PmenuSel ctermbg=240 ctermfg=255 guibg=#5b6389 guifg=#eff0f4
@@ -58,24 +58,24 @@ highlight! Search ctermbg=216 ctermfg=234 guibg=#e4aa80 guifg=#392313
 highlight! SignColumn ctermbg=235 ctermfg=239 guibg=#1e2132 guifg=#444b71
 highlight! Special ctermfg=150 guifg=#b4be82
 highlight! SpellBad ctermbg=95 ctermfg=252 gui=undercurl guisp=#e27878
-highlight! SpellCap ctermbg=24 ctermfg=252 gui=undercurl guisp=#84a0c6
+highlight! SpellCap ctermbg=24 ctermfg=252 gui=undercurl guisp=#C792EA
 highlight! SpellLocal ctermbg=23 ctermfg=252 gui=undercurl guisp=#89b8c2
 highlight! SpellRare ctermbg=97 ctermfg=252 gui=undercurl guisp=#a093c7
-highlight! Statement ctermfg=110 gui=NONE guifg=#84a0c6
+highlight! Statement ctermfg=110 gui=NONE guifg=#C792EA
 highlight! StatusLine cterm=reverse ctermbg=234 ctermfg=245 gui=reverse guibg=#17171b guifg=#818596 term=reverse
 highlight! StatusLineTerm cterm=reverse ctermbg=234 ctermfg=245 gui=reverse guibg=#17171b guifg=#818596 term=reverse
 highlight! StatusLineNC cterm=reverse ctermbg=238 ctermfg=233 gui=reverse guibg=#3e445e guifg=#0f1117
 highlight! StatusLineTermNC cterm=reverse ctermbg=238 ctermfg=233 gui=reverse guibg=#3e445e guifg=#0f1117
-highlight! StorageClass ctermfg=110 guifg=#84a0c6
+highlight! StorageClass ctermfg=110 guifg=#C792EA
 highlight! String ctermfg=109 guifg=#89b8c2
-highlight! Structure ctermfg=110 guifg=#84a0c6
+highlight! Structure ctermfg=110 guifg=#C792EA
 highlight! TabLine cterm=NONE ctermbg=245 ctermfg=234 gui=NONE guibg=#818596 guifg=#17171b
 highlight! TabLineFill cterm=reverse ctermbg=234 ctermfg=245 gui=reverse guibg=#17171b guifg=#818596
 highlight! TabLineSel cterm=NONE ctermbg=234 ctermfg=252 gui=NONE guibg=#161821 guifg=#9a9ca5
 highlight! Title ctermfg=216 gui=NONE guifg=#e2a478
 highlight! Todo ctermbg=234 ctermfg=150 guibg=#45493e guifg=#b4be82
-highlight! Type ctermfg=110 gui=NONE guifg=#84a0c6
-highlight! Underlined cterm=underline ctermfg=110 gui=underline guifg=#84a0c6 term=underline
+highlight! Type ctermfg=110 gui=NONE guifg=#C792EA
+highlight! Underlined cterm=underline ctermfg=110 gui=underline guifg=#C792EA term=underline
 highlight! VertSplit cterm=NONE ctermbg=233 ctermfg=233 gui=NONE guibg=#0f1117 guifg=#0f1117
 highlight! Visual ctermbg=236 guibg=#272c42
 highlight! WildMenu ctermbg=255 ctermfg=234 guibg=#d4d5db guifg=#17171b
@@ -207,7 +207,7 @@ if has('nvim')
 	let g:terminal_color_1 = '#e27878'
 	let g:terminal_color_2 = '#b4be82'
 	let g:terminal_color_3 = '#e2a478'
-	let g:terminal_color_4 = '#84a0c6'
+	let g:terminal_color_4 = '#C792EA'
 	let g:terminal_color_5 = '#a093c7'
 	let g:terminal_color_6 = '#89b8c2'
 	let g:terminal_color_7 = '#c6c8d1'
@@ -225,7 +225,7 @@ else
 		\ '#e27878',
 		\ '#b4be82',
 		\ '#e2a478',
-		\ '#84a0c6',
+		\ '#C792EA',
 		\ '#a093c7',
 		\ '#89b8c2',
 		\ '#c6c8d1',
@@ -240,23 +240,23 @@ else
 	\ ]
 endif
 
-" Overrides.
-highlight! Cursor ctermbg=252 ctermfg=234 guibg=#c6c8d1 guifg=#131315
-highlight! EndOfBuffer ctermbg=234 ctermfg=236 guibg=#131315 guifg=#242940
-highlight! EndOfBuffer ctermfg=bg guifg=bg | " Hide tilde symbols for all buffers.
-highlight! Error ctermbg=234 ctermfg=203 guibg=#131315 guifg=#e27878
-highlight! ErrorMsg ctermbg=234 ctermfg=203 guibg=#131315 guifg=#e27878
-highlight! NonText ctermbg=234 ctermfg=236 guibg=#131315 guifg=#242940
-highlight! Normal ctermbg=234 ctermfg=252 guibg=#131315 guifg=#c6c8d1
-highlight! SpecialKey ctermbg=234 ctermfg=236 guibg=#131315 guifg=#242940
-highlight! StatusLine ctermbg=243 ctermfg=238 guibg=#818596 guifg=#131315
-highlight! StatusLineNC ctermbg=243 ctermfg=237 guibg=#3e445e guifg=#131315
+" Overrides."
+highlight! Cursor ctermbg=252 ctermfg=234 guibg=#c6c8d1 guifg=#1e1e30
+highlight! EndOfBuffer ctermbg=234 ctermfg=236 guibg=#1e1e30 guifg=#242940
+highlight! EndOfBuffer ctermfg=bg guifg=bg | " Hide tilde symbols for all buffers."
+highlight! Error ctermbg=234 ctermfg=203 guibg=#1e1e30 guifg=#e27878
+highlight! ErrorMsg ctermbg=234 ctermfg=203 guibg=#1e1e30 guifg=#e27878
+highlight! NonText ctermbg=234 ctermfg=236 guibg=#1e1e30 guifg=#242940
+highlight! Normal ctermbg=234 ctermfg=252 guibg=#1e1e30 guifg=#c6c8d1
+highlight! SpecialKey ctermbg=234 ctermfg=236 guibg=#1e1e30 guifg=#242940
+highlight! StatusLine ctermbg=243 ctermfg=238 guibg=#818596 guifg=#1e1e30
+highlight! StatusLineNC ctermbg=243 ctermfg=237 guibg=#3e445e guifg=#1e1e30
 highlight! TabLine cterm=NONE ctermbg=245 ctermfg=234 gui=NONE guibg=#1e2132 guifg=#818596
 highlight! TabLineFill cterm=reverse ctermbg=234 ctermfg=245 gui=NONE guibg=#1e2132 guifg=#818596
 highlight! TabLineSel cterm=NONE ctermbg=234 ctermfg=252 gui=NONE guibg=#3e445e guifg=#9a9ca5
-highlight! WarningMsg ctermbg=234 ctermfg=203 guibg=#131315 guifg=#e27878
-highlight! ALEErrorSign ctermbg=235 ctermfg=203 guibg=#131315 guifg=#e27878
-highlight! ALEWarningSign ctermbg=235 ctermfg=216 guibg=#131315 guifg=#e2a478
+highlight! WarningMsg ctermbg=234 ctermfg=203 guibg=#1e1e30 guifg=#e27878
+highlight! ALEErrorSign ctermbg=235 ctermfg=203 guibg=#1e1e30 guifg=#e27878
+highlight! ALEWarningSign ctermbg=235 ctermfg=216 guibg=#1e1e30 guifg=#e2a478
 execute 'highlight! CursorLineNr guibg=' . synIDattr(synIDtrans(hlID('CursorLine')), 'bg', 'gui') . ' ctermbg=' . synIDattr(synIDtrans(hlID('CursorLine')), 'bg', 'cterm')
 execute 'highlight! SignColumn guibg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'gui') . ' ctermbg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'cterm')
 execute 'highlight! VertSplit guibg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'gui') . ' ctermbg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'cterm')
