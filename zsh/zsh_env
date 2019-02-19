@@ -19,7 +19,7 @@ else
 fi
 
 # Path
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:"
+export PATH="/usr/local/bin:/usr/local/sbin:~/bin:$PATH"
 export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/.rvm/bin:$HOME/.composer/vendor/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
@@ -48,9 +48,10 @@ fi
 # nvm
 export NVM_DIR="$HOME/.nvm"
 export NVM_LAZY_LOAD=true
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
 
 # For pyenv
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PATH:$PYENV_ROOT/bin"
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
