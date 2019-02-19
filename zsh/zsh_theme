@@ -49,7 +49,6 @@ spaceship_react() {
     dir
     git
     react
-    node
     php
     line_sep
     battery
@@ -67,7 +66,7 @@ random_emoji() {
   echo -n "$EMOJI[$RANDOM%$#EMOJI+1]"
 }
 
-SPACESHIP_PROMPT_FIRST_PREFIX_SHOW=true
+# SPACESHIP_PROMPT_FIRST_PREFIX_SHOW=true
 SPACESHIP_DIR_TRUNC='1' # show only last directory
 SPACESHIP_DIR_TRUNC_PREFIX="┌─[%b "
 SPACESHIP_CHAR_SYMBOL="$(random_emoji) %b"
@@ -75,7 +74,7 @@ SPACESHIP_DIR_SUFFIX=" ] "
 SPACESHIP_BATTERY_SHOW='always'
 SPACESHIP_VI_MODE_SHOW=false
 SPACESHIP_PACKAGE_SHOW=false
-SPACESHIP_NODE_SHOW=true
+SPACESHIP_NODE_SHOW=false
 SPACESHIP_PHP_SHOW=true
 
 # EXIT CODE
