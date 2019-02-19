@@ -34,7 +34,6 @@ Plugin 'thinca/vim-textobj-function-javascript'           " Add JS function obje
 Plugin 'FooSoft/vim-argwrap'                              " Collapse or expand arguments for a function"
 Plugin 'sunaku/vim-dasht'                                 " Show documentation for the word under the cursor"
 Plugin 'sunaku/vim-hicterm'                               " Displays cterm colors"
-Plugin 'edkolev/tmuxline.vim'                             " tmux line"
 
 " Programming Support (Formatter, Linter,Highlighting, Snippets) "
 Plugin 'pangloss/vim-javascript'                          " Javascript"
