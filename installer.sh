@@ -41,6 +41,7 @@ export ZSH_DOTFILES=${1:-"$HOME/dotfiles"}
 GITHUB_REPO_URL_BASE="https://github.com/AhmedAbdulrahman/dotfiles"
 HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
 LINUXBREW_INSTALLER_URL="https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh"
+brew="/usr/local/bin/brew"
 
 # get the dir of the current script
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SCRIPT_DIR" || exit 1
@@ -90,7 +91,7 @@ install_cli_tools() {
 
     xcode-select --install
   else
-    success "Seems like you have installed Command Line Tools. Skipping..."
+    success "You already have Command Line Tools installed, nothing to do here skipping ... 💨"
   fi
 
   finish
@@ -102,8 +103,8 @@ install_package_manager() {
   if [ `uname` == 'Darwin' ]; then
 
     info "Checking if Homebrew is installed..."
-
-    if ! _exists brew; then
+    
+    if ! _exists $brew; then
       echo "Seems like you don't have Homebrew installed!"
       read -p "Do you agree to proceed with Homebrew installation? [y/N] " -n 1 answer
       echo
@@ -113,13 +114,16 @@ install_package_manager() {
       fi
 
       info "Installing Homebrew..."
+      echo "This may take a while"
+      
       ruby -e "$(curl -fsSL ${HOMEBREW_INSTALLER_URL})"
       # Make sure we’re using the latest Homebrew.
-      brew update
+      $brew update
       # Upgrade any already-installed formulae.
-      brew upgrade --all
+      $brew upgrade --all
     else
-      success "You already have Homebrew installed. Skipping ... 💨"
+      success "You already have Homebrew installed, nothing to do here skipping ... 💨"
+      $brew -v
     fi
 
   # Linux 
@@ -137,6 +141,8 @@ install_package_manager() {
       fi
 
       info "Installing Linuxbrew..."
+      echo "This may take a while"
+
       ruby -e "$(curl -fsSL ${LINUXBREW_INSTALLER_URL})"
       # Make sure we’re using the latest Homebrew.
       brew update
@@ -151,7 +157,7 @@ install_package_manager() {
       ln -s /usr/lib64/libstdc++.so.6 /lib64/libgcc_s.so.1 $HOME/.linuxbrew/lib/
 
     else
-      success "You already have Linuxbrew installed. Skipping... 💨"
+      success "You already have Linuxbrew installed, nothing to do here skipping... 💨"
     fi
   
   fi
@@ -183,7 +189,7 @@ install_git() {
       exit 1
     fi
   else
-    success "You already have Git installed. Skipping..."
+    success "You already have Git installed, nothing to do here skipping ... 💨"
   fi
 
   finish
@@ -211,7 +217,7 @@ install_zsh() {
       exit 1
     fi
   else
-    success "You already have Zsh installed. Skipping..."
+    success "You already have Zsh installed, nothing to do here skipping ... 💨"
   fi
 
   if _exists zsh; then
@@ -221,26 +227,28 @@ install_zsh() {
     echo
 
     chsh -s "$(command -v zsh)" || error "Error: Cannot set Zsh as default shell!"
+    echo "You'll need to log out for this to take effect"
   fi
 
   finish
 }
 
 install_dotfiles() {
-  info "Trying to detect installed zsh dotfiles in $ZSH_DOTFILES..."
+  info "Trying to detect if Ahmed's dotfiles is installed in $ZSH_DOTFILES..."
 
   if [ ! -d $ZSH_DOTFILES ]; then
-    echo "Seems like you don't have zsh dotfiles installed!"
-    read -p "Do you agree to proceed with zsh dotfiles installation? [y/N] " -n 1 answer
+    echo "Seems like you don't have Ahmed's dotfiles installed!"
+    read -p "Do you agree to proceed with Ahmed's dotfiles installation? [y/N] " -n 1 answer
     echo
     if [ ${answer} != "y" ]; then
       exit 1
     fi
 
+    echo "Cloning Ahmed's dotfiles into dotfiles"
     git clone --recursive "$GITHUB_REPO_URL_BASE.git" $ZSH_DOTFILES
     
   else
-    success "You already have zsh dotfiles installed. Skipping..."
+    success "You already have Ahmed's dotfiles installed. Skipping..."
   fi
 
   read -p "Enter files you would like to install separated by 'space' : " input
@@ -256,6 +264,7 @@ install_dotfiles() {
 }
 
 bootstrap() {
+  echo "Seems like you don't have Ahmed's dotfiles installed!"
   read -p "Would you like to bootstrap your environment by installing Homebrew formulae? [y/N] " -n 1 answer
   echo
   if [ ${answer} != "y" ]; then
@@ -282,6 +291,7 @@ on_finish() {
   echo -e  $RESET$BOLD'""  ""'$RESET
   echo
   info "P.S: Don't forget to restart a terminal :)"
+  echo "Cheers"
   echo
 }
 
