@@ -79,6 +79,9 @@ let g:NERDTreeMapUpdir = ''
 nnoremap <silent> <Leader>v :NERDTreeFind<CR>
 map <Leader>t :NERDTreeToggle<CR>
 
+map <C-Right> :tabn<cr>
+map <C-Left> :tabp<cr>
+
 augroup nerdtreesettings
 	autocmd!
 
