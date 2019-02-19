@@ -13,7 +13,7 @@ let g:fzf_commands_expect = 'alt-enter'
 
 " Set custom layout." 
 let g:fzf_layout = {
-    \ 'down': '75%',
+    \ 'down': '55%',
 \ }
 
 " Set actions manually." 
