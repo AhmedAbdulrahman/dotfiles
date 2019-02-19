@@ -10,13 +10,16 @@ SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SCRIPT_DIR" || 
 
 mkdir -p ~/.vim
 
-ln -sf  "$SCRIPT_DIR/vimrc"           ~/.vimrc
-ln -sf  "$SCRIPT_DIR/vim_plugins"     ~/.vim_plugins
+ln -sf  "$SCRIPT_DIR/vimrc"             ~/.vimrc
+ln -sf  "$SCRIPT_DIR/vim_plugins"       ~/.vim_plugins
+cp -r   "$SCRIPT_DIR/cache"             ~/.vim/cache
 
 for dir in "$SCRIPT_DIR"/*/; do
+  if [ ! $(basename "$dir") == "cache" ] ; then
+    ln -sf "$SCRIPT_DIR/$(basename "$dir")" "$HOME/.vim/$(basename "$dir")"
+  fi
   # echo "$SCRIPT_DIR/$(basename "$dir")" "$HOME/.vim/$(basename "$dir")"
   # ln -sf "$dir" "$HOME/.vim/$(basename "$dir")"
-  ln -sf "$SCRIPT_DIR/$(basename "$dir")" "$HOME/.vim/$(basename "$dir")"
 done
 
 # # Check If Vundle doesn't exist, install it
