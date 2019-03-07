@@ -23,9 +23,7 @@ Missing feature? 🍴 Fork this repo and make it better!
 
 #### ⚠️ Disclaimer ⚠️
 
-These are **my** dotfiles, so please feel free to take anything you want but do so **at your own risk**. 🙂 You should first fork this repository, review the code, and remove the things you don’t want or need. Don’t blindly use stuff unless you know what that entails.
-
-Also — and this is just my personal opinion — I can **highly** recommend setting up your own `.files` (instead of forking an existing project) and moving along step by step. There is much to be learned and no better feeling than having full control over the things that are happening and being aware where everything is and what exactly it does. But that’s just me. 🙂
+These are **my** dotfiles, so please feel free to take anything you want but do so **at your own risk** 😉.
 
 #### Clone the repo
 
@@ -48,18 +46,11 @@ bash -c "$(wget https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/mast
 On a fresh install of macOS, run:
 
 ```
-sudo softwareupdate -i -a
-xcode-select --install
-```
-
-Then clone the repo and run `installer.sh`:
-
-```
 git clone git@github.com:AhmedAbdulrahman/dotfiles.git ~/dotfiles
 source ~/dotfiles/installer.sh
 ```
 
-#### Install Configuration
+#### Configurations
 
 You will be prompt with few questions, answer based on your need then type what config file you want to install see below:
 
@@ -82,6 +73,7 @@ These plugins are included when you install `Oh-My-Zsh` Framework:
 
 ### External Plugins - Zsh Improvements
 
+- [`spaceship`](https://github.com/denysdovhan/spaceship-prompt) — Minimalistic, powerful and extremely customizable Zsh prompt. It combines everything you may need for convenient work, without unnecessary complications, like a real spaceship.
 - [`forgit`](https://github.com/wfxr/forgit) — utility tool for git taking advantage of fuzzy finder fzf.
 - [`git-extras`](https://github.com/tj/git-extras) — Small git utilities
 - [`diff-so-fancy`](https://github.com/so-fancy/diff-so-fancy) — Makes your diff's human readable instead of machine readable
@@ -96,10 +88,6 @@ These plugins are included when you install `Oh-My-Zsh` Framework:
 - [`k`](https://github.com/supercrabtree/k) — Makes directory listings more readable, adding a bit of color and some git status information on files and directories.
 - [`alias-tips`](https://github.com/djui/alias-tips) — Cool utility that helps remembering those aliases you defined once ;)
 - [`almostontop`](https://github.com/Valiev/almostontop) — Utility that clears previous command output every time before new command executed in shell
-
-### Theme
-
-- [Spaceship](https://github.com/denysdovhan/spaceship-prompt) — Minimalistic, powerful and extremely customizable Zsh prompt. It combines everything you may need for convenient work, without unnecessary complications, like a real spaceship.
 
 ## License
 

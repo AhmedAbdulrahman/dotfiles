@@ -53,7 +53,7 @@ source ~/.zsh_theme 2>/dev/null
 # source $ZSH/oh-my-zsh.sh
 
 (( $+commands[thefuck] )) && source <(thefuck --alias 2>/dev/null)
-(( $+commands[kubectl] )) && source <(kubectl completion zsh)
+# (( $+commands[kubectl] )) && source <(kubectl completion zsh)
 (( $+commands[pyenv]   )) && source <(pyenv init -)
 
 return 0
