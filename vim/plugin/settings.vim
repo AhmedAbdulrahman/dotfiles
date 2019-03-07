@@ -14,7 +14,7 @@ execute printf('set viminfo+=n~/.vim/cache/share/%s', has('nvim') ? 'nviminfo' :
 " Colors "
 set t_Co=256
 set background=dark " Choose dark colors if available. "
-colorscheme night-owl " Color scheme. "
+colorscheme minimal-dark " Color scheme. "
 
 if (has("termguicolors"))
  set termguicolors " Enable True Color support. "
