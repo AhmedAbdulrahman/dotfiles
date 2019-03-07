@@ -2,27 +2,34 @@
 k = hs.hotkey.modal.new({}, "F17")
 
 -- HYPER+L: Open news.google.com in the default browser
--- lfun = function()
---   news = "app = Application.currentApplication(); app.includeStandardAdditions = true; app.doShellScript('open http://news.google.com')"
---   hs.osascript.javascript(news)
---   k.triggered = true
--- end
--- k:bind('', 'l', nil, lfun)
+lfun = function()
+  news = "app = Application.currentApplication(); app.includeStandardAdditions = true; app.doShellScript('open http://news.google.com')"
+  hs.osascript.javascript(news)
+  k.triggered = true
+end
+k:bind('', 'n', nil, lfun)
 
-k:bind('', 'space', function() hs.application.launchOrFocus("iTerm") end)
-k:bind('', 'i', function() hs.application.launchOrFocus("iTerm") end)
-k:bind('', 's', function() hs.application.launchOrFocus("Slack") end)
-k:bind('', 'm', function() hs.application.launchOrFocus("Spark") end)
-k:bind('', 'c', function() hs.application.launchOrFocus("Google Chrome") end)
-k:bind('shift', 'w', function() hs.application.launchOrFocus("FirefoxDeveloperEdition") end)
-k:bind('', 'd', function() hs.application.launchOrFocus("Discord") end)
-k:bind('', 'f', function() hs.application.launchOrFocus("Finder") end)
-k:bind('', '1', function() hs.application.launchOrFocus("Sketch") end)
-k:bind('', 'p', function() hs.application.launchOrFocus("Preview") end)
+local focusKeys = {
+  S='Slack',
+  s='Sketch',
+  c='Google Chrome',
+  shift='iTerm',
+  e='Simulator',
+  m='Spark',
+  d='Discord',
+  f='Finder',
+  m='Spark',
+}
 
--- require('keyboard')
--- require('watcher')
--- require('position')
+for key in pairs(focusKeys) do
+  k:bind('', key, function()
+    hs.application.launchOrFocus(focusKeys[key])
+  end)
+end
+
+k:bind('', "r", function()
+  hs.reload()
+end)
 
 -- Enter Hyper Mode when F18 (Hyper/Capslock) is pressed
 pressedF18 = function()
