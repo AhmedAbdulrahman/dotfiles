@@ -10,15 +10,13 @@ end
 k:bind('', 'n', nil, lfun)
 
 local focusKeys = {
-  S='Slack',
-  s='Sketch',
+  s='Slack',
   c='Google Chrome',
-  shift='iTerm',
+  i='iTerm',
   e='Simulator',
   m='Spark',
   d='Discord',
   f='Finder',
-  m='Spark',
 }
 
 for key in pairs(focusKeys) do
