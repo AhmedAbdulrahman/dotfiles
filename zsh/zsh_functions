@@ -17,20 +17,25 @@ function code {
     fi
 }
 
-# Change dir to active Finder window, else ~/
-function cdf() {
-  local fPath=`osascript -e '
-  tell app "finder"
-  try
-    set folderPath to (folder of the front window as alias)
-  on error
-    set folderPath to (path to home folder as alias)
-  end try
-  POSIX path of folderPath
-  end tell'◊
-  `;
-  echo "cd $fPath";
-  cd "$fPath" > /dev/null
+# Copy file with a progress bar
+function cpp()
+{
+	set -e
+	strace -q -ewrite cp -- "${1}" "${2}" 2>&1 \
+	| awk '{
+	count += $NF
+	if (count % 10 == 0) {
+		percent = count / total_size * 100
+		printf "%3d%% [", percent
+		for (i=0;i<=percent;i++)
+			printf "="
+			printf ">"
+			for (i=percent;i<100;i++)
+				printf " "
+				printf "]\r"
+			}
+		}
+	END { print "" }' total_size=$(stat -c '%s' "${1}") count=0
 }
 
 # Start an HTTP server from a directory, optionally specifying the port
@@ -52,16 +57,6 @@ function phpserver() {
   fi
 }
 
-# Get a fresh copy of Webpack Boilerplate
-webpack-boilerplate(){
-    git clone git@github.com:jesperorb/webpack-boilerplate.git $1 && cd $1 && yarn && npm run dev
-}
-
-# Get gitignore preset
-function gi() {
-    curl -s "https://www.gitignore.io/api/$*"
-}
-
 # Syntax-highlight JSON strings or files
 function json() {
   if [ -p /dev/stdin ]; then
@@ -73,14 +68,24 @@ function json() {
   fi
 }
 
+# Goes up a specified number of directories  (i.e. up 4)
+function up() {
+	local d=""
+	limit=$1
+	for ((i=1 ; i <= limit ; i++))
+		do
+			d=$d/..
+		done
+	d=$(echo $d | sed 's/^\///')
+	if [ -z "$d" ]; then
+		d=..
+	fi
+	cd $d
+}
+
 # Search google from command line!
 function gsearch() {
     open "http://www.google.com/search?q=$*"
-}
-
-# Google's "I'm feeling lucky" search shortcut
-function lucky() {
-    open "https://www.google.com/search?btnI=1&q=$*"
 }
 
 # Usage: clone <GITHUB_REPO_URL>
@@ -194,6 +199,14 @@ function rimages () {
     docker rmi $(docker images -a -q)
 }
 
+# Trim leading and trailing spaces (for scripts)
+function trim() {
+	local var=$@
+	var="${var#"${var%%[![:space:]]*}"}"  # remove leading whitespace characters
+	var="${var%"${var##*[![:space:]]}"}"  # remove trailing whitespace characters
+	echo -n "$var"
+}
+
 #remove everything in Docker
 function killdocker () {
     docker kill \$(docker ps -q) && docker rm \$(docker ps -a -q) && docker rmi \$(docker images -q)
@@ -232,14 +245,54 @@ function halt-all-except-current() {
 }
 
 # PHP
-function artisan {
+function artisan() {
     ( php artisan $* )
 }
 
-function phpunit {
+function phpunit() {
     ( vendor/bin/phpunit $* )
 }
 
-function phpunit-watch {
+function phpunit-watch() {
     ( watch -t -n 1 -c -x vendor/bin/phpunit --colors=always --no-coverage $2 -d "ls -l $1" )
+}
+
+# Edit the PHP configuration file
+function phpconfig() {
+	if [ -f /etc/php.ini ]; then
+		vim /etc/php.ini
+	elif [ -f /etc/php/php.ini ]; then
+		vim /etc/php/php.ini
+	elif [ -f /etc/php5/php.ini ]; then
+		vim /etc/php5/php.ini
+	elif [ -f /usr/bin/php5/bin/php.ini ]; then
+		vim /usr/bin/php5/bin/php.ini
+	elif [ -f /etc/php5/apache2/php.ini ]; then
+		vim /etc/php5/apache2/php.ini
+	else
+		echo "Error: php.ini file could not be found."
+		echo "Searching for possible locations:"
+		sudo updatedb && locate php.ini
+	fi
+}
+
+# Edit the MySQL configuration file
+function mysqlconfig() {
+	if [ -f /etc/my.cnf ]; then
+		vim /etc/my.cnf
+	elif [ -f /etc/mysql/my.cnf ]; then
+		vim /etc/mysql/my.cnf
+	elif [ -f /usr/local/etc/my.cnf ]; then
+		vim /usr/local/etc/my.cnf
+	elif [ -f /usr/bin/mysql/my.cnf ]; then
+		vim /usr/bin/mysql/my.cnf
+	elif [ -f ~/my.cnf ]; then
+		vim ~/my.cnf
+	elif [ -f ~/.my.cnf ]; then
+		vim ~/.my.cnf
+	else
+		echo "Error: my.cnf file could not be found."
+		echo "Searching for possible locations:"
+		sudo updatedb && locate my.cnf
+	fi
 }
