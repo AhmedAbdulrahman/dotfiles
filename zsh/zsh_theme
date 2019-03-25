@@ -32,7 +32,7 @@ spaceship_react() {
 
   # Show REACT status only inside an NODE/NPM project
   # [[ -f package.json || -d node_modules ]] && return
-  
+
   local react_version=$(_is_react_project "react")
 
   [[ $react_version == "undefined" || $react_version == "" || $react_version == "null" ]] && return
@@ -49,9 +49,7 @@ spaceship_react() {
     dir
     git
     react
-    php
     line_sep
-    battery
     char
   )
 
@@ -60,7 +58,7 @@ spaceship_react() {
 # Generate Random Emojis
 # ------------------------------------------------------------------------------
 
-EMOJI=(👻 🐦 🚀 🐞 🎨 🍕 🐭 👽 ☕️ 🔬 💀 👀 🐼 🐶 🐬 🐧 🐳 🍔 🍣 🍻 🔮 💰 💎 💾 💞 🍪 🌞 🌍 🐌 🐓 🍄 )
+EMOJI=(👻 🚀 🐞 🎨 🍕 🐭 ☕️ 💀 👀 🐼 🐶 🐬 🐳 💰 💞 🍪 🐌 🍄 )
 
 random_emoji() {
   echo -n "$EMOJI[$RANDOM%$#EMOJI+1]"
@@ -71,11 +69,6 @@ SPACESHIP_DIR_TRUNC='1' # show only last directory
 SPACESHIP_DIR_TRUNC_PREFIX="┌─[%b "
 SPACESHIP_CHAR_SYMBOL="$(random_emoji) %b"
 SPACESHIP_DIR_SUFFIX=" ] "
-SPACESHIP_BATTERY_SHOW='always'
-SPACESHIP_VI_MODE_SHOW=false
-SPACESHIP_PACKAGE_SHOW=false
-SPACESHIP_NODE_SHOW=false
-SPACESHIP_PHP_SHOW=true
 
 # EXIT CODE
 SPACESHIP_EXIT_CODE_SHOW=true
