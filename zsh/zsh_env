@@ -1,10 +1,5 @@
 #!/usr/bin/env zsh
 
-# skip_global_compinit=1
-setopt combiningchars
-setopt no_global_rcs
-echo 'ZSHENV Loaded'
-
 # Get os info
 if (( $+commands[lsb_release] )); then
     export OSNAME=$(lsb_release -si)
@@ -56,6 +51,9 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PATH:$PYENV_ROOT/bin"
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
 
+export ANDROID_HOME="/Users/$USER/Library/Android/sdk"
+export PATH="${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+
 # For bat
 export BAT_CONFIG_PATH="$HOME/.config/bat/config"
 
@@ -70,10 +68,10 @@ export LC_CTYPE="${LANGUAGE}"
 # Editor
 # For Terminal
 export EDITOR=vim
-export CVSEDITOR="${EDITOR}"
-export GIT_EDITOR="${EDITOR}"
+export CVSEDITOR=$EDITOR
+export GIT_EDITOR=$EDITOR
 # For GUI
-export VISUAL="${EDITOR}"
+export VISUAL=$EDITOR
 
 # Default editor for local and remote sessions
 if [[ -n "$SSH_CONNECTION" ]]; then
@@ -88,7 +86,8 @@ else
 fi
 
 # Less
-export LESS="-R -f -F -X -i -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]"
+#export LESS="-R -f -F -X -i -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]"
+export LESS='-F -g -i -M -R -S -w -X -z-4'
 export LESSCHARSET="utf-8"
 # Pager
 export PAGER="${commands[less]:-$PAGER}"
