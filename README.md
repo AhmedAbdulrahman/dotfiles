@@ -20,7 +20,9 @@ There are tons of useful things in here:
 Missing feature? 🍴 Fork this repo and make it better!
 
 ## Resources
+
 This repo is inspired and influenced by
+
 - GitHub 💞 [dotfiles](http://dotfiles.github.io/)
 - Niclas Pahlfer’s [dotfiles](https://github.com/Npahlfer)
 - Mathias Bynens’ [dotfiles](https://github.com/mathiasbynens/dotfiles)
@@ -29,7 +31,7 @@ This repo is inspired and influenced by
 - Adam Eivy’s [dotfiles](https://github.com/atomantic/dotfiles)
 - Matthew J Morrison’s [dotfiles](https://github.com/mattjmorrison/dotfiles)
 
-*It’s not a fork of any, since I wanted to build from scratch and really only include what I need, while improving my understanding of how things work along the way.*
+_It’s not a fork of any, since I wanted to build from scratch and really only include what I need, while improving my understanding of how things work along the way._
 
 ## Installation
 
