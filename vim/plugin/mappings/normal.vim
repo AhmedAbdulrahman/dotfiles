@@ -4,7 +4,7 @@ nnoremap <C-k> 5k
 nnoremap <C-h> 5h
 nnoremap <C-l> 5l
 
-" Always search with 'very magic' mode." 
+" Always search with 'very magic' mode."
 nnoremap / /\v
 nnoremap ? ?\v
 
@@ -12,31 +12,31 @@ nnoremap ? ?\v
 nnoremap <S-j> :m .+1<CR>==
 nnoremap <S-k> :m .-2<CR>==
 
-" Refactor word under cursor." 
+" Refactor word under cursor."
 nnoremap c* *``cgn
 nnoremap c# #``cgN
 
 "copy line and leave a marker"
 nnoremap yy yymy
 
-" Alternative mappings for finding the next pair." 
+" Alternative mappings for finding the next pair."
 nnoremap <C-n> %
 xnoremap <C-n> %
 onoremap <C-n> %
 
-" Construct grep search." 
+" Construct grep search."
 nnoremap gs :Search ''<Left>
 nnoremap gS :Search! ''<Left>
 
-" Correct bad indent while pasting." 
+" Correct bad indent while pasting."
 nnoremap gp p=`]
 nnoremap gP P=`]
 
-" Correct previous and next spelling mistakes." 
+" Correct previous and next spelling mistakes."
 nnoremap [gs [s1z=
 nnoremap ]gs ]s1z=
 
-" Scroll viewport faster." 
+" Scroll viewport faster."
 nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
 
@@ -45,13 +45,18 @@ nnoremap <Up>    <NOP>
 nnoremap <Down>  <NOP>
 
 " Split current window"
-nnoremap <C-w>- :split file<CR>
-nnoremap <C-w>\ :vsplit file<CR>
+nnoremap <C-w>n :new file<CR>
+nnoremap <C-w>s :split file<CR>
+nnoremap <C-w>v :vsplit file<CR>
 nnoremap <leader>- :split file<CR>
 nnoremap <leader>\ :vsplit file<CR>
 
+" Close Split"
+nnoremap <C-w>c :close<CR>
+nnoremap <C-w>q :q<CR>
+nnoremap <C-w>o :only<CR>
 
-" Resize current window sizes." 
+"Resize window sizes."
 nnoremap <S-Up> 2<C-w>+
 nnoremap <S-Down> 2<C-w>-
 nnoremap <S-Right> 2<C-w>>
@@ -64,11 +69,11 @@ nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 nnoremap <Leader>8 *#
 nnoremap <Leader>3 #*
 
-" Store relative line number jumps in the jumplist if they exceed a threshold." 
+" Store relative line number jumps in the jumplist if they exceed a threshold."
 nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
 nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
-" Add [count] blank lines above or below the cursor." 
+" Add [count] blank lines above or below the cursor."
 nnoremap [<Space> :<C-u>put! =repeat(nr2char(10), v:count1) <Bar> ']+1<Enter>
 nnoremap ]<Space> :<C-u>put =repeat(nr2char(10), v:count1) <Bar> '[-1<Enter>
 
@@ -87,7 +92,7 @@ nnoremap <leader>z ZZ
 nnoremap <leader>w :w<CR>
 
 "Close pane using <C-w>"
-noremap <silent> <C-w> :call <SID>ahmed#autocmds#closetab#()<Cr>
+"noremap <silent> <C-w> :call <SID>ahmed#autocmds#closetab#()<Cr>
 
 " Tab managment "
 map <leader>tn :tabnew<cr>
