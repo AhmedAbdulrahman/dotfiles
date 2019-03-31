@@ -8,17 +8,8 @@ let $LANG = 'en_US'
 set langmenu=en_US
 
 " Shared Data "
-" set viminfo=!,'100,<50,s10,h,'" 
+" set viminfo=!,'100,<50,s10,h,'"
 execute printf('set viminfo+=n~/.vim/cache/share/%s', has('nvim') ? 'nviminfo' : 'viminfo')
-
-" Colors "
-set t_Co=256
-set background=dark " Choose dark colors if available. "
-colorscheme minimal-dark " Color scheme. "
-
-if (has("termguicolors"))
- set termguicolors " Enable True Color support. "
-endif
 
 " Behaviour "
 set backspace=indent,eol,start " Allow backspacing over everything in insert mode. "
@@ -40,7 +31,8 @@ set nolangremap " Setting 'langmap' does not apply to characters resulting from 
 set noruler " Disable showing line numbers in command line. "
 set noshowmatch " When a bracket is inserted, do not jump to the matching one. "
 set nostartofline " Prevent the cursor from changing the current column when jumping. "
-set nowrap " Prevent wrapping for long lines. "
+set wrap " Prevent wrapping for long lines. "
+set nolist
 set nrformats=bin,hex " Only accept binary and hexadecimal numbers. "
 set pumheight=10 " Maximum number of items to show in the pop-up menu for completion. "
 set regexpengine=1 " Use old regular expression engine. "
