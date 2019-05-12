@@ -17,3 +17,9 @@ inoremap ``   ``<Left>
 
 "save using <C-s> and back to normal mode"
 inoremap <C-s> <Esc>:write<Cr>
+
+"This keybinding allows you to jump to the end of the line and we are switched back to insert mode"
+inoremap <C-e> <C-o>$
+
+"This keybinding allows you to instead jump to beginning of a line while in insert mode."
+inoremap <C-a> <C-o>0
