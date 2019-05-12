@@ -42,9 +42,9 @@
 [color]
 	ui = auto
 [color "diff"]
-	meta = yellow bold
-	commit = green bold
+	meta = 39
 	frag = magenta bold
+	commit = "222 bold"
 	old = red bold
 	new = green bold
 	whitespace = red reverse
@@ -60,14 +60,10 @@
 	local = yellow
 	remote = green
 [color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
-
-# git mergetool
-[merge]
-	tool = opendiff
-	renameLimit = 0
+	added = green
+	changed = red
+	untracked = yellow
+	updated= green
 
 # rewrites of repo paths
 [url "git@github.com:"]
@@ -85,15 +81,6 @@
 	
 [url "git://gist.github.com/"]
 	insteadOf = "gist:"
-
-# correct typos
-[help]
-	autocorrect = 1
-
-# push easily. http://stackoverflow.com/a/23918418/89484
-[push]
-	default = current
-	followTags = true
 
 # use separate file for username / github token / etc
 [include]
