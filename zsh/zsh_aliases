@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
-#!/usr/bin/env zsh
 
 # --- Moving around ---
 alias ..="cd .."
 alias ...="cd ../.."
 alias cd..="cd .."
 alias oo='open .'
+alias cc="../.."
 
 # --- Shortcust ---
 alias dot='cd ~/dotfiles'
@@ -60,24 +60,23 @@ alias ypm="echo \"Installing deps without lockfile and ignoring engines\" && yar
 # --- Git ---
 alias git=hub
 alias g='git'
-alias add="git add"
-alias gb="git branch"
-alias gba="git branch -a"
+alias add="ga"
+alias log="glo"
+alias branch="git branch"
 alias commit='git commit -m'
 alias amend="git commit --amend"
-alias gco="git checkout"
-alias gcb='gco -b'
-alias master="git checkout master"
-alias develop="git checkout develop"
+alias checkout="git checkout"
+alias master="checkout master"
+alias develop="checkout develop"
 alias status="git status"
 alias push="git push"
-alias pushu='git push upstream'
-alias pull='git pull'
-alias pullu='git pull upstream'
+alias gl='git pull'
+alias glp='git pull upstream'
 alias remote='git remote'
 alias stash='git stash'
-alias save='git stash save -u'
-alias gsp='git stash pop'
+alias stashu='git stash save -u'
+alias gapply="stash apply"
+alias gpop='stash pop'
 
 alias logf='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias logs='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
@@ -91,6 +90,13 @@ alias undosoft='git reset --soft HEAD~'
 alias undohard='git reset --hard HEAD~'
 alias undopush='git push -f origin HEAD^:master'
 alias unstage='git reset --'
+alias branchd='git branch --edit-description'
+# git root
+alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
+# gist-paste filename.ext -- create private Gist from the clipboard contents
+alias gist-paste="gist --private --copy --paste --filename"  
+# gist-file filename.ext -- create private Gist from a file
+alias gist-file="gist --private --copy"  										
 
 # --- Docker ---
 alias dps='docker ps'
@@ -119,48 +125,6 @@ alias "tws"='timew start'
 alias "twp"='timew stop'
 alias "twt"='timew stop'
 
-# Resource Usage
-alias df='df -kh'
-alias du='du -kh'
-alias diskspace='du -h -d 2'
-#alias diskspace='du -s | sort -n -r |more'
-
-# Terminal
-alias "?"="pwd"
-alias c="clear "
-alias KABOOM="yarn global upgrade --latest;brew update; brew upgrade; brew cleanup -s; brew doctor"
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes;sudo rm -rfv ~/.Trash"
-alias fs="stat -f '%z bytes'"
-alias flushdns="sudo killall -HUP mDNSResponder"
-if (( $+commands[jq] )) then;
-  alias formatJSON='jq .'
-else
-  alias formatJSON='python -m json.tool'
-fi
-
-# --- IP Addresses ---
-alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
-alias localip="ipconfig getifaddr en1"
-alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
-alias myip="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \$2}'"
-alias lsof-tcp='lsof -iTCP'
-alias lsof-tcp-listen='lsof -iTCP -sTCP:LISTEN -P'
-alias hosts='sudo $EDITOR /etc/hosts'
-
-# --- Tmux ---
-# Conditional aliases
-# https://gist.github.com/sos4nt/3187620#gistcomment-1452131
-[[ $TERM == *"tmux"* ]] && alias :sp='tmux split-window'
-[[ $TERM == *"tmux"* ]] && alias :vs='tmux split-window -h'
-[[ $TERM == *"tmux"* ]] && alias ssh="TERM=xterm-256color ssh"
-[[ $TERM == *"tmux"* ]] && alias vagrant="TERM=xterm-256color vagrant"
-[[ $TERM == *"tmux"* ]] && alias brew="TERM=xterm-256color brew"
-alias tmux='tmux -2'
-alias mks='tmux kill-session -t'
-alias mkS='tmux kill-server'
-alias tn='tmux new-session -s'
-alias tl='tmux list-sessions'
-
 # --- Shell ---
 alias vv='vim $(fzf)'
 alias vi=vim
@@ -168,11 +132,39 @@ alias zcfg="vim ~/.zshrc"
 alias refresh='source ~/.zshrc; echo "Reloaded .zshrc."'
 alias less='less -r'
 alias tf='tail -f'
+alias tmux='tmux -2'
+alias mks='tmux kill-session -t'
+alias mkS='tmux kill-server'
+alias tn='tmux new-session -s'
+alias tl='tmux list-sessions'
 alias cl='clear'
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec ${SHELL} -l"
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
+# show disk human friendly numbers
+alias df='df -h'
+alias du='du -h -d 2'
+
+# --- Grep ---
+# Always enable colored `grep` output
+# Sensible defaults for grep (recursive, case-insensitive)
+alias gi='grep -r -i --color'
+# Add line numbers.
+alias gin='grep -r -i -n --color'	
+# Grep with perl regex.
+which ggrep > /dev/null 2>&1 &&\
+  alias gp='ggrep -r -P --color' ||\
+  alias gp='grep -r -P --color'
+
+# Grep git repo.
+alias greprepo='git grep --untracked'
+# Grep only files
+alias grepfiles='grep -w -i -r -l --color'
+# Grep with Lines Before and After
+alias greplines='grep -win -C 2 --color'
+ # Grep in directory with count
+alias grepdir='grep -wirc --color'
 
 # --- Applications ---
 alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
@@ -194,7 +186,7 @@ alias clean='sudo apt-get autoclean && sudo apt-get autoremove'
 # System monitoring
 alias top-cpu='top -n 10 -o cpu -O time -stats pid,command,cpu,cpu_me,time,threads,ports'
 # Trim new lines and copy to clipboard
-alias trimcopy="tr -d '\n' | pbcopy"
+alias trimcopy="tr -d '\n' | pbcopy"										
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 # Empty the Trash on all mounted volumes and the main HDD.
@@ -214,6 +206,18 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 alias rm_modules="find . -name "node_modules" -type d -prune -exec rm -rf '{}' +"
 # Recursively delete `.DS_Store` files
 alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
+
+# --- IP Addresses ---
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+# Get public ip
+alias wmip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias public-ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias local-ip="ipconfig getifaddr en1"
+alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
+alias myip="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \$2}'"
+alias lsof-tcp='lsof -iTCP'
+alias lsof-tcp-listen='lsof -iTCP -sTCP:LISTEN -P'
+alias hosts='sudo $EDITOR /etc/hosts'
 
 # One of @janmoesen’s ProTip™s HTTP requests
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
