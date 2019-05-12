@@ -7,6 +7,15 @@ set fileformats=unix " Only use Unix end-of-line format. "
 let $LANG = 'en_US'
 set langmenu=en_US
 
+
+" Colors"
+set background=dark " Choose dark colors if available."
+" If you have vim >=8.0 or Neovim >= 0.1.5"
+if (has("termguicolors"))
+ set termguicolors
+endif
+colorscheme minimal-dark " Color scheme."
+
 " Shared Data "
 " set viminfo=!,'100,<50,s10,h,'"
 execute printf('set viminfo+=n~/.vim/cache/share/%s', has('nvim') ? 'nviminfo' : 'viminfo')
@@ -16,10 +25,8 @@ set backspace=indent,eol,start " Allow backspacing over everything in insert mod
 set belloff=all " Turn off the bell upon all events. "
 set breakindent " Wrapped lines will be indented with same amount of space. "
 set clipboard=unnamedplus " Sync unnamed register with system clipboard. "
-"use default clipboard on MAC"
-if has('mac')
-    set clipboard=unnamed
-endif
+set comments= " Clear default 'comments' value, let the filetype handle it."
+
 set shell=zsh " Set ZSH as the prompt for Vim"
 set confirm " Seek for confirmation for certain commands instead of giving errors. "
 set display=lastline " As much as possible of the last line in a window will be displayed. "
@@ -31,7 +38,7 @@ set nolangremap " Setting 'langmap' does not apply to characters resulting from 
 set noruler " Disable showing line numbers in command line. "
 set noshowmatch " When a bracket is inserted, do not jump to the matching one. "
 set nostartofline " Prevent the cursor from changing the current column when jumping. "
-set wrap " Prevent wrapping for long lines. "
+set nowrap " Prevent wrapping for long lines. "
 set nolist
 set nrformats=bin,hex " Only accept binary and hexadecimal numbers. "
 set pumheight=10 " Maximum number of items to show in the pop-up menu for completion. "
@@ -139,7 +146,7 @@ set wildignorecase " Ignore case when completing in command menu. "
 set wildmenu " Command-line completion operates in an enhanced mode. "
 set wildmode=full " Wildmenu options. "
 set wildignore+=*/tmp/*,/dist/*,/node_modules/*,*.so,*.swp,*.zip "to limit ctrlp search"
-set esckeys "Allow cursor keys in insert mode"
+"set esckeys" "Allow cursor keys in insert mode"
 " Vim "
 if !has('nvim') && !has('gui')
 	" Configures the cursor style for each mode. "
@@ -155,6 +162,9 @@ endif
 if has('nvim')
 	set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor " Configures the cursor style for each mode."
 	set inccommand=nosplit " Show live substitution results as you type."
+	set fillchars+=eob:\  " Hide end of buffer tilde symbols."
+	set display+=msgsep " Only scroll lines on command line pager, not the entire screen."
+	"set wildoptions+=pum" " Display the completion matches using the popupmenu."
 endif
 
 if has('gui_running')

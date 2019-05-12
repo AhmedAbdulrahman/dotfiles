@@ -33,6 +33,9 @@ let g:NERDTreeNaturalSort = v:true
 let g:NERDTreeRemoveDirCmd = 'trash '
 let g:NERDTreeRemoveFileCmd = 'trash '
 
+" Change default statusline."
+let g:NERDTreeStatusline = '%{ahmed#statusline#nerdtree()}'
+
 " Make colors of directory icons with the same as directory names."
 highlight! link NERDTreeFlags NERDTreeDir
 
@@ -76,8 +79,11 @@ let g:NERDTreeMapToggleFilters = ''
 let g:NERDTreeMapUpdir = ''
 
 " Define mappings."
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
-map <Leader>t :NERDTreeToggle<CR>
+" nnoremap <silent> <Leader>v :NERDTreeFind<CR>"
+" nnoremap <Leader>t :NERDTreeToggle<CR>"
+
+nnoremap <silent> <Leader>f :packadd nerdtree <Bar> NERDTreeToggle <Bar> wincmd p<Enter>
+nnoremap <silent> <Leader>F :packadd nerdtree <Bar> NERDTreeFind<Enter>
 
 map <C-Right> :tabn<cr>
 map <C-Left> :tabp<cr>

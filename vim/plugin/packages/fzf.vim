@@ -1,31 +1,32 @@
 ""
-" Fuzzy finder fzf as Vim plugin." 
+" Fuzzy finder fzf as Vim plugin."
 ""
 
-" Add prefix 'Fzf' commands for grouping." 
+" Add prefix 'Fzf' commands for grouping."
 let g:fzf_command_prefix = 'F'
 
-" Jump to the existing window if possible." 
+" Jump to the existing window if possible."
 let g:fzf_buffers_jump = 1
 
-" Directly execute the command without appending anything." 
+" Directly execute the command without appending anything."
 let g:fzf_commands_expect = 'alt-enter'
 
-" Set custom layout." 
+" Set custom layout."
 let g:fzf_layout = {
     \ 'down': '55%',
 \ }
 
-" Set actions manually." 
+" Set actions manually."
 let g:fzf_action = {
 	\ 'ctrl-e': 'split',
-	\ 'ctrl-v': 'vsplit'
+	\ 'ctrl-v': 'vsplit',
+	\ 'ctrl-t': 'tab split'
 \ }
 
-" History directory." 
+" History directory."
 let g:fzf_history_dir = $HOME . '/.vim/cache/share/fzf/'
 
-" Customize `fzf` colors to match current color scheme." 
+" Customize `fzf` colors to match current color scheme."
 let g:fzf_colors = {
 	\ 'fg': ['fg', 'Normal'],
 	\ 'bg': ['bg', 'Normal'],
@@ -54,9 +55,9 @@ nnoremap <silent> <M-b> :FBuffers<Enter>
 nnoremap <silent> <Leader>h :FHelptags<Enter>
 nnoremap <silent> <Leader>: :FHistory:<Enter>
 nnoremap <silent> <Leader>/ :FHistory/<Enter>
-nnoremap <silent> <Leader>` :FMarks`<Enter>
+nnoremap <silent> <Leader>` :FMarks<Enter>
 
-" Disable status line for fzf buffers." 
+" Disable status line for fzf buffers."
 augroup fzfdisablestatusline
 	autocmd!
 	autocmd User FzfStatusLine setlocal statusline=\  |
