@@ -8,17 +8,8 @@
 # Plugin manager
 export ZPLUG_THREADS=32
 
-# * zplug
-ZPLUG_HOME=${HOME}/.zplug
-
-# Check If zplug doesn't exist, install it
-if [[ ! -d ${ZPLUG_HOME} ]]; then
-  git clone https://github.com/zplug/zplug $ZPLUG_HOME
-  source $ZPLUG_HOME/init.zsh
-fi
-
-# Essential
-source $ZPLUG_HOME/init.zsh
+# Source zplug manager (https://github.com/zplug/zplug)
+source "$DOTFILES/zsh/plugins/zplug/init.zsh"
 
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
