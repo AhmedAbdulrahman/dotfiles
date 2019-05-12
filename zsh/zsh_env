@@ -41,12 +41,13 @@ if [[ "$OSNAME" == 'Linux' ]]; then
 fi
 
 # nvm
-export NVM_DIR="$HOME/.nvm"
-export NVM_LAZY_LOAD=true
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+#export NVM_DIR="$HOME/.nvm"
+#export NVM_LAZY_LOAD=true
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
 
 # For pyenv
-export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+#export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+export PATH="/usr/bin/python:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PATH:$PYENV_ROOT/bin"
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
