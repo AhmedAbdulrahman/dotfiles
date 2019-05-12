@@ -21,6 +21,7 @@ alias cp='cp -i'
 
 # --- Permission ---
 alias chmox='chmod -x'
+alias python=python3
 
 # Exa
 alias l='exa -1a'                 # Lists in one column, hidden files.
@@ -162,9 +163,10 @@ alias tn='tmux new-session -s'
 alias tl='tmux list-sessions'
 
 # --- Shell ---
-alias vv='vim $(fzf)'
-alias vi=vim
-alias zcfg="vim ~/.zshrc"
+alias vv='nvim $(fzf)'
+alias vi='nvim'
+alias vim='nvim'
+alias zcfg="nvim ~/.zshrc"
 alias refresh='source ~/.zshrc; echo "Reloaded .zshrc."'
 alias less='less -r'
 alias tf='tail -f'
