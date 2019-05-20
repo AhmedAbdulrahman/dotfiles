@@ -7,18 +7,15 @@ set fileformats=unix " Only use Unix end-of-line format. "
 let $LANG = 'en_US'
 set langmenu=en_US
 
+" Shared Data "
+if !has('nvim')
+	set viminfo+=n~/.vim/cache/share/viminfo
+endif
 
 " Colors"
 set background=dark " Choose dark colors if available."
-" If you have vim >=8.0 or Neovim >= 0.1.5"
-if (has("termguicolors"))
- set termguicolors
-endif
+set termguicolors " Enable True Color support. "
 colorscheme minimal-dark " Color scheme."
-
-" Shared Data "
-" set viminfo=!,'100,<50,s10,h,'"
-execute printf('set viminfo+=n~/.vim/cache/share/%s', has('nvim') ? 'nviminfo' : 'viminfo')
 
 " Behaviour "
 set backspace=indent,eol,start " Allow backspacing over everything in insert mode. "
@@ -74,7 +71,7 @@ set titlestring=%f " Format of the title used by 'title'. %F\ -\ vim"
 set tags=./.git/tags;,./tags;,tags " Look for `tags` file in .git/ directory. "
 
 " Diff "
-set diffopt=filler,vertical,foldcolumn:0 " Option settings for diff mode. "
+set diffopt=filler,vertical,hiddenoff,foldcolumn:0,algorithm:patience " Option settings for diff mode. "
 
 " Formatting "
 let &formatprg = 'par b1 e1 g1 q1 r3 w80 R1 T4 B=.,\?_A_a Q=_s\>' " External formatter program that will be used with `gq` operator. "
@@ -110,8 +107,8 @@ set nohlsearch " Disable highlight the matched search results by default. "
 set smartcase " If a uppercase character is entered, the search will be case sensitive. "
 
 " Backup "
-set backupdir=~/.vim/cache/backup/" The directory for backup files. "
-set directory=~/.vim/cache/swap/" The directory for swap files. "
+set backupdir=~/.vim/cache/backup// " The directory for backup files. "
+set directory=~/.vim/cache/swap// " The directory for swap files. "
 "Persistent Undo"
 if has('persistent_undo')
     let target_path = expand('~/.vim/vim-persisted-undo/')
@@ -134,10 +131,11 @@ set hidden " Allows you to hide buffers with unsaved changes without being promp
 set splitbelow " Splitting a window will put the new window below of the current one. "
 set splitright " Splitting a window will put the new window right of the current one. "
 set switchbuf=useopen " Jump to the first open window that contains the specified buffer. "
+set tabline=%!ahmed#settings#tabline() " Custom tabline modifier function. "
 set tabpagemax=50 " Maximum number of tab pages to be opened by the `tab all` command. "
 
 " Command Mode "
-set cmdwinheight=18 " Height of the command window size for commands like `q:` and `q/`. "
+set cmdwinheight=5 " Height of the command window size for commands like `q:` and `q/`. "
 set history=10000 " Define maximum command history size. "
 set noshowcmd " Disable displaying key presses at the right bottom. "
 set noshowmode " Disable native mode indicator. showmode"
