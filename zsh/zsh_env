@@ -142,9 +142,8 @@ export FZF_DIR_HIGHLIGHTER
 export FZF_PATH_LOC
 
 # FZF: default
-#(( $+commands[ag] )) && FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden --follow --smart-case --glob "!.git/*" --glob "!node_modules/*" 2>/dev/null'
-(( $+commands[ag]   )) && FZF_DEFAULT_COMMAND='ag --hidden --ignore .git node_modules -g "" 2>/dev/null'
-(( $+commands[fd] )) && FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git 2>/dev/null'
+(( $+commands[ag] )) && FZF_DEFAULT_COMMAND='rg --files --no-messages --no-ignore-vcs --hidden --follow --smart-case --glob "!.git/*" --glob "!node_modules/*" 2>/dev/null'
+(( $+commands[fd] )) && FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude ".git/*" --exclude "node_modules/*" 2>/dev/null'
 export FZF_DEFAULT_COMMAND
 FZF_DEFAULT_OPTS="
 --border
@@ -194,7 +193,7 @@ export FZF_CTRL_R_OPTS
 FZF_ALT_C_COMMAND="command find -L . -mindepth 1 \
     \\( -path '*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) \
     -prune -o -type d -print 2> /dev/null | cut -b3-"
-(( $+commands[fd]      )) && FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git 2>/dev/null'
+(( $+commands[fd]      )) && FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude ".git/*" --exclude "node_modules/*" 2>/dev/null'
 (( $+commands[blsd]    )) && FZF_ALT_C_COMMAND='blsd $dir | grep -v "^\.$"'
 (( $+commands[iconful] )) && FZF_ALT_C_COMMAND="$FZF_ALT_C_COMMAND | iconful -d"
 export FZF_ALT_C_COMMAND
