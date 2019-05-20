@@ -191,13 +191,15 @@ nnoremap <silent> [A :first<Enter>
 nnoremap <silent> ]A :last<Enter>
 
 " [t]abs mappings."
-nnoremap <silent> =ot :tabs<Enter>
 nnoremap <silent> [t :tabprevious<Enter>
 nnoremap <silent> ]t :tabnext<Enter>
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
+nnoremap          <leader>te <esc>:tabedit <tab>
+nnoremap <silent> <leader>tn <esc>:tabnew<cr>:silent! Startify<cr>
+nnoremap <silent> <leader>to <esc>:tabonly<cr>
+nnoremap <silent> <leader>tc <esc>:tabclose<cr>
+nnoremap          <leader>tm <esc>:tabmove<Space>
+nnoremap <silent> <leader>tb <esc>:tab ball<cr>
+nnoremap <silent> <leader>tl <esc>:tabs<cr>
 
 " ta[g]s mappings."
 nnoremap <C-]> g<C-]>zt
