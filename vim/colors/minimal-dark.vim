@@ -1,272 +1,400 @@
-" =============================================================== "
-" Minimal Dark "
-" Author: Ahmed Abdulrahman"
-" License: MIT"
-" Last Change: 2019/03/07 22:42"
-" ==============================================================="
+" Vim color scheme Minimal Dark "
+" ---------------------------------------------------------------------- "
+" Author:     Ahmed Abdulrahman (@_ahmed_ab) "
+" colors "
+" --------------------------"
+:let _white       = '#ebebff'
+:let _d_white     = '#bdbde8'
+:let _gray_light  = '#8383af'
+:let _gray        = '#616181'
+:let _gray_dark   = '#50506b'
+:let _lightblack  = '#3a3a58'
+:let _semiblack   = '#222234'
+:let _black       = '#272737'
 
-if !has('gui_running') && &t_Co < 256
-	finish
-endif
+:let _aubergine   = '#e18fb5'
+:let _turquoise   = '#68ecd2'
+:let _d_turquoise = '#28a492'
+:let _l_sky       = '#9fd4ff'
+:let _sky         = '#6cbeff'
+:let _sap         = '#ebff00'
+:let _pink        = '#f45c7f'
 
 set background=dark
 highlight clear
-
-if exists('g:syntax_on')
-	syntax reset
+if exists("syntax_on")
+  syntax reset
 endif
-
-let g:colors_name = 'minimal-dark'
-
-highlight! ColorColumn cterm=NONE ctermbg=235 guibg=#242732
-highlight! CursorColumn cterm=NONE ctermbg=235 guibg=#242732
-highlight! CursorLine cterm=NONE ctermbg=235 guibg=#242732
-highlight! Comment ctermfg=242 guifg=#6b7089
-highlight! Constant ctermfg=140 guifg=#a093c7
-highlight! Cursor ctermbg=252 ctermfg=234 guibg=#c6c8d1 guifg=#161821
-highlight! CursorLineNr ctermbg=237 ctermfg=253 guibg=#2a3158 guifg=#cdd1e6
-highlight! Delimiter ctermfg=252 guifg=#c6c8d1
-highlight! DiffAdd ctermbg=29 ctermfg=158 guibg=#45493e guifg=#c0c5b9
-highlight! DiffChange ctermbg=23 ctermfg=159 guibg=#384851 guifg=#b3c3cc
-highlight! DiffDelete ctermbg=95 ctermfg=224 guibg=#53343b guifg=#ceb0b6
-highlight! DiffText cterm=NONE ctermbg=30 ctermfg=195 gui=NONE guibg=#5b7881 guifg=#c6c8d1
-highlight! Directory ctermfg=109 guifg=#89b8c2
-highlight! Error ctermbg=234 ctermfg=203 guibg=#161821 guifg=#e27878
-highlight! ErrorMsg ctermbg=234 ctermfg=203 guibg=#161821 guifg=#e27878
-highlight! WarningMsg ctermbg=234 ctermfg=203 guibg=#161821 guifg=#e27878
-highlight! EndOfBuffer ctermbg=234 ctermfg=236 guibg=#161821 guifg=#242940
-highlight! NonText ctermbg=234 ctermfg=236 guibg=#161821 guifg=#242940
-highlight! SpecialKey ctermbg=234 ctermfg=236 guibg=#161821 guifg=#242940
-highlight! Folded ctermbg=235 ctermfg=245 guibg=#1e2132 guifg=#686f9a
-highlight! FoldColumn ctermbg=235 ctermfg=239 guibg=#1e2132 guifg=#444b71
-highlight! Function ctermfg=110 guifg=#84a0c6
-highlight! Identifier cterm=NONE ctermfg=109 guifg=#89b8c2
-highlight! Include ctermfg=110 guifg=#84a0c6
-highlight! LineNr ctermbg=235 ctermfg=239 guibg=#1e2132 guifg=#444b71
-highlight! MatchParen ctermbg=237 ctermfg=255 guibg=#3e445e guifg=#ffffff
-highlight! MoreMsg ctermfg=150 guifg=#b4be82
-highlight! Normal ctermbg=234 ctermfg=252 guibg=#161821 guifg=#c6c8d1
-highlight! Operator ctermfg=110 guifg=#84a0c6
-highlight! Pmenu ctermbg=236 ctermfg=251 guibg=#3d425b guifg=#c6c8d1
-highlight! PmenuSbar ctermbg=236 guibg=#3d425b
-highlight! PmenuSel ctermbg=240 ctermfg=255 guibg=#5b6389 guifg=#eff0f4
-highlight! PmenuThumb ctermbg=251 guibg=#c6c8d1
-highlight! PreProc ctermfg=150 guifg=#b4be82
-highlight! Question ctermfg=150 guifg=#b4be82
-highlight! QuickFixLine ctermbg=236 ctermfg=252 guibg=#272c42 guifg=#c6c8d1
-highlight! Search ctermbg=216 ctermfg=234 guibg=#e4aa80 guifg=#392313
-highlight! SignColumn ctermbg=235 ctermfg=239 guibg=#1e2132 guifg=#444b71
-highlight! Special ctermfg=150 guifg=#b4be82
-highlight! SpellBad ctermbg=95 ctermfg=252 gui=undercurl guisp=#e27878
-highlight! SpellCap ctermbg=24 ctermfg=252 gui=undercurl guisp=#84a0c6
-highlight! SpellLocal ctermbg=23 ctermfg=252 gui=undercurl guisp=#89b8c2
-highlight! SpellRare ctermbg=97 ctermfg=252 gui=undercurl guisp=#a093c7
-highlight! Statement ctermfg=110 gui=NONE guifg=#84a0c6
-highlight! StatusLine cterm=reverse ctermbg=234 ctermfg=245 gui=reverse guibg=#17171b guifg=#818596 term=reverse
-highlight! StatusLineTerm cterm=reverse ctermbg=234 ctermfg=245 gui=reverse guibg=#17171b guifg=#818596 term=reverse
-highlight! StatusLineNC cterm=reverse ctermbg=238 ctermfg=233 gui=reverse guibg=#3e445e guifg=#0f1117
-highlight! StatusLineTermNC cterm=reverse ctermbg=238 ctermfg=233 gui=reverse guibg=#3e445e guifg=#0f1117
-highlight! StorageClass ctermfg=110 guifg=#84a0c6
-highlight! String ctermfg=109 guifg=#89b8c2
-highlight! Structure ctermfg=110 guifg=#84a0c6
-highlight! TabLine cterm=NONE ctermbg=245 ctermfg=234 gui=NONE guibg=#818596 guifg=#17171b
-highlight! TabLineFill cterm=reverse ctermbg=234 ctermfg=245 gui=reverse guibg=#17171b guifg=#818596
-highlight! TabLineSel cterm=NONE ctermbg=234 ctermfg=252 gui=NONE guibg=#e2a478 guifg=#9a9ca5
-highlight! Title ctermfg=216 gui=NONE guifg=#e2a478
-highlight! Todo ctermbg=234 ctermfg=150 guibg=#45493e guifg=#b4be82
-highlight! Type ctermfg=110 gui=NONE guifg=#84a0c6
-highlight! Underlined cterm=underline ctermfg=110 gui=underline guifg=#84a0c6 term=underline
-highlight! VertSplit cterm=NONE ctermbg=233 ctermfg=233 gui=NONE guibg=#0f1117 guifg=#0f1117
-highlight! Visual ctermbg=236 guibg=#272c42
-highlight! WildMenu ctermbg=255 ctermfg=234 guibg=#d4d5db guifg=#17171b
-highlight! diffAdded ctermfg=150 guifg=#b4be82
-highlight! diffRemoved ctermfg=203 guifg=#e27878
-highlight! ALEErrorSign ctermbg=235 ctermfg=203 guibg=#1e2132 guifg=#e27878
-highlight! ALEWarningSign ctermbg=235 ctermfg=216 guibg=#1e2132 guifg=#e2a478
-highlight! ALEVirtualTextError ctermfg=203 guifg=#e27878
-highlight! ALEVirtualTextWarning ctermfg=216 guifg=#e2a478
-highlight! CtrlPMode1 ctermbg=241 ctermfg=234 guibg=#5a5f72 guifg=#17171b
-highlight! EasyMotionShade ctermfg=239 guifg=#3d425b
-highlight! EasyMotionTarget ctermfg=150 guifg=#b4be82
-highlight! EasyMotionTarget2First ctermfg=216 guifg=#e2a478
-highlight! EasyMotionTarget2Second ctermfg=216 guifg=#e2a478
-highlight! GitGutterAdd ctermbg=235 ctermfg=150 guibg=#1e2132 guifg=#b4be82
-highlight! GitGutterChange ctermbg=235 ctermfg=109 guibg=#1e2132 guifg=#89b8c2
-highlight! GitGutterChangeDelete ctermbg=235 ctermfg=109 guibg=#1e2132 guifg=#89b8c2
-highlight! GitGutterDelete ctermbg=235 ctermfg=203 guibg=#1e2132 guifg=#e27878
-highlight! Sneak ctermbg=140 ctermfg=234 guibg=#a093c7 guifg=#161821
-highlight! SneakScope ctermbg=236 ctermfg=242 guibg=#272c42 guifg=#6b7089
-highlight! SyntasticErrorSign ctermbg=235 ctermfg=203 guibg=#1e2132 guifg=#e27878
-highlight! SyntasticStyleErrorSign ctermbg=235 ctermfg=203 guibg=#1e2132 guifg=#e27878
-highlight! SyntasticStyleWarningSign ctermbg=235 ctermfg=216 guibg=#1e2132 guifg=#e2a478
-highlight! SyntasticWarningSign ctermbg=235 ctermfg=216 guibg=#1e2132 guifg=#e2a478
-highlight! ZenSpace ctermbg=203 guibg=#e27878
-highlight! icebergALAccentRed ctermfg=203 guifg=#e27878
-
-highlight! link cssBraces Delimiter
-highlight! link cssClassName Special
-highlight! link cssClassNameDot Normal
-highlight! link cssPseudoClassId Special
-highlight! link cssTagName Statement
-highlight! link helpHyperTextJump Constant
-highlight! link htmlArg Constant
-highlight! link htmlEndTag Statement
-highlight! link htmlTag Statement
-highlight! link jsonQuote Normal
-highlight! link phpVarSelector Identifier
-highlight! link pythonFunction Title
-highlight! link rubyDefine Statement
-highlight! link rubyFunction Title
-highlight! link rubyInterpolationDelimiter String
-highlight! link rubySharpBang Comment
-highlight! link rubyStringDelimiter String
-highlight! link sassClass Special
-highlight! link shFunction Normal
-highlight! link vimContinue Comment
-highlight! link vimFuncSID vimFunction
-highlight! link vimFuncVar Normal
-highlight! link vimFunction Title
-highlight! link vimGroup Statement
-highlight! link vimHiGroup Statement
-highlight! link vimHiTerm Identifier
-highlight! link vimMapModKey Special
-highlight! link vimOption Identifier
-highlight! link vimVar Normal
-highlight! link xmlAttrib Constant
-highlight! link xmlAttribPunct Statement
-highlight! link xmlEndTag Statement
-highlight! link xmlNamespace Statement
-highlight! link xmlTag Statement
-highlight! link xmlTagName Statement
-highlight! link yamlKeyValueDelimiter Delimiter
-highlight! link CtrlPPrtCursor Cursor
-highlight! link CtrlPMatch Title
-highlight! link CtrlPMode2 StatusLine
-highlight! link deniteMatched Normal
-highlight! link deniteMatchedChar Title
-highlight! link jsFlowMaybe Normal
-highlight! link jsFlowObject Normal
-highlight! link jsFlowType PreProc
-highlight! link graphqlName Normal
-highlight! link graphqlOperator Normal
-highlight! link jsArrowFunction Operator
-highlight! link jsClassDefinition Normal
-highlight! link jsClassFuncName Title
-highlight! link jsExport Statement
-highlight! link jsFuncName Title
-highlight! link jsFutureKeys Statement
-highlight! link jsFuncCall Normal
-highlight! link jsGlobalObjects Statement
-highlight! link jsModuleKeywords Statement
-highlight! link jsModuleOperators Statement
-highlight! link jsNull Constant
-highlight! link jsObjectFuncName Title
-highlight! link jsObjectKey Identifier
-highlight! link jsSuper Statement
-highlight! link jsTemplateBraces Special
-highlight! link jsUndefined Constant
-highlight! link markdownBold Special
-highlight! link markdownCode String
-highlight! link markdownCodeDelimiter String
-highlight! link markdownHeadingDelimiter Comment
-highlight! link markdownRule Comment
-highlight! link ngxDirective Statement
-highlight! link plug1 Normal
-highlight! link plug2 Identifier
-highlight! link plugDash Comment
-highlight! link plugMessage Special
-highlight! link SignifySignAdd GitGutterAdd
-highlight! link SignifySignChange GitGutterChange
-highlight! link SignifySignChangeDelete GitGutterChangeDelete
-highlight! link SignifySignDelete GitGutterDelete
-highlight! link SignifySignDeleteFirstLine SignifySignDelete
-highlight! link StartifyBracket Comment
-highlight! link StartifyFile Identifier
-highlight! link StartifyFooter Constant
-highlight! link StartifyHeader Constant
-highlight! link StartifyNumber Special
-highlight! link StartifyPath Comment
-highlight! link StartifySection Statement
-highlight! link StartifySlash Comment
-highlight! link StartifySpecial Normal
-highlight! link svssBraces Delimiter
-highlight! link swiftIdentifier Normal
-highlight! link typescriptAjaxMethods Normal
-highlight! link typescriptBraces Normal
-highlight! link typescriptEndColons Normal
-highlight! link typescriptFuncKeyword Statement
-highlight! link typescriptGlobalObjects Statement
-highlight! link typescriptHtmlElemProperties Normal
-highlight! link typescriptIdentifier Statement
-highlight! link typescriptMessage Normal
-highlight! link typescriptNull Constant
-highlight! link typescriptParens Normal
-
-if has('nvim')
-	let g:terminal_color_0 = '#1e2132'
-	let g:terminal_color_1 = '#e27878'
-	let g:terminal_color_2 = '#b4be82'
-	let g:terminal_color_3 = '#e2a478'
-	let g:terminal_color_4 = '#84a0c6'
-	let g:terminal_color_5 = '#a093c7'
-	let g:terminal_color_6 = '#89b8c2'
-	let g:terminal_color_7 = '#c6c8d1'
-	let g:terminal_color_8 = '#6b7089'
-	let g:terminal_color_9 = '#e98989'
-	let g:terminal_color_10 = '#c0ca8e'
-	let g:terminal_color_11 = '#e9b189'
-	let g:terminal_color_12 = '#91acd1'
-	let g:terminal_color_13 = '#ada0d3'
-	let g:terminal_color_14 = '#95c4ce'
-	let g:terminal_color_15 = '#d2d4de'
-else
-	let g:terminal_ansi_colors = [
-		\ '#1e2132',
-		\ '#e27878',
-		\ '#b4be82',
-		\ '#e2a478',
-		\ '#84a0c6',
-		\ '#a093c7',
-		\ '#89b8c2',
-		\ '#c6c8d1',
-		\ '#6b7089',
-		\ '#e98989',
-		\ '#c0ca8e',
-		\ '#e9b189',
-		\ '#91acd1',
-		\ '#ada0d3',
-		\ '#95c4ce',
-		\ '#d2d4de'
-	\ ]
+set t_Co=256
+let colors_name = "minimal-dark"
+let colorgroup = {}
+" Interface "
+" ---------------------------------------------------------------------- "
+let colorgroup['Normal']       = {"GUIFG": _white,     "GUIBG":  _black}
+" ------------------------ "
+let colorgroup['Darker']       = {"GUIFG": _gray,      "GUIBG":  _black}
+let colorgroup['ColorColumn']  = {"GUIFG": _black, "GUIBG":  _aubergine}
+let colorgroup['Conceal']      = {"GUIFG": _sap,        "GUI": "bold"}
+let colorgroup['Cursor']       = {"GUIFG": _black, "GUIBG":  _turquoise}
+let colorgroup['iCursor']       = {"GUIFG": _black, "GUIBG":  _turquoise}
+let colorgroup['CursorLine']   = {"GUIFG": "NONE",     "GUIBG":  _semiblack}
+let colorgroup['CursorLineNr'] = {"GUIFG": _gray_dark, "GUIBG":  _black}
+let colorgroup['Directory']    = {"GUIFG": _turquoise,   "GUIBG":  _black}
+let colorgroup['ErrorMsg']     = {"GUIFG": _black, "GUIBG":  _aubergine}
+let colorgroup['FoldColumn']   = {                     "GUIBG":  _black}
+let colorgroup['Folded']       = {"GUIFG": _white,     "GUIBG":  _semiblack}
+let colorgroup['LineNr']       = {"GUIFG": _lightblack, "GUIBG":  _black}
+if &background == "light"
+  let colorgroup['LineNr']       = {"GUIFG": _gray, "GUIBG":  _black}
 endif
+let colorgroup['MatchParen']   = {"GUIFG": _black, "GUIBG":  _white}
+let colorgroup['ModeMsg']      = {"GUIFG": _black, "GUIBG":  _turquoise}
+let colorgroup['Pmenu']        = {"GUIFG": _white,     "GUIBG":  _gray_dark}
+let colorgroup['PmenuSel']     = {"GUIFG": _black, "GUIBG":  _turquoise}
+let colorgroup['PmenuSbar']    = {                     "GUIBG":  _black}
+let colorgroup['Search']       = {                     "GUIBG":  _gray_dark, "GUI": "underline"}
+let colorgroup['SignColumn']   = {                     "GUIBG":  _black}
+let colorgroup['StatusLine']   = {"GUIFG": _gray,      "GUIBG":  _semiblack}
+let colorgroup['StatusLineNC'] = {"GUIFG": _gray_dark, "GUIBG":  _semiblack}
+let colorgroup['Title']        = {"GUIFG": _turquoise, "GUI": "bold"}
+let colorgroup['Todo']         = {"GUIFG": _black, "GUIBG":  _sky, "GUI": "italic"}
+let colorgroup['VertSplit']    = {"GUIFG": _semiblack,      "GUIBG":  _semiblack}
+let colorgroup['Visual']       = {"GUIFG": _black, "GUIBG":  _sap}
+if &background == "light"
+  let colorgroup['Visual']       = {"GUIFG": _white,     "GUIBG":  _sap}
+endif
+let colorgroup['WarningMsg']   = {"GUIFG": _pink, "GUIBG":  _black}
 
-" Overrides.
-highlight! Cursor ctermbg=252 ctermfg=234 guibg=#e27878 guifg=#e27878
-highlight! EndOfBuffer ctermbg=234 ctermfg=236 guibg=#1e222d guifg=#242940
-highlight! EndOfBuffer ctermfg=bg guifg=bg | " Hide end of buffer tilde symbols.
-highlight! Error ctermbg=234 ctermfg=203 guibg=#131315 guifg=#e27878
-highlight! ErrorMsg ctermbg=234 ctermfg=203 guibg=#131315 guifg=#e27878
-highlight! NonText ctermbg=234 ctermfg=236 guibg=#131315 guifg=#242940
-highlight! Normal ctermbg=234 ctermfg=252 guibg=#1e222d guifg=#c6c8d1
-highlight! SpecialKey ctermbg=234 ctermfg=236 guibg=#131315 guifg=#242940
-highlight! StatusLine ctermbg=243 ctermfg=238 guibg=#818596 guifg=#1e222d
-highlight! StatusLineNC ctermbg=243 ctermfg=237 guibg=#3e445e guifg=#131315
-highlight! TabLine cterm=NONE ctermbg=245 ctermfg=234 gui=NONE guibg=#131315 guifg=#818596
-highlight! TabLineFill cterm=reverse ctermbg=234 ctermfg=245 gui=NONE guibg=#131315 guifg=#818596
-highlight! TabLineSel cterm=NONE ctermbg=234 ctermfg=252 gui=NONE guibg=#3e445e guifg=#c0c1c4
-highlight! WarningMsg ctermbg=234 ctermfg=203 guibg=#131315 guifg=#e27878
-highlight! ALEErrorSign ctermbg=235 ctermfg=203 guibg=#131315 guifg=#e27878
-highlight! ALEWarningSign ctermbg=235 ctermfg=216 guibg=#131315 guifg=#e2a478
-execute 'highlight! CursorLineNr guibg=' . synIDattr(synIDtrans(hlID('CursorLine')), 'bg', 'gui') . ' ctermbg=' . synIDattr(synIDtrans(hlID('CursorLine')), 'bg', 'cterm')
-execute 'highlight! SignColumn guibg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'gui') . ' ctermbg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'cterm')
-execute 'highlight! VertSplit guibg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'gui') . ' ctermbg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'cterm')
-execute 'highlight! LineNr guibg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'gui') . ' ctermbg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'cterm')
-execute 'highlight! GitGutterAdd guibg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'gui') . ' ctermbg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'cterm')
-execute 'highlight! GitGutterChange guibg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'gui') . ' ctermbg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'cterm')
-execute 'highlight! GitGutterChangeDelete guibg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'gui') . ' ctermbg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'cterm')
-execute 'highlight! GitGutterDelete guibg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'gui') . ' ctermbg=' . synIDattr(synIDtrans(hlID('Normal')), 'bg', 'cterm')
+" Syntax "
+" ---------------------------------------------------------------------- "
+" There are nine primary highlighting groups which Vim uses: "
+" Group Name  Description "
+" Comment     Comments within a program "
+" Constant    Program constants, such as numbers, quoted strings, or true/false "
+" Identifier  Variable identifier names "
+" Statement   A programming language statement, usually a keyword like if or while "
+" PreProc     A preprocessor, such as #include in C "
+" Type        A variable datatype, such as int "
+" Special     A special symbol, usually used for special characters like "\n" in strings "
+" Underlined  Text that should be underlined "
+" Error       Text which contains a programming language error "
+let colorgroup['Comment']      = {"GUIFG": _gray_light, "CTERMFG":244, "CTERMBG":"NONE", "GUIBG": "NONE", "GUISP":"NONE", "CTERM":"NONE", "GUI":"NONE"}
+let colorgroup['Constant']     = {"GUIFG": _turquoise, "GUI": "bold"}
+let colorgroup['Identifier']   = {"GUIFG": _aubergine}
+let colorgroup['Statement']    = {"GUIFG": _l_sky}
+let colorgroup['PreProc']      = {"GUIFG": _d_white}
+let colorgroup['Type']         = {"GUIFG": _d_white}
+let colorgroup['Special']      = {"GUIFG": _sap}
+let colorgroup['Underlined']   = {"GUIFG": _turquoise, "GUI": "underline"}
+let colorgroup['Error']        = {"GUIFG": _black, "GUIBG": _aubergine}
+" Other highlighting groups "
+let colorgroup['Access']       = {"GUIFG": _turquoise, "GUI": "bold"}
+let colorgroup['Character']     = {"GUIFG": _sky}
+let colorgroup['Define']       = {"GUIFG": _gray_light}
+let colorgroup['Function']     = {"GUIFG": _sky, "GUI": "bold"}
+let colorgroup['Label']        = {"GUIFG": _d_turquoise}
+let colorgroup['Module']       = {"GUIFG": _aubergine, "GUI": "underline"}
+let colorgroup['NonText']      = {"GUIFG": _gray_dark}
+let colorgroup['String']       = {"GUIFG": _turquoise}
+let colorgroup['Structure']    = {"GUIFG": _gray}
+" Own highlighting groups "
+let colorgroup['UnderlinedBold']   = {"GUIFG": _turquoise, "GUI": "underline,bold"}
+" ------------------------ "
+hi link Boolean               Number
+hi link Class                 Constant
+hi link ErrorMsg              Error
+hi link Delimiter             Define
+hi link Debug                 Special
+hi link Conditional           Define
+hi link Exception             PreProc
+hi link Float                 Number
+hi link Include               PreProc
+hi link Macro                 PreProc
+hi link Number                Character
+hi link Operator              PreProc
+hi link PreCondit             PreProc
+hi link Repeat                Statement
+hi link SpecialChar           Special
+hi link SpecialComment        Special
+hi link SpecialKey            Define
+hi link StorageClass          Identifier
+hi link Symbol                PreProc
+hi link Tag                   Statement
+hi link Typedef               Type
+" Plugins "
+" ---------------------------------------------------------------------- "
+" CtrlP "
+hi link CtrlPMatch             Character
+" Git commit "
+hi link gitcommitBranch        Constant
+hi link gitcommitSelectedFile  Statement
+hi link gitcommitDiscardedFile Structure
+hi link gitcommitUntrackedFile Structure
+hi link gitcommitSummary       String
+" GitGutter "
+hi link GitGutterAdd          Darker
+hi link GitGutterChange       Darker
+hi link GitGutterDelete       Darker
+hi link GitGutterChangeDelete Darker
+" NERDtree "
+hi link NerdTreeCWD           Character
+hi link NerdTreeHelpKey       Character
+hi link NerdTreeHelpTitle     Statement
+hi link NerdTreeOpenable      NerdTreeCWD
+hi link NerdTreeClosable      Statement
+hi link NerdTreeDir           Normal
+hi link NerdTreeDirSlash      NerdTreeDir
+" PlainTasks (.todo) "
+hi link ptCompleteTask        Number
+hi link ptContext             Type
+hi link ptSection             Title
+hi link ptTask                Normal
+" VimPlug "
+hi link plugName              Character
+" Startify "
+hi link StartifyNumber        Character
+hi link StartifyBracket       StartifyNumber
+hi link StartifySection       Title
+hi link StartifyPath          Define
+hi link StartifySlash         StartifyPath
+hi link StartifyFile          Normal
+" Languages/Tools "
+" ---------------------------------------------------------------------- "
+" highlight clear ALEErrorSign "
+"hi link ALEErrorSign          Type"
+"hi link ALEWarningSign        Special"
+hi link ALEErrorSign WarningMsg
+hi link ALEWarningSign WarningMsg
+hi link ALEVirtualTextError WarningMsg
+hi link ALEVirtualTextWarning WarningMsg
 
-" ==================================="
-" Generated by Estilo 1.3.3"
-" https://github.com/jacoborus/estilo"
-" ===================================
+" Apache "
+hi link apacheDeclaration     PreProc
+" CoffeeScript "
+hi link coffeeExtendedOp      Character
+hi link coffeeObject          Statement
+hi link coffeeObjAssign       Character
+hi link coffeeParen           Character
+" CSS "
+hi link cssAttr               String
+hi link cssColor              Normal
+hi link cssClassName          PreProc
+hi link cssProp               Define
+hi link cssPseudoClass        Identifier
+hi link cssPseudoClassId      cssPseudoClass
+hi link cssSelectorOp         Identifier
+hi link cssTagName            Tag
+" GraphQL "
+hi link graphqlName           Function
+" HAML "
+hi link hamlTag               Character
+" HTML "
+" hi link htmlArg               Statement "
+hi link javaScript            Normal
+hi link htmlTag               Delimiter
+hi link htmlEndTag            Delimiter
+hi link htmlTagName           Tag
+" hi link htmlEndTag            Function "
+" JavaScript "
+hi link javascriptFuncArg     Character
+hi link javascriptFuncComma   Character
+hi link javascriptFuncDef     Statement
+hi link javascriptFuncKeyword Statement
+hi link javascriptOpSymbols   Type
+hi link javascriptParens      Character
+hi link javascriptEndcolons   Character
+" Javascript (pangloss/vim-javascript) "
+hi link jsArrowFuncArgs       Identifier
+hi link jsArrowFunction       Character
+hi link jsBraces              PreProc
+hi link jsBrackets            Delimiter
+hi link jsClassBraces         Statement
+hi link jsClassDefinition     Class
+hi link jsClassFuncName       Function
+hi link jsClassKeyword        Statement
+hi link jsDecorator           Normal
+hi link jsDestructuringBraces PreProc
+hi link jsExtendsKeyword      jsClassKeyword
+hi link jsExport              Identifier
+hi link jsImport              Identifier
+hi link jsFrom                Identifier
+hi link jsFuncBraces          Delimiter
+hi link jsFuncCall            Character
+hi link jsFuncBraces          Delimiter
+hi link jsFuncParens          Delimiter
+hi link jsFunctionKey         Function
+hi link jsGlobalObjects       Identifier
+hi link jsGlobalNodeObjects   Identifier
+hi link jsIfElseBraces        Delimiter
+hi link jsModuleBraces        Normal
+hi link jsModuleKeyword       Tag
+hi link jsNoise               Delimiter
+hi link jsObjectBraces        PreProc
+hi link jsObjectKey           PreProc
+hi link jsObjectValue         PreProc
+hi link jsParens              Delimiter
+hi link jsReturn              Identifier
+hi link jsSpreadOperator      Character
+hi link jsThis                Identifier
+" JSON "
+hi link jsonKeyword           Normal
+hi link jsonKeywordMatch      Delimiter
+hi link jsonNoise             Delimiter
+hi link jsonQuote             Delimiter
+" LaTeX "
+hi link texInputFile          PreProc
+hi link texDocType            Constant
+hi link texDocTypeArgs        Character
+hi link texInputFile          Symbol
+hi link texInputFileOpt       String
+hi link texMathMatcher        Statement
+hi link texMathSymbol         Symbol
+hi link texMathZoneX          Symbol
+hi link texSection            Title
+hi link texStatement          Character
+hi link texTypeSize           Symbol
+hi link texTypeStyle          Symbol
+" hi link texSpecialChar        Special "
+" Markdown "
+hi link mkdBlockquote         Symbol
+hi link mkdCode               Character
+hi link mkdIndentCode         Identifier
+hi link mkdLineBreak          Statement
+" MatchTagAlways "
+hi link MatchTag              Identifier
+" PHP "
+hi link phpParent             Normal
+hi link phpRegion             Comment
+hi link phpVarSelector        Identifier
+" Ruby "
+hi link rubyAccess            Access
+hi link rubyBlockParameterList PreProc
+hi link rubyCallback          Character
+hi link rubyClass             Label
+hi link rubyClassName         UnderlinedBold
+hi link rubyControl           Statement
+hi link rubyConstant          Constant
+hi link rubyEntity            Character
+hi link rubyInclude           Include
+hi link rubyInterpolation     Identifier
+hi link rubyMacro             Character
+hi link rubyModule            Module
+hi link rubyStringDelimiter   rubyString
+hi link rubySymbol            Symbol
+hi link rubyRoute             Type
+" SASS "
+hi link sassClassChar         Character
+hi link sassClass             Character
+hi link sassIdChar            Character
+hi link sassId                Character
+hi link sassProperty          CSSProp
+" Slim "
+hi link slimBegin             Normal
+hi link slimClass             Character
+hi link slimClassChar         Character
+hi link slimId                Character
+hi link slimIdChar            Character
+hi link rubyKeyword           PreProc
+hi link slimText              Normal
+" TypeScript "
+hi link typescriptBOM                 Normal
+hi link typescriptBraces              Delimiter
+hi link typescriptCall                Define
+hi link typescriptClassExtends        Label
+hi link typescriptClassHeritage       Constant
+hi link typescriptClassKeyword        Label
+hi link typescriptClassName           Constant
+hi link typescriptDefault             Identifier
+hi link typescriptExport              PreProc
+hi link typescriptIdentifier          Identifier
+hi link typescriptIdentifierName      Character
+hi link typescriptImport              PreProc
+hi link typescriptMember              Define
+hi link typescriptObjectKey           Define
+hi link typescriptObjectLabel         Define
+hi link typescriptParens              Delimiter
+hi link typescriptParenExp            Delimiter
+hi link typescriptProp                PreProc
+hi link typescriptReserved            PreProc
+hi link typescriptTypeReference       Define
+hi link tsxTagName                    Statement
+" VimL "
+hi link vimCmdSep             Character
+" YAML "
+hi link yamlBlockMappingKey   Normal
+hi link yamlDocumentStart     Comment
+hi link yamlKeyValueDelimiter Delimiter
+hi link yamlPlainScalar       Character
+" XML "
+" hi link xmlAttrib             Normal"
+hi link xmlTag                Delimiter
+hi link xmlTagName            Tag
+hi link xmlEndTag             Tag
+" Expand colorgroups "
+" ---------------------------------------------------------------------- "
+let s:colors = {}
+" http://choorucode.com/2011/07/29/vim-chart-of-color-names/"
+let valid_cterm_colors =
+      \ [
+      \     'Black', 'DarkBlue', 'DarkGreen', 'DarkCyan',
+      \     'DarkRed', 'DarkMagenta', 'Brown', 'DarkYellow',
+      \     'LightGray', 'LightGrey', 'Gray', 'Grey',
+      \     'DarkGray', 'DarkGrey', 'Blue', 'LightBlue',
+      \     'Green', 'LightGreen', 'Cyan', 'LightCyan',
+      \     'Red', 'LightRed', 'Magenta', 'LightMagenta',
+      \     'Yellow', 'LightYellow', 'White',
+      \ ]
+for key in keys(colorgroup)
+  let s:colors = colorgroup[key]
+  if has_key(s:colors, 'TERM')
+    let term = s:colors['TERM']
+  else
+    let term = 'NONE'
+  endif
+  if has_key(s:colors, 'GUI')
+    let gui = s:colors['GUI']
+  else
+    let gui='NONE'
+  endif
+  if has_key(s:colors, 'GUIFG')
+    let guifg = s:colors['GUIFG']
+  else
+    let guifg='NONE'
+  endif
+  if has_key(s:colors, 'GUIBG')
+    let guibg = s:colors['GUIBG']
+  else
+    let guibg='NONE'
+  endif
+  if has_key(s:colors, 'CTERM')
+    let cterm = s:colors['CTERM']
+  else
+    let cterm=gui
+  endif
+  if has_key(s:colors, 'CTERMFG')
+    let ctermfg = s:colors['CTERMFG']
+  else
+    if index(valid_cterm_colors, guifg) != -1
+      let ctermfg=guifg
+    else
+      let ctermfg='Blue'
+    endif
+  endif
+  if has_key(s:colors, 'CTERMBG')
+    let ctermbg = s:colors['CTERMBG']
+  else
+    if index(valid_cterm_colors, guibg) != -1
+      let ctermbg=guibg
+    else
+      let ctermbg='NONE'
+    endif
+  endif
+  if has_key(s:colors, 'GUISP')
+    let guisp = s:colors['GUISP']
+  else
+    let guisp='NONE'
+  endif
+  if key =~ '^\k*$'
+    execute "hi ".key." term=".term." cterm=".cterm." gui=".gui." ctermfg=".ctermfg." guifg=".guifg." ctermbg=".ctermbg." guibg=".guibg." guisp=".guisp
+  endif
+endfor
