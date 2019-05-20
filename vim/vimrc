@@ -1,3 +1,6 @@
+"To use fzf in Vim, add the following line to your .vimrc:"
+set rtp+=/usr/local/opt/fzf
+
 " Load Plugins {{"
   if filereadable(expand("$HOME/.vim_plugins"))
     source $HOME/.vim_plugins
