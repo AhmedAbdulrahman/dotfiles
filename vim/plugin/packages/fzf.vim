@@ -13,7 +13,7 @@ let g:fzf_commands_expect = 'alt-enter'
 
 " Set custom layout."
 let g:fzf_layout = {
-    \ 'down': '55%',
+	\ 'window': 'silent 18split enew'
 \ }
 
 " Set actions manually."
@@ -43,15 +43,13 @@ let g:fzf_colors = {
 	\ 'header': ['fg', 'Comment']
 \ }
 
-command! -bang -nargs=? -complete=dir Files
-\ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
 " Define key mappings."
 nnoremap <silent> <leader><tab> :Files<CR>
 nnoremap <silent> <C-p> :FGFiles<Enter>
 nnoremap <silent> <Leader><C-p> :FFiles<Enter>
 nnoremap <silent> <M-x> :FCommands<Enter>
 nnoremap <silent> <M-b> :FBuffers<Enter>
+nnoremap <silent> <C-f> :FTags<Enter>
 nnoremap <silent> <Leader>h :FHelptags<Enter>
 nnoremap <silent> <Leader>: :FHistory:<Enter>
 nnoremap <silent> <Leader>/ :FHistory/<Enter>
@@ -63,7 +61,6 @@ augroup fzfdisablestatusline
 	autocmd User FzfStatusLine setlocal statusline=\  |
 augroup end
 
-
 " The Silver Searcher"
 if executable('ag')
     " Use ag over grep"
@@ -74,13 +71,17 @@ if executable('rg')
     set grepprg=rg\ --vimgrep\ --color=never\ --glob\ '"!*/plugins/*"'
 
     " Ripgrep and fzf settings"
-    command! -bang -nargs=* Rg
-        \ call fzf#vim#grep(
-        \   'rg --column --line-number --no-heading --iglob "!**/dist/**" --iglob "!**/language/**" --iglob "!**/lang/**" -g "!*.sql" -g "!*.min.js" --color=always '.shellescape(<q-args>), 1,
-        \   fzf#vim#with_preview(),
-        \   <bang>0)
+	command! -bang -nargs=* Rg
+		\ call fzf#vim#grep(
+		\ 'rg --column --line-number --no-heading --glob "!*/dist/*" --glob "!*/plugins/*" -g "!*.sql" -g "!*.min.js" --color=always '.shellescape(<q-args>), 1,
+		\ <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+  		\           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+		\ <bang>0)
+
 endif
+
+command! -bang -nargs=? -complete=dir Files
+      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 nnoremap <leader>/ :Rg<cr>
-" }}"
