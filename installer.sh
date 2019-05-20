@@ -37,7 +37,7 @@ finish() {
   sleep 1
 }
 
-export ZSH_DOTFILES=${1:-"$HOME/dotfiles"}
+export DOTFILES=${1:-"$HOME/dotfiles"}
 GITHUB_REPO_URL_BASE="https://github.com/AhmedAbdulrahman/dotfiles"
 HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
 LINUXBREW_INSTALLER_URL="https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh"
@@ -234,9 +234,9 @@ install_zsh() {
 }
 
 install_dotfiles() {
-  info "Trying to detect if Ahmed's dotfiles is installed in $ZSH_DOTFILES..."
+  info "Trying to detect if Ahmed's dotfiles is installed in $DOTFILES..."
 
-  if [ ! -d $ZSH_DOTFILES ]; then
+  if [ ! -d $DOTFILES ]; then
     echo "Seems like you don't have Ahmed's dotfiles installed!"
     read -p "Do you agree to proceed with Ahmed's dotfiles installation? [y/N] " -n 1 answer
     echo
@@ -244,9 +244,9 @@ install_dotfiles() {
       exit 1
     fi
 
-    echo "Cloning Ahmed's dotfiles into dotfiles"
-    git clone --recursive "$GITHUB_REPO_URL_BASE.git" $ZSH_DOTFILES
-    
+    echo "Cloning Ahmed's dotfiles"
+    git clone --recursive "$GITHUB_REPO_URL_BASE.git" $DOTFILES
+
   else
     success "You already have Ahmed's dotfiles installed. Skipping..."
   fi
@@ -271,7 +271,7 @@ bootstrap() {
     return
   fi
 
-  $ZSH_DOTFILES/scripts/bootstrap.zsh
+  $DOTFILES/scripts/bootstrap.zsh
 
   finish
 }
