@@ -20,13 +20,6 @@ augroup togglenumbers
 	autocmd InsertLeave,BufEnter,WinEnter,FocusGained * call ahmed#autocmds#togglenumbers#('setlocal relativenumber')
 augroup end
 
-" Save the current buffer after any changes."
-augroup savebuffer
-	autocmd!
-	autocmd InsertLeave,TextChanged * nested call ahmed#autocmds#savebuffer#()
-	autocmd FocusGained,BufEnter,CursorHold * silent! checktime
-augroup end
-
 " Set current working directory project root."
 augroup setroot
 	autocmd!
