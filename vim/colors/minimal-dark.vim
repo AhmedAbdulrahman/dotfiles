@@ -136,6 +136,11 @@ hi link GitGutterAdd          Darker
 hi link GitGutterChange       Darker
 hi link GitGutterDelete       Darker
 hi link GitGutterChangeDelete Darker
+hi link SignifySignAdd GitGutterAdd
+hi link SignifySignChange GitGutterChange
+hi link SignifySignChangeDelete GitGutterChangeDelete
+hi link SignifySignDelete GitGutterDelete
+hi link SignifySignDeleteFirstLine SignifySignDelete
 " NERDtree "
 hi link NerdTreeCWD           Character
 hi link NerdTreeHelpKey       Character
