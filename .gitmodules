@@ -76,3 +76,6 @@
 [submodule "vim/pack/bundle/start/startify"]
 	path = vim/pack/bundle/start/startify
 	url = https://github.com/mhinz/vim-startify.git
+[submodule "vim/pack/bundle/start/wakatime"]
+	path = vim/pack/bundle/start/wakatime
+	url = https://github.com/wakatime/vim-wakatime.git
