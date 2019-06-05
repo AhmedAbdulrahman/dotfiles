@@ -79,3 +79,6 @@
 [submodule "vim/pack/bundle/start/wakatime"]
 	path = vim/pack/bundle/start/wakatime
 	url = https://github.com/wakatime/vim-wakatime.git
+[submodule "vim/pack/bundle/start/gitgutter"]
+	path = vim/pack/bundle/start/gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git
