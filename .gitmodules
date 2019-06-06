@@ -82,3 +82,6 @@
 [submodule "vim/pack/bundle/start/gitgutter"]
 	path = vim/pack/bundle/start/gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
+[submodule "vim/pack/bundle/start/night-day"]
+	path = vim/pack/bundle/start/night-day
+	url = https://github.com/nightsense/night-and-day.git
