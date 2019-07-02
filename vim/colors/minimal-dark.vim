@@ -9,8 +9,8 @@
 :let _gray        = '#616181'
 :let _gray_dark   = '#50506b'
 :let _lightblack  = '#3a3a58'
-:let _semiblack   = '#222234'
-:let _black       = '#272737'
+:let _semiblack   = '#222736'
+:let _black       = '#1f2430'
 
 :let _aubergine   = '#e18fb5'
 :let _turquoise   = '#68ecd2'
