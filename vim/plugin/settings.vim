@@ -13,7 +13,14 @@ if !has('nvim')
 endif
 
 " Colors"
-set background=dark " Choose dark colors if available."
+" Set Color/Theme based off time of day"
+"set background=dark"  "Choose dark colors if available."
+
+let g:nd_themes = [
+  \ ['7:00',  'minimal-light', 'light' ],
+  \ ['18:00', 'minimal-dark', 'dark' ],
+  \ ]
+
 set termguicolors " Enable True Color support. "
 colorscheme minimal-dark " Color scheme."
 
