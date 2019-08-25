@@ -119,6 +119,33 @@ fix_npm_perm() {
   finish
 }
 
+install_global_packages() {
+	info "Installing NPM global packages"
+
+	NPM_PACKAGES=(
+	"bash-language-server"
+	"dockerfile-language-server-nodejs"
+	"netlify-cli"
+	"now"
+	"parker"
+	"prettier"
+	"serve"
+	"source-map-explorer"
+	"svgo"
+	"overtime-cli"
+	"dependency-cruiser"
+	"neovim"
+	"npkill"
+	"create-react-app",
+	"create-react-native-app"
+	"expo-cli"
+	"nodemon"
+	)
+
+	yarn global add "${NPM_PACKAGES[@]}"
+	unset -v NPM_PACKAGES
+}
+
 on_finish() {
   success "Done!"
   success "Node.js is installed!"
@@ -137,6 +164,7 @@ main() {
   install_nvm "$*"
   configure_npm_init "$*"
   fix_npm_perm "$*"
+  install_global_packages "$*"
 }
 
 main "$*"
