@@ -102,8 +102,10 @@ set smartindent " Automatically inserts one extra level of indentation in some c
 
 " Folding "
 set foldlevelstart=99 " Start editing with all folds open. "
-set foldmethod=indent " Use indent model for folding mechanism. "
+set foldmethod=syntax "syntax highlighting items specify folds. "
 set foldtext=ahmed#settings#foldtext() " Use custom fold text function for folds. "
+set foldcolumn=1 "defines 1 col at window left, to indicate folding"
+let javaScript_fold=1 "activate folding by JS syntax
 
 " Search "
 let &grepprg = 'rg --vimgrep --no-messages --no-ignore --hidden --follow --smart-case --glob "!.git/" --glob "!node_modules/" --regexp' " Program to use for the :grep command. "
