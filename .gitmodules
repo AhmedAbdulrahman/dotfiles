@@ -1,9 +1,6 @@
 [submodule "vim/pack/bundle/start/ale"]
 	path = vim/pack/bundle/start/ale
 	url = https://github.com/w0rp/ale.git
-[submodule "vim/pack/bundle/start/devicons"]
-	path = vim/pack/bundle/start/devicons
-	url = https://github.com/kutsan/vim-devicons.git
 [submodule "vim/pack/bundle/start/fzf-core"]
 	path = vim/pack/bundle/start/fzf-core
 	url = https://github.com/junegunn/fzf.git
