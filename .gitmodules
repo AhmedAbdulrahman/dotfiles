@@ -79,3 +79,6 @@
 [submodule "vim/pack/bundle/start/night-day"]
 	path = vim/pack/bundle/start/night-day
 	url = https://github.com/nightsense/night-and-day.git
+[submodule "vim/pack/bundle/start/devicons"]
+	path = vim/pack/bundle/start/devicons
+	url = https://github.com/ryanoasis/vim-devicons.git
