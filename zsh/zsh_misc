@@ -24,8 +24,11 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-separator '->'
 zstyle ':completion:*:manuals' separate-sections true
 
-# Menu select
-zmodload -i zsh/complist
+# Basic auto/tab complete:
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
 
-# Include hidden files
-_comp_options=(globdots)
+# Include hidden files.
+_comp_options+=(globdots)
