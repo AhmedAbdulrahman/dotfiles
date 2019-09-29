@@ -26,3 +26,6 @@ zstyle ':completion:*:manuals' separate-sections true
 
 # Menu select
 zmodload -i zsh/complist
+
+# Include hidden files
+_comp_options=(globdots)
