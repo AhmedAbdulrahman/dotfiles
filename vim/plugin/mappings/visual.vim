@@ -5,8 +5,8 @@ xmap <C-h> 5h
 xmap <C-l> 5l
 
 "Move lines"
-vnoremap <S-j> :m '<-2'<CR>gv=gv
-vnoremap <S-k> :m '>+1'<CR>gv=gv
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " Stay in visual mode when indenting."
 xnoremap < <gv
