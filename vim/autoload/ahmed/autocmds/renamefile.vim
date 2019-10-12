@@ -1,6 +1,6 @@
-"
+""
 " Rename file name"
-"
+""
 function! RenameFile()
     let old_name = expand('%')
     let new_name = input('New file name: ', expand('%'), 'file')

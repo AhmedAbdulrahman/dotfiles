@@ -1,7 +1,7 @@
 ""
-" Debug function for development.
-"
-" @param {string} content Content to be written to file.
+" Debug function for development."
+""
+" @param {string} content Content to be written to file."
 ""
 function! ahmed#debug#log(content) abort
 	let l:contentwithdate = printf(

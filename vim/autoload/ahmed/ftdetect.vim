@@ -1,10 +1,10 @@
 ""
-" Return true if current buffer has given regex.
-"
-" @param {string} regex Regular expression to be used in search.
-" @param {dictionary} options Configuration dictionary.
-" @param {dictionary} options.maxline Maximum line number to be searched from top,
-" as 500 maximum.
+" Return true if current buffer has given regex."
+""
+" @param {string} regex Regular expression to be used in search."
+" @param {dictionary} options Configuration dictionary."
+" @param {dictionary} options.maxline Maximum line number to be searched from top,"
+" as 500 maximum."
 ""
 function! ahmed#ftdetect#contains(regex, ...) abort
 	let l:options = get(a:, '1', {})

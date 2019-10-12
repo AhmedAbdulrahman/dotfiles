@@ -1,8 +1,8 @@
 ""
-" Show table of contents window.
-" Modified version of man#show_toc() and ftplugin/qf.vim's s:setup_toc().
-"
-" nnoremap <buffer><silent> gO :call ahmed#ftplugin#man#showtoc()<Enter>
+" Show table of contents window."
+" Modified version of man#show_toc() and ftplugin/qf.vim's s:setup_toc()."
+""
+" nnoremap <buffer><silent> gO :call ahmed#ftplugin#man#showtoc()<Enter>"
 ""
 function! ahmed#ftplugin#man#showtoc() abort
 	if !has('nvim')
@@ -34,17 +34,17 @@ function! ahmed#ftplugin#man#showtoc() abort
 	call setloclist(0, l:toc, ' ')
 	call setloclist(0, [], 'a', { 'title': 'Man TOC' })
 
-	" Prepare and set options for the window.
+	" Prepare and set options for the window."
 	vertical leftabove lopen
 	vert resize 35
 	setlocal winfixwidth
 	setlocal nonumber norelativenumber
 
-	" Define mappings.
+	" Define mappings."
 	nnoremap <buffer><silent> l <Enter>zt
 	nnoremap <buffer><silent> <Enter> <Enter>zt
 
-	" Abort if there is nothing to show.
+	" Abort if there is nothing to show."
 	let l:list = getloclist(0)
 	if empty(l:list)
 		return v:false
@@ -59,14 +59,14 @@ function! ahmed#ftplugin#man#showtoc() abort
 
 	let w:qf_toc = l:bufname
 
-	" Move the window to the other side.
+	" Move the window to the other side."
 	wincmd x
 endfunction
 
 ""
-" Open man page under the cursor.
-"
-" nnoremap <buffer><silent> <C-]> :call ahmed#ftplugin#man#jumptag()<Enter>
+" Open man page under the cursor."
+""
+" nnoremap <buffer><silent> <C-]> :call ahmed#ftplugin#man#jumptag()<Enter>"
 ""
 function! ahmed#ftplugin#man#jumptag() abort
 	if !has('nvim')
@@ -77,9 +77,9 @@ function! ahmed#ftplugin#man#jumptag() abort
 endfunction
 
 ""
-" Jump to the previous entry in tag stack.
-"
-" nnoremap <buffer><silent> [g :call ahmed#ftplugin#man#poptag()<Enter>
+" Jump to the previous entry in tag stack."
+""
+" nnoremap <buffer><silent> [g :call ahmed#ftplugin#man#poptag()<Enter>"
 ""
 function! ahmed#ftplugin#man#poptag() abort
 	if !has('nvim')

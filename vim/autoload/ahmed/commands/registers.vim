@@ -1,7 +1,6 @@
 ""
-" Display the contents of all registers in vertical split like `:registers`.
-"
-" command! Registers call ahmed#commands#registers#()
+" Display the contents of all registers in vertical split like `:registers`."
+" command! Registers call ahmed#commands#registers#()"
 ""
 function! ahmed#commands#registers#() abort
 	let l:buffercurrent = @%

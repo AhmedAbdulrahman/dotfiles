@@ -1,9 +1,9 @@
 ""
-" Insert shebang string according to filetype.
-"
-" inoreabbrev <expr> _#! ahmed#abbreviations#shebang()
-"
-" @return {shebang} Shebang string, with or without interpreter.
+" Insert shebang string according to filetype."
+""
+" inoreabbrev <expr> _#! ahmed#abbreviations#shebang()"
+""
+" @return {shebang} Shebang string, with or without interpreter."
 ""
 function! ahmed#abbreviations#shebang() abort
 	if empty(&filetype)
