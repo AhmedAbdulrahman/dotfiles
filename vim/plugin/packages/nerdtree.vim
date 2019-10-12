@@ -85,8 +85,8 @@ let g:NERDTreeMapUpdir = ''
 nnoremap <silent> <Leader>f :packadd nerdtree <Bar> NERDTreeToggle <Bar> wincmd p<Enter>
 nnoremap <silent> <Leader>F :packadd nerdtree <Bar> NERDTreeFind<Enter>
 
-map <C-Right> :tabn<cr>
-map <C-Left> :tabp<cr>
+"map <C-Right> :tabn<cr>"
+"map <C-Left> :tabp<cr>"
 
 augroup nerdtreesettings
 	autocmd!
