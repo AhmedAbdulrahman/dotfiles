@@ -11,11 +11,11 @@ let g:signify_vcs_list = ['git']
 let g:signify_sign_show_count = v:false
 
 " Define symbols for signs."
-let g:signify_sign_add = '│' " U+2502
-let g:signify_sign_delete = '│' " U+2502
-let g:signify_sign_delete_first_line = '│' " U+2502
-let g:signify_sign_change = '│' " U+2502
-let g:signify_sign_changedelete = '│' " U+2502
+let g:signify_sign_add = '+'
+let g:signify_sign_delete = '-'
+let g:signify_sign_delete_first_line = '◥'
+let g:signify_sign_change = '>'
+let g:signify_sign_changedelete = '◢'
 
 " [i]n [c]hunk and [a] [c]hunk motions."
 omap ic <Plug>(signify-motion-inner-pending)
