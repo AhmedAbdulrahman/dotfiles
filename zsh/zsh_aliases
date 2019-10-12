@@ -1,5 +1,4 @@
 #!/usr/bin/env zsh
-#!/usr/bin/env zsh
 
 # --- Moving around ---
 alias ..="cd .."
@@ -15,26 +14,30 @@ alias p="cd ~/Projects"
 
 # --- Copy & Move ---
 # `rm` and `mv` are so dangerous, they must always ask for confirmation.
-alias rm='rm -i'
-alias mv='mv -i'
-alias cp='cp -i'
+alias rm="${aliases[rm]:-rm} -i"
+alias mv="${aliases[mv]:-mv} -iv"
+alias cp="${aliases[cp]:-cp} -iv"
+alias mkdir="${aliases[mkdir]:-mkdir} -p"
+alias e="${(z)VISUAL:-${(z)EDITOR}}"
+alias which='which -a'
 
 # --- Permission ---
 alias chmox='chmod -x'
 alias python=python3
 
+# better ls
+if (($+commands[colorls])); then
+	alias ls="echo; colorls -A --group-directories-first"
+fi
+
 # Exa
-alias l='exa -1a'                 # Lists in one column, hidden files.
-alias ll='exa -l'                 # Lists human readable sizes.
-alias lr='ll -R'                  # Lists human readable sizes, recursively.
-alias la='ll -a'                  # Lists human readable sizes, hidden files.
-alias lm='la | "$PAGER"'          # Lists human readable sizes, hidden files through pager.
-alias lx='ll --sort=Extension'    # Lists sorted by extension (GNU only).
-alias lk='ll --sort=size -r'      # Lists sorted by size, largest last.
-alias lt='ll --sort=modified -r'  # Lists sorted by date, most recent last.
-alias lc='lt -m'                  # Lists sorted by date, most recent last, shows change time.
-alias lu='lt -u'                  # Lists sorted by date, most recent last, shows access time.
-alias sl='ls'                     # I often screw this up.
+if (( $+commands[exa] )); then
+	alias ll="exa --tree --all --group-directories-first"
+elif (( $+commands[tree] )); then
+	alias ll="type tree >/dev/null && tree --dirsfirst -a -L 1 || l -d .*/ */ "
+else
+	alias ll="echo 'You have to install exa or tree'"
+fi
 
 # Npm
 alias npm-update="npx npm-check -u"
@@ -59,55 +62,33 @@ alias yoff="yarn add --offline";
 alias ypm="echo \"Installing deps without lockfile and ignoring engines\" && yarn install --no-lockfile --ignore-engines"
 
 # --- Git ---
-alias git=hub
+if (( $+commands[hub] )); then
+  alias git=hub
+  compdef g=hub
+else
+  compdef g=git
+fi
 alias g='git'
 alias add="git add"
-alias gb="git branch"
-alias gba="git branch -a"
 alias commit='git commit -m'
 alias amend="git commit --amend"
-alias gco="git checkout"
-alias gcb='gco -b'
 alias master="git checkout master"
 alias develop="git checkout develop"
 alias status="git status"
 alias push="git push"
-alias pushu='git push upstream'
 alias pull='git pull'
-alias pullu='git pull upstream'
-alias remote='git remote'
 alias stash='git stash'
 alias save='git stash save -u'
-alias gsp='git stash pop'
-
 alias logf='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias logs='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias loga='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
 alias logd='git log --graph --decorate --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset --abbrev-commit --date=relative --all"'
-# Undo commit and unstage all files
-alias undo='git reset HEAD~'
-# Undo commit and keep all files staged
-alias undosoft='git reset --soft HEAD~'
-# Undo the commit and completely remove all changes
-alias undohard='git reset --hard HEAD~'
+alias undo='git reset HEAD~'			# Undo commit and unstage all files
+alias undosoft='git reset --soft HEAD~'	# Undo commit and keep all files staged
+alias undohard='git reset --hard HEAD~'	# Undo the commit and completely remove all changes
 alias undopush='git push -f origin HEAD^:master'
 alias unstage='git reset --'
 
-# --- Docker ---
-alias dps='docker ps'
-alias dpsa='dps -a'
-alias drun='docker run'
-alias drm='docker rm'
-alias drmi='docker rmi'
-alias da='docker attach'
-alias dim='docker images'
-alias dp='docker pull'
-alias dstop='docker stop'
-alias dstart='docker start'
-alias dexec='docker exec'
-alias ds='docker service'
-alias dm='docker-machine'
-alias k='kubectl'
 # alias dacker="docker-compose build && docker-compose up"
 # alias dacker-down="docker-compose down && docker-compose rm"
 # alias dacker-stop="docker-compose kill"
@@ -124,6 +105,9 @@ alias "twt"='timew stop'
 alias df='df -kh'
 alias du='du -kh'
 alias diskspace='du -h -d 2'
+alias fs="stat -f \"%z bytes\""		# File size
+alias diskspace_report="df -P -kHl"
+alias free_diskspace_report="diskspace_report"
 #alias diskspace='du -s | sort -n -r |more'
 
 # Terminal
@@ -131,13 +115,15 @@ alias "?"="pwd"
 alias c="clear "
 alias KABOOM="yarn global upgrade --latest;brew update; brew upgrade; brew cleanup -s; brew doctor"
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes;sudo rm -rfv ~/.Trash"
-alias fs="stat -f '%z bytes'"
 alias flushdns="sudo killall -HUP mDNSResponder"
 if (( $+commands[jq] )) then;
   alias formatJSON='jq .'
 else
   alias formatJSON='python -m json.tool'
 fi
+alias cask="brew cask"
+alias apache="sudo apachectl "
+alias r="ranger" # overrides built-in r command
 
 # --- IP Addresses ---
 alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
@@ -149,18 +135,17 @@ alias lsof-tcp-listen='lsof -iTCP -sTCP:LISTEN -P'
 alias hosts='sudo $EDITOR /etc/hosts'
 
 # --- Tmux ---
-# Conditional aliases
-# https://gist.github.com/sos4nt/3187620#gistcomment-1452131
-[[ $TERM == *"tmux"* ]] && alias :sp='tmux split-window'
-[[ $TERM == *"tmux"* ]] && alias :vs='tmux split-window -h'
-[[ $TERM == *"tmux"* ]] && alias ssh="TERM=xterm-256color ssh"
-[[ $TERM == *"tmux"* ]] && alias vagrant="TERM=xterm-256color vagrant"
-[[ $TERM == *"tmux"* ]] && alias brew="TERM=xterm-256color brew"
 alias tmux='tmux -2'
 alias mks='tmux kill-session -t'
 alias mkS='tmux kill-server'
 alias tn='tmux new-session -s'
 alias tl='tmux list-sessions'
+# Conditional Tmux aliases
+[[ $TERM == *"tmux"* ]] && alias :sp='tmux split-window'
+[[ $TERM == *"tmux"* ]] && alias :vs='tmux split-window -h'
+[[ $TERM == *"tmux"* ]] && alias ssh="TERM=xterm-256color ssh"
+[[ $TERM == *"tmux"* ]] && alias vagrant="TERM=xterm-256color vagrant"
+[[ $TERM == *"tmux"* ]] && alias brew="TERM=xterm-256color brew"
 
 # --- Shell ---
 alias vv='nvim $(fzf)'
@@ -171,6 +156,7 @@ alias refresh='source ~/.zshrc; echo "Reloaded .zshrc."'
 alias less='less -r'
 alias tf='tail -f'
 alias cl='clear'
+alias note='nvim ~/Documents/Notes/note'
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec ${SHELL} -l"
 # Print each PATH entry on a separate line
@@ -216,17 +202,6 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 alias rm_modules="find . -name "node_modules" -type d -prune -exec rm -rf '{}' +"
 # Recursively delete `.DS_Store` files
 alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
-
-# One of @janmoesen’s ProTip™s HTTP requests
-for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-	alias "${method}"="lwp-request -m '${method}'"
-done
-
-# File size
-alias fs="stat -f \"%z bytes\""
-
-alias diskspace_report="df -P -kHl"
-alias free_diskspace_report="diskspace_report"
 
 # --- LiveStream ---
 # Get Prepared for LiveStream

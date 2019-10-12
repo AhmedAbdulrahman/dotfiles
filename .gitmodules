@@ -82,3 +82,6 @@
 [submodule "vim/pack/bundle/start/devicons"]
 	path = vim/pack/bundle/start/devicons
 	url = https://github.com/ryanoasis/vim-devicons.git
+[submodule "vim/pack/bundle/start/buftabline"]
+	path = vim/pack/bundle/start/buftabline
+	url = https://github.com/ap/vim-buftabline.git
