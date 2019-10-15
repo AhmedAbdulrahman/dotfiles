@@ -85,3 +85,6 @@
 [submodule "vim/pack/bundle/start/buftabline"]
 	path = vim/pack/bundle/start/buftabline
 	url = https://github.com/ap/vim-buftabline.git
+[submodule "vim/pack/bundle/start/ultisnips"]
+	path = vim/pack/bundle/start/ultisnips
+	url = https://github.com/SirVer/ultisnips.git
