@@ -4,81 +4,210 @@
 
 scriptencoding UTF-8
 
-if !exists('g:did_coc_loaded')
-  finish
-endif
+" Disable automatically opening quickfix list upon errors."
+let g:coc_auto_copen = v:false
 
-let g:coc_extension_root = $VIMHOME . '/coc/extensions'
 let g:coc_node_path=exepath('node')
 
+" List of extensions."
+let g:coc_global_extensions = [
+  \ 'coc-css',
+  \ 'coc-emmet',
+  \ 'coc-emoji',
+  \ 'coc-github',
+  \ 'coc-html',
+  \ 'coc-json',
+  \ 'coc-phpls',
+  \ 'coc-python',
+  \ 'coc-rls',
+  \ 'coc-snippets',
+  \ 'coc-svg',
+  \ 'coc-tailwindcss',
+  \ 'coc-tsserver',
+  \ 'coc-vimlsp',
+  \ 'coc-yaml',
+  \ 'coc-highlight'
+\ ]
 
+" User configuration "
 let g:coc_user_config = {
-      \  'coc.preferences.colorSupport': 0,
-      \  'coc.preferences.snippets.enable': v:true,
-      \  'coc.preferences.colorSupport': 1,
-      \  'coc.preferences.previewAutoClose': 1,
-      \  'coc.preferences.snippetStatusText': 'SNIP',
-      \  'coc.preferences.rootPatterns': ['.vim', '.git'],
-      \  'coc.preferences.useQuickfixForLocations': 0,
-      \  'coc.preferences.extensionUpdateCheck': 'daily',
-      \  'coc.preferences.watchmanPath': v:null,
-      \  'coc.preferences.jumpCommand': 'edit',
-      \  'coc.preferences.messageLevel': 'more',
-      \  'coc.preferences.bracketEnterImprove': 1,
-      \  'coc.preferences.hoverTarget': functions#has_floating_window() ? 'float' : 'echo',
-      \  'suggest.autoTrigger': 'always',
-      \  'suggest.noselect': 0,
-      \  'suggest.echodocSupport': 1,
-      \  'suggest.snippetIndicator': ' [snippet]',
-      \  'sugget.maxCompleteItemCount': 20,
-      \  'sugget.preferCompleteThanJumpPlaceholder': 0,
-      \  'sugget.fixInsertedWord': 1,
-      \  'sugget.localityBonus': 1,
-      \  'sugget.triggerAfterInsertEnter': 0,
-      \  'sugget.timeout': 2000,
-      \  'sugget.minTriggerInputLength': 1,
-      \  'sugget.triggerCompletionWait': 60,
-      \  'suggest.floatEnable': functions#has_floating_window(),
-      \  'signature.target': functions#has_floating_window() ? 'float' : 'echo',
-      \  'diagnostic.errorSign': '×',
-      \  'diagnostic.warningSign': '●',
-      \  'diagnostic.infoSign': '!',
-      \  'diagnostic.hintSign': '!',
-      \  'diagnostic.messageTarget': functions#has_floating_window() ? 'float' : 'echo',
-      \  'diagnostic.refreshOnInsertMode': 1,
-      \  'diagnostic.locationlist': 1,
-      \  'python.linting': {
-      \    'pylintUseMinimalCheckers': 0
-      \   },
-      \  'coc.github.filetypes': ['gitcommit', 'markdown.ghpull'],
-      \  'snippets.priority': 200,
-      \  'snippets.shortcut': 'S',
-      \  'snippets.loadFromExtensions': 0,
-      \  'snippets.ultisnips': {
-      \     'enable': 1,
-      \     'directories': ['snippet']
-      \  },
-      \ }
+	\ 'suggest': {
+		\ 'maxPreviewWidth': 50,
+		\ 'enablePreview': v:false,
+		\ 'floatEnable': ahmed#settings#has_floating_window(),
+		\ 'labelMaxLength': 200,
+		\ 'detailMaxLength': 200,
+		\ 'detailField': 'menu',
+		\ 'autoTrigger': 'always',
+		\ 'languageSourcePriority': 99,
+		\ 'numberSelect': v:false,
+		\ 'disableKind': v:true,
+		\ 'disableMenu': v:true,
+		\ 'disableMenuShortcut': v:true,
+		\ 'snippetIndicator': ' [snippet]',
+		\ 'maxCompleteItemCount': 20,
+		\ 'preferCompleteThanJumpPlaceholder': v:false,
+		\ 'fixInsertedWord': v:true,
+		\ 'localityBonus': v:true,
+		\ 'triggerAfterInsertEnter': v:false,
+		\ 'timeout': 2000,
+		\ 'minTriggerInputLength': 1,
+		\ 'triggerCompletionWait': 60,
+		\ 'echodocSupport': v:true,
+		\ 'acceptSuggestionOnCommitCharacter': v:false,
+		\ 'noselect': v:false,
+		\ 'keepCompleteopt': v:true,
+		\ 'completionItemKindLabels': {}
+	\ },
+	\ 'diagnostic': {
+		\ 'enable': v:true,
+		\ 'level': 'hint',
+		\ 'checkCurrentLine': v:false,
+		\ 'messageTarget': ahmed#settings#has_floating_window() ? 'float' : 'echo',
+		\ 'joinMessageLines': v:false,
+		\ 'refreshOnInsertMode': v:true,
+		\ 'refreshAfterSave': v:false,
+		\ 'displayByAle': v:true,
+		\ 'virtualText': v:true,
+		\ 'virtualTextPrefix': '  ',
+		\ 'virtualTextLines': 3,
+		\ 'virtualTextLineSeparator': ' \\ ',
+		\ 'enableSign': v:true,
+		\ 'enableMessage': 'never',
+		\ 'locationlist': v:true,
+		\ 'highlightOffset': 1000,
+		\ 'signOffset': 1000,
+		\ 'errorSign': '•',
+		\ 'warningSign': '•',
+		\ 'infoSign': '•',
+		\ 'hintSign': '•',
+		\ 'maxWindowHeight': 5
+	\ },
+	\ 'signature': {
+		\ 'enable': v:true,
+		\ 'triggerSignatureWait': 50,
+		\ 'target': ahmed#settings#has_floating_window() ? 'float' : 'echo',
+		\ 'floatTimeout': 1000,
+		\ 'preferShownAbove': v:true,
+		\ 'hideOnTextChange': v:false,
+		\ 'maxWindowHeight': 8
+	\ },
+	\ 'codeLens': {
+		\ 'enable': v:false,
+		\ 'separator': ''
+	\ },
+	\ 'workspace': {
+		\ 'ignoredFiletypes': ['markdown', 'log', 'txt', 'help']
+	\ },
+	\ 'list': {
+		\ 'indicator': '>',
+		\ 'maxHeight': 10,
+		\ 'signOffset': 900,
+		\ 'selectedSignText': '*',
+		\ 'extendedSearchMode': v:true,
+		\ 'autoResize': v:true,
+		\ 'limitLines': 30000,
+		\ 'maxPreviewHeight': 12,
+		\ 'previewSplitRight': v:false,
+		\ 'previewHighlightGroup': 'Search',
+		\ 'nextKeymap': '<NOP>',
+		\ 'previousKeymap': '<NOP>',
+		\ 'normalMappings': {},
+		\ 'insertMappings': {}
+	\ },
+	\ 'coc': {
+		\ 'preferences': {
+			\ 'useQuickfixForLocations': v:false,
+			\ 'extensionUpdateCheck': 'daily',
+			\ 'snippetStatusText': 'SNIP',
+			\ 'hoverTarget':  ahmed#settings#has_floating_window() ? 'float' : 'echo',
+			\ 'colorSupport': v:false,
+			\ 'previewAutoClose': v:true,
+			\ 'currentFunctionSymbolAutoUpdate': v:false,
+			\ 'formatOnSaveFiletypes': [],
+			\ 'enableFloatHighlight': v:false,
+			\ 'rootPatterns': ['.vim', '.git'],
+			\ 'watchmanPath': v:null,
+			\ 'jumpCommand': 'edit',
+			\ 'messageLevel': 'more',
+			\ 'bracketEnterImprove': v:true,
+			\ 'formatOnType': v:false,
+			\ 'snippets.enable': v:true
+		\ },
+		\ 'source': {
+			\ 'around': {
+				\ 'enable': v:true,
+				\ 'firstMatch': v:true,
+				\ 'shortcut': 'A',
+				\ 'priority': 1,
+				\ 'disableSyntaxes': []
+			\ },
+			\ 'buffer': {
+				\ 'enable': v:true,
+				\ 'firstMatch': v:true,
+				\ 'shortcut': 'B',
+				\ 'priority': 1,
+				\ 'disableSyntaxes': [],
+				\ 'ignoreGitignore': v:true
+			\ },
+			\ 'file': {
+				\ 'enable': v:true,
+				\ 'shortcut': 'F',
+				\ 'priority': 10,
+				\ 'disableSyntaxes': [],
+				\ 'triggerCharacters': '/',
+				\ 'trimSameExts': ['.ts', '.js'],
+				\ 'ignoreHidden': v:true,
+				\ 'ignorePatterns': []
+			\ },
+			\ 'outline': {
+				\ 'ctagsFilestypes': []
+			\ }
+		\ },
+    \ 'github': {
+      \ 'filetypes': ['gitcommit', 'markdown.ghpull'],
+    \ },
+	\ },
+	\ 'languageserver': {},
+	\
+	\ 'snippets': {
+		\ 'priority': 200,
+		\ 'shortcut': 'S',
+    \ 'ultisnips': { 
+      \ 'enable': v:true
+    \ },
+	\ },
+	\ 'highlight': {
+		\ 'disableLanguages': '',
+		\ 'document.enable': v:true,
+		\ 'colors.enable': v:true
+	\ },
+  \ 'emmet': {
+		\ 'includeLanguages': { 'javascript': 'javascriptreact' },
+	\ },
+\ }
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+" Go to definition of word under cursor "
+nmap <silent> <Leader>dd <Plug>(coc-definition) 
+nmap <silent> <Leader>dt <Plug>(coc-type-definition)
+" Find references "
+nmap <silent> <Leader>dr <Plug>(coc-references) 
+" Go to implementation "
+nmap <silent> <Leader>dj <Plug>(coc-implementation) 
 
-" Remap for rename current word."
-nmap <leader>rn <Plug>(coc-rename)
+" rename the current word in the cursor "
+nmap <Leader>rn  <Plug>(coc-rename)
+nmap <Leader>fs  <Plug>(coc-format-selected)
 
-" Use K for show documentation in preview window"
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" restart when tsserver gets wonky "
+nnoremap <silent> <Leader>cr  :<C-u>CocRestart<CR>
 
-augroup MY_COC
-  autocmd!
-  " Update signature help on jump placeholder"
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+" manage extensions "
+nnoremap <silent> <Leader>cx  :<C-u>CocList extensions<cr>
+
+augroup cocsettings
+	autocmd!
+	" Update signature help on jump placeholder."
+	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   autocmd CursorHold * silent call CocActionAsync('highlight')
-  autocmd BufWritePost coc.vim source % | CocRestart
-  autocmd BufWritePost coc-settings.json CocRestart
 augroup end
