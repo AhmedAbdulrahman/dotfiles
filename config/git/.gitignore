@@ -1,0 +1,101 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+# Icon?
+ehthumbs.db
+Thumbs.db
+
+
+# Folders    #
+#############
+.sass-cache/
+.grunt/
+node_modules/
+.gems/
+.bundle/
+elm-stuff/
+log/
+logs/
+tmp/
+dump/
+.next/
+
+# Editors    #
+#############
+#sublime
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+sublime/User/Package Control.merged-ca-bundle
+#vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+#vim
+*~
+*.un~
+tags
+tags.*
+.local.vim
+Session.vim
+.sw[a-p]
+.*.sw[a-p]
+*.add.spl
+*.vim-rplugin~
+.netrwhist
+undodir/
+#Emacs
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Misc      #
+#############
+npm-debug.log*
+*.pyc
+*.map
+.mx-start
+.direnv
+.envrc
+.tern-port
+.tern-project
+.ignore
+*.zwc

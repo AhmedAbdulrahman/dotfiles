@@ -5,7 +5,7 @@ data.location=~/.task
 # Show the tracking of time
 journal.time=on
 # Do not use color
-color=off
+color=on
 
 # Priority
 uda.priority.values = H,M,,L
@@ -47,8 +47,8 @@ report.ready.labels= ,,Depends, Project, Due, Description
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-blue-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-violets-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-yellow-green.theme
-#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-gray-256.theme
-#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-gray-blue-256.theme
+# include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-gray-256.theme
+include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-gray-blue-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/solarized-dark-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/solarized-light-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/no-color.theme

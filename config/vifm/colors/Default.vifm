@@ -1,0 +1,93 @@
+" You can edit this file by hand.
+" The " character at the beginning of a line comments out the line.
+" Blank lines are ignored.
+
+" The Default color scheme is used for any directory that does not have
+" a specified scheme and for parts of user interface like menus. A
+" color scheme set for a base directory will also
+" be used for the sub directories.
+
+" The standard ncurses colors are:
+" Default = -1 = None, can be used for transparency or default color
+" Black = 0
+" Red = 1
+" Green = 2
+" Yellow = 3
+" Blue = 4
+" Magenta = 5
+" Cyan = 6
+" White = 7
+
+" Light versions of colors are also available (set bold attribute):
+" LightBlack
+" LightRed
+" LightGreen
+" LightYellow
+" LightBlue
+" LightMagenta
+" LightCyan
+" LightWhite
+
+" Available attributes (some of them can be combined):
+" bold
+" underline
+" reverse or inverse
+" standout
+" italic (on unsupported systems becomes reverse)
+" none
+
+" Vifm supports 256 colors you can use color numbers 0-255
+" (requires properly set up terminal: set your TERM environment variable
+" (directly or using resources) to some color terminal name (e.g.
+" xterm-256color) from /usr/lib/terminfo/; you can check current number
+" of colors in your terminal with tput colors command)
+
+" highlight group cterm=attrs ctermfg=foreground_color ctermbg=background_color
+
+highlight clear
+
+highlight Win cterm=none ctermfg=253 ctermbg=black
+highlight Directory cterm=bold ctermfg=153 ctermbg=default
+highlight Link cterm=bold ctermfg=yellow ctermbg=default
+highlight BrokenLink cterm=bold ctermfg=red ctermbg=default
+highlight Socket cterm=bold ctermfg=magenta ctermbg=default
+highlight Device cterm=bold ctermfg=red ctermbg=default
+highlight Fifo cterm=bold ctermfg=cyan ctermbg=default
+highlight Executable cterm=bold ctermfg=green ctermbg=default
+highlight Selected cterm=bold ctermfg=140 ctermbg=default
+highlight CurrLine cterm=bold,reverse ctermfg=default ctermbg=default
+highlight TopLine cterm=none ctermfg=236 ctermbg=247
+highlight TopLineSel cterm=bold ctermfg=236 ctermbg=default
+highlight StatusLine cterm=bold ctermfg=236 ctermbg=247
+highlight WildMenu cterm=bold,reverse ctermfg=252 ctermbg=236
+highlight CmdLine cterm=none ctermfg=253 ctermbg=black
+highlight ErrorMsg cterm=none ctermfg=red ctermbg=black
+highlight Border cterm=none ctermfg=236 ctermbg=247
+highlight JobLine cterm=bold,reverse ctermfg=black ctermbg=white
+highlight SuggestBox cterm=bold ctermfg=default ctermbg=default
+highlight CmpMismatch cterm=bold ctermfg=white ctermbg=red
+" You can see AuxWin if run the following command: set millerview
+highlight AuxWin cterm=bold ctermfg=default ctermbg=default
+highlight TabLine cterm=none ctermfg=247 ctermbg=236
+highlight TabLineSel cterm=bold,reverse ctermfg=default ctermbg=default
+
+highlight User1 cterm=bold,underline,reverse,standout ctermfg=default ctermbg=default
+highlight User2 cterm=bold,underline,reverse,standout ctermfg=default ctermbg=default
+highlight User3 cterm=bold,underline,reverse,standout ctermfg=default ctermbg=default
+highlight User4 cterm=bold,underline,reverse,standout ctermfg=default ctermbg=default
+highlight User5 cterm=bold,underline,reverse,standout ctermfg=default ctermbg=default
+highlight User6 cterm=bold,underline,reverse,standout ctermfg=default ctermbg=default
+highlight User7 cterm=bold,underline,reverse,standout ctermfg=default ctermbg=default
+highlight User8 cterm=bold,underline,reverse,standout ctermfg=default ctermbg=default
+highlight User9 cterm=bold,underline,reverse,standout ctermfg=default ctermbg=default
+
+" Highlight archives
+highlight /^.*\.(7z|apk|bz2|cab|cpio|deb|gem|gz|gzip|lh|lzh|lzma|rar|rpm|tar|tb2|tbz|tbz2|tgz|tlz|trz|txz|tz|tz2|xz|zip|dmg)$/ ctermfg=178
+" Highlight music files
+highlight /^.*\.(aac|anx|asf|au|axa|flac|m2a|m4a|mid|midi|mp3|mpc|oga|ogg|ogx|ra|ram|rm|spx|wav|wma|ac3)$/ ctermfg=147
+" Highlight images
+highlight /^.*\.(bmp|gif|ico|jpeg|jpg|png|svg|svgz|tga|tiff|xmb|xcf|xpm|xspf|xwd|cr2|dng|3fr|ari|arw|bay|crw|cr3|cap|data|dcs|dcr|drf|eip|erf|fff|gpr|iiq|k25|kdc|mdc|mef|mos|mrw|obm|orf|pef|ptx|pxn|r3d|raf|raw|rwl|rw2|rwz|sr2|srf|srf|srw|tif|x3f)$/ ctermfg=180
+" Highlight video files
+highlight /^.*\.(avi|ts|axv|divx|m2v|m4p|m4v|mka|mkv|mov|mp4|flv|mp4v|mpeg|mpg|nuv|ogv|pbm|pgm|qt|vob|wmv|xvid)$/ ctermfg=149
+" Highlight pdf and djvu
+highlight /^.*\.(pdf|djvu)$/ ctermfg=175
