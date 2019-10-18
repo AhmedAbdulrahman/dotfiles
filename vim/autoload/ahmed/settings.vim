@@ -72,17 +72,16 @@ function! ahmed#settings#floating_fzf() abort
   call setbufvar(buf, '&signcolumn', 'no')
   call setbufvar(l:buf, '&filetype', 'fzf')
 
-  let l:height = float2nr(&lines * 0.9)
-  let l:width = float2nr(&columns - (&columns * 2 / 60))
-  let l:col = float2nr((&columns - width) / 2)
-  let l:row = float2nr(&lines / 15)
+  let height = &lines - 3
+  let width = float2nr(&columns - (&columns * 2 / 60))
+  let col = float2nr((&columns - width) / 2)
 
   let l:opts = {
         \ 'relative': 'editor',
-        \ 'row': l:row,
-        \ 'col': l:col,
-        \ 'width': l:width,
-        \ 'height': l:height
+        \ 'row': 1,
+        \ 'col': col,
+        \ 'width': width,
+        \ 'height': height
         \ }
 
   call nvim_open_win(l:buf, v:true, l:opts)
@@ -90,4 +89,11 @@ endfunction
 
 function! ahmed#settings#fzf_window() abort
   return ahmed#settings#has_floating_window() ? 'call ahmed#settings#floating_fzf()' : 'enew'
+endfunction
+
+function! ahmed#settings#attempt_select_last_file() abort
+  let l:previous=expand('#:t')
+  if l:previous !=# ''
+    call search('\v<' . l:previous . '>')
+  endif
 endfunction
