@@ -1,13 +1,13 @@
 #!/usr/bin/env zsh
 ################################################################################
 #    Author: Wenxuan                                                           #
-#     Email: wenxuangm@gmail.com                                               #
-#   Created: 2018-06-13 15:09                                                  #
+#    Email: a.kasapbashi@gmail.com                                               #
+#   Created: 2019-09-29 13:00                                                  #
 ################################################################################
 [[ $- != *i* ]] && return
 
 # ALT-E - Edit selected file
-wfxr::fzf-file-edit-widget() {
+fzf-file-edit-widget() {
     setopt localoptions pipefail 2> /dev/null
     local files
     files=$(eval "$FZF_ALT_E_COMMAND" |
@@ -21,11 +21,11 @@ wfxr::fzf-file-edit-widget() {
     typeset -f zle-line-init >/dev/null && zle zle-line-init
     return $ret
 }
-zle     -N    wfxr::fzf-file-edit-widget
-bindkey '\ee' wfxr::fzf-file-edit-widget
+zle     -N    fzf-file-edit-widget
+bindkey '\ee' fzf-file-edit-widget
 
 # CTRL-R - Paste the selected command from history into the command line
-wfxr::fzf-history-widget() {
+fzf-history-widget() {
     local selected num
     setopt localoptions noglobsubst noposixbuiltins pipefail 2> /dev/null
     selected=( $(fc -rl 1 | awk '{FIRST=$1; $1=""; if (!x[$0]++) {$1=FIRST; print $0}}' |
@@ -41,5 +41,5 @@ wfxr::fzf-history-widget() {
     typeset -f zle-line-init >/dev/null && zle zle-line-init
     return $ret
 }
-zle     -N   wfxr::fzf-history-widget
-bindkey '^R' wfxr::fzf-history-widget
+zle     -N   fzf-history-widget
+bindkey '^R' fzf-history-widget
