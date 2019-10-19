@@ -3,14 +3,11 @@ set encoding=UTF-8 " Default encoding. (vim-only) "
 scriptencoding UTF-8 " Default encoding for current script. "
 set fileformats=unix " Only use Unix end-of-line format. "
 
+let $VIMHOME = expand($HOME.'/.vim')
+
 " Change to English version"
 let $LANG = 'en_US'
 set langmenu=en_US
-
-" Shared Data "
-if !has('nvim')
-	set viminfo+=n~/.vim/cache/share/viminfo
-endif
 
 " Colors"
 " Set Color/Theme based off time of day"
@@ -37,13 +34,11 @@ set display=lastline " As much as possible of the last line in a window will be 
 set keywordprg= " Disable definition search by default. "
 set modelines=1 " Maximum number of lines that is checked for set commands. "
 set mouse=nv " Enable mouse support only for normal and visual modes. "
-set nojoinspaces " Disable inserting two spaces after `.`, `?`, `!` with join command. "
 set nolangremap " Setting 'langmap' does not apply to characters resulting from a mapping. "
 set noruler " Disable showing line numbers in command line. "
 set noshowmatch " When a bracket is inserted, do not jump to the matching one. "
 set nostartofline " Prevent the cursor from changing the current column when jumping. "
 set nowrap " Prevent wrapping for long lines. "
-set nolist
 set nrformats=bin,hex " Only accept binary and hexadecimal numbers. "
 set pumheight=10 " Maximum number of items to show in the pop-up menu for completion. "
 set regexpengine=1 " Use old regular expression engine. "
@@ -54,7 +49,8 @@ set shellpipe=&> " Fix potentional screen flashing problems with not using `tee`
 set shortmess=filmnrwxoOstTIc " Use abbreviations and short messages in command menu line. "
 set sidescroll=5 " Columns to scroll horizontally when cursor is moved off the screen. "
 set sidescrolloff=5 " Minimum number of screen columns to keep to cursor right. "
-set synmaxcol=200 " Maximum column in which to search for syntax items. "
+set synmaxcol=200 " Don't highlight very long lines. "
+syntax sync minlines=256   " Start highlighting from 256 lines backwards"
 set textwidth=0 " Prevent auto wrapping when using affecting keys. "
 set timeoutlen=500 " Mapping delays in milliseconds. "
 set ttimeoutlen=10 " Key code delays in milliseconds. "
@@ -64,35 +60,61 @@ set visualbell " Use visual bell instead of beeping on errors. "
 
 " Interface "
 set cursorline " Highlight the line background of the cursor. "
-set fillchars=stl:\ ,stlnc:\ ,vert:\ ,fold:\ ,diff:\  " Characters to be used in various user-interface elements. "
+set lazyredraw " Don't bother updating screen during macro playback"
+set re=1
 set laststatus=2 " Always show the status line. "
-set linebreak " Wrap lines in 'breakat', rather than at the last character. "
-set listchars=tab:│\ ,nbsp:␣,extends:…,precedes:… " Strings to use when 'list' option set. "
-set number " Show line numbers alongside relative numbers. "
+
+" Show trailing whitespace"
+set list
+set listchars=nbsp:░,tab:▷\ ,extends:»,precedes:«,trail:• " Strings to use when 'list' option set. "
+set nojoinspaces " Disable inserting two spaces after `.`, `?`, `!` with join command. "
+set concealcursor=n
+
+" Characters to be used in various user-interface elements. "
+if has('windows')
+  set fillchars=diff:⣿                " BOX DRAWINGS "
+  set fillchars+=vert:┃               " HEAVY VERTICAL "
+  set fillchars+=fold:─
+  if has('nvim')
+    set fillchars=eob:\                 " Hide end of buffer ~ "
+  endif
+endif
+
+if has('linebreak')
+  let &showbreak='↳  '                " DOWNWARDS ARROW WITH TIP RIGHTWARDS"
+endif
+
 set relativenumber " Show relative line numbers alongside numbers. "
-set signcolumn=yes " Always draw the sign column even there is no sign in it. "
+
+" Always draw the sign column even there is no sign in it. "
+if has('nvim-0.4.2')
+  set signcolumn=yes:2
+else
+  set signcolumn=yes
+endif
 set title " Show title as in 'titlestring' in title bar of window. "
 set titlestring=%f " Format of the title used by 'title'. %F\ -\ vim"
 
 " Tags "
 set tags=./.git/tags;,./tags;,tags " Look for `tags` file in .git/ directory. "
 
-" Diff "
-set diffopt=filler,vertical,hiddenoff,foldcolumn:0,algorithm:patience " Option settings for diff mode. "
+" Make sure diffs are always opened in vertical splits, also match my git settings"
+set diffopt+=vertical,algorithm:histogram,indent-heuristic,hiddenoff
+call ahmed#settings#customize_diff()
 
 " Formatting "
 let &formatprg = 'par b1 e1 g1 q1 r3 w80 R1 T4 B=.,\?_A_a Q=_s\>' " External formatter program that will be used with `gq` operator. "
 set formatoptions=croqnj " General text formatting options used by many mechanics. "
-
+set linespace=41
 " Completion "
 set complete=.,w,b,k,t " Options for keyword completion. "
-set completeopt=noinsert,menuone " Options for insert mode completion. "
+set completeopt=longest,menuone " Options for insert mode completion. "
 set path=.,** " List of directories which will be searched when using related features. "
 set pumheight=8 " Maximum height of the popup menu for insert mode completion. "
 
 " Indentation "
-set tabstop=4 " Length of a <Tab> character. "
-set shiftwidth=0 " Number of spaces to use for each step of auto indent operators. "
+set tabstop=4 " Spaces per tab. "
+set shiftwidth=2 " Number of spaces to use for each step of auto indent operators. (when shifting) "
 set softtabstop=-1 " Number of spaces that a <Tab> counts. "
 set noexpandtab " Disable using spaces instead of tab characters. "
 set nosmarttab " Tab key always inserts blanks according to 'tabstop'. "
@@ -101,38 +123,21 @@ set shiftround " Round indent to multiple of 'shiftwidth'. Applies to > and < co
 set smartindent " Automatically inserts one extra level of indentation in some cases. "
 
 " Folding "
-set foldlevelstart=99 " Start editing with all folds open. "
-set foldmethod=syntax "syntax highlighting items specify folds. "
-set foldtext=ahmed#settings#foldtext() " Use custom fold text function for folds. "
-set foldcolumn=1 "defines 1 col at window left, to indicate folding"
-let javaScript_fold=1 "activate folding by JS syntax
+if has('folding')
+  set foldtext=ahmed#settings#foldtext()
+  set foldmethod=indent               " not as cool as syntax, but faster"
+  set foldlevelstart=99               " start unfolded"
+endif
 
 " Search "
-let &grepprg = 'rg --vimgrep --no-messages --no-ignore --hidden --follow --smart-case --glob "!.git/" --glob "!node_modules/" --regexp' " Program to use for the :grep command. "
-set grepformat=%f:%l:%c:%m,%f:%l:%m " Format to recognize for the :grep command output. "
 set ignorecase " Make default search is not case sensitive. "
 set incsearch " Instantly show results when you start searching. "
 set nohlsearch " Disable highlight the matched search results by default. "
 set smartcase " If a uppercase character is entered, the search will be case sensitive. "
-
-" Backup "
-set backupdir=~/.vim/cache/backup// " The directory for backup files. "
-set directory=~/.vim/cache/swap// " The directory for swap files. "
-"Persistent Undo"
-if has('persistent_undo')
-    let target_path = expand('~/.vim/vim-persisted-undo/')
-
-    if !isdirectory(target_path)
-      call system('mkdir -p ' . target_path)
-    endif
-
-    let &undodir = target_path
-	set undofile " Undo tree to be saved to a file when exiting a buffer. "
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --no-messages\ --no-ignore\ --hidden\ --follow\ --smart-case\ --glob "!.git/"\ --glob "!node_modules/"\ --regexp\ " Program to use for the :grep command. "
+  set grepformat=%f:%l:%c:%m,%f:%l:%m " Format to recognize for the :grep command output. "
 endif
-set undolevels=100000 " Maximum undo limit. "
-set updatecount=100 " Typing this many characters will create the swap file. "
-set viewdir=~/.vim/cache/view// " Name of the directory where to store files for :mkview. "
-set viewoptions=cursor,folds " Options used by `mkview` and `loadview` commands. "
 
 " Buffers, Windows, Tabs "
 set autoread " Read the file again if have been changed outside of Vim. "
@@ -151,7 +156,11 @@ set noshowmode " Disable native mode indicator. showmode"
 set wildcharm=<C-z> " The key to start wildcard expansion inside macro. "
 set wildignorecase " Ignore case when completing in command menu. "
 set wildmenu " Command-line completion operates in an enhanced mode. "
-set wildmode=full " Wildmenu options. "
+set wildmode=list:longest,full " zsh-like command autocompletion. "
+set wildignore+=.hg,.git,.svn,.bzr " Version control "
+set wildignore+=*.DS_Store         " Apple OS X "
+set wildignore+=Thumbs.db          " Windows "
+set wildignore+=*.pyc              " Python "
 set wildignore+=*/tmp/*,/dist/*,/node_modules/*,*.so,*.swp,*.zip "to limit ctrlp search"
 "set esckeys" "Allow cursor keys in insert mode"
 " Vim "
@@ -167,11 +176,24 @@ endif
 
 " Neovim "
 if has('nvim')
-	set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor " Configures the cursor style for each mode."
 	set inccommand=nosplit " Show live substitution results as you type."
 	set fillchars+=eob:\  " Hide end of buffer tilde symbols."
 	set display+=msgsep " Only scroll lines on command line pager, not the entire screen."
 	"set wildoptions+=pum" " Display the completion matches using the popupmenu."
+
+  " For neovim terminal :term"
+  " nnoremap <leader>t  :vsplit +terminal<cr>"
+  tnoremap <expr> <esc> &filetype == 'fzf' ? "\<esc>" : "\<c-\>\<c-n>"
+  tnoremap <M-h> <c-\><c-n><c-w>h
+  tnoremap <M-j> <c-\><c-n><c-w>j
+  tnoremap <M-k> <c-\><c-n><c-w>k
+  tnoremap <M-l> <c-\><c-n><c-w>l
+  augroup MyTerm
+    autocmd!
+    autocmd TermOpen * setl nonumber norelativenumber
+    autocmd TermOpen term://* startinsert
+    autocmd TermClose term://* stopinsert
+  augroup END
 endif
 
 if has('gui_running')
@@ -181,15 +203,107 @@ if has('gui_running')
     set guioptions-=r       " Removes right hand scroll bar"
     set guioptions-=b       " bottom scroll bar"
     set guioptions-=h       " only calculate bottom scroll size of current line"
-    set shortmess=atI       " Don't show the intro message at start and truncate msgs (avoid press ENTER msgs)."
+    set shortmess+=A        " ignore annoying swapfile messages"
+    set shortmess+=I        " no splash screen"
+    set shortmess+=O        " file-read message overwrites previous"
+    set shortmess+=T        " truncate non-file messages in middle"
+    set shortmess+=W        " don't echo "[w]"/"[written]" when writing"
+    set shortmess+=a        " use abbreviations in messages eg. `[RO]` instead of `[readonly]`"
+    set shortmess+=o        " overwrite file-written messages"
+    set shortmess+=t        " truncate file messages at start"
 endif
 
+" Configures the cursor style for each mode "
+if exists('&guioptions')
+  " cursor behavior:"
+  "   - no blinking in normal/visual mode"
+  "   - blinking in insert-mode"
+  set guicursor+=n-v-c:blinkon0,i-ci:ver25-Cursor/lCursor-blinkwait30-blinkoff100-blinkon100
+endif
 
-" Root "
+if has('nvim')
+  " dark0 + gray"
+  let g:terminal_color_0 = '#282828'
+  let g:terminal_color_8 = '#928374'
+
+  " neurtral_red + bright_red"
+  let g:terminal_color_1 = '#cc241d'
+  let g:terminal_color_9 = '#fb4934'
+
+  " neutral_green + bright_green"
+  let g:terminal_color_2 = '#98971a'
+  let g:terminal_color_10 = '#b8bb26'
+
+  " neutral_yellow + bright_yellow"
+  let g:terminal_color_3 = '#d79921'
+  let g:terminal_color_11 = '#fabd2f'
+
+  " neutral_blue + bright_blue"
+  let g:terminal_color_4 = '#458588'
+  let g:terminal_color_12 = '#83a598'
+
+  " neutral_purple + bright_purple"
+  let g:terminal_color_5 = '#b16286'
+  let g:terminal_color_13 = '#d3869b'
+
+  " neutral_aqua + faded_aqua"
+  let g:terminal_color_6 = '#689d6a'
+  let g:terminal_color_14 = '#8ec07c'
+
+  " light4 + light1"
+  let g:terminal_color_7 = '#a89984'
+  let g:terminal_color_15 = '#ebdbb2'
+endif
+
+if has('mksession')
+  let &viewdir=$VIMHOME.'/cache/view' " override ~/.vim/view default "
+  set viewoptions=cursor,folds        " save/restore just these (with `:{mk,load}view`)"
+endif
+
+" Backup "
 if exists('$SUDO_USER')
-	set noswapfile
-	set nobackup
-	set nowritebackup
-	set noundofile
-	set viminfo=
+  set nobackup                        " Don't create root-owned files "
+  set nowritebackup                   " Don't create root-owned files "
+else
+  let &backupdir=$VIMHOME.'/cache/backup//' " Keep undo files out of the way "
+  set backupdir+=.
+endif
+
+" Swap "
+if exists('$SUDO_USER')
+  set noswapfile                      " Don't create root-owned files "
+else
+  let &directory=$VIMHOME.'/cache/swap//' " Keep swap files out of the way "
+  set directory+=.
+endif
+
+set updatecount=100 " Update swapfiles every 80 typed chars "
+
+if has('persistent_undo')
+  if exists('$SUDO_USER')
+    set noundofile                    " Don't create root-owned files "
+  else
+    let &undodir=$VIMHOME.'/cache/undo/' " Keep undo files out of the way"
+    set undodir+=.
+    set undofile                      " Actually use undo files when exiting a buffer "
+  endif
+endif
+
+if exists('$SUDO_USER')               " Don't create root-owned files "
+  if has('nvim')
+    set shada=
+  else
+    set viminfo=
+  endif
+else
+  if has('nvim')
+    " default in nvim: !,'100,<50,s10,h "
+    execute "set shada=!,'100,<500,:10000,/10000,s10,h,n".$VIMHOME.'/cache/main.shada'
+    augroup MyNeovimShada
+      autocmd!
+      autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
+    augroup END
+  else
+    execute "set viminfo=!,'100,<500,:10000,/10000,s10,h,n".$VIMHOME.'/cache/viminfo'
+  endif
 endif
