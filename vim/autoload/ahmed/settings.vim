@@ -97,3 +97,16 @@ function! ahmed#settings#attempt_select_last_file() abort
     call search('\v<' . l:previous . '>')
   endif
 endfunction
+
+function! ahmed#settings#customize_diff()
+  if &diff
+  	" Disable loading syntax/*.vim files."
+    syntax off
+    set number
+  else
+  	" Enable loading syntax/*.vim files."
+    syntax on
+	" Show line numbers alongside relative numbers. "
+    set number&
+  endif
+endfunction
