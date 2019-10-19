@@ -124,11 +124,22 @@ zplug 'so-fancy/diff-so-fancy', \
     as:command, use:diff-so-fancy, \
     hook-build:'git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"'
 
+zplug 'b4b4r07/zplug-doctor', lazy:yes
+zplug 'wfxr/zplug-rm', lazy:yes
 zplug 'wfxr/iconful', as:command, use:'(iconful).sh', rename-to:'$1'
 zplug 'wfxr/forgit', defer:1
+forgit_log=log
+forgit_diff=diff
+forgit_add=add
+forgit_reset_head=grh
+forgit_ignore=ignore
+forgit_restore=cof
+forgit_stash_show=stash
 FORGIT_FZF_DEFAULT_OPTS="
 --height '80%'
 "
+
+zplug "wfxr/emoji-cli", as:command, use:'emojify|fuzzy-emoji'
 
 # jq is a lightweight and flexible command-line JSON processor.
 (( $+commands[jq] )) || zplug "stedolan/jq", as:command, from:gh-r, rename-to:jq
