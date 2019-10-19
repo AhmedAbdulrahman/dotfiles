@@ -1,8 +1,10 @@
 #!/usr/bin/env zsh
 
-# Create a new directory and enter it
-function mg() {
-	mkdir -p "$@" && cd "$@" || exit
+(( ${+color} )) || autoload -Uz colors && colors
+
+# Makes directory and `cd`s into it.
+function take() {
+	command mkdir --parents --verbose "$1" && cd "$1"
 }
 
 # Open Visual Studio Code
