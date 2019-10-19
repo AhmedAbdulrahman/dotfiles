@@ -288,3 +288,71 @@ function mysqlconfig() {
 		sudo updatedb && locate my.cnf
 	fi
 }
+
+function zsh-bench() {
+    for i in $(seq 5); do time zsh -i -c exit; done;
+}
+
+# FZF functions
+if hash fzf &>/dev/null; then 
+  if hash fd &>/dev/null; then 
+    # Set ag as the default source for fzf
+    export FZF_DEFAULT_COMMAND='fd --type f --no-ignore --hidden --follow --exclude "{.git,node_modules}/*"'
+    # Apply the command to CTRL-T as well
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  fi
+
+  # Remove file with FZF 
+  function frm() {
+    local file
+    file=$(fzf --cycle +m) && rm -rfi "$file"
+  }
+
+  # fkill - kill process wtih FZF
+  function fkill() {
+    pid=$(ps -ef | sed 1d | fzf --cycle -m | awk '{print $2}')
+  
+    if [ "x$pid" != "x" ]
+    then
+      kill -${1:-9} $pid
+    fi
+  }
+
+  # checkoutt - checkout git branch with FZF (including remote branches)
+  function checkout() {
+    local branches branch
+    branches=$(git branch --all | grep -v HEAD) &&
+    branch=$(echo "$branches" |
+             fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+    git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+  }
+
+  # tm -> open fzf and let you select the session, or tm something -> it will attach to the something session (if it exists), else it will create it.
+  function tm() {
+    [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+    if [ $1 ]; then 
+      tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+    fi
+    session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+  }
+
+  # tmpane - switch tmux pane with FZF
+  function tmpane () {
+    local panes current_window target target_window target_pane
+    panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
+    current_window=$(tmux display-message  -p '#I')
+  
+    target=$(echo "$panes" | fzf) || return
+  
+    target_window=$(echo $target | awk 'BEGIN{FS=":|-"} {print$1}')
+    target_pane=$(echo $target | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
+  
+    if [[ $current_window -eq $target_window ]]; then
+      tmux select-pane -t ${target_window}.${target_pane}
+    else
+      tmux select-pane -t ${target_window}.${target_pane} &&
+      tmux select-window -t $target_window
+    fi
+  }
+
+fi
