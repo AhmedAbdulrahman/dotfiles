@@ -21,7 +21,7 @@ let g:fzf_commands_expect = 'alt-enter'
 
 " Set custom layout."
 let g:fzf_layout = {
-	\ 'window': 'silent 18split enew'
+	\ 'window': ahmed#settings#fzf_window()
 \ }
 
 " Set actions manually."
