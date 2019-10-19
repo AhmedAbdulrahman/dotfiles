@@ -20,8 +20,7 @@ function code {
 }
 
 # Copy file with a progress bar
-function cpp()
-{
+function cpp() {
 	set -e
 	strace -q -ewrite cp -- "${1}" "${2}" 2>&1 \
 	| awk '{
@@ -91,20 +90,11 @@ function gsearch() {
 }
 
 # Usage: clone <GITHUB_REPO_URL>
-function clone() {
-    git clone --depth=1 $1
-    cd $(basename ${1%.*})
-    # For Yarn
-    if [ -f ./yarn.lock ]; then
-      yarn install
-    # For Laravel
-    elif [ -f ./composer.json ]; then
-      npm install && composer install
-    else
-    # For NPM
-      npm install
-    fi
-}
+function gclone() { git clone "https://github.com/${(j:/:)@}" }
+
+function custom-jq() {
+    [[ -t 1 ]] && jq -C "$@" | less -FR || jq "$@"
+} && alias jq='custom-jq'
 
 # whois a domain or a URL
 function whois() {
