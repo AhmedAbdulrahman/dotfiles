@@ -14,7 +14,6 @@ source "$DOTFILES/zsh/plugins/zplug/init.zsh"
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # No need to load it when in ssh session
-[ "$SSH_CLIENT" ] || zplug "plugins/web-search",    from:oh-my-zsh, hook-load:"unalias map &>/dev/null"
 [ "$SSH_CLIENT" ] || zplug 'wfxr/fzf-chrome-marks', as:command,     use:'b'
 
 # ------------------------------------------------------------------------------
@@ -26,6 +25,12 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "plugins/git", from:oh-my-zsh
 # Git completions. On OS X with Homebrew, you need to install git with brew install git --without-completions. Otherwise, git's _git will take precedence, and you won't see the completions for git-extras commands.
 zplug "plugins/git-extras", from:oh-my-zsh
+zplug 'plugins/git-flow-avh', from:oh-my-zsh
+(( $+commands[mvn]        )) && zplug "plugins/mvn",        from:oh-my-zsh, lazy:yes
+(( $+commands[docker]     )) && zplug "plugins/docker",     from:oh-my-zsh, lazy:yes
+(( $+commands[tmuxinator] )) && zplug "plugins/tmuxinator", from:oh-my-zsh, lazy:yes
+(( $+commands[gem]        )) && zplug "plugins/gem",        from:oh-my-zsh, lazy:yes
+(( $+commands[lein]       )) && zplug 'plugins/lein',       from:oh-my-zsh, lazy:yes
 zplug "plugins/npm", from:oh-my-zsh
 zplug "plugins/yarn", from:oh-my-zsh
 zplug "plugins/nvm", from:oh-my-zsh
