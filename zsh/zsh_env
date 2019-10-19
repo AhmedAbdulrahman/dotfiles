@@ -114,23 +114,50 @@ fi
 
 # Less
 #export LESS="-R -f -F -X -i -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]"
-export LESS='-F -g -i -M -R -S -w -X -z-4'
-export LESSCHARSET="utf-8"
+# less
+export LESS=" \
+	--ignore-case \
+	--tilde \
+	--chop-long-lines \
+	--status-column \
+	--LONG-PROMPT \
+	--jump-target=10 \
+	--RAW-CONTROL-CHARS \
+	--clear-screen \
+	--silent \
+	--tabs=4 \
+	--shift=5"
+export LESSOPEN="| bat %s 2>/dev/null" # Use `bat` program to syntax-wise highlight files.
+export LESSHISTFILE="$HOME/.config/less/lesshistory" # Command and search history file.
+export LESSKEYRC="$HOME/.config/less/lesskey" # Path of the uncompiled lesskey file.
+export LESSKEY="$LESSKEYRC.lwc" # Path of the compiled lesskey file.
+export LESS_TERMCAP_md=$'\e[01;34m' # Turn on bold mode.
+export LESS_TERMCAP_me=$'\e[0m' # Turn off all attributes.
+export LESS_TERMCAP_mh=$'\e[2m' # Turn on dim mode.
+export LESS_TERMCAP_mr=$'\e[7m' # Turn on reverse mode.
+export LESS_TERMCAP_se=$'\e[27;0m' # Exit standout mode.
+export LESS_TERMCAP_so=$'\e[1;33m' # Begin standout mode.
+export LESS_TERMCAP_ue=$'\e[24;0m' # Exit underline mode.
+export LESS_TERMCAP_us=$'\e[4;1;38;5;250m' # Begin underline mode.
 
 # Pager
 export PAGER="${commands[less]:-$PAGER}"
 
 #  History {{{
-export HISTFILE="$HOME/.zsh_history" # History file
-export HISTSIZE=100000               # History size in memory
-export SAVEHIST=1000000              # The number of histsize
-export LISTMAX=50                    # The size of asking history
-setopt EXTENDED_HISTORY              # Write the history file in the ":start:elapsed;command" format.
-setopt INC_APPEND_HISTORY            # Write to the history file immediately, not when the shell exits.
-# setopt SHARE_HISTORY               # Share history between all sessions.
-setopt HIST_IGNORE_SPACE             # Do not record an entry starting with a space.
-setopt HIST_REDUCE_BLANKS            # Remove superfluous blanks before recording entry.
-setopt HIST_VERIFY                   # Do not execute immediately upon history expansion.
+typeset -g HISTFILE="$HOME/.zsh_history" # Where history logs are stored.
+typeset -g HISTSIZE=10000000 # The maximum number of events stored in the internal history list.
+typeset -g SAVEHIST=$HISTSIZE # The maximum number of history events to save in the history file.
+setopt EXTENDED_HISTORY # Save each command's epoch timestamps and the duration in seconds.
+setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicate entries first when trimming history.
+setopt HIST_FIND_NO_DUPS # Don't display a line previously found.
+setopt HIST_IGNORE_ALL_DUPS # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_IGNORE_DUPS # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_SPACE # Don't record an entry starting with a space.
+setopt HIST_REDUCE_BLANKS # Remove superfluous blanks before recording an entry.
+setopt HIST_SAVE_NO_DUPS # Don't write duplicate entries in the history file.
+setopt HIST_VERIFY # Don't execute the line directly instead perform history expansion.
+setopt INC_APPEND_HISTORY # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY # Share history between all sessions.
 setopt HIST_BEEP                     # Beep when accessing nonexistent history.
 # Do not add in root
 [[ "$UID" == 0 ]] && unset HISTFILE && SAVEHIST=0
