@@ -1,7 +1,8 @@
 #!/usr/bin/env zsh
 
 # Important
-zstyle ':completion:*:default' menu select=2
+zstyle ':completion:*:default' menu select=2 # Use completion menu for completion when available.
+zstyle ':completion:*' rehash true # When new programs is installed, auto update without reloading.
 
 # Completing Groping
 zstyle ':completion:*:options' description 'yes'
@@ -9,7 +10,7 @@ zstyle ':completion:*:descriptions' format '%F{yellow}Completing %B%d%b%f'
 zstyle ':completion:*' group-name ''
 
 # Completing misc
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list
 zstyle ':completion:*:*files' ignored-patterns '*?.o' '*?~' '*\#'
@@ -18,17 +19,23 @@ zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 
 # Directory
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} # Match dircolors with completion schema.
 
 # default: --
 zstyle ':completion:*' list-separator '->'
 zstyle ':completion:*:manuals' separate-sections true
 
+setopt COMPLETE_ALIASES # Prevent aliases from being substituted before completion is attempted.
+setopt COMPLETE_IN_WORD # Attempt to start completion from both ends of a word.
+setopt GLOB_COMPLETE # Don't insert anything resulting from a glob pattern, show completion menu.
+setopt NO_LIST_BEEP # Don't beep on an ambiguous completion.
+setopt LIST_PACKED # Try to make the completion list smaller by drawing smaller columns.
+setopt MENU_COMPLETE # Instead of listing possibilities, select the first match immediately.
+
 # Basic auto/tab complete:
 autoload -U compinit
-zstyle ':completion:*' menu select
-zmodload zsh/complist
-compinit
+# Menu select
+zmodload -i zsh/complist
 
 # Include hidden files.
 _comp_options+=(globdots)
