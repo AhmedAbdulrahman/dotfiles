@@ -89,8 +89,36 @@ bindkey '^[[A' history-substring-search-up;
 bindkey '^[[B' history-substring-search-down;
 
 zplug "zsh-users/zsh-autosuggestions"
-ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(forward-word forward-char)
-ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(end-of-line)
+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(vi-forward-word)
+ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(vi-forward-char)
+ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=()
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX='autosuggest-orig-'
+ZSH_AUTOSUGGEST_STRATEGY=('history')
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(
+		history-search-forward
+		history-search-backward
+		history-beginning-search-forward
+		history-beginning-search-backward
+		history-substring-search-up
+		history-substring-search-down
+		up-line-or-beginning-search
+		down-line-or-beginning-search
+		up-line-or-history
+		down-line-or-history
+		accept-line
+	)
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(
+		orig-\*
+		beep
+		run-help
+		set-local-history
+		which-command
+		yank
+		yank-pop
+	)
+
+zplug 'soimort/translate-shell', at:'develop'
 
 zplug 'so-fancy/diff-so-fancy', \
     as:command, use:diff-so-fancy, \
