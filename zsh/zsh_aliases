@@ -1,75 +1,44 @@
 #!/usr/bin/env zsh
 
-# --- Moving around ---
+# Permission
+alias chmox='chmod -x'
+alias python=python3
+
+# Moving around
 alias ..="cd .."
 alias ...="cd ../.."
 alias cd..="cd .."
 alias oo='open .'
 
-# --- Shortcust ---
-alias dot='cd ~/dotfiles'
+# Shortcust
+alias dotfiles='cd ~/dotfiles'
 alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
+alias dk="cd ~/Desktop"
 alias p="cd ~/Projects"
+alias docs='cd ~/Documents/'
+alias ds='cd ~/.ssh'
+alias dp='cd ~/Dropbox'
+alias cdbin='cd /usr/local/bin/'
 
-# --- Copy & Move ---
+# Copy & Move
 # `rm` and `mv` are so dangerous, they must always ask for confirmation.
-alias rm="${aliases[rm]:-rm} -i"
-alias mv="${aliases[mv]:-mv} -iv"
-alias cp="${aliases[cp]:-cp} -iv"
-alias mkdir="${aliases[mkdir]:-mkdir} -p"
+alias rm='trash' # Use `trash` program instead of built-in irrecoverable way to delete nodes.
+alias mv='mv --interactive --verbose' # Move nodes with interactive mode and extra verbosity.
+alias cp='cp --interactive --verbose' # Copy nodes with interactive mode and extra verbosity.
+alias mkdir='mkdir --parents' # Make missing parent directories when creating folders.
 alias e="${(z)VISUAL:-${(z)EDITOR}}"
 alias which='which -a'
+alias trimcopy="tr -d '\n' | pbcopy"	# Trim new lines and copy to clipboard
 
-# --- Permission ---
-alias chmox='chmod -x'
-alias python=python3
-
-# better ls
-if (($+commands[colorls])); then
-	alias ls="echo; colorls -A --group-directories-first"
-fi
-
-# Exa
-if (( $+commands[exa] )); then
-	alias ll="exa --tree --all --group-directories-first"
-elif (( $+commands[tree] )); then
-	alias ll="type tree >/dev/null && tree --dirsfirst -a -L 1 || l -d .*/ */ "
-else
-	alias ll="echo 'You have to install exa or tree'"
-fi
-
-# Npm
+# Npm & Yarn
 alias npm-update="npx npm-check -u"
-alias ni="npm install"
-alias nrs="npm run start -s --"
-alias nrb="npm run build -s --"
-alias nrd="npm run dev -s --"
-alias nrt="npm run test -s --"
-alias nrtw="npm run test:watch -s --"
-alias nrv="npm run validate -s --"
-alias rmn="rm -rf node_modules"
 alias flush-npm="rm -rf node_modules && npm i && echo NPM is done"
 alias nicache="npm install --prefer-offline"
-
-# Yarn
-alias yar="yarn run";
-alias yas="yarn run start -s --";
-alias yab="yarn run build -s --";
-alias yat="yarn run test -s --";
-alias yav="yarn run validate -s --";
 alias yoff="yarn add --offline";
 alias ypm="echo \"Installing deps without lockfile and ignoring engines\" && yarn install --no-lockfile --ignore-engines"
+alias KABOOM="yarn global upgrade --latest;brew update; brew upgrade; brew cleanup -s; brew doctor"
 
-# --- Git ---
-if (( $+commands[hub] )); then
-  alias git=hub
-  compdef g=hub
-else
-  compdef g=git
-fi
-alias g='git'
-alias add="git add"
+# Git
 alias commit='git commit -m'
 alias amend="git commit --amend"
 alias master="git checkout master"
@@ -77,55 +46,25 @@ alias develop="git checkout develop"
 alias status="git status"
 alias push="git push"
 alias pull='git pull'
-alias stash='git stash'
 alias save='git stash save -u'
 alias logf='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias logs='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
 alias loga='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
-alias logd='git log --graph --decorate --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset --abbrev-commit --date=relative --all"'
+alias logd='git log --graph --decorate --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative --all'
 alias undo='git reset HEAD~'			# Undo commit and unstage all files
 alias undosoft='git reset --soft HEAD~'	# Undo commit and keep all files staged
 alias undohard='git reset --hard HEAD~'	# Undo the commit and completely remove all changes
 alias undopush='git push -f origin HEAD^:master'
 alias unstage='git reset --'
 
-# alias dacker="docker-compose build && docker-compose up"
-# alias dacker-down="docker-compose down && docker-compose rm"
-# alias dacker-stop="docker-compose kill"
-# alias dacker-clean="docker volume rm $(docker volume ls -qf dangling=true) && docker rmi $(docker images -f dangling=true -q)"
-
-# --- Timewarrior ---
+# Timewarrior
 alias tw='timew'
 alias "tw sum"='timew summary'
 alias "tws"='timew start'
 alias "twp"='timew stop'
 alias "twt"='timew stop'
 
-# Resource Usage
-alias df='df -kh'
-alias du='du -kh'
-alias diskspace='du -h -d 2'
-alias fs="stat -f \"%z bytes\""		# File size
-alias diskspace_report="df -P -kHl"
-alias free_diskspace_report="diskspace_report"
-#alias diskspace='du -s | sort -n -r |more'
-
-# Terminal
-alias "?"="pwd"
-alias c="clear "
-alias KABOOM="yarn global upgrade --latest;brew update; brew upgrade; brew cleanup -s; brew doctor"
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes;sudo rm -rfv ~/.Trash"
-alias flushdns="sudo killall -HUP mDNSResponder"
-if (( $+commands[jq] )) then;
-  alias formatJSON='jq .'
-else
-  alias formatJSON='python -m json.tool'
-fi
-alias cask="brew cask"
-alias apache="sudo apachectl "
-alias r="ranger" # overrides built-in r command
-
-# --- IP Addresses ---
+# IP Addresses
 alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias localip="ipconfig getifaddr en1"
 alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
@@ -134,8 +73,8 @@ alias lsof-tcp='lsof -iTCP'
 alias lsof-tcp-listen='lsof -iTCP -sTCP:LISTEN -P'
 alias hosts='sudo $EDITOR /etc/hosts'
 
-# --- Tmux ---
-alias tmux='tmux -2'
+# Tmux
+alias tmux='tmux -f "$HOME/.tmux.conf"'
 alias mks='tmux kill-session -t'
 alias mkS='tmux kill-server'
 alias tn='tmux new-session -s'
@@ -147,64 +86,51 @@ alias tl='tmux list-sessions'
 [[ $TERM == *"tmux"* ]] && alias vagrant="TERM=xterm-256color vagrant"
 [[ $TERM == *"tmux"* ]] && alias brew="TERM=xterm-256color brew"
 
-# --- Shell ---
-alias vv='nvim $(fzf)'
-alias vi='nvim'
-alias vim='nvim'
-alias zcfg="nvim ~/.zshrc"
+# Utilities
+alias "?"="pwd"
+alias sz='exec zsh'
 alias refresh='source ~/.zshrc; echo "Reloaded .zshrc."'
 alias less='less -r'
 alias tf='tail -f'
 alias cl='clear'
 alias note='nvim ~/Documents/Notes/note'
-# Reload the shell (i.e. invoke as a login shell)
-alias reload="exec ${SHELL} -l"
-# Print each PATH entry on a separate line
-alias path='echo -e ${PATH//:/\\n}'
+alias reload="exec ${SHELL} -l"	# Reload the shell (i.e. invoke as a login shell)
+alias path='echo -e ${PATH//:/\\n}'	# Print each PATH entry on a separate line
+alias cask="brew cask"
+alias apache="sudo apachectl"
 
-# --- Applications ---
+# Applications
 alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 alias ios='open -a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
+alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"	# Kill all the tabs in Chrome to free up memory
 
-if ls --color > /dev/null 2>&1; then # GNU `ls`
-	colorflag="--color"
-	export LS_COLORS='no=00:fi=00:di=01;31:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:'
-else # macOS `ls`
-	colorflag="-G"
-	export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
-fi
-
-# --- System ---
+# System
 alias bye='sudo shutdown -h now'
-alias update='sudo apt-get update && sudo apt-get upgrade'
-alias upgrade='sudo apt-get upgrade'
 alias clean='sudo apt-get autoclean && sudo apt-get autoremove'
-# System monitoring
-alias top-cpu='top -n 10 -o cpu -O time -stats pid,command,cpu,cpu_me,time,threads,ports'
-# Trim new lines and copy to clipboard
-alias trimcopy="tr -d '\n' | pbcopy"
-# Recursively delete `.DS_Store` files
-alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
-# Empty the Trash on all mounted volumes and the main HDD.
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
-# Show/hide hidden files in Finder
-alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
-# Hide/show all desktop icons (useful when presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-# Kill all the tabs in Chrome to free up memory
-alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
-# Lock the screen (when going AFK = Away From Keyboard)
-alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+alias cpu='top -n 10 -o cpu -O time -stats pid,command,cpu,cpu_me,time,threads,ports' # CPU
+alias mem='top -o rsize' # Memory
+alias df='df --all --si --print-type' # Display all disk usage statistics with SI units and FS types.
+alias du='du --max-depth=1 --si' # Display size of files and folders under current directory.
+alias diskspace='du -h -d 2'
+alias fs="stat -f \"%z bytes\""		# File size
+alias diskspace_report="df -P -kHl"
+alias free_diskspace_report="diskspace_report"
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"	# Lock the screen (when going AFK = Away From Keyboard)
 
-# --- Cleaners ---
+# Cleaners
 alias rm_modules="find . -name "node_modules" -type d -prune -exec rm -rf '{}' +"
-# Recursively delete `.DS_Store` files
-alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"	# Recursively delete `.DS_Store` files
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+# alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes;sudo rm -rfv ~/.Trash"
+alias flushdns="sudo killall -HUP mDNSResponder"
 
-# --- LiveStream ---
+# LiveStream
 # Get Prepared for LiveStream
+alias showhidden="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder" # Show hidden files in Finder
+alias hidehidden="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder" # Hide hidden files in Finder
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"	# Show all desktop icons
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder" # Hide all desktop icons
+
 alias tutMode='defaults write com.apple.dock autohide -bool true;
 							 killall Dock;
 							 defaults write com.apple.menuextra.clock IsAnalog -bool true;
@@ -216,3 +142,32 @@ alias regMode='defaults write com.apple.dock autohide -bool false
 							killall Dock;
 							defaults write com.apple.menuextra.clock IsAnalog -bool false;
 							killall SystemUIServer;'
+
+if (( $+commands[nvim] )) then;
+  	# Use `\vim` or `command vim` to get the real vim.
+	alias vim='nvim'
+	alias vv='vim $(fzf)'
+	alias ez="vim ~/.zshrc"
+fi
+if (( $+commands[hub] )); then
+  alias git=hub
+  compdef g=hub
+else
+  compdef g=git
+fi
+# better ls
+if (($+commands[colorls])); then
+	alias ls="echo; colorls -A --group-directories-first"
+fi
+
+# Exa
+if (( $+commands[exa] )); then
+	alias ll="exa --tree --all --group-directories-first"
+fi
+
+# Jq
+if (( $+commands[jq] )) then;
+  alias formatJSON='jq .'
+else
+  alias formatJSON='python -m json.tool'
+fi
