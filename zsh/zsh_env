@@ -188,8 +188,8 @@ export FZF_DIR_HIGHLIGHTER
 export FZF_PATH_LOC
 
 # FZF: default
-(( $+commands[ag] )) && FZF_DEFAULT_COMMAND='rg --files --no-messages --no-ignore-vcs --hidden --follow --smart-case --glob "!.git/*" --glob "!node_modules/*" 2>/dev/null'
-(( $+commands[fd] )) && FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude ".git/*" --exclude "node_modules/*" 2>/dev/null'
+(( $+commands[ag] )) && FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+(( $+commands[fd] )) && FZF_DEFAULT_COMMAND='fd --type f --no-ignore --hidden --follow --exclude "{.git,node_modules}/*" 2>/dev/null'
 export FZF_DEFAULT_COMMAND
 FZF_DEFAULT_OPTS="
 --border
@@ -198,6 +198,10 @@ FZF_DEFAULT_OPTS="
 --ansi
 --reverse
 --cycle
+--color=fg:#d0d0d0,bg:#1e2431,hl:#5f87af
+--color=fg+:#d0d0d0,bg+:#1e2431,hl+:#5fd7ff
+--color=info:#afaf87,prompt:#d7005f,pointer:#7edbca
+--color=marker:#ffa7c4,spinner:#ffa7c4
 --bind alt-p:preview-up,alt-n:preview-down
 --bind ctrl-u:half-page-up
 --bind ctrl-d:half-page-down
@@ -213,9 +217,14 @@ export FZF_DEFAULT_OPTS
 
 # FZF: Ctrl - T
 FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-(( $+commands[iconful] )) && FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND | iconful -f"
+(( $+commands[iconful] )) && FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND"
+# (( $+commands[iconful] )) && FZF_CTRL_T_COMMAND="$FZF_CTRL_T_COMMAND | iconful -f"
 export FZF_CTRL_T_COMMAND
 FZF_CTRL_T_OPTS="
+--color=fg:#d0d0d0,bg:#1e2431,hl:#5f87af
+--color=fg+:#d0d0d0,bg+:#1e2431,hl+:#5fd7ff
+--color=info:#afaf87,prompt:#d7005f,pointer:#7edbca
+--color=marker:#ffa7c4,spinner:#ffa7c4
 --preview \"($FZF_FILE_HIGHLIGHTER {$FZF_PATH_LOC} || $FZF_DIR_HIGHLIGHTER {$FZF_PATH_LOC}) 2>/dev/null | head -200\"
 --bind 'enter:execute(echo {$FZF_PATH_LOC})+abort'
 --bind 'alt-e:execute($EDITOR {$FZF_PATH_LOC} >/dev/tty </dev/tty)'
@@ -239,7 +248,8 @@ export FZF_CTRL_R_OPTS
 FZF_ALT_C_COMMAND="command find -L . -mindepth 1 \
     \\( -path '*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) \
     -prune -o -type d -print 2> /dev/null | cut -b3-"
-(( $+commands[fd]      )) && FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude ".git/*" --exclude "node_modules/*" 2>/dev/null'
+# (( $+commands[fd]      )) && FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude ".git/*" --exclude "node_modules/*" 2>/dev/null'
+(( $+commands[fd]      )) && FZF_ALT_C_COMMAND='fd --type d --no-ignore --hidden --follow --exclude "{.git,node_modules}/*" 2>/dev/null'
 (( $+commands[blsd]    )) && FZF_ALT_C_COMMAND='blsd $dir | grep -v "^\.$"'
 (( $+commands[iconful] )) && FZF_ALT_C_COMMAND="$FZF_ALT_C_COMMAND | iconful -d"
 export FZF_ALT_C_COMMAND
