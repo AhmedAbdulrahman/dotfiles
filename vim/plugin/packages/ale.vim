@@ -34,10 +34,10 @@ let g:ale_completion_delay = 100
 let g:ale_lint_delay = 300
 
 " The sign for errors in the sign gutter."
-let g:ale_sign_error = '•'
+let g:ale_sign_error = '✘'
 
 " The sign for warnings in the sign gutter."
-let g:ale_sign_warning = '•'
+let g:ale_sign_warning = '⚠'
 
 " The string used for error severity in the echoed message."
 let g:ale_echo_msg_error_str = 'E'
