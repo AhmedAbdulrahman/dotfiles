@@ -56,10 +56,10 @@ nnoremap <Up> <Nop>
 nnoremap <Down> <Nop>
 nnoremap <Left> <Nop>
 nnoremap <Right> <Nop>
-nnoremap <C-p> <Nop>
-nnoremap <C-n> <Nop>
-nnoremap <C-h> <Nop>
-nnoremap <C-l> <Nop>
+"nnoremap <C-p> <Nop>"
+"nnoremap <C-n> <Nop>"
+"nnoremap <C-h> <Nop>"
+"nnoremap <C-l> <Nop>"
 nnoremap <BS> <Nop>
 nnoremap <Space> <Nop>
 
@@ -74,7 +74,7 @@ nnoremap ]<MiddleMouse> <Nop>
 nnoremap gs <Nop>
 
 " Disable join mapping."
-xnoremap J <Nop>
+"xnoremap J <Nop>"
 
-" Disable lookup the keyword under the cursor mapping.
-xnoremap K <Nop>
+" Disable lookup the keyword under the cursor mapping."
+"xnoremap K <Nop>"
