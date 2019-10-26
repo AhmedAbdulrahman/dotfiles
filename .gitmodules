@@ -64,9 +64,6 @@
 [submodule "vim/pack/bundle/start/terminus"]
 	path = vim/pack/bundle/start/terminus
 	url = https://github.com/wincent/terminus.git
-[submodule "zsh/plugins/zplug"]
-	path = zsh/plugins/zplug
-	url = https://github.com/zplug/zplug.git
 [submodule "vim/pack/bundle/start/prettier"]
 	path = vim/pack/bundle/start/prettier
 	url = https://github.com/prettier/vim-prettier.git
