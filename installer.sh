@@ -312,15 +312,71 @@ clone_dotfiles() {
   finish
 }
 
-bootstrap() {
-  echo "Seems like you don't have Ahmed's dotfiles installed!"
-  read -p "Would you like to bootstrap your environment by installing Homebrew formulae? [y/N] " -n 1 answer
-  echo
-  if [ ${answer} != "y" ]; then
-    return
-  fi
+symlink_files() {
+  info "Trying to detect if you have already cloned Ahmed's dotfiles..."
 
-  $DOTFILES/scripts/bootstrap.zsh
+  if [[ -d $DOTFILES ]]; then
+
+    echo "What files you want to Symlink?"
+
+    PS3="Enter your choice (must be a number): "
+    files=("ZSH" "VIM" "TMUX" "CONFIG" "HAMMERSPOON" "Quit")
+
+    select file in "${files[@]}"; do
+      case $file in
+      "ZSH")
+        echo "Symlinking ZSH files"
+        
+        cd "$DOTFILES" && make --ignore-errors link file=zsh
+        break
+        ;;
+      "VIM")
+        echo "Symlinking VIM files"
+        cd "$DOTFILES" && make --ignore-errors link file=vim
+        break
+        ;;
+      "TMUX")
+        echo "Symlinking TMUX files"
+        cd "$DOTFILES" && make --ignore-errors link file=tmux
+        break
+        ;;
+      "CONFIG")
+        echo "Symlinking CONFIG files"
+        cd "$DOTFILES" && make --ignore-errors link file=config
+        break
+        ;;
+      "HAMMERSPOON")
+        echo "Symlinking HAMMERSPOON files"
+        cd "$DOTFILES" && make --ignore-errors link file=hammerspoon
+        break
+        ;;
+      "Quit")
+        break
+        ;;
+      *)
+        echo "Invalid option"
+        break
+        ;;
+      esac
+    done
+  else
+    error "You don't  Ahmed's dotfiles $DOTFILES in your machine!"
+  fi
+}
+
+bootstrap_macOS_apps() {
+  if [[ -d $DOTFILES ]]; then
+    echo "Seems like you have Ahmed's dotfiles installed!"
+    read -p "Would you like to bootstrap your environment by installing Homebrew formulae? [y/N] " -n 1 answer
+    echo
+    if [ ${answer} != "y" ]; then
+      return
+    fi
+
+    $DOTFILES/scripts/bootstrap.zsh
+  else
+    error "You don't  Ahmed's dotfiles $DOTFILES in your machine!"
+  fi
 
   finish
 }
@@ -339,7 +395,7 @@ on_finish() {
   echo -ne $CYAN'-_-_-_-_-_-_-_-_-_-_-_-_-_-_'
   echo -e  $RESET$BOLD'""  ""'$RESET
   echo
-  info "P.S: Don't forget to restart a terminal :)"
+  info "P.S: Don't forget to restart your terminal ;)"
   echo "Cheers"
   echo
 }
@@ -363,4 +419,10 @@ main() {
   on_finish "$*"
 }
 
-main "$*"
+main() {
+  on_start
+  print_prompt
+  on_finish
+}
+
+main
