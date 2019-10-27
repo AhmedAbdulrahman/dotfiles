@@ -39,48 +39,30 @@ finish() {
 }
 
 on_start() {
-  info "   _   _           _           _  _____  "
-  info "  | \ | |         | |         | |/ ____| "
-  info "  |  \| | ___   __| | ___     | | (___   "
-  info "  | . ` |/ _ \ / _` |/ _ \_   | |\___ \  "
-  info "  | |\  | (_) | (_| |  __/ |__| |____) | "
-  info "  |_| \_|\___/ \__,_|\___|\____/|_____/  "
-  info "                                         "
-  info "This script will guide you through installing Node.js, nvm, etc."
+
+  info  "   _   _           _           _  _____  "
+  error "  | \ | |         | |         | |/ ____| "
+  info  "  |  \| | ___   __| | ___     | | (___   "
+  error "  | . ' |/ _ \ / _' |/ _ \_   | |\___ \  "
+  info  "  | |\  | (_) | (_| |  __/ |__| |____) | "
+  error "  |_| \_|\___/ \__,_|\___|\____/|_____/  "
+  error "                                         "
+  info "This script will guide you through installing NPM config, global packages..etc"
+
   echo
-  ask "Do you want to proceed with installation?" && read answer
+  read -p "Do you want to proceed with installation? [y/N] " -n 1 answer
   echo
-  if [[ "${answer}" != "y" ]]; then
+
+  if [ ${answer} != "y" ]; then
     exit 1
   fi
+
 }
 
-install_node() {
-  info "Installing Node.js..."
-
-  if [[ "$(uname)" == 'Darwin' ]]; then
-    brew install node
-  else
-    curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-    sudo apt-get install -y nodejs build-essential
-  fi
-
-  finish
-}
-
-install_nvm() {
-  # Install nvm
-  info "Installing nvm..."
-
-  mkdir $HOME/.nvm
-  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-
-  finish
-}
 
 configure_npm_init() {
   # Ask required parameters
-  info "Configure npm init..."
+  info "Configure NPM init..."
 
   # Defaults
   local name="Ahmed Abdulrahman"
@@ -92,14 +74,11 @@ configure_npm_init() {
   # If required parameters are not entered, set them default values
   : ${NAME:="$name"}
   : ${EMAIL:="$email"}
-  : ${WEBSITE:="$website"}
 
   echo "Author name set as: $NAME"
   npm set init.author.name "$NAME"
   echo "Author email set as: $EMAIL"
   npm set init.author.email "$EMAIL"
-  echo "Author website set as: $WEBSITE"
-  npm set init.author.url "$WEBSITE"
   echo
 
   finish
@@ -137,10 +116,9 @@ install_global_packages() {
 	"dependency-cruiser"
 	"neovim"
 	"npkill"
-	"create-react-app",
-	"create-react-native-app"
 	"expo-cli"
 	"nodemon"
+  "gatsby-cli"
 	)
 
 	yarn global add "${NPM_PACKAGES[@]}"
@@ -148,8 +126,7 @@ install_global_packages() {
 }
 
 on_finish() {
-  success "Done!"
-  success "Node.js is installed!"
+  success "Done with NODE configurations1"
   echo
 }
 
@@ -161,8 +138,6 @@ on_error() {
 
 main() {
   on_start "$*"
-  install_node "$*"
-  install_nvm "$*"
   configure_npm_init "$*"
   fix_npm_perm "$*"
   install_global_packages "$*"
