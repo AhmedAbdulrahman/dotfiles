@@ -4,6 +4,11 @@
 set -Eueo pipefail
 trap on_error SIGKILL SIGTERM
 
+DOTFILES="$HOME/dotfiles"
+GITHUB_REPO_URL_BASE="https://github.com/AhmedAbdulrahman/dotfiles"
+HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
+LINUXBREW_INSTALLER_URL="https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh"
+
 e='\033'
 RESET="${e}[0m"
 BOLD="${e}[1m"
