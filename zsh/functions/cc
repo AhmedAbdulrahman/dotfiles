@@ -1,0 +1,8 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Combining cd command and z, longer range. I have an alias for cc (= "../..")
+
+if [ -d "$1" ]; then
+  cd $@
+else
+  z $@
+fi

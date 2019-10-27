@@ -1,0 +1,11 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# generates a unique 192.168.X.X ip adress.
+
+local current=($(grep "192.168.*.*" /etc/hosts | cut -c12-13))
+local gen=$(echo $RANDOM % 99 + 1 | bc)
+local gen2=$(echo $RANDOM % 99 + 1 | bc)
+if [[ $gen != ${current[*]} ]]; then
+  echo -e "192.168.$gen.$gen2"
+else
+  !!
+fi

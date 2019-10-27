@@ -1,0 +1,7 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# fb - checkout git branch with FZF (including remote branches), sorted by most recent commit, limit 30 last branches
+
+local branches branch
+branches=$(git branch --all | grep -v HEAD) &&
+branch=$(echo "$branches" | fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")

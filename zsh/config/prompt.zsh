@@ -1,8 +1,7 @@
-#!/usr/bin/env zsh
 #===============================================================================
 #  Author: Ahmed Abdulrahman
 #  Email: a.kasapbashi@gmail.com
-#  Created: 2018-12-16 16:20
+#  Created: 2019-10-20 20:20
 #===============================================================================
 
 # ------------------------------------------------------------------------------
@@ -21,6 +20,7 @@ SPACESHIP_REACT_COLOR="${SPACESHIP_REACT_COLOR:="cyan"}"
 # ------------------------------------------------------------------------------
 
 _is_react_project() {
+	# Uncomment if you are not using jq tool
   # node -p "r=require('./package.json'); r.dependencies['$1']" 2>/dev/null
   # node -p "require('./package.json').dependencies['$1']"
   jq -r ".dependencies.$1" package.json 2>/dev/null
@@ -70,3 +70,6 @@ SPACESHIP_EXIT_CODE_PREFIX="("
 SPACESHIP_EXIT_CODE_SUFFIX=") "
 SPACESHIP_EXIT_CODE_SYMBOL="✘ "
 SPACESHIP_EXIT_CODE_COLOR="red"
+
+# autoload -Uz promptinit;
+# promptinit

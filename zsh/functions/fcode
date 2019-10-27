@@ -1,0 +1,6 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# fcode - open files in VSCODE
+
+local files
+IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+[[ -n "$files" ]] && code "${files[@]}"

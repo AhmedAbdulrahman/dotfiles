@@ -1,0 +1,5 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Git clone 
+# Usage: clone <GITHUB_REPO_URL>
+
+git clone "https://github.com/${(j:/:)@}" 

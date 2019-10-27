@@ -1,0 +1,95 @@
+#!/usr/bin/env zsh
+
+_mx_util_pane_title() {
+    local _pane_id
+    pane_info_location="/tmp/tmux-pane-info"
+    mkdir -p ${pane_info_location}
+    while (($# > 0)); do
+        arg="$1"
+        case "$arg" in
+        --tty=*)
+            _tty=$(echo "$arg" | cut -d '=' -f2)
+            ;;
+        --tty)
+            _tty=$2
+            shift
+            ;;
+        --title=*)
+            _title=$(echo "$arg" | cut -d '=' -f2)
+            ;;
+        --title)
+            _title=$2
+            shift
+            ;;
+        --clear)
+            _clear="yes"
+            ;;
+        --clear-all)
+            _clear_all="yes"
+            ;;
+        --separator=*)
+            _separator=$(echo "$arg" | cut -d '=' -f2)
+            ;;
+        --separator)
+            _separator=$2
+            shift
+            ;;
+        *) ;;
+
+        esac
+        shift
+    done
+    [[ -n "${_clear_all}" ]] && rm -rf /tmp/tmux-pane-info/* >/dev/null && return 0
+    [[ -z ${_tty} ]] && _tty=$(tmux display-message -p "#{pane_tty}")
+    _pane_id=${_tty//\//_}
+    _pane_info_file="${pane_info_location}/${_pane_id}"
+    if [[ -n "${_title}" ]]; then
+        echo "${_title}" | tee "${_pane_info_file}" >/dev/null
+        exit 0
+    fi
+    [[ -n "${_clear}" ]] && rm "${_pane_info_file}" 2>/dev/null && return 0
+    [[ -f "${_pane_info_file}" ]] && echo " $(head -n 1 "${_pane_info_file}") " && return 0
+    echo "${_separator:-─}"
+
+}
+
+_mx_util_resize() {
+    while (($# > 0)); do
+        arg="$1"
+        case "$arg" in
+        -y)
+            direction="-y"
+            ;;
+        -x)
+            direction="-x"
+            ;;
+        --* | -*) ;;
+        *)
+            size="${arg}"
+            ;;
+        esac
+        shift
+    done
+    tmux resize-pane "${direction:--x}" "${size:-80}"
+}
+
+_mx_util() {
+    local command args
+    command="${1:-}"
+    shift
+    args=("$@")
+    case "$command" in
+    resize)
+        _mx_util_resize "$@"
+        ;;
+    pane-title)
+        _mx_util_pane_title "$@"
+        ;;
+    *)
+        echo "Unrecognized command: mx util ${command}"
+        exit 1
+        ;;
+    esac
+}
+
+_mx_util "$@"

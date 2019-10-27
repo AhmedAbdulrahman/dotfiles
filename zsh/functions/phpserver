@@ -1,0 +1,10 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Start PHP server
+
+local port="${2:-8888}"
+if [ -z $1 ]; then
+  php -S localhost:${port}
+else
+  open "http://localhost:${port}/"
+  php -S localhost:${port} -t $1
+fi

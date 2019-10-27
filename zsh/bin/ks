@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+# ks - Switch to another tmux/mx session and kill the current one
+
+ks() {
+    if [[ $# -eq 0 ]]; then
+        echo "USAGE: ks session_name"
+        exit 0
+    fi
+    SESSION="$1"
+    if [ "$SESSION" == "-" ]; then
+        tmux kill-session
+        exit 0
+    fi
+    if [ -z "$TMUX" ]; then
+        tmux attach -t "$SESSION"
+    else
+        tmux switch-client -t "$SESSION"
+        [[ -z $2 ]] && tmux kill-session
+    fi
+}
+
+ks "$@"

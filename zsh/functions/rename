@@ -1,0 +1,4 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# example: rename-multiple *.svg abc cba
+
+for file in $1; do mv $file ${file//$2/$3} ; done

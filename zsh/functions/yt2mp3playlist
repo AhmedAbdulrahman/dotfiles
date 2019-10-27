@@ -1,0 +1,12 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Don't run if youtube-dl is not available
+(( $+commands[youtube-dl] )) || return 0
+
+unalias yt2mp3playlist 2>/dev/null
+
+if [[ $# -eq 0 ]]; then
+    echo "USAGE: yt2mp3playlist <youtube-url>"
+    return 1
+else
+    youtube-dl -ic --yes-playlist --extract-audio --audio-format mp3 --audio-quality 320K -o "%(title)s.%(ext)s" --restrict-filenames $@ 
+fi

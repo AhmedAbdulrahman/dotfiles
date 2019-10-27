@@ -1,0 +1,10 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Combining cd command and z
+
+if [ -z "$1" ]; then
+  cd ..
+elif [ -d "$1" ]; then
+  cd "$@"
+else
+  z -c "$@"
+fi

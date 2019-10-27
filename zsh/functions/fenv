@@ -1,0 +1,6 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Search env variables
+
+local out
+out=$(env | fzf)
+echo $(echo $out | cut -d= -f2)

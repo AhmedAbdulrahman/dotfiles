@@ -1,0 +1,7 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Trim leading and trailing spaces (for scripts)
+
+local var=$@
+var="${var#"${var%%[![:space:]]*}"}"  # remove leading whitespace characters
+var="${var%"${var##*[![:space:]]}"}"  # remove trailing whitespace characters
+echo -n "$var"

@@ -1,0 +1,13 @@
+# Alias yarn to y
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+
+# Exit if yarn is not installed
+(( $+commands[yarn] )) || return 0
+
+unalias y 2>/dev/null
+
+if [[ $# -eq 0 ]]; then
+    yarn --link-duplicates
+else
+    yarn "$@"
+fi
