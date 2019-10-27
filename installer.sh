@@ -54,8 +54,52 @@ get_permission() {
   done 2>/dev/null &
 }
 
-# get the dir of the current script
-SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SCRIPT_DIR" || exit 1
+print_prompt() {
+  echo "What you want to do?"
+
+  PS3="Enter your choice (must be a number): "
+  options=("Install package manager" "Clone Ahmed's dotfiles" "Symlink files" "Install macOS Apps" "Change shell" "Install XCode tools" "Quit")
+
+  select opt in "${options[@]}"; do
+    case $opt in
+    "Install package manager")
+      install_package_manager
+      break
+      ;;
+    "Clone Ahmed's dotfiles")
+      clone_dotfiles
+      break
+      ;;
+    "Symlink files")
+      install_package_manager
+      symlink_files
+      break
+      ;;
+    "Install macOS Apps")
+      install_package_manager
+      bootstrap_macOS_apps
+      break
+      ;;
+    "Change shell")
+      get_permission
+      install_package_manager
+      install_zsh
+      break
+      ;;
+    "Install XCode tools")
+      install_cli_tools
+      break
+      ;;
+    "Quit")
+      break
+      ;;
+    *)
+      echo "Invalid option"
+      break
+      ;;
+    esac
+  done
+}
 
 on_start() {
 
@@ -181,36 +225,6 @@ install_package_manager() {
       success "You already have Linuxbrew installed, nothing to do here skipping... 💨"
     fi
   
-  fi
-
-  finish
-}
-
-install_git() {
-
-  # Install Git 
-  info "Trying to detect installed Git..."
-
-  if ! _exists git; then
-    echo "Seems like you don't have Git installed!"
-    read -p "Do you agree to proceed with Git installation? [y/N] " -n 1 answer
-    echo
-    if [ ${answer} != "y" ]; then
-      exit 1
-    fi
-
-    info "Installing Git..."
-
-    if [ `uname` == 'Darwin' ]; then
-      brew install git
-    elif [ `uname` == 'Linux' ]; then
-      sudo apt-get install build-essential curl file git
-    else
-      error "Error: Failed to install Git!"
-      exit 1
-    fi
-  else
-    success "You already have Git installed, nothing to do here skipping ... 💨"
   fi
 
   finish
