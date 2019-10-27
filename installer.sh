@@ -163,13 +163,13 @@ install_cli_tools() {
 }
 
 install_package_manager() {
-  
+  local BREW_PATH="/usr/local/bin/brew"
   # macOS 
   if [ `uname` == 'Darwin' ]; then
 
     info "Checking if Homebrew is installed..."
     
-    if ! _exists $brew; then
+    if ! _exists $BREW_PATH; then
       echo "Seems like you don't have Homebrew installed!"
       read -p "Do you agree to proceed with Homebrew installation? [y/N] " -n 1 answer
       echo
@@ -183,17 +183,16 @@ install_package_manager() {
       
       ruby -e "$(curl -fsSL ${HOMEBREW_INSTALLER_URL})"
       # Make sure we’re using the latest Homebrew.
-      $brew update
-      # Upgrade any already-installed formulae.
-      $brew upgrade --all
+      $BREW_PATH update
+      $BREW_PATH install stow
     else
       success "You already have Homebrew installed, nothing to do here skipping ... 💨"
-      $brew -v
+      $BREW_PATH -v
     fi
 
   # Linux 
-  elif [ `uname` == 'Linux' ]; then 
-
+  elif [ `uname` == 'Linux' ]; then
+    # You can choose something else for linux specifc like Linuxbrew, apt-get, yum, etc...
     info "Checking if Linuxbrew is installed..."
 
     if [! -d "$HOME/.linuxbrew" ]; then
@@ -211,9 +210,7 @@ install_package_manager() {
       ruby -e "$(curl -fsSL ${LINUXBREW_INSTALLER_URL})"
       # Make sure we’re using the latest Homebrew.
       brew update
-      # Upgrade any already-installed formulae.
-      brew upgrade --all
-      
+      brew install stow
       brew doctor || true
 
       mkdir $HOME/.linuxbrew/lib
