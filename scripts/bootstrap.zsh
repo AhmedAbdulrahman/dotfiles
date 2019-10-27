@@ -15,11 +15,11 @@ if [ `uname` == 'Darwin' ]; then
     . ./brew.zsh
     . ./nodejs.zsh
     cd -
-# linux
+# Install linux packages here 
 elif [ `uname` == 'Darwin' ]; then
     . ./linuxbrew.zsh
     cd -
-# Windows OS
+# Install Windows packages here...
 elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
     info "Checking if Scoop is installed..."
     $DOTFILES/scripts/scoop.ps1
