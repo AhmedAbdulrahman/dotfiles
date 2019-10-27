@@ -47,11 +47,8 @@ if (( ! ${+PAGER} )); then
 fi
 
 # set the correct term with TMUX
-if [[ ! -n "$TMUX" && "$TERM" == kitty* ]]; then
-    export TERM=xterm-256color
-else
-    export TERM=screen-256color
-fi
+export TERM=xterm-256color
+
 # Better spell checking & auto correction prompt
 export SPROMPT="zsh: correct %F{red}'%R'%f to %F{blue}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
