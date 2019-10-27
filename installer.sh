@@ -54,18 +54,28 @@ SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SCRIPT_DIR" || 
 
 on_start() {
 
-  info "   _____   ____ _______ ______ _____ _      ______  _____  "
-  info "  |  __ \ / __ \__   __|  ____|_   _| |    |  ____|/ ____| "
-  info "  | |  | | |  | | | |  | |__    | | | |    | |__  | (___   "
-  info "  | |  | | |  | | | |  |  __|   | | | |    |  __|  \___ \  "
-  info "  | |__| | |__| | | |  | |     _| |_| |____| |____ ____) | "
-  info "  |_____/ \____/  |_|  |_|    |_____|______|______|_____/  "
-  info "                                                                                "
-  info "                            by @AhmedAbdulrahman                                "
+  info  "   _____   ____ _______ ______ _____ _      ______  _____  "
+  error "  |  __ \ / __ \__   __|  ____|_   _| |    |  ____|/ ____| "
+  info  "  | |  | | |  | | | |  | |__    | | | |    | |__  | (___   "
+  error "  | |  | | |  | | | |  |  __|   | | | |    |  __|  \___ \  "
+  info  "  | |__| | |__| | | |  | |     _| |_| |____| |____ ____) | "
+  error "  |_____/ \____/  |_|  |_|    |_____|______|______|_____/  "
+  error "                                                           "
+  info  "                  by @AhmedAbdulrahman                     "
 
-  
-  info "This script will guide you through installing essentials for your OS(Mac/Linux/Windows)."
-  echo "It will not install anything without your direct agreement!"
+
+  if [ -d "$DOTFILES/.git" ]; then
+command cat <<EOF
+      *******************************************
+              $(git --git-dir "$DOTFILES/.git" --work-tree "$DOTFILES" log -n 1 --pretty=format:'%C(yellow)Last commit SHA:  %h')
+              $(git --git-dir "$DOTFILES/.git" --work-tree "$DOTFILES" log -n 1 --pretty=format:'%C(red)Commit date:    %ad' --date=short)
+              $(git --git-dir "$DOTFILES/.git" --work-tree "$DOTFILES" log -n 1 --pretty=format:'%C(cyan)Author:  %an')
+      ********************************************
+EOF
+  fi
+
+  info "This script will guide you through installing essentials for your (Mac/Linux/Windows WIP)OS."
+  info "It won't install anything without your agreement!"
   echo
   read -p "Do you want to proceed with installation? [y/N] " -n 1 answer
   echo
