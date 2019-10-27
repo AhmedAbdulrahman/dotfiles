@@ -43,11 +43,16 @@ finish() {
   sleep 1
 }
 
-export DOTFILES=${1:-"$HOME/dotfiles"}
-GITHUB_REPO_URL_BASE="https://github.com/AhmedAbdulrahman/dotfiles"
-HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
-LINUXBREW_INSTALLER_URL="https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh"
-brew="/usr/local/bin/brew"
+get_permission() {
+  # Ask for the administrator password upfront.
+  sudo -v
+  # Keep-alive: update existing `sudo` time stamp until the script has finished.
+  while true; do
+    sudo -n true
+    sleep 60
+    kill -0 "$$" || exit
+  done 2>/dev/null &
+}
 
 # get the dir of the current script
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SCRIPT_DIR" || exit 1
