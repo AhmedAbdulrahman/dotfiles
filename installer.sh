@@ -279,7 +279,7 @@ install_zsh() {
   finish
 }
 
-install_dotfiles() {
+clone_dotfiles() {
   info "Trying to detect if Ahmed's dotfiles is installed in $DOTFILES..."
 
   if [ ! -d $DOTFILES ]; then
@@ -293,18 +293,21 @@ install_dotfiles() {
     echo "Cloning Ahmed's dotfiles"
     git clone --recursive "$GITHUB_REPO_URL_BASE.git" $DOTFILES
 
+    # Setup repo origin & mirrors
+    cd "$DOTFILES" &&
+      git remote set-url origin git@github.com:AhmedAbdulrahman/dotfiles.git
+
   else
     success "You already have Ahmed's dotfiles installed. Skipping..."
+    echo "Pulling latest update..."
+    cd "$DOTFILES" &&
+      git stash -u &&
+      git checkout master &&
+      git reset --hard origin/master &&
+      git submodule update --init --recursive &&
+      git checkout - &&
+      git stash pop
   fi
-
-  read -p "Enter files you would like to install separated by 'space' : " input
-
-  for module in ${input[@]}; do
-    info "Installing $module config ..."
-
-    [[ ! -f "$module/setup.sh" ]] && error "$module config not found!" && return
-    "$module/setup.sh"            && info  "$module config installed successfully!"
-  done
 
   finish
 }
