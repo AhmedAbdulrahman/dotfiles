@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -e
+# Safer bash scripts with 'set -euxo pipefail'
+set -Eueo pipefail
 trap on_error SIGKILL SIGTERM
 
 e='\033'
