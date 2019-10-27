@@ -9,3 +9,10 @@
 
 vim/cache/
 vim/coc/extensions/node_modules
+
+zsh/zcompdump*
+zsh/.zhistory
+zsh/*.zwc
+zsh/*.old
+zsh/.zcompcache
+zsh/.zcalc_history
