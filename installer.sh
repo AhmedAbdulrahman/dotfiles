@@ -91,6 +91,7 @@ print_prompt() {
       break
       ;;
     "Install XCode tools")
+      install_git
       install_cli_tools
       break
       ;;
@@ -226,6 +227,35 @@ install_package_manager() {
       success "You already have Linuxbrew installed, nothing to do here skipping... 💨"
     fi
   
+  fi
+
+  finish
+}
+
+install_git() {
+  info "Trying to detect installed Git..."
+  local BREW_PATH="/usr/local/bin/brew"
+
+  if ! _exists git; then
+    echo "Seems like you don't have Git installed!"
+    read -p "Do you agree to proceed with Git installation? [y/N] " -n 1 answer
+    echo
+    if [ ${answer} != "y" ]; then
+      exit 1
+    fi
+
+    info "Installing Git..."
+
+    if [ `uname` == 'Darwin' ]; then
+      $BREW_PATH install git
+    elif [ `uname` == 'Linux' ]; then
+      sudo apt-get install git
+    else
+      error "Error: Failed to install Git!"
+      exit 1
+    fi
+  else
+    success "You already have Git installed. Skipping..."
   fi
 
   finish
@@ -415,6 +445,7 @@ on_error() {
 all() {
   get_permission
   install_package_manager
+  install_git
   install_cli_tools
   clone_dotfiles
   install_zsh
