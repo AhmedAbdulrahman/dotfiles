@@ -103,7 +103,7 @@ alias hosts='sudo $EDITOR /etc/hosts'
 # ---------------------------------------------
 # Tmux
 # ---------------------------------------------
-# alias tmux='tmux -f "$HOME/.tmux.conf"'
+alias tmux='tmux -f "$HOME/.tmux.conf"'
 alias mks='tmux kill-session -t'
 alias mkS='tmux kill-server'
 alias tn='tmux new-session -s'
