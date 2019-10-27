@@ -254,12 +254,26 @@ install_zsh() {
 
   if _exists zsh; then
     info "Setting up Zsh as default shell..."
+    local BREW_ZSH_PATH="/usr/local/bin/zsh"
 
     echo "The script will ask you the password for sudo when changing your default shell via chsh -s"
     echo
 
-    chsh -s "$(command -v zsh)" || error "Error: Cannot set Zsh as default shell!"
-    echo "You'll need to log out for this to take effect"
+    if ! grep -q "$BREW_ZSH_PATH" /etc/shells; then
+      info "Switching shell to zsh..."
+      local ZSH_PATH=$(which zsh)
+
+      if [ -x "$BREW_ZSH_PATH" ]; then
+        ZSH_PATH="$BREW_ZSH_PATH"
+      else
+        info "Using system (outdated) zsh...."
+      fi
+      echo "$ZSH_PATH" | sudo tee -a /etc/shells >/dev/null
+      chsh -s "$ZSH_PATH" "$(whoami)"
+      echo "You'll need to log out for this to take effect"
+    else
+        info "No need to switch ZSH shell!"
+    fi
   fi
 
   finish
