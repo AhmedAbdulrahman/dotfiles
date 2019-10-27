@@ -1,0 +1,18 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Edit the PHP configuration file
+
+if [ -f /etc/php.ini ]; then
+	vim /etc/php.ini
+elif [ -f /etc/php/php.ini ]; then
+	vim /etc/php/php.ini
+elif [ -f /etc/php5/php.ini ]; then
+	vim /etc/php5/php.ini
+elif [ -f /usr/bin/php5/bin/php.ini ]; then
+	vim /usr/bin/php5/bin/php.ini
+elif [ -f /etc/php5/apache2/php.ini ]; then
+	vim /etc/php5/apache2/php.ini
+else
+	echo "Error: php.ini file could not be found."
+	echo "Searching for possible locations:"
+	sudo updatedb && locate php.ini
+fi

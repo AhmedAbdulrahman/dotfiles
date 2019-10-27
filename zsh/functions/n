@@ -1,0 +1,11 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Alias npm to n
+
+# Exit if npm is not installed
+(( $+commands[npm] )) || return 0
+
+if [[ $# -eq 0 ]]; then
+    npm install --link
+else
+    npm "$@"
+fi

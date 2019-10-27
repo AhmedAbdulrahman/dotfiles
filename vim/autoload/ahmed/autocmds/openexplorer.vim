@@ -1,7 +1,7 @@
 ""
-" Open file explorer if argument list contains at least one directory.
-"
-" autocmd VimEnter * call ahmed#autocmds#openexplorer#()
+" Open file explorer if argument list contains at least one directory."
+""
+" autocmd VimEnter * call ahmed#autocmds#openexplorer#()"
 ""
 function! ahmed#autocmds#openexplorer#() abort
 	let l:directory = expand('<amatch>')

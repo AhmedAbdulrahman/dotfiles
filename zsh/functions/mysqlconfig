@@ -1,0 +1,20 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Edit the MySQL configuration file
+
+if [ -f /etc/my.cnf ]; then
+	vim /etc/my.cnf
+elif [ -f /etc/mysql/my.cnf ]; then
+	vim /etc/mysql/my.cnf
+elif [ -f /usr/local/etc/my.cnf ]; then
+	vim /usr/local/etc/my.cnf
+elif [ -f /usr/bin/mysql/my.cnf ]; then
+	vim /usr/bin/mysql/my.cnf
+elif [ -f ~/my.cnf ]; then
+	vim ~/my.cnf
+elif [ -f ~/.my.cnf ]; then
+	vim ~/.my.cnf
+else
+	echo "Error: my.cnf file could not be found."
+	echo "Searching for possible locations:"
+	sudo updatedb && locate my.cnf
+fi

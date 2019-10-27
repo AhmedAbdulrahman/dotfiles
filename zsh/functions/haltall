@@ -1,0 +1,17 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Halt all active virtualboxes except the one of this directory
+
+vmBOX=(`VBoxManage list runningvms --long | grep "vagrant', Host path:" | awk '{print $5}' | cut -d "'" -f 2`)
+vmBOXId=(`VBoxManage list runningvms --long | grep "Hardware UUID:" | awk '{print $3}'`)
+
+for ((i=1;i<=${#vmBOX[@]};++i)); do
+  if [[ "${PWD}" =~ "${vmBOX[i]}" ]]; then
+    echo "No other VM than the one of this directory is running."
+  else
+    echo -e "Halting ${vmBOX[i]}"
+    VBoxManage controlvm {${vmBOXId[i]}} poweroff
+  fi
+done
+
+unset vmBOX
+unset vmBOXId

@@ -1,0 +1,396 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+snippet pretty "pretty-print JSON-able data" b
+console.log(
+JSON.stringify({
+	$1
+}, null, 2)
+)
+endsnippet
+
+# Functions
+
+snippet iife
+((${1:window, document, undefined}) => {
+${0:${VISUAL}}
+}(${2:win, doc}))
+endsnippet
+
+# Loops
+
+snippet arrinstance "new array"
+Array.from(new Array(${1}), (val, index) => (${2}))
+endsnippet
+
+snippet for "for loop" !
+for (let ${1:i} = 0, len = ${2:array}.length; $1 < len; $1++) {
+$0${2/([^.]+).*/$1/}[$1]
+}
+endsnippet
+
+snippet forof "for of loop" b
+for (let ${1:value} of ${2:Things}) {
+${0:${VISUAL}}
+}
+endsnippet
+
+snippet forin "for each loop" b
+for (let ${1:key} in ${2:object}) {
+if ($2.hasOwnProperty($1)) {
+	${0:let ${3:value} = $2[$1];}
+}
+}
+endsnippet
+
+# Modules
+
+
+# Conditionals
+
+snippet if "if" b
+if (${1}) {
+${0:${VISUAL}}
+}
+endsnippet
+
+snippet el "else"
+else {
+${0:${VISUAL}}
+}
+endsnippet
+
+snippet eif "else if" !
+else if (${1}) {
+${0:${VISUAL}}
+}
+endsnippet
+
+
+# Switches
+
+snippet sw "switch" b
+switch (${1}) {
+${0:${VISUAL}}
+}
+endsnippet
+
+snippet case "case" b
+case ${1}:
+${0:${VISUAL}}
+break;
+endsnippet
+
+# React
+snippet ctor "constructor()" b
+constructor(props) {
+super(props)
+$0
+}
+endsnippet
+
+snippet dse "getDerivedStateFromError" b
+static getDerivedStateFromError(${1:error}) {
+$0
+}
+endsnippet
+
+snippet dsp "getDerivedStateFromProps" b
+static getDerivedStateFromProps(${1:nextProps}, ${2:prevState}) {
+$0
+}
+endsnippet
+
+snippet sbu "getSnapshotBeforeUpdate" b
+getSnapshotBeforeUpdate(${1:prevProps}, ${2:prevState}) {
+$0
+}
+endsnippet
+
+snippet cdc "componentDidCatch" b
+componentDidCatch() {
+$0
+}
+endsnippet
+
+snippet cdm "componentDidMount" b
+componentDidMount() {
+$0
+}
+endsnippet
+
+snippet cdu "componentDidUpdate" b
+componentDidUpdate(prevProps, prevState) {
+$0
+}
+endsnippet
+
+snippet cwum "componentWillUnmount" b
+componentWillUnmount() {
+$0
+}
+endsnippet
+
+snippet scu "shouldComponentUpdate" b
+shouldComponentUpdate(nextProps, nextState) {
+return ${1:true};
+}
+endsnippet
+
+snippet reactClass "Create React Class"
+import React from 'react'
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
+
+class ${1:MyComponent} extends React.Component {
+	render() {
+		const {className, children, ...other} = this.props
+		return (
+			<${2:div}
+				className={classnames(styles.${3:root}, className)}
+				{...other}
+			>
+				${4:children}
+			</${2:div}>
+		)
+	}
+}
+
+${1:MyComponent}.propTypes = {
+	children: PropTypes.node.isRequired,
+	classes: PropTypes.object.isRequired,
+	className: PropTypes.string,
+}
+
+export default ${1:MyComponent}
+endsnippet
+
+snippet reactClassJSS "Create React Class JSS"
+import React from 'react'
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
+import withStyles from '../styles/withStyles'
+
+export const styles = theme => ({
+	root: {},
+})
+
+class ${1:MyComponent} extends React.Component {
+	render() {
+		const { children, classes, className, ...other} = this.props
+
+		return (
+			<${2:div}
+				className={classnames(classes.root, className)}
+				{...other}
+			>
+				${3:children}
+			</${2:div}>
+		)
+	}
+}
+
+${1:MyComponent}.propTypes = {
+	children: PropTypes.node.isRequired,
+	classes: PropTypes.object.isRequired,
+	className: PropTypes.string,
+}
+
+export default withStyles(styles)(${1:MyComponent})
+endsnippet
+
+snippet reactStatless "Create React Stateless"
+import React from 'react'
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
+
+const ${1:MyComponent} = (props) => {
+	const { className, children, ...other } = props
+
+	return (
+		<${2:div}
+		className={classnames(styles.${3:root}, className)}
+		{...other}
+		>
+		${4:children}
+		</${2:div}>
+	)
+}
+
+${1:MyComponent}.propTypes = {
+children: PropTypes.node.isRequired,
+className: PropTypes.string,
+}
+
+export default ${1:MyComponent}
+endsnippet
+
+snippet reactStatlessCSSModules "Create React Stateless CSS Modules"
+import React from 'react'
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
+import styles from './${1}.module.css'
+
+const ${1:MyComponent} = props => {
+	const { children, className, ...other } = props
+
+	return (
+	<${2:div}
+		className={classnames(styles.${3:root}, className)}
+		{...other}
+	>
+		${4:children}
+	</${2:div}>
+	)
+}
+
+${1:MyComponent}.propTypes = {
+	children: PropTypes.node.isRequired,
+	className: PropTypes.string,
+}
+
+export default ${1:MyComponent}
+endsnippet
+
+snippet reactStory "Create React Story"
+import React from 'react'
+import { storiesOf } from '@storybook/react'
+import { text, boolean } from '@storybook/addon-knobs'
+import ${1:Button} from './'
+
+const stories = storiesOf('Components/${1:Button}', module)
+
+export const Default = () => (
+	<${1:Button}
+		disabled={boolean('disabled', false)}
+	>
+		{text('children', 'Just a ${1:Button}')}
+	</${1:Button}>
+)
+
+stories.add('Default', Default)
+
+export default Default
+endsnippet
+
+snippet reactDanger "React dangerouslySet"
+dangerouslySetInnerHTML={{ __html: ${1} }}
+endsnippet
+# Console.Log
+snippet cl "console.log" b
+console.log(${1})
+endsnippet
+
+snippet ca "console.assert" b
+console.assert(${1}, ${2:'Condition'})
+endsnippet
+
+snippet ci "console.info" b
+console.info(${1})
+endsnippet
+
+snippet cw "console.warn" b
+console.warn(${1})
+endsnippet
+
+snippet cd "console.debug" b
+console.debug(${1})
+endsnippet
+
+snippet cc "console.count" b
+console.count(${1})
+endsnippet
+
+snippet ct "console.table" b
+console.table(${1}${2:,${3:['Optional column to show']}})
+endsnippet
+
+snippet cti "console.time" b
+console.time(${1})
+${0:${VISUAL}}
+console.timeEnd($1)
+endsnippet
+
+snippet cg "console.group" b
+console.group(${1})
+cosnole.log(${2})$3
+console.groupEnd()$0
+endsnippet
+
+# JSDoc
+
+snippet ** "docblock" b
+/**
+${VISUAL:/((?m)^)/ * /g}$0
+*/
+endsnippet
+
+snippet par "@param {...}"
+@param {${1:type}} ${0:name description}
+endsnippet
+
+snippet ret "@return {...}"
+@return {${1:type}} ${0}
+endsnippet
+
+
+# Misc
+
+snippet fl "flow" b
+// @flow
+endsnippet
+
+snippet "(use|strict)" "'use strict' declaration" br
+'use strict';
+endsnippet
+
+snippet jsc "JSX Comment"
+{/* ${0:${VISUAL}} */}
+endsnippet
+
+# Jest
+
+snippet describe "describe" b
+describe('${1}', () => {
+${0:${VISUAL}}
+})
+endsnippet
+
+snippet it "it" b
+it('${1}', () => {
+${0:${VISUAL}}
+})
+endsnippet
+
+snippet expect "expect" b
+expect(${1}).to${2}(${3})
+endsnippet
+
+snippet esl "eslint comment"
+// eslint-disable${1:-next-line} ${2:no-debugger}
+${0:debugger}
+endsnippet
+
+# vim:ft=snippets:

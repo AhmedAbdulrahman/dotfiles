@@ -1,0 +1,5 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Remove file with FZF 
+
+local file
+file=$(fzf --cycle +m) && rm -rfi "$file"

@@ -1,0 +1,5 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Turn any video into webm.
+# brew reinstall ffmpeg --with-libvpx
+
+ffmpeg -i $1 -vcodec libvpx -acodec libvorbis -isync -copyts -aq 80 -threads 3 -qmax 30 -y $2 $1.webm

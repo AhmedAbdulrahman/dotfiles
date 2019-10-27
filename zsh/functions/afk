@@ -1,0 +1,40 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# simple afk command to invoke screensaver from CLI.
+
+function _macos_afk() {
+}
+
+function _welcome_back() {
+    integer _elapsed
+    local human
+    (( _elapsed = $EPOCHSECONDS - ${_afk_start_time:-$EPOCHSECONDS} ))
+	local days=$(( _elapsed / 60 / 60 / 24 ))
+	local hours=$(( _elapsed / 60 / 60 % 24 ))
+	local minutes=$(( _elapsed / 60 % 60 ))
+	local seconds=$(( _elapsed % 60 ))
+	(( days > 0 )) && human+="${days}d "
+	(( hours > 0 )) && human+="${hours}h "
+	(( minutes > 0 )) && human+="${minutes}m "
+	human+="${seconds}s"
+
+    if [[ $_elapsed -gt 60 ]]; then
+        echo "Welcome back. You've been away for ${human}"
+    else
+        if [[ $_elapsed == 0 ]]; then
+            echo "Welcome back."
+        else
+            echo "Welcome back. That was quick! I missed you all the ${_elapsed} seconds you were gone."
+        fi
+    fi
+}
+
+_afk_start_time=$EPOCHSECONDS
+app_name="ScreenSaverEngine.app"
+screensaver_script="/System/Library/CoreServices/${app_name}/Contents/MacOS/ScreenSaverEngine"
+# Check if we're able to call the script directly. Otherwise, try to open as
+# a normal app
+if [[ -f $screensaver_script ]]; then
+    ${screensaver_script} 2>/dev/null && _welcome_back
+else
+    /usr/bin/open -W -a $app_name && _welcome_back
+fi

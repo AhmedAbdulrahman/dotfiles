@@ -1,7 +1,6 @@
 ""
-" Set current working directory to git root.
-"
-" autocmd VimEnter,BufEnter * call ahmed#autocmds#setroot#()
+" Set current working directory to git root."
+" autocmd VimEnter,BufEnter * call ahmed#autocmds#setroot#()"
 ""
 function! ahmed#autocmds#setroot#() abort
 	let l:currentdir = escape(expand('%:p:h'), ' ')

@@ -1,9 +1,6 @@
 [submodule "vim/pack/bundle/start/ale"]
 	path = vim/pack/bundle/start/ale
 	url = https://github.com/w0rp/ale.git
-[submodule "vim/pack/bundle/start/devicons"]
-	path = vim/pack/bundle/start/devicons
-	url = https://github.com/kutsan/vim-devicons.git
 [submodule "vim/pack/bundle/start/fzf-core"]
 	path = vim/pack/bundle/start/fzf-core
 	url = https://github.com/junegunn/fzf.git
@@ -67,9 +64,6 @@
 [submodule "vim/pack/bundle/start/terminus"]
 	path = vim/pack/bundle/start/terminus
 	url = https://github.com/wincent/terminus.git
-[submodule "zsh/plugins/zplug"]
-	path = zsh/plugins/zplug
-	url = https://github.com/zplug/zplug.git
 [submodule "vim/pack/bundle/start/prettier"]
 	path = vim/pack/bundle/start/prettier
 	url = https://github.com/prettier/vim-prettier.git
@@ -82,3 +76,9 @@
 [submodule "vim/pack/bundle/start/night-day"]
 	path = vim/pack/bundle/start/night-day
 	url = https://github.com/nightsense/night-and-day.git
+[submodule "vim/pack/bundle/start/devicons"]
+	path = vim/pack/bundle/start/devicons
+	url = https://github.com/ryanoasis/vim-devicons.git
+[submodule "vim/pack/bundle/start/buftabline"]
+	path = vim/pack/bundle/start/buftabline
+	url = https://github.com/ap/vim-buftabline.git

@@ -1,42 +1,14 @@
-"To use fzf in Vim, add the following line to your .vimrc:"
-set rtp+=/usr/local/opt/fzf
-
-" Load Plugins {{"
-  if filereadable(expand("$HOME/.vim_plugins"))
-    source $HOME/.vim_plugins
-  endif
-" }}"
+" Disable unused built-in functionality. "
+runtime startup/disable.vim
 
 " Define global variables."
 runtime startup/variables.vim
+
+" Detect filetype."
+runtime startup/filetype.vim
 
 " Enable loading {ftdetect,ftplugin,indent}/*.vim files."
 filetype plugin indent on
 
 " Enable loading syntax/*.vim files."
-syntax on
-
-" Setting Font"
-set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 14
-
-function! WrapForTmux(s)
-  if !exists('$TMUX')
-    return a:s
-  endif
-
-  let tmux_start = "\<Esc>Ptmux;"
-  let tmux_end = "\<Esc>\\"
-
-  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
-endfunction
-
-let &t_SI .= WrapForTmux("\<Esc>[?2004h")
-let &t_EI .= WrapForTmux("\<Esc>[?2004l")
-
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
-endfunction
-
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+"syntax on"

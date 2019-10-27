@@ -1,0 +1,79 @@
+"Zathura settings"
+" Colors"
+set default-bg              "#1e2431"
+set default-fg              "#A6B5C5"
+
+set statusbar-bg            "#1A2128"
+set statusbar-fg            "#13AFAF"
+
+set inputbar-bg             "#1e2431"
+set inputbar-fg             "#A6B5C5"
+
+set notification-error-bg   "#EC5252"
+set notification-error-fg   "#1e2431"
+
+set notification-warning-bg "#EC5252"
+set notification-warning-fg "#1e2431"
+
+set highlight-color         "#53697F"
+set highlight-active-color  "#EC5252"
+
+set completion-highlight-fg "#13AFAF"
+set completion-highlight-bg "#1e2431"
+
+set completion-bg           "#1e2431"
+set completion-fg           "#A6B5C5"
+
+set notification-bg         "#A6B5C5"
+set notification-fg         "#1e2431"
+
+set recolor                 "true"
+set recolor-lightcolor      "#1e2431"
+set recolor-darkcolor       "#A6B5C5"
+
+" Clipboard "
+set selection-clipboard clipboard
+
+" Search "
+set incremental-search true
+set search-hadjust true
+
+" Autoadjust"
+set adjust-open width
+
+" Typography "
+set font "Terminus 12"
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set page-padding 1
+
+"Zathura mappings"
+" Zoom in/out"
+map z zoom in
+map Z zoom out
+
+" Toggle mode"
+map D toggle_page_mode
+
+" Scroll"
+map u scroll half-up
+map d scroll half-down
+
+" Fullscreen "
+map [normal]     <C-f> toggle_fullscreen
+map [fullscreen] <C-F> toggle_fullscreen
+
+" Reload "
+map [normal]     <C-r> reload
+map [fullscreen] <C-r> reload
+
+"Rotate"
+map R rotate
+
+"Invert color"
+map i recolor
+
+"Print"
+map p print
+
+" vim: ft=vim

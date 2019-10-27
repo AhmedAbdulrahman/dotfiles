@@ -1,27 +1,5 @@
 scriptencoding UTF-8
 
-let g:currentmode={
-      \ 'n'  : 'N ',
-      \ 'no' : 'N·Operator Pending ',
-      \ 'v'  : 'V ',
-      \ 'V'  : 'V·Line ',
-      \ 'x22' : 'V·Block ',
-      \ 's'  : 'Select ',
-      \ 'S'  : 'S·Line ',
-      \ 'x19' : 'S·Block ',
-      \ 'i'  : 'I ',
-      \ 'R'  : 'R ',
-      \ 'Rv' : 'V·Replace ',
-      \ 'c'  : 'Command ',
-      \ 'cv' : 'Vim Ex ',
-      \ 'ce' : 'Ex ',
-      \ 'r'  : 'Prompt ',
-      \ 'rm' : 'More ',
-      \ 'r?' : 'Confirm ',
-      \ '!'  : 'Shell ',
-      \ 't'  : 'Terminal '
-      \}
-
 " [1] Linter status, error and warnings count with Unicode symbols."
 set statusline+=%{repeat('\ ',4)} " Generate space characters given number of times."
 set statusline+=%{ahmed#statusline#linter()}
@@ -57,6 +35,16 @@ set statusline+=%{repeat('\ ',2)}
 set statusline+=%{ahmed#statusline#git()}
 set statusline+=%{repeat('\ ',2)}
 
-" [8] Vim Mode."
-set statusline+=%0*\ %{toupper(g:currentmode[mode()])}   " Current mode
+" [8] Show file size"
+set statusline+=%{ahmed#statusline#fileSize()}
 set statusline+=%{repeat('\ ',2)}
+
+" [9] Vim Mode."
+set statusline+=%{ahmed#statusline#getMode()}   " Current mode"
+set statusline+=%{repeat('\ ',2)}
+
+" [10] COC status diagnostic"
+if exists('*ahmed#statusline#statusDiagnostic')
+      set statusline+=%{ahmed#statusline#statusDiagnostic()}
+      set statusline+=%{repeat('\ ',2)}
+endif

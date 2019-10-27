@@ -1,0 +1,6 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# open up process in new tab: "$ ntab process"
+
+osascript -e " activate application \"iTerm\"
+tell application \"System Events\" to keystroke \"t\" using command down
+tell application \"iTerm\" to tell session -1 of current terminal to write text \"$@\""

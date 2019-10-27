@@ -8,14 +8,18 @@
 # get the dir of the current script
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SCRIPT_DIR" || return 1
 
-mkdir -p ~/.vim
+echo "Create some required folders...\\n"
+mkdir -p $HOME/.vim
+mkdir -p $HOME/.config/nvim
 
-ln -sf  "$SCRIPT_DIR/vimrc"             ~/.vimrc
-cp -r   "$SCRIPT_DIR/cache"             ~/.vim/cache
+echo "Copying init.vim file -> ~/.config/nvim \\n"
+cp "$SCRIPT_DIR/init.vim" $HOME/.config/nvim/init.vim
 
-for dir in "$SCRIPT_DIR"/*/; do
-  if [ ! $(basename "$dir") == "cache" ] ; then
-    ln -sf "$SCRIPT_DIR/$(basename "$dir")" "$HOME/.vim/$(basename "$dir")"
-  fi
-  echo "$SCRIPT_DIR/$(basename "$dir")" "$HOME/.vim/$(basename "$dir")"
-done
+echo "Create COC directory & Symlink extensions \\n"
+mkdir -p $HOME/.config/coc
+# stow --restow -vv --target="$HOME/.config/coc" --dir=$SCRIPT_DIR coc
+cp -a "$SCRIPT_DIR/snippets/." $HOME/.config/coc/ultisnips/
+
+echo "Copying Cache \\n"
+mkdir -p $HOME/.vim/cache
+cp -a "$SCRIPT_DIR/cache/." $HOME/.vim/cache/

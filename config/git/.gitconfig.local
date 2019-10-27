@@ -1,0 +1,6 @@
+; vim: ft=gitconfig
+
+[user]
+  email = a.kasapbashi@live.com
+  name = Ahmed Abdulrahman
+  signingkey =

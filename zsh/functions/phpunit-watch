@@ -1,0 +1,4 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Watch PHP Unit Testing
+
+( watch -t -n 1 -c -x vendor/bin/phpunit --colors=always --no-coverage $2 -d "ls -l $1" )
