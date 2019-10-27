@@ -58,10 +58,14 @@ print_prompt() {
   echo "What you want to do?"
 
   PS3="Enter your choice (must be a number): "
-  options=("Install package manager" "Clone Ahmed's dotfiles" "Symlink files" "Install macOS Apps" "Change shell" "Install XCode tools" "Quit")
+  options=("All" "Install package manager" "Clone Ahmed's dotfiles" "Symlink files" "Install macOS Apps" "Change shell" "Install XCode tools" "Quit")
 
   select opt in "${options[@]}"; do
     case $opt in
+    "All")
+      all
+      break
+      ;;
     "Install package manager")
       install_package_manager
       break
@@ -408,15 +412,22 @@ on_error() {
   exit 1
 }
 
-main() {
-  on_start "$*"
-  install_cli_tools "$*"
-  install_package_manager "$*"
-  install_git "$*"
-  install_zsh "$*"
-  install_dotfiles "$*"
-  bootstrap "$*"
-  on_finish "$*"
+all() {
+  get_permission
+  install_package_manager
+  install_cli_tools
+  clone_dotfiles
+  install_zsh
+  symlink_files
+  bootstrap_macOS_apps
+
+  FAILED_COMMAND=$(fc -ln -1)
+
+  if [ $? -eq 0 ]; then
+    success "Done."
+  else
+    error "Something went wrong, [ Failed on: $FAILED_COMMAND ]"
+  fi
 }
 
 main() {
