@@ -1,17 +1,14 @@
-" Load Plugins {{"
-  if filereadable(expand("$HOME/.vim_plugins"))
-    source $HOME/.vim_plugins
-  endif
-" }}"
+" Disable unused built-in functionality. "
+runtime startup/disable.vim
 
-" Define global variables." 
+" Define global variables."
 runtime startup/variables.vim
 
-" Enable loading {ftdetect,ftplugin,indent}/*.vim files." 
+" Detect filetype."
+runtime startup/filetype.vim
+
+" Enable loading {ftdetect,ftplugin,indent}/*.vim files."
 filetype plugin indent on
 
-" Enable loading syntax/*.vim files." 
-syntax on
-
-" Setting Font"
-set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 14
+" Enable loading syntax/*.vim files."
+"syntax on"

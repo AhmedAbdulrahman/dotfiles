@@ -1,5 +1,5 @@
 " TagBar "
-map <C-m> :TagbarToggle<CR>
+"map <C-m> :TagbarToggle<CR>"
 let g:tagbar_autofocus=1
 let g:tagbar_compact = 1
 let g:tagbar_usearrows = 1

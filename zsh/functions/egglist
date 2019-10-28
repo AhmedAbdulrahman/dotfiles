@@ -1,0 +1,20 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Don't run if youtube-dl is not available
+(( $+commands[youtube-dl] )) || return 0
+
+unalias egglist 2>/dev/null
+
+if [[ $# -eq 0 ]]; then
+    echo "USAGE: egglist <username> <password> <directory> <egghead-playlist-courses-url>"
+    return 1
+else
+    youtube-dl \
+    \ --yes-playlist 
+    \ --playlist-start 1 
+    \ --username ${EGGHEAD_USERNAME:-$1} 
+    \ --password ${EGGHEAD_PASSWORD:-$2} 
+    \ -o "~/${$3}/%(playlist)s/%(chapter_number)s - %(chapter)s/%(playlist_index)s - %(title)s.%(ext)s" 
+    \ --restrict-filenames 
+    \ --min-sleep-interval 30 
+    \ --max-sleep-interval 60 $4
+fi

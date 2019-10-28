@@ -1,0 +1,4 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+
+unalias reload 2> /dev/null # Unbind z
+source $HOME/.zshenv

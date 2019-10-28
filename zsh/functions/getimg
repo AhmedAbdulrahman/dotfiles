@@ -1,0 +1,4 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Download all images from website to current dir.
+
+wget -r -l 1 -A jpeg,jpg,bmp,gif,png "$@"

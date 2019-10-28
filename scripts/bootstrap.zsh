@@ -8,22 +8,20 @@ sudo -v
 # Keep-alive: update existing `sudo` time stamp until `.osx` has finished.
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-export ZSH_DOTFILES=${ZSH_DOTFILES:="$HOME/dotfiles"}
-
-cd $ZSH_DOTFILES/scripts
+cd $DOTFILES/scripts
 
 # macOS
 if [ `uname` == 'Darwin' ]; then
     . ./brew.zsh
     . ./nodejs.zsh
     cd -
-# linux
+# Install linux packages here 
 elif [ `uname` == 'Darwin' ]; then
     . ./linuxbrew.zsh
     cd -
-# Windows OS
-elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then 
+# Install Windows packages here...
+elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
     info "Checking if Scoop is installed..."
-    $ZSH_DOTFILES/scripts/scoop.ps1
+    $DOTFILES/scripts/scoop.ps1
     cd -
 fi

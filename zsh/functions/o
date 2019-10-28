@@ -1,0 +1,16 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# No arguments: `open .`
+# With arguments: acts like `open`
+
+if (( $+commands[xdg-open] )); then
+  #if it's linux, we use xdg-open instead of open
+  alias open="xdg-open &> /dev/null"
+fi
+
+(( $+commands[open] || $+aliases[open] )) || return 0
+
+if [[ $# -eq 0 ]]; then
+    open .
+else
+    open "$@"
+fi

@@ -1,16 +1,17 @@
-"Move faster UP|DOWN|RIGHT|LEFT"
-xmap <C-j> 5j
-xmap <C-k> 5k
-xmap <C-h> 5h
-xmap <C-l> 5l
-
 "Move lines"
-vnoremap <S-j> :m '<-2'<CR>gv=gv
-vnoremap <S-k> :m '>+1'<CR>gv=gv
+xnoremap <silent> K :call ahmed#mappings#visual#movelines#moveup()<CR>
+xnoremap <silent> J :call ahmed#mappings#visual#movelines#movedown()<CR>
 
-" Stay in visual mode when indenting." 
+" Stay in visual mode when indenting."
 xnoremap < <gv
 xnoremap > >gv
+
+" Always search with 'very magic' mode."
+xnoremap / /\v
+xnoremap ? ?\v
+
+" Execute a macro over visual selection."
+xnoremap <silent> @ :<C-u>execute printf("'<,'>normal! @%s", nr2char(getchar()))<Enter>
 
 "easy regex replace for current word"
 xnoremap <leader>s :<c-u>%s/\%V

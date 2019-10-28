@@ -1,0 +1,4 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Halt all active virtualboxes
+
+for VM in `VBoxManage list runningvms | awk '{ print $2; }'`; do VBoxManage controlvm $VM poweroff; done

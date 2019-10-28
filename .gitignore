@@ -6,3 +6,13 @@
 .vim/vim-persisted-undo
 *.log
 .DS_STORE
+
+vim/cache/
+vim/coc/extensions/node_modules
+
+.zcompdump*
+.zhistory
+*.zwc
+*.old
+.zcompcache
+.zcalc_history

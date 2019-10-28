@@ -1,0 +1,10 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# fkill - kill process wtih FZF
+
+ local pid
+pid=$(ps -ef | sed 1d | fzf --cycle -m | awk '{print $2}')
+
+if [ "x$pid" != "x" ]
+then
+    echo $pid | xargs kill -${1:-9}
+fi

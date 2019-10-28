@@ -1,0 +1,10 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+if [[ -z "$1" ]]; then
+    echo "USAGE: touche path/to/new/file.ext"
+    return 1
+fi
+local filePath="$1"
+local fileLocation="${filePath:h}"
+[[ ! -d $fileLocation ]] && (echo "Created ${fileLocation}…" && mkdir -p ${fileLocation} || (echo "Error when trying to create ${fileLocation}. Aborting…" && return 1))
+[[ ! -f $filePath ]] && (touch $filePath && echo "Created ${filePath}. Opening using '${EDITOR}'" || (echo "Error creating ${filePath:t}. Aborting…" && exit 1))
+$EDITOR $filePath
