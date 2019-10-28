@@ -88,7 +88,7 @@ def get_prayer(now):
                 prayer_time_timestamp = time.mktime(prayer_time.timetuple())
                 time_remaning = int(prayer_time_timestamp - now_timestamp) / 60
 
-                result = "{color}{prayer}: {time}".format(
+                result = "{prayer}: {time}".format(
                     prayer=prayer,
                     time=timings[prayer],
                     color="" if time_remaning > 30 else RED,

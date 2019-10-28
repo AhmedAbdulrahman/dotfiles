@@ -1,0 +1,306 @@
+#!/usr/bin/env zsh
+
+# Create a new directory and enter it
+function mg() {
+	mkdir -p "$@" && cd "$@" || exit
+}
+
+# Open Visual Studio Code
+function code {
+    if [[ $# = 0 ]]
+    then
+        open -a "Visual Studio Code"
+    else
+        local argPath="$1"
+        [[ $1 = /* ]] && argPath="$1" || argPath="$PWD/${1#./}"
+        open -a "Visual Studio Code" "$argPath"
+    fi
+}
+
+function tm() {
+  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+  if [ $1 ]; then 
+     tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+  fi
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+}
+
+# Copy file with a progress bar
+function cpp()
+{
+	set -e
+	strace -q -ewrite cp -- "${1}" "${2}" 2>&1 \
+	| awk '{
+	count += $NF
+	if (count % 10 == 0) {
+		percent = count / total_size * 100
+		printf "%3d%% [", percent
+		for (i=0;i<=percent;i++)
+			printf "="
+			printf ">"
+			for (i=percent;i<100;i++)
+				printf " "
+				printf "]\r"
+			}
+		}
+	END { print "" }' total_size=$(stat -c '%s' "${1}") count=0
+}
+
+# Start an HTTP server from a directory, optionally specifying the port
+function server() {
+  local port="${1:-8000}"
+  open "http://localhost:${port}/"
+  # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+  # And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
+  python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+}
+
+function phpserver() {
+  local port="${2:-8888}"
+  if [ -z $1 ]; then
+    php -S localhost:${port}
+  else
+    open "http://localhost:${port}/"
+    php -S localhost:${port} -t $1
+  fi
+}
+
+# Syntax-highlight JSON strings or files
+function json() {
+  if [ -p /dev/stdin ]; then
+    # piping, e.g. `echo '{"foo":42}' | json`
+    python -mjson.tool | pygmentize -l javascript
+  else
+    # e.g. `json '{"foo":42}'`
+    python -mjson.tool <<< "$*" | pygmentize -l javascript
+  fi
+}
+
+# Goes up a specified number of directories  (i.e. up 4)
+function up() {
+	local d=""
+	limit=$1
+	for ((i=1 ; i <= limit ; i++))
+		do
+			d=$d/..
+		done
+	d=$(echo $d | sed 's/^\///')
+	if [ -z "$d" ]; then
+		d=..
+	fi
+	cd $d
+}
+
+# Search google from command line!
+function gsearch() {
+    open "http://www.google.com/search?q=$*"
+}
+
+# Usage: clone <GITHUB_REPO_URL>
+function clone() {
+    git clone --depth=1 $1
+    cd $(basename ${1%.*})
+    # For Yarn
+    if [ -f ./yarn.lock ]; then
+      yarn install
+    # For Laravel
+    elif [ -f ./composer.json ]; then
+      npm install && composer install
+    else
+    # For NPM
+      npm install
+    fi
+}
+
+# whois a domain or a URL
+function whois() {
+  local domain=$(echo "$1" | awk -F/ '{print $3}') # get domain from URL
+  if [ -z $domain ] ; then
+    domain=$1
+  fi
+  echo "Getting whois record for: $domain …"
+
+  # avoid recursion
+  # this is the best whois server
+  # strip extra fluff
+  /usr/bin/whois -h whois.internic.net $domain | sed '/NOTICE:/q'
+}
+
+# animated gifs from any video
+# from alex sexton   gist.github.com/SlexAxton/4989674
+function gifify() {
+  if [[ -n "$1" ]]; then
+    if [[ $2 == '--good' ]]; then
+      ffmpeg -i $1 -r 10 -vcodec png out-static-%05d.png
+      time convert -verbose +dither -layers Optimize -resize 900x900\> out-static*.png  GIF:- | gifsicle --colors 128 --delay=5 --loop --optimize=3 --multifile - > $1.gif
+      rm out-static*.png
+    else
+      ffmpeg -i $1 -s 600x400 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $1.gif
+    fi
+  else
+    echo "proper usage: gifify <input_movie.mov>. You DO need to include extension."
+  fi
+}
+
+# turn that video into webm.
+# brew reinstall ffmpeg --with-libvpx
+function webmify(){
+  ffmpeg -i $1 -vcodec libvpx -acodec libvorbis -isync -copyts -aq 80 -threads 3 -qmax 30 -y $2 $1.webm
+}
+
+# example: rename-multiple *.svg abc cba
+function rename() {
+  for file in $1; do mv $file ${file//$2/$3} ; done
+}
+
+# Download all images from website to current dir.
+function getAllImagesFromWebsite() {
+  wget -r -l 1 -A jpeg,jpg,bmp,gif,png "$@"
+}
+
+# Combining cd command and z
+function c() {
+  if [ -z "$1" ]; then
+    cd ..
+  elif [ -d "$1" ]; then
+    cd "$@"
+  else
+    z -c "$@"
+  fi
+}
+
+# Combining cd command and z, longer range
+# I have an alias for cc (= "../..")
+function cc() {
+  if [ -d "$1" ]; then
+    cd $@
+  else
+    z $@
+  fi
+}
+
+# generates a unique 192.168.X.X ip adress.
+function ipgen() {
+  local current=($(grep "192.168.*.*" /etc/hosts | cut -c12-13))
+  local gen=$(echo $RANDOM % 99 + 1 | bc)
+  local gen2=$(echo $RANDOM % 99 + 1 | bc)
+  if [[ $gen != ${current[*]} ]]; then
+    echo -e "192.168.$gen.$gen2"
+  else
+    !!
+  fi
+}
+
+# Docker
+#stop all containers:
+function docker-stop () {
+    docker kill $(docker ps -q)
+}
+
+#remove all containers
+function rcontainers () {
+    docker rm $(docker ps -a -q)
+}
+
+#remove all docker images
+function rimages () {
+    docker rmi $(docker images -a -q)
+}
+
+# Trim leading and trailing spaces (for scripts)
+function trim() {
+	local var=$@
+	var="${var#"${var%%[![:space:]]*}"}"  # remove leading whitespace characters
+	var="${var%"${var##*[![:space:]]}"}"  # remove trailing whitespace characters
+	echo -n "$var"
+}
+
+#remove everything in Docker
+function killdocker () {
+    docker kill \$(docker ps -q) && docker rm \$(docker ps -a -q) && docker rmi \$(docker images -q)
+}
+
+# open up process in new tab: "$ ntab process"
+function ntab() {
+  osascript -e "
+  activate application \"iTerm\"
+  tell application \"System Events\" to keystroke \"t\" using command down
+  tell application \"iTerm\" to tell session -1 of current terminal to write text \"$@\""
+}
+
+# Vagrant
+# Halt all active virtualboxes
+function haltvms() {
+    for VM in `VBoxManage list runningvms | awk '{ print $2; }'`; do VBoxManage controlvm $VM poweroff; done
+}
+
+# Halt all active virtualboxes except the one of this directory
+function halt-all-except-current() {
+  vmBOX=(`VBoxManage list runningvms --long | grep "vagrant', Host path:" | awk '{print $5}' | cut -d "'" -f 2`)
+  vmBOXId=(`VBoxManage list runningvms --long | grep "Hardware UUID:" | awk '{print $3}'`)
+
+  for ((i=1;i<=${#vmBOX[@]};++i)); do
+    if [[ "${PWD}" =~ "${vmBOX[i]}" ]]; then
+      echo "No other VM than the one of this directory is running."
+    else
+      echo -e "Halting ${vmBOX[i]}"
+      VBoxManage controlvm {${vmBOXId[i]}} poweroff
+    fi
+  done
+
+  unset vmBOX
+  unset vmBOXId
+}
+
+# PHP
+function artisan() {
+    ( php artisan $* )
+}
+
+function phpunit() {
+    ( vendor/bin/phpunit $* )
+}
+
+function phpunit-watch() {
+    ( watch -t -n 1 -c -x vendor/bin/phpunit --colors=always --no-coverage $2 -d "ls -l $1" )
+}
+
+# Edit the PHP configuration file
+function phpconfig() {
+	if [ -f /etc/php.ini ]; then
+		vim /etc/php.ini
+	elif [ -f /etc/php/php.ini ]; then
+		vim /etc/php/php.ini
+	elif [ -f /etc/php5/php.ini ]; then
+		vim /etc/php5/php.ini
+	elif [ -f /usr/bin/php5/bin/php.ini ]; then
+		vim /usr/bin/php5/bin/php.ini
+	elif [ -f /etc/php5/apache2/php.ini ]; then
+		vim /etc/php5/apache2/php.ini
+	else
+		echo "Error: php.ini file could not be found."
+		echo "Searching for possible locations:"
+		sudo updatedb && locate php.ini
+	fi
+}
+
+# Edit the MySQL configuration file
+function mysqlconfig() {
+	if [ -f /etc/my.cnf ]; then
+		vim /etc/my.cnf
+	elif [ -f /etc/mysql/my.cnf ]; then
+		vim /etc/mysql/my.cnf
+	elif [ -f /usr/local/etc/my.cnf ]; then
+		vim /usr/local/etc/my.cnf
+	elif [ -f /usr/bin/mysql/my.cnf ]; then
+		vim /usr/bin/mysql/my.cnf
+	elif [ -f ~/my.cnf ]; then
+		vim ~/my.cnf
+	elif [ -f ~/.my.cnf ]; then
+		vim ~/.my.cnf
+	else
+		echo "Error: my.cnf file could not be found."
+		echo "Searching for possible locations:"
+		sudo updatedb && locate my.cnf
+	fi
+}
