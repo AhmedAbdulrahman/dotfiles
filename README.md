@@ -1,35 +1,23 @@
 # Ahmed’s dotfiles adapted for ZSH
 
-> Running [**iTerm2**](https://www.iterm2.com/) with [**oh-my-zsh**](https://github.com/robbyrussell/oh-my-zsh) and [**Spaceship-zsh-theme**](https://github.com/denysdovhan/spaceship-zsh-theme).
+> Running [**iTerm2**](https://www.iterm2.com/) with custom [**Spaceship-zsh**](https://github.com/denysdovhan/spaceship-zsh-theme) theme.
 
-The color scheme is [**Material Design**](https://github.com/MartinSeeler/iterm2-material-design) for _iTerm2_ and the font is [**Danke Mono**](https://dank.sh/) with [**Droid Sans Mono**](https://github.com/ryanoasis/nerd-fonts) as Non-ASCII Font
+The color scheme is [**Aylin**](https://github.com/AhmedAbdulrahman/aylin-iterm-theme) for _iTerm2_ and the font is [**IBM Plex Mono**](https://github.com/IBM/plex) with [**DroidSansMono Nerd Font**](https://github.com/ryanoasis/nerd-fonts) as Non-ASCII Font
 
 ![Screenshot](intro.gif)
 
 There are tons of useful things in here:
-
-- ⚡️ Power up and beautify terminal with [“Oh My ZSH!”](http://ohmyz.sh/) is already built–in.
 - [🚀 Spaceships ZSH](https://github.com/denysdovhan/spaceship-prompt) as a prompt.
-- [🌺 zplug](https://zplug.sh) for dependency management.
+- [🌺 ZPLUG](https://zplug.sh) for dependency management.
+- ⚡️ Power up and beautify terminal with ZSH completions.
 - 💄 Syntax highlighting of commands.
-- ⌨️ Autosuggestions for most of commands.
-- 🕵️‍ Fuzzy Search for VIM, Git and history
-- 🏎 Useful [aliases](./zsh/zsh_aliases).
-- Git config, global `.gitignore` file and aliases.
+- ⌨️  Autosuggestions for most of commands.
+- 🕵️‍ Fuzzy Finder for VIM, Git and ZSH
+- 🏎 ZSH [vim](./zsh/config/mappings.zsh) bindings for VIM nerds.
+- 🏎 Useful [aliases](./zsh/config/aliases.zsh).
+- 🛠 Git [.gitconfig](./config/git/.gitconfig), global [.gitignore](./config/git/.gitignore) file and aliases.
 
 Missing feature? 🍴 Fork this repo and make it better!
-
-## Resources
-
-This repo is inspired and influenced by
-
-- GitHub 💞 [dotfiles](http://dotfiles.github.io/)
-- Niclas Pahlfer’s [dotfiles](https://github.com/Npahlfer)
-- Mathias Bynens’ [dotfiles](https://github.com/mathiasbynens/dotfiles)
-- Paul Irish’s [dotfiles](https://github.com/paulirish/dotfiles)
-- Denys Dovhan’s [dotfiles](https://github.com/denysdovhan/dotfiles)
-- Adam Eivy’s [dotfiles](https://github.com/atomantic/dotfiles)
-- Matthew J Morrison’s [dotfiles](https://github.com/mattjmorrison/dotfiles)
 
 _It’s not a fork of any, since I wanted to build from scratch and really only include what I need, while improving my understanding of how things work along the way._
 
@@ -39,38 +27,44 @@ _It’s not a fork of any, since I wanted to build from scratch and really only 
 
 These are **my** dotfiles, so please feel free to take anything you want but do so **at your own risk** 😉.
 
-#### Clone the repo
+1. #### Clone the repo
 
-Dotfiles are installed by running one of the following commands in your terminal:
+    Dotfiles are installed by running one of the following commands in your terminal:
 
-via `curl`
+    via `curl`
 
-```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh)"
-```
+    ```bash
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh)"
+    ```
 
-via `wget`
+    via `wget`
 
-```bash
-bash -c "$(wget https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh -O -)"
-```
+    ```bash
+    bash -c "$(wget https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh -O -)"
+    ```
 
-#### Clone with Git
+2. #### Clone with Git
 
-On a fresh install of macOS, run:
+   On a fresh install of macOS, run:
 
-```
-git clone git@github.com:AhmedAbdulrahman/dotfiles.git ~/dotfiles
-source ~/dotfiles/installer.sh
-```
+   ```
+   git clone git@github.com:AhmedAbdulrahman/dotfiles.git ~/dotfiles
+   source ~/dotfiles/installer.sh
+   ```
 
-#### Configurations
+3. #### Configurations
 
-You will be prompt with few questions, answer based on your need then type what config file you want to install see below:
+    You will be prompt with few questions, answer based on your need then type what config file you want to install see below:
 
-```bash
-Enter files you would like to install separated by 'space' : zsh tmux vim
-```
+    ```bash
+    What you want to do?
+
+    1) All                      5) Install macOS Apps
+    2) Install package manager  6) Change shell
+    3) Clone Ahmeds dotfiles    7) Install XCode tools
+    4) Symlink files            8) Quit
+    Enter your choice (must be a number): # here you type number of config you want to install
+    ```
 
 ## Essentials 👩‍💻☕️
 
@@ -102,6 +96,18 @@ These plugins are included when you install `Oh-My-Zsh` Framework:
 - [`k`](https://github.com/supercrabtree/k) — Makes directory listings more readable, adding a bit of color and some git status information on files and directories.
 - [`alias-tips`](https://github.com/djui/alias-tips) — Cool utility that helps remembering those aliases you defined once ;)
 - [`almostontop`](https://github.com/Valiev/almostontop) — Utility that clears previous command output every time before new command executed in shell
+
+## Resources
+
+This repo is inspired and influenced by
+
+- GitHub 💞 [dotfiles](http://dotfiles.github.io/)
+- Niclas Pahlfer’s [dotfiles](https://github.com/Npahlfer)
+- Mathias Bynens’ [dotfiles](https://github.com/mathiasbynens/dotfiles)
+- Paul Irish’s [dotfiles](https://github.com/paulirish/dotfiles)
+- Denys Dovhan’s [dotfiles](https://github.com/denysdovhan/dotfiles)
+- Adam Eivy’s [dotfiles](https://github.com/atomantic/dotfiles)
+- Matthew J Morrison’s [dotfiles](https://github.com/mattjmorrison/dotfiles)
 
 ## License
 
