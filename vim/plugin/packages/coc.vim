@@ -202,6 +202,9 @@ nmap <Leader>fs  <Plug>(coc-format-selected)
 " restart when tsserver gets wonky "
 nnoremap <silent> <Leader>cr  :<C-u>CocRestart<CR>
 
+" Use K for show documentation in preview window"
+nnoremap <silent> K :call <SID>ahmed#autocmds#showdocumentation#()<CR>
+
 " manage extensions "
 nnoremap <silent> <Leader>cx  :<C-u>CocList extensions<cr>
 
@@ -209,5 +212,6 @@ augroup cocsettings
 	autocmd!
 	" Update signature help on jump placeholder."
 	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  autocmd CursorHold * silent call CocActionAsync('highlight')
+	" Highlight symbol under cursor on CursorHold"
+	autocmd CursorHold * silent call CocActionAsync('highlight')
 augroup end
