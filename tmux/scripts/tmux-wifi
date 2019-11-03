@@ -2,8 +2,9 @@
 
 WIFI_NAME=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk -F': ' '/ SSID/{print $2}')
 
-ON_ICON=""
-OFF_ICON'⨉'
-TAIL="#[fg=colour237] "
+ON_ICON=" "
+OFF_ICON=" "
+TAIL="#[fg=#ffa7c4]"
 
-[ -n "$WIFI_NAME" ] && printf "%s" "$ON_ICON  $WIFI_NAME$TAIL" || printf "#[fg=red]%s" "$OFF_ICON$TAIL"
+# [ "$WIFI_NAME" ] && printf "%s" "$ON_ICON  $WIFI_NAME$TAIL" || printf "#[fg=red]%s" "$OFF_ICON$TAIL"
+[ "$WIFI_NAME" = "" ] && printf "#[fg=#ffa7c4]%s" "$OFF_ICON$TAIL" || printf "#[fg=#7edbca]%s" "$ON_ICON  $WIFI_NAME$TAIL"
