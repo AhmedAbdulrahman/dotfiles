@@ -115,7 +115,7 @@ main() {
   brew tap dbcli/tap
   brew tap zegervdv/zathura
   brew tap xo/xo
-
+  brew tap dandavison/delta https://github.com/dandavison/delta
   # Core
   brew_install openssl
   brew_install git
@@ -155,6 +155,7 @@ main() {
   brew_install tokei                          # A program that allows you to count your code, quickly.
   brew_install the_silver_searcher            # A code-searching tool similar to ack, but faster. 
   brew_install diff-so-fancy
+  brew_install dandavison/delta/git-delta
   brew_install z                              # z hopping around folders
   brew_install imagemagick --with-webp
   brew_install rename
