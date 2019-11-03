@@ -1,7 +1,7 @@
 ""
-" Trim trailing whitespace characters from end of each line.
-"
-" autocmd BufWritePre * call ahmed#autocmds#trimtrailing#()
+" Trim trailing whitespace characters from end of each line."
+""
+" autocmd BufWritePre * call ahmed#autocmds#trimtrailing#()"
 ""
 function! ahmed#autocmds#trimtrailing#() abort
 	if &l:modifiable && !&l:binary
