@@ -23,7 +23,7 @@
     (( $+commands[rougify]   )) && FZF_FILE_HIGHLIGHTER='rougify'
     (( $+commands[coderay]   )) && FZF_FILE_HIGHLIGHTER='coderay'
     (( $+commands[highlight] )) && FZF_FILE_HIGHLIGHTER='highlight -O ansi -l {}'
-    (( $+commands[bat]       )) && FZF_FILE_HIGHLIGHTER='bat --style=numbers,changes --wrap never --color always {}'
+    (( $+commands[bat]       )) && FZF_FILE_HIGHLIGHTER='bat --theme="OneHalfDark" --style=numbers,changes --color always {2..-1}'
     export FZF_FILE_HIGHLIGHTER
 
     FZF_DIR_HIGHLIGHTER='ls -l --color=always'
