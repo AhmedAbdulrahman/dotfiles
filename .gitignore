@@ -10,6 +10,8 @@
 vim/cache/
 vim/coc/extensions/node_modules
 
+tmux/cache/
+
 .zcompdump*
 .zhistory
 *.zwc
