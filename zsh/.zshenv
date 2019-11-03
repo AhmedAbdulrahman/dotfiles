@@ -36,6 +36,7 @@ export OSTYPE=$(uname -s)
 export HOSTNAME=$(hostname)
 export DOTFILES="${HOME}/dotfiles"
 export GOPATH="${HOME}/.go"
+export GOBIN="${GOPATH}/bin"
 export PROJECTS="${HOME}/Projects"
 
 # Ensure that a non-login, non-interactive shell has a defined environment.

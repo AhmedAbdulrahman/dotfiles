@@ -59,7 +59,7 @@ path=(
   ${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin(N-/)
   ${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin(N-/)
   ${XDG_CONFIG_HOME}/yarn/global/node_modules/.bin(N-/)
-  ${GOPATH}/bin(N-/)
+  ${GOBIN}(N-/)
   $HOME/Library/Python/3.*/bin(Nn[-1]-/)
   $HOME/Library/Python/2.*/bin(Nn[-1]-/)
   ${HOMEBREW_PREFIX}/opt/ruby/bin(N-/)
