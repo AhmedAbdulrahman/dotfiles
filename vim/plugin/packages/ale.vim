@@ -11,8 +11,6 @@ let g:ale_command_wrapper = ''
 let g:ale_set_signs = has('signs')
 let g:ale_max_signs = -1
 let g:ale_maximum_file_size = v:null
-let g:ale_pattern_options = v:null
-let g:ale_pattern_options_enabled = v:false
 let g:ale_cache_executable_check_failures = v:false
 let g:ale_warn_about_trailing_blank_lines = v:true
 let g:ale_warn_about_trailing_whitespace = v:false
@@ -62,16 +60,50 @@ let g:ale_virtualtext_prefix = '  '
 
 " Define fixers for 'ALEFix' command."
 let g:ale_fixers = {
-	\ 'html': ['prettier'],
-	\ 'css': ['prettier', 'stylelint'],
-	\ 'sass': ['prettier'],
-	\ 'javascript': ['eslint', 'prettier'],
+	\  '*':				['remove_trailing_lines', 'trim_whitespace'],
+	\ 'html': 			['prettier'],
+	\ 'css': 			['prettier', 'stylelint'],
+	\ 'sass': 			['prettier'],
+	\ 'javascript': 	['eslint', 'prettier'],
 	\ 'javascript.jsx': ['eslint', 'prettier'],
-	\ 'json': ['prettier'],
-	\ 'graphql': ['prettier'],
-	\ 'markdown': ['prettier']
+	\ 'json': 			['prettier'],
+	\ 'graphql': 		['prettier'],
+	\ 'markdown': 		['prettier'],
+	\ 'python': 		['black'],
+	\ 'sh': 			['shfmt'],
+	\ 'bash': 			['shfmt'],
+	\ 'go': 			['gofmt'],
 \ }
 let g:ale_fix_on_save = v:false
+
+" Don't auto auto-format files inside `node_modules`, `forks`, `repo`, `playground` directories, minified files and jquery (for legacy codebases)"
+let g:ale_pattern_options_enabled = v:true
+let g:ale_pattern_options = {
+	\   '\.min\.(js\|css)$': {
+	\       'ale_linters': [],
+	\       'ale_fixers': g:ale_fixers['*']
+	\   },
+	\   'jquery.*': {
+	\       'ale_linters': [],
+	\       'ale_fixers': g:ale_fixers['*']
+	\   },
+	\   'node_modules/.*': {
+	\       'ale_linters': [],
+	\       'ale_fixers': []
+	\   },
+	\   'package.json': {
+	\       'ale_fixers': g:ale_fixers['*']
+	\   },
+	\   'Projects/_Fork/.*': {
+	\       'ale_fixers': []
+	\   },
+	\   'Projects/_Repo/.*': {
+	\       'ale_fixers': []
+	\   },
+	\   'Projects/_Playground/.*': {
+	\       'ale_fixers': []
+	\   },
+\ }
 
 " Linter options."
 let g:ale_lint_on_enter = v:true
