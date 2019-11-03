@@ -2,7 +2,7 @@
 --theme="TwoDark"
 
 # Show line numbers, Git modifications and file header (but no grid)
---style=plain,changes,numbers
+--style=numbers,changes,header
 
 # Use italic text on the terminal (not supported on all terminals)
 --italic-text=always
@@ -16,6 +16,15 @@
 
 # Use "gitignore" highlighting for ".ignore" files
 --map-syntax .ignore:.gitignore
+
+# Use "gitconfig" highlighting for ".gitconfig" file
+--map-syntax .gitconfig.local:gitconfig
+
+# Use "zsh" highlighting for ".zshrc" file
+--map-syntax .zshrc.local:zsh
+
+# Use "vim" highlighting for ".vimrc" file
+--map-syntax .vimrc.local:vim
 
 # Always use colors.
 --color=always
