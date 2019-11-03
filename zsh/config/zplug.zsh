@@ -64,9 +64,9 @@ zplug "wfxr/emoji-cli", as:command, use:'emojify|fuzzy-emoji', from:github
 zplug "reorx/httpstat", as:command, use:'(httpstat).py', rename-to:'$1', from:github
 
 # The best-lookin' diffs. 🎉
-zplug 'so-fancy/diff-so-fancy', \
-    as:command, use:diff-so-fancy, \
-    hook-build:'git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"'
+# zplug 'so-fancy/diff-so-fancy', \
+#     as:command, use:diff-so-fancy, \
+#     hook-build:'git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"'
 
 zplug 'wfxr/zplug-rm', lazy:yes, from:github
 zplug 'wfxr/iconful', as:command, use:'(iconful).sh', rename-to:'$1', from:github

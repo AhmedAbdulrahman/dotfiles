@@ -76,7 +76,7 @@
 	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
 	untrackedCache = true
-	pager = diff-so-fancy | less --tabs=4 -RFX
+	pager = delta --dark --hunk-style plain --theme OneHalfDark
 	commentChar = %
 
 [branch]
@@ -90,12 +90,12 @@
   prune = true
   fsckObjects = true
 
-[pager]
-	# insanely beautiful diffs ==> npm install -g diff-so-fancy
-	diff = diff-so-fancy | less --tabs=4 -RFX
-	show = diff-so-fancy | less --tabs=4 -RFX
+# [pager]
+# 	# insanely beautiful diffs ==> npm install -g diff-so-fancy
+# 	diff = diff-so-fancy | less --tabs=4 -RFX
+# 	show = diff-so-fancy | less --tabs=4 -RFX
 
-[interactive]
+# [interactive]
   # disabled until github.com/so-fancy/diff-so-fancy/pull/172 is resolved :(
 	# diffFilter = "diff-so-fancy"
 
