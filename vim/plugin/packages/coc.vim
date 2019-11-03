@@ -164,18 +164,17 @@ let g:coc_user_config = {
 				\ 'ctagsFilestypes': []
 			\ }
 		\ },
-    \ 'github': {
-      \ 'filetypes': ['gitcommit', 'markdown.ghpull'],
-    \ },
+		\ 'github': {
+			\ 'filetypes': ['gitcommit', 'markdown.ghpull'],
+		\ },
 	\ },
 	\ 'languageserver': {},
-	\
 	\ 'snippets': {
 		\ 'priority': 200,
 		\ 'shortcut': 'S',
-    \ 'ultisnips': { 
-      \ 'enable': v:true
-    \ },
+		\ 'ultisnips': { 
+			\ 'enable': v:true
+		\ },
 	\ },
 	\ 'highlight': {
 		\ 'disableLanguages': '',
@@ -184,6 +183,14 @@ let g:coc_user_config = {
 	\ },
   \ 'emmet': {
 		\ 'includeLanguages': { 'javascript': 'javascriptreact' },
+	\ },
+	\ 'golang': {
+		\ 'command': exepath('gopls'),
+		\ 'rootPatterns': ['go.mod', '.vim/', '.git/', '.hg/'],
+		\ 'filetypes': ['go'],
+		\ 'initializationOptions': {
+		\ 	'usePlaceholders': 1,
+		\  },
 	\ },
 \ }
 
@@ -214,4 +221,6 @@ augroup cocsettings
 	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 	" Highlight symbol under cursor on CursorHold"
 	autocmd CursorHold * silent call CocActionAsync('highlight')
+
+	autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport'
 augroup end
