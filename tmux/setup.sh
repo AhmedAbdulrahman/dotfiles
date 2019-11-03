@@ -12,3 +12,7 @@ if [[ $(uname) == *Darwin* ]]; then
     echo "→ Symlinking ~/.tmux_osx.conf \\n"
     ln -nfs "$SCRIPT_DIR/.tmux_osx.conf" "$HOME/.tmux_osx.conf"
 fi
+
+echo "Copying Cache \\n"
+mkdir -p $HOME/.tmux/cache
+cp -a "$SCRIPT_DIR/cache/." $HOME/.tmux/cache/
