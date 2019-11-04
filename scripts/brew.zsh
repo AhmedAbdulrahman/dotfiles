@@ -218,6 +218,7 @@ main() {
   brew_install cask zoomus
   brew_install cask notion
   brew_install cask transmit
+  brew_install mas             # A simple command line interface for the Mac App Store
 
   # Quicklook
   brew_install cask qlcolorcode
@@ -225,6 +226,21 @@ main() {
   brew_install cask quicklook-json
   brew_install cask quicklook-csv
   brew_install cask qlstephen
+
+  # Mac App Store
+  mas install 420212497 # 'Byword'
+  mas install 668208984 # Giphy Capture
+  mas install 409183694 # Keynote
+  mas install 1091189122 # Bear
+  mas install 1176895641 # Spark
+  mas install 425424353 # The Unarchiver
+  mas install 1384080005 # Tweetbot
+  mas install 485812721  # TweetDeck
+  mas install 1147396723 # WhatsApp
+  mas install 747648890 # Telegram
+  mas install 803453959 # Slack
+  mas install 552383089 # Dashlane
+  mas install 405843582 # Alfred - helps you do a lot more things quicker, without having to leave the keyboard.
 
   # Remove outdated versions from the cellar
   brew cleanup
