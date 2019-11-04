@@ -193,7 +193,6 @@ main() {
   brew_install cask google-chrome
   brew_install cask iterm2                      # iTerm2 is a replacement for Terminal and the successor to iTerm.
   brew_install cask visual-studio-code          # code editor
-  brew_install cask alfred                      # An app helps you do a lot more things quicker, without having to leave the keyboard.
   brew_install cask karabiner                   # A powerful and stable keyboard customizer for macOS.
   brew_install cask karabiner-elements          # A powerful and stable keyboard customizer for macOS.
   brew_install cask spectacle                   # Move and resize windows with ease
@@ -201,13 +200,10 @@ main() {
   brew_install cask insomnia                    # Insomnia is a cross-platform GraphQL and REST client
   brew_install cask transmission                # Insomnia is a cross-platform GraphQL and REST client
   brew_install cask handbrake                   # HandBrake is a tool for converting video from nearly any format to a selection of modern, widely supported codecs.
-  brew_install cask dashlane                    # the safe, simple way to store and fill passwords and personal information.
-  brew_install cask slack
   brew_install cask discord                     # A Free Voice and Text Chat app for Gamers
   brew_install cask vlc                         # A free and open source cross-platform multimedia player
   brew_install cask utorrent
   brew_install cask teamviewer                  # A handy tool for connecting remote devices
-  brew_install cask telegram                    # A cloud-based instant messaging and voice over IP app
   brew_install cask steam                       # A video game digital distribution platform
   brew_install cask docker
   brew_install cask virtualbox
@@ -220,6 +216,15 @@ main() {
   brew_install cask kap
   brew_install cask abstract
   brew_install cask zoomus
+  brew_install cask notion
+  brew_install cask transmit
+
+  # Quicklook
+  brew_install cask qlcolorcode
+  brew_install cask qlmarkdown
+  brew_install cask quicklook-json
+  brew_install cask quicklook-csv
+  brew_install cask qlstephen
 
   # Remove outdated versions from the cellar
   brew cleanup
