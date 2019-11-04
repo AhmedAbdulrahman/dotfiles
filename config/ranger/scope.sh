@@ -24,14 +24,15 @@ IFS=$'\n'
 # 7    | image      | Display the file directly as an image
 
 # Script arguments
-FILE_PATH="${1}"         # Full path of the highlighted file
-PV_WIDTH="${2}"          # Width of the preview pane (number of fitting characters)
-PV_HEIGHT="${3}"         # Height of the preview pane (number of fitting characters)
-IMAGE_CACHE_PATH="${4}"  # Full path that should be used to cache image preview
-PV_IMAGE_ENABLED="${5}"  # 'True' if image previews are enabled, 'False' otherwise.
+declare -g FILE_PATH="${1}" # Full path of the highlighted file.
+declare -g PV_WIDTH="${2}" # Width of the preview pane (number of fitting characters).
+declare -g PV_HEIGHT="${3}" # Height of the preview pane (number of fitting characters).
+declare -g IMAGE_CACHE_PATH="${4}" # Full path that should be used to cache image preview.
+declare -g PV_IMAGE_ENABLED="${5}" # 'True' if image previews are enabled, 'False' otherwise.
 
-FILE_EXTENSION="${FILE_PATH##*.}"
-FILE_EXTENSION_LOWER=$(echo ${FILE_EXTENSION} | tr '[:upper:]' '[:lower:]')
+declare -g FILE_EXTENSION="${FILE_PATH##*.}"
+declare -g FILE_EXTENSION_LOWER=$(echo ${FILE_EXTENSION} | tr '[:upper:]' '[:lower:]')
+declare -g FILE_MIMETYPE="$(file --dereference --brief --mime-type -- "${FILE_PATH}")"
 
 # Settings
 HIGHLIGHT_SIZE_MAX=262143  # 256KiB
