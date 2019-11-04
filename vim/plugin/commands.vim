@@ -1,9 +1,6 @@
 " Run any command under toggle terminal."
 command -nargs=* -complete=shellcmd T call ahmed#terminal#execute(<q-args>)
 
-" Open documentations for given query."
-command -nargs=* Docs call ahmed#commands#docs#("<args>")
-
 " Start profiling until it's invoked with ! modifier once again."
 command -bang Profile call ahmed#commands#profile#(<bang>v:false)
 
