@@ -58,14 +58,26 @@ let g:ale_virtualtext_cursor = v:true
 " Set virtual text warning prefix."
 let g:ale_virtualtext_prefix = '  '
 
+" Define Linters for 'ALElinters' command."
+let g:ale_linters = {
+      \ 'javascript': 		['eslint'],
+      \ 'javascript.jsx':	['eslint'],
+      \ 'typescript':		['eslint'],
+      \ 'typescript.tsx':	['eslint'],
+      \ 'typescriptreact':	['eslint'],
+      \}
+
 " Define fixers for 'ALEFix' command."
 let g:ale_fixers = {
 	\  '*':				['remove_trailing_lines', 'trim_whitespace'],
 	\ 'html': 			['prettier'],
 	\ 'css': 			['prettier', 'stylelint'],
-	\ 'sass': 			['prettier'],
+	\ 'scss': 			['prettier'],
+	\ 'yaml': 			['prettier'],
 	\ 'javascript': 	['eslint', 'prettier'],
 	\ 'javascript.jsx': ['eslint', 'prettier'],
+	\ 'typescript': 	['prettier'],
+	\ 'typescriptreact':['prettier'],
 	\ 'json': 			['prettier'],
 	\ 'graphql': 		['prettier'],
 	\ 'markdown': 		['prettier'],
