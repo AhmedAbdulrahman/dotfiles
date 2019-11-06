@@ -113,9 +113,9 @@
 
 [color "diff-highlight"]
 	oldNormal = red strike
-	oldHighlight = red 52 strike
+	oldHighlight = red strike 52
 	newNormal = green italic
-	newHighlight = green 22 italic
+	newHighlight = green italic 22
 
 [color "branch"]
 	current = yellow reverse
