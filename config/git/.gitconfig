@@ -104,14 +104,12 @@
 	ui = auto
 
 [color "diff"]
-	meta = yellow bold
-	commit = green bold
-	frag = magenta bold
-	old = red bold
-	new = green bold
+	meta = 238 italic
+	frag = 240
+	old = red strike
+	new = green italic
 	whitespace = red reverse
-	newMoved = cyan
-	oldMoved = blue
+	commit = yellow bold
 
 [color "diff-highlight"]
 	oldNormal = red strike
