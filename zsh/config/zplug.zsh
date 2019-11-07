@@ -25,6 +25,9 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 # Spaceship Prompt
 zplug "denysdovhan/spaceship-prompt", as:theme, use:"spaceship.zsh"
 
+# For installing, updating and loading NVM
+zplug "lukechilds/zsh-nvm"
+
 # Toggle "sudo" before the current/previous command by pressing [ESC][ESC] 
 zplug "hcgraf/zsh-sudo", from:github 
 zplug "zsh-users/zsh-completions", from:github
