@@ -85,3 +85,6 @@
 [submodule "vim/pack/bundle/start/golang"]
 	path = vim/pack/bundle/start/golang
 	url = https://github.com/fatih/vim-go.git
+[submodule "config/ranger/plugins/ranger_devicons"]
+	path = config/ranger/plugins/ranger_devicons
+	url = https://github.com/alexanderjeurissen/ranger_devicons.git
