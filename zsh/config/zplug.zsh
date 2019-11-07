@@ -153,7 +153,7 @@ ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(
     # zplug "$ZDOTDIR/aliases", from:local
 
 # Conditionally Install plugins
-(( $+commands[docker]     )) && zplug "plugins/docker",     from:oh-my-zsh, lazy:yes
+(( $+commands[docker]     )) && zplug "webyneter/docker-aliases", use:docker-aliases.plugin.zsh
 (( $+commands[tmuxinator] )) && zplug "plugins/tmuxinator", from:oh-my-zsh, lazy:yes
 (( $+commands[jq]         )) && zplug "stedolan/jq", as:command, from:gh-r, rename-to:jq
 
