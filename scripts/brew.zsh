@@ -127,6 +127,7 @@ main() {
   brew_install coreutils                        # GNU File Shell and Text utilities
   brew_install findutils
   brew_install curl
+  brew_install httpie
   brew_install wget --with-iri # Install `wget` with IRI support.
   brew_install pinentry-mac
   brew_install gnupg           # Install GnuPG to enable PGP-signing commits.
@@ -169,6 +170,7 @@ main() {
   brew_install htop                           # Improved top (interactive process viewer) for OS X
   brew_install namespace                      # Port scanning utility for large networks
   brew_install ffmpeg --with-libvpx
+  brew_install gifski
   brew_install terminal-notifier
   brew_install exa
   brew_install grep
