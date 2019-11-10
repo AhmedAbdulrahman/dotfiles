@@ -8,18 +8,22 @@
 # get the dir of the current script
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SCRIPT_DIR" || return 1
 
-echo "Create some required folders...\\n"
+echo "\\n → Creating VIM folder in root directory..."
 mkdir -p $HOME/.vim
-mkdir -p $HOME/.config/nvim
+echo "✓ ZSH folder created successfully!\\n"
 
-echo "Copying init.vim file -> ~/.config/nvim \\n"
-cp "$SCRIPT_DIR/init.vim" $HOME/.config/nvim/init.vim
-
-echo "Create COC directory & Symlink extensions \\n"
+echo "→ Creating COC folder inside ~/.config directory..."
 mkdir -p $HOME/.config/coc
-# stow --restow -vv --target="$HOME/.config/coc" --dir=$SCRIPT_DIR coc
-cp -a "$SCRIPT_DIR/snippets/." $HOME/.config/coc/ultisnips/
+echo "✓ ZSH folder created successfully!\\n"
 
-echo "Copying Cache \\n"
+echo "→ Copying COC snippets..."
+cp -a "$SCRIPT_DIR/snippets/." $HOME/.config/coc/ultisnips/
+echo "✓ COC snippets copied successfully!\\n"
+
+echo "→ Creating VIM cache folder..."
 mkdir -p $HOME/.vim/cache
+echo "✓ ZSH folder created successfully!\\n"
+
+echo "→ Copying VIM cache folders..."
 cp -a "$SCRIPT_DIR/cache/." $HOME/.vim/cache/
+echo "✓ VIM cache copied successfully!\\n"

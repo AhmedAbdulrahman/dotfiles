@@ -8,17 +8,22 @@
 # get the dir of the current script
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SCRIPT_DIR" || return 1
 
-echo "→ Creating ~/.config folder..\\n"
+echo "\\n → Creating ~/.config folder in root directory..."
 mkdir -p $HOME/.config
+echo "✓ ~/.config folder created successfully! \\n"
 
-echo "⏳Symlink .gitconfig, .gitconfig.local, .gitignore files"
+echo "→ Symlinking git files..."
 stow --restow -vv --target="$HOME" --dir=$SCRIPT_DIR git
+echo "✓ git files linked successfully! \\n"
 
-echo "⏳Symlink taskwarrior config"
+echo "→ Symlinking taskwarrior files..."
 stow --restow -vv --target="$HOME" --dir=$SCRIPT_DIR taskwarrior
+echo "✓ taskwarrior files linked successfully! \\n"
 
-echo "→ Creating timewarrior folder...\\n"
+echo "→ Creating ~/.timewarrior folder in root directory..."
 mkdir -p $HOME/.timewarrior
+echo "✓ ~/.timewarrior files linked successfully! \\n"
 
-echo "⏳Symlink timewarrior config"
+echo "→ Symlinking ~/.timewarrior files..."
 stow --restow -vv --target="$HOME/.timewarrior" --dir=$SCRIPT_DIR timewarrior
+echo "✓ ~/.timewarrior/timewarrior.cfg files linked successfully! \\n"
