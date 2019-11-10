@@ -7,12 +7,19 @@ SCRIPTS="$(DOTFILES)/scripts"
 INSTALL="$(DOTFILES)/installer.sh"
 file=not_override
 
-link:
-	sh $(DOTFILES)/$(file)/setup.sh
+# This is to symlink all files when All is selected in prompt
+CANDIDATES = $(wildcard config hammerspoon tmux vim zsh)
+EXCLUSIONS := .DS_Store .git .gitmodules .travis.yml
+DIRS   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 
-	@printf "Symlinking files/folders...\\n"
-	/usr/local/bin/stow --restow -vv --ignore ".DS_Store" --target="$(HOME)/.$(file)" --dir="$(DOTFILES)" $(file)
-	
-unlink:
-	@printf "Removing Symlink files/folders...\\n"
-	stow --delete -vv --ignore ".DS_Store" --target="$(HOME)/.$(file)" --dir="$(DOTFILES)" $(file)
+link:
+	@echo "→ Setup Environment Settings"
+
+    ifeq "$(file)" "all"
+		@echo "→ Symlinking $(DIRS) files"
+		@$(foreach val, $(DIRS), sh $(DOTFILES)/$(val)/setup.sh && /usr/local/bin/stow --restow -vv --ignore ".DS_Store" --target="$(HOME)/.$(val)" --dir="$(DOTFILES)" $(val);)
+    else
+		@echo "→ Symlinking $(file) file"
+		sh $(DOTFILES)/$(file)/setup.sh
+		/usr/local/bin/stow --restow -vv --ignore ".DS_Store" --target="$(HOME)/.$(file)" --dir="$(DOTFILES)" $(file)
+    endif
