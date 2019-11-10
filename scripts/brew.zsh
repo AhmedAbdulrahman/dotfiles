@@ -140,8 +140,15 @@ main() {
   brew_install yarn
   brew_install ruby
   brew_install cask java
+  brew_install go
+  brew_install mongodb
+  brew_install mysql
+  brew_install postgresql
+  brew_install redis
 
   # CLI Tools
+  brew_install tmux
+  brew_install neovim
   brew_install tree
   brew_install n                              # Interactively Manage Your Node.js Versions
   brew_install hub                            # an extension to command-line git that helps you do everyday GitHub tasks without ever leaving the terminal.
@@ -220,6 +227,7 @@ main() {
   brew_install cask zoomus
   brew_install cask notion
   brew_install cask transmit
+  brew_install cask dash
   brew_install mas             # A simple command line interface for the Mac App Store
 
   # Quicklook
