@@ -114,7 +114,6 @@ install_global_packages() {
 	"svgo"
 	"overtime-cli"
 	"dependency-cruiser"
-	"neovim"
 	"npkill"
 	"expo-cli"
 	"nodemon"
