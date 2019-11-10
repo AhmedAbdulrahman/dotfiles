@@ -354,42 +354,21 @@ symlink_files() {
     echo "What files you want to Symlink?"
 
     PS3="Enter your choice (must be a number): "
-    files=("ZSH" "VIM" "TMUX" "CONFIG" "HAMMERSPOON" "Quit")
+    files=("All" "ZSH" "VIM" "TMUX" "CONFIG" "HAMMERSPOON" "Quit")
 
     select file in "${files[@]}"; do
       case $file in
-      "ZSH")
-        echo "Symlinking ZSH files"
-        
-        cd "$DOTFILES" && make --ignore-errors link file=zsh
-        break
-        ;;
-      "VIM")
-        echo "Symlinking VIM files"
-        cd "$DOTFILES" && make --ignore-errors link file=vim
-        break
-        ;;
-      "TMUX")
-        echo "Symlinking TMUX files"
-        cd "$DOTFILES" && make --ignore-errors link file=tmux
-        break
-        ;;
-      "CONFIG")
-        echo "Symlinking CONFIG files"
-        cd "$DOTFILES" && make --ignore-errors link file=config
-        break
-        ;;
-      "HAMMERSPOON")
-        echo "Symlinking HAMMERSPOON files"
-        cd "$DOTFILES" && make --ignore-errors link file=hammerspoon
+      All|ZSH|VIM|TMUX|CONFIG|HAMMERSPOON)
+        cd "$DOTFILES" && make --ignore-errors link file="$(echo "$file" | tr '[:upper:]' '[:lower:]')"
         break
         ;;
       "Quit")
+        info "We are done..."
         break
         ;;
       *)
-        echo "Invalid option"
-        break
+        error "Invalid option!"
+        PS3="Enter a valid choice? " # this displays the common prompt
         ;;
       esac
     done
