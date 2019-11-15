@@ -1,0 +1,11 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+
+unalias update-json 2>/dev/null
+
+local f="$1"
+cmp -s "$f" "$f.tmp"
+if [ $? = 0 ] ; then
+    /bin/rm $f.tmp
+else
+    /bin/mv "$f.tmp" "$f"
+fi

@@ -1,0 +1,13 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Remove file with FZF 
+
+# Exit if jq is not installed
+(( $+commands[jq] )) || return 0
+
+unalias format-json 2>/dev/null
+
+for f
+do
+    jq . "$f" > "$f.tmp"
+    update-json "$f"
+done
