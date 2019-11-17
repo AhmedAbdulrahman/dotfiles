@@ -61,10 +61,7 @@ let g:ale_virtualtext_prefix = '  '
 " Define Linters for 'ALElinters' command."
 let g:ale_linters = {
       \ 'javascript': 		['eslint'],
-      \ 'javascript.jsx':	['eslint'],
       \ 'typescript':		['eslint'],
-      \ 'typescript.tsx':	['eslint'],
-      \ 'typescriptreact':	['eslint'],
       \}
 
 " Define fixers for 'ALEFix' command."
