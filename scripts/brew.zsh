@@ -179,7 +179,7 @@ main() {
   brew_install ffmpeg --with-libvpx
   brew_install gifski
   brew_install terminal-notifier
-  brew_install exa
+  brew_install lsd
   brew_install grep
   brew_install testssl
   brew_install exiftool

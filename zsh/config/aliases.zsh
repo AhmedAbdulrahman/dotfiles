@@ -194,12 +194,13 @@ if (($+commands[colorls])); then
 	alias ls="echo; colorls -A --group-directories-first"
 fi
 
-if (( $+commands[exa] )); then
-  alias ll="exa --tree"
+if (( $+commands[lsd] )); then
+  alias ls="lsd "
+  alias ll="lsd --tree --almost-all --group-dirs first "
 elif (( $+commands[tree] )); then
   alias ll="type tree >/dev/null && tree -da -L 1 || l -d .*/ */ "
 else
-  alias ll="echo 'You have to install exa or tree'"
+  alias ll="echo 'You have to install lsd or tree'"
 fi
 
 # Jq

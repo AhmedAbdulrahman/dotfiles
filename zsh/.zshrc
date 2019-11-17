@@ -28,7 +28,7 @@
 
     FZF_DIR_HIGHLIGHTER='ls -l --color=always'
     (( $+commands[tree] )) && FZF_DIR_HIGHLIGHTER='tree -CtrL2'
-    (( $+commands[exa]  )) && FZF_DIR_HIGHLIGHTER='exa --color=always -TL2'
+    (( $+commands[lsd]  )) && FZF_DIR_HIGHLIGHTER='lsd --color=always'
     export FZF_DIR_HIGHLIGHTER
 
     (( $+commands[iconful] )) && FZF_PATH_LOC='2..' || FZF_PATH_LOC=''
@@ -129,7 +129,6 @@
     # ---------------------------------------------
     # Others
     # ---------------------------------------------
-    export EXA_COLORS="uu=38;5;249:un=38;5;241:gu=38;5;245:gn=38;5;241:da=38;5;245:sn=38;5;7:sb=38;5;7:ur=38;5;3;1:uw=38;5;5;1:ux=38;5;1;1:ue=38;5;1;1:gr=38;5;3:gw=38;5;5:gx=38;5;1:tr=38;5;3:tw=38;5;1:tx=38;5;1:di=38;5;12:ex=38;5;7;1:*.md=38;5;229;4:*.png=38;5;208:*.jpg=38;5;208:*.gif=38;5;208"
     export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
     export BAT_CONFIG_PATH="${HOME}/.config/bat/config" # Bat
     # export RIPGREP_CONFIG_PATH="${HOME}/.rgrc"

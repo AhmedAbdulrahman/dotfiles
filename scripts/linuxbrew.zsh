@@ -161,7 +161,7 @@ main() {
   brew install gzip
   brew install terminal-notifier
   brew install jq
-  brew install exa
+  brew install lsd
 
   # corrects your previous console command
   brew install thefuck
