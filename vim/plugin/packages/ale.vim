@@ -38,13 +38,17 @@ let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 
 " The string used for error severity in the echoed message."
-let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_error_str = '[ERROR]'
 
 " The string used for warning severity in the echoed message."
-let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_warning_str = '[WARNING]'
+
+" The string used for INFO severity in the echoed message."
+let g:ale_echo_msg_info_str = '[INFO]'
 
 " Define the form of the echoed message."
-let g:ale_echo_msg_format = ' %linter%: %s (%severity%)'
+let g:ale_echo_msg_format = '%severity% %linter% -> [%code%] -> %s'
+let g:ale_statusline_format = ['E•%d', 'W•%d', 'OK']
 
 " Disable highlighting underline on errors and warnings."
 let g:ale_set_highlights = v:true
@@ -57,6 +61,15 @@ let g:ale_virtualtext_cursor = v:true
 
 " Set virtual text warning prefix."
 let g:ale_virtualtext_prefix = '  '
+
+let g:ale_javascript_prettier_use_local_config = 1
+function! s:PRETTIER_OPTIONS()
+  return '--config-precedence prefer-file --single-quote --no-bracket-spacing --prose-wrap always --trailing-comma all --no-semi --end-of-line  lf --print-width ' . &textwidth
+endfunction
+let g:ale_javascript_prettier_options = <SID>PRETTIER_OPTIONS()
+" Auto update the option when textwidth is dynamically set or changed in a ftplugin file"
+au! OptionSet textwidth let g:ale_javascript_prettier_options = <SID>PRETTIER_OPTIONS()
+
 
 " Define Linters for 'ALElinters' command."
 let g:ale_linters = {
@@ -140,7 +153,6 @@ let g:ale_open_list = v:false
 let g:ale_set_loclist = v:true
 let g:ale_set_quickfix = v:false
 let g:ale_echo_delay = 10
-let g:ale_echo_msg_info_str = 'I'
 let g:ale_use_global_executables = v:null
 let g:ale_virtualenv_dir_names = ['.env', '.venv', 'env', 've-py3', 've', 'virtualenv', 'venv']
 
