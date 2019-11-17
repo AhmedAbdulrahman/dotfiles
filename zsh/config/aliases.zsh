@@ -183,7 +183,7 @@ if (( $+commands[nvim] )) then;
   	# Use `\vim` or `command vim` to get the real vim.
 	alias vim='nvim'
 	alias vv='vim $(fzf)'
-	alias ez="vim ~/.zshrc"
+	alias ez="vim ~/.zsh/.zshrc"
 fi
 
 if (( $+commands[hub] )); then
