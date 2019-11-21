@@ -10,8 +10,9 @@ if !empty(expand($VIM_FZF_LOG))
   let g:fzf_commits_log_options = $VIM_FZF_LOG
 endif
 
+"Override `fzf` options."
 if !empty(expand($FZF_DEFAULT_OPTS))
-  let $FZF_DEFAULT_OPTS .= ' --layout=reverse --margin=1,4'
+  let $FZF_DEFAULT_OPTS .=" --layout=reverse --margin='1,3' --no-inline-info --bold --color='fg+:15,bg+:-1,info:8,prompt:0,pointer:12'"
 endif
 
 " Add prefix 'Fzf' commands for grouping."
