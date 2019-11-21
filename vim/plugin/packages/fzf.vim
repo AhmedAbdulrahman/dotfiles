@@ -66,24 +66,24 @@ endif
 if executable('rg')
     set grepprg=rg\ --vimgrep\ --color=never\ --glob\ '"!*/plugins/*"'
 
-    " Ripgrep and fzf settings"
+	" Ripgrep and fzf settings"
 	command! -bang -nargs=* Rg
 		\ call fzf#vim#grep(
-		\ 'rg --column --line-number --no-heading --glob "!*/dist/*" --glob "!*/plugins/*" -g "!*.sql" -g "!*.min.js" --color=always '.shellescape(<q-args>), 1,
-		\ <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
-  		\           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%', '?'),
+		\ 'rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!*/dist/*" --glob "!.git/*" --glob "!*/plugins/*" -g "!*.sql" -g "!*.min.js" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1,
+		\ <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%', '?')
+		\ 		  : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'down:60%:hidden', '?'),
 		\ <bang>0)
 
 endif
 
 command! -bang -nargs=? -complete=dir GFiles
-	\ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview('right:60%', '?'), <bang>0)
+	\ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview('down:60%', '?'), <bang>0)
 
 command! -bang -nargs=? -complete=dir Files
-	\ call fzf#vim#files(<q-args>, fzf#vim#with_preview('right:60%', '?'), <bang>0)
+	\ call fzf#vim#files(<q-args>, fzf#vim#with_preview('down:60%', '?'), <bang>0)
 
 command! -bang -nargs=* -complete=buffer Buffers
-  	\ call fzf#vim#buffers(<q-args>, fzf#vim#with_preview('right:60%', '?'), <bang>0)
+  	\ call fzf#vim#buffers(<q-args>, fzf#vim#with_preview('down:60%', '?'), <bang>0)
 
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
