@@ -78,17 +78,18 @@ function! ahmed#settings#floating_fzf() abort
 
   let l:opts = {
         \ 'relative': 'editor',
-        \ 'row': 1,
+        \ 'row': 5,
         \ 'col': col,
         \ 'width': width,
-        \ 'height': height
+        \ 'height': height,
+        \ 'style': 'minimal',
         \ }
 
   call nvim_open_win(l:buf, v:true, l:opts)
 endfunction
 
 function! ahmed#settings#fzf_window() abort
-  return ahmed#settings#has_floating_window() ? 'call ahmed#settings#floating_fzf()' : 'enew'
+  return ahmed#settings#has_floating_window() ? 'call ahmed#settings#floating_fzf()' : 'silent 18split enew'
 endfunction
 
 function! ahmed#settings#attempt_select_last_file() abort
