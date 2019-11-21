@@ -135,8 +135,8 @@
     nnoremap <silent> <leader>bb <C-^>
 
     " Go to Next/Previous Buffer"
-    nnoremap <silent> <C-O> :bn<CR>
-    nnoremap <silent> <C-P> :bp<CR>
+    nnoremap <silent> <S-Tab> :bn<CR>
+    nnoremap <silent> <Tab> :bp<CR>
 
     " Close buffer"
     nnoremap <silent> <C-w> :bd<CR>
