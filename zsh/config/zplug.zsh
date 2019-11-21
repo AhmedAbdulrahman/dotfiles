@@ -81,9 +81,10 @@ forgit_add=add
 forgit_reset_head=grh
 forgit_ignore=ignore
 forgit_restore=cof
-forgit_stash_show=stash
+# forgit_stash_show=stash, Create custom stash function
 FORGIT_FZF_DEFAULT_OPTS="
---height '80%'
+--height '90%'
+--preview-window 'down:20:wrap'
 "
 
 # Syntax highlighting for the shell ZSH
