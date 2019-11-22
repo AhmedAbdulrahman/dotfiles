@@ -150,6 +150,7 @@ main() {
   brew_install tmux
   brew_install neovim
   brew_install tree
+  brew_install newsboat                       # an RSS/Atom feed reader for the text console
   brew_install n                              # Interactively Manage Your Node.js Versions
   brew_install hub                            # an extension to command-line git that helps you do everyday GitHub tasks without ever leaving the terminal.
   brew_install fd                             # Alternative to 'find' command
@@ -169,6 +170,7 @@ main() {
   brew_install rename
   brew_install tree
   brew_install ranger                         # A console file manager with VI key bindings.
+  brew_install universal-ctags/universal-ctags/universal-ctags --HEAD
   brew_install zathura
   brew_install zathura-pdf-poppler
   brew_install yq
@@ -254,7 +256,7 @@ main() {
 
   # Remove outdated versions from the cellar
   brew cleanup
-  
+
   # Finish
   on_finish
 }
