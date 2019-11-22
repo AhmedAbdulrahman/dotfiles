@@ -1,4 +1,5 @@
-git
+.gitconfig
+.gitconfig.local
 taskwarrior
 timewarrior
 setup.sh
