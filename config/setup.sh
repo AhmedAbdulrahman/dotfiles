@@ -12,8 +12,9 @@ echo "\\n → Creating ~/.config folder in root directory..."
 mkdir -p $HOME/.config
 echo "✓ ~/.config folder created successfully! \\n"
 
-echo "→ Symlinking git files..."
-stow --restow -vv --target="$HOME" --dir=$SCRIPT_DIR git
+echo "→ Symlinking ~/.gitconfig & ~/.gitconfig.local ..."
+ln -sfnv "$SCRIPT_DIR/.gitconfig"   "$HOME/.gitconfig"
+ln -sfnv "$SCRIPT_DIR/.gitconfig.local"   "$HOME/.gitconfig.local"
 echo "✓ git files linked successfully! \\n"
 
 echo "→ Symlinking taskwarrior files..."
