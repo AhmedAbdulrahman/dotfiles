@@ -23,7 +23,7 @@
     (( $+commands[rougify]   )) && FZF_FILE_HIGHLIGHTER='rougify'
     (( $+commands[coderay]   )) && FZF_FILE_HIGHLIGHTER='coderay'
     (( $+commands[highlight] )) && FZF_FILE_HIGHLIGHTER='highlight -O ansi -l {}'
-    (( $+commands[bat]       )) && FZF_FILE_HIGHLIGHTER='bat --theme="OneHalfDark" --style=numbers,changes --color always {2..-1}'
+    (( $+commands[bat]       )) && FZF_FILE_HIGHLIGHTER='bat --theme="OneHalfDark" --style=numbers,changes --wrap never --color always {}'
     export FZF_FILE_HIGHLIGHTER
 
     FZF_DIR_HIGHLIGHTER='ls -l --color=always'
@@ -53,22 +53,18 @@
     export FZF_ALT_E_COMMAND="${__FZF[ALT_E]} | iconful -f"  # FZF: ALT + E
 
     export FZF_DEFAULT_OPTS="
-    --border
     --height 80%
+    --tabstop 2 
     --extended
     --ansi
     --reverse
     --cycle
-    --bind alt-p:preview-up,alt-n:preview-down
-    --bind ctrl-u:half-page-up
-    --bind ctrl-d:half-page-down
-    --bind alt-a:select-all,ctrl-r:toggle-all
     --bind ctrl-s:toggle-sort
-    --bind ?:toggle-preview,alt-w:toggle-preview-wrap
+    --bind ?:toggle-preview
     --bind \"ctrl-y:execute-silent(ruby -e 'puts ARGV' {+} | pbcopy)+abort\"
     --bind 'alt-e:execute($EDITOR {} >/dev/tty </dev/tty)'
     --preview \"($FZF_FILE_HIGHLIGHTER {} || $FZF_DIR_HIGHLIGHTER {}) 2>/dev/null | head -200\"
-    --preview-window right:50%:hidden
+    --preview-window right:60%
     --color=fg:#d0d0d0,bg:#1e2431,hl:#5f87af
     --color=fg+:#d0d0d0,bg+:#1e2431,hl+:#5fd7ff
     --color=info:#afaf87,prompt:#d7005f,pointer:#7edbca
@@ -81,7 +77,7 @@
     --bind 'enter:execute(echo {$FZF_PATH_LOC})+abort'
     --bind 'alt-e:execute($EDITOR {$FZF_PATH_LOC} >/dev/tty </dev/tty)'
     --bind \"ctrl-y:execute-silent(ruby -e 'puts ARGV' {+$FZF_PATH_LOC} | pbcopy)+abort\"
-    --preview-window right:50%
+    --preview-window right:70%
     --color=fg:#d0d0d0,bg:#1e2431,hl:#5f87af
     --color=fg+:#d0d0d0,bg+:#1e2431,hl+:#5fd7ff
     --color=info:#afaf87,prompt:#d7005f,pointer:#7edbca
@@ -95,19 +91,20 @@
     --header 'Press CTRL-Y to copy command into clipboard'
     --exact
     --expect=ctrl-x
+    --border
     "
     export FZF_ALT_C_OPTS="
     --exit-0
     --bind 'enter:execute(echo {$FZF_PATH_LOC})+abort'
-    --preview '($FZF_DIR_HIGHLIGHTER {$FZF_PATH_LOC}) | head -200 2>/dev/null'
-    --preview-window=right:50%
+    --preview 'tree -C {} 2> /dev/null'
+    --preview-window=right:60%
     "
 
     export FZF_ALT_E_OPTS="
     --preview \"($FZF_FILE_HIGHLIGHTER {$FZF_PATH_LOC} || $FZF_DIR_HIGHLIGHTER {$FZF_PATH_LOC}) 2>/dev/null | head -200\"
     --bind 'alt-e:execute($EDITOR {$FZF_PATH_LOC} >/dev/tty </dev/tty)'
     --bind \"ctrl-y:execute-silent(ruby -e 'puts ARGV' {+$FZF_PATH_LOC} | pbcopy)+abort\"
-    --preview-window right:50%
+    --preview-window=down:60%
     "
 
     # ---------------------------------------------
