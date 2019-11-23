@@ -147,8 +147,8 @@ main() {
   brew_install redis
 
   # CLI Tools
-  brew_install tmux
-  brew_install neovim
+  brew_install tmux --HEAD
+  brew_install neovim --HEAD
   brew_install tree
   brew_install newsboat                       # an RSS/Atom feed reader for the text console
   brew_install n                              # Interactively Manage Your Node.js Versions
