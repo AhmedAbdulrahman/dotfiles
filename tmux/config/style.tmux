@@ -1,6 +1,20 @@
 # ----------------------
+# Colorize Messages
+# ----------------------
+set -g message-style bg=default,fg=brightred #base02
+set -g message-command-style bg=black,fg=blue
+
+# ----------------------
+# Panes
+# ----------------------
+set -g pane-border-style bg=default,fg=colour235
+set -g pane-active-border-style bg=default,fg=colour235
+setw -g pane-border-status top
+setw -g pane-border-format '─'
+
+# ----------------------
 # Status Bar
-# -----------------------
+# ----------------------
 set -g status on
 
 set -g status-interval 5
