@@ -23,3 +23,10 @@ link:
 		sh $(DOTFILES)/$(file)/setup.sh
 		/usr/local/bin/stow --restow -vv --ignore ".DS_Store" --target="$(HOME)/.$(file)" --dir="$(DOTFILES)" $(file)
     endif
+
+bootstrap:
+	$(SCRIPTS)/brew.zsh
+	$(SCRIPTS)/nodejs.zsh
+
+python:
+	$(SCRIPTS)/python-packages.zsh
