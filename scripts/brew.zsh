@@ -102,7 +102,7 @@ main() {
   # Make sure we’re using the latest Homebrew.
   brew update
   # Upgrade any already-installed formulae.
-  brew upgrade --all
+  brew upgrade
 
   brew tap homebrew/cask-fonts
   brew tap homebrew/cask-versions
