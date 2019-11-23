@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# Simple function to get weather data
+#
+# Usage:
+#   $ weather
+#   $ weather <city>
+# Check curl wttr.in/:help for more info
+
+weather () {
+  curl -H "Accept-Language: ${LANG%_*}" wttr.in/"${1:-Stockholm}"?0qm
+}
+
+weather "$@"
