@@ -8,7 +8,7 @@ INSTALL="$(DOTFILES)/installer.sh"
 file=not_override
 
 # This is to symlink all files when All is selected in prompt
-CANDIDATES = $(wildcard config hammerspoon tmux vim zsh)
+CANDIDATES = $(wildcard config hammerspoon tmux vim zsh newsboat)
 EXCLUSIONS := .DS_Store .git .gitmodules .travis.yml
 DIRS   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 
