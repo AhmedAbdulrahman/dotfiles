@@ -73,7 +73,7 @@ function! ahmed#settings#floating_fzf() abort
   call setbufvar(l:buf, '&filetype', 'fzf')
 
   let height = &lines - 3
-  let width = float2nr(&columns - (&columns * 2 / 60))
+  let width = float2nr(&columns - (&columns * 2 / 40))
   let col = float2nr((&columns - width) / 2)
 
   let l:opts = {
