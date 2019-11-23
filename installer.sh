@@ -386,7 +386,7 @@ bootstrap_macOS_apps() {
       return
     fi
 
-    $DOTFILES/scripts/bootstrap.zsh
+    cd "$DOTFILES" && make --ignore-errors bootstrap
   else
     error "You don't  Ahmed's dotfiles $DOTFILES in your machine!"
   fi
