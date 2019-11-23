@@ -65,8 +65,8 @@
     --bind 'alt-e:execute($EDITOR {} >/dev/tty </dev/tty)'
     --preview \"($FZF_FILE_HIGHLIGHTER {} || $FZF_DIR_HIGHLIGHTER {}) 2>/dev/null | head -200\"
     --preview-window right:60%
-    --color=fg:#d0d0d0,bg:#1e2431,hl:#5f87af
-    --color=fg+:#d0d0d0,bg+:#1e2431,hl+:#5fd7ff
+    --color=fg:#d0d0d0,bg:#25262e,hl:#d7005f
+    --color=fg+:#d0d0d0,bg+:#25262e,hl+:#5fd7ff
     --color=info:#afaf87,prompt:#d7005f,pointer:#7edbca
     --color=marker:#ffa7c4,spinner:#ffa7c4
     "
@@ -78,8 +78,9 @@
     --bind 'alt-e:execute($EDITOR {$FZF_PATH_LOC} >/dev/tty </dev/tty)'
     --bind \"ctrl-y:execute-silent(ruby -e 'puts ARGV' {+$FZF_PATH_LOC} | pbcopy)+abort\"
     --preview-window right:70%
-    --color=fg:#d0d0d0,bg:#1e2431,hl:#5f87af
-    --color=fg+:#d0d0d0,bg+:#1e2431,hl+:#5fd7ff
+    --color=bg+:24
+    --color=fg:#d0d0d0,bg:#25262e,hl:#5f87af
+    --color=fg+:#d0d0d0,bg+:#25262e,hl+:#5fd7ff
     --color=info:#afaf87,prompt:#d7005f,pointer:#7edbca
     --color=marker:#ffa7c4,spinner:#ffa7c4
     "
