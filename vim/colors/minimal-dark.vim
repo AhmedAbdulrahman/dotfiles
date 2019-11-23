@@ -5,14 +5,14 @@
 " --------------------------"
 :let _white       = '#ffffff'
 :let _l_white     = '#ebefff'
-:let _d_white     = '#bdbde8'
-:let _gray_light  = '#8383af'
-:let _gray        = '#616181'
-:let _gray_dark   = '#50506b'
-:let _semigray    = "#2a3546"
-:let _lightblack  = '#3a3a58'
-:let _semiblack   = '#222736'
-:let _black       = '#1f2430'
+:let _d_white     = '#c8c8db'
+:let _gray_light  = '#74778c'
+:let _gray        = '#606375'
+:let _gray_dark   = '#535560'
+:let _semigray    = "#42444b"
+:let _lightblack  = '#383b47'
+:let _semiblack   = '#2d2f37'
+:let _black       = '#24262e'
 
 :let _aubergine   = '#e18fb5'
 :let _marzipan    = '#ecc48d'
