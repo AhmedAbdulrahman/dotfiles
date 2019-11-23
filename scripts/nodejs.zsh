@@ -39,6 +39,9 @@ finish() {
 }
 
 on_start() {
+  if [[ $(uname) != 'Darwin' ]]; then
+    exit 1
+  fi
 
   info  "   _   _           _           _  _____  "
   error "  | \ | |         | |         | |/ ____| "
@@ -59,6 +62,15 @@ on_start() {
 
 }
 
+install_node() {
+  info "Installing Node.js..."
+
+  if [[ "$(uname)" == 'Darwin' ]]; then
+    brew install node
+  fi
+
+  finish
+}
 
 configure_npm_init() {
   # Ask required parameters
@@ -137,6 +149,7 @@ on_error() {
 
 main() {
   on_start "$*"
+  install_node "$*"
   configure_npm_init "$*"
   fix_npm_perm "$*"
   install_global_packages "$*"
