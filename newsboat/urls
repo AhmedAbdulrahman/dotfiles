@@ -1,0 +1,207 @@
+# vim:ft=config foldmethod=marker tw=0 spell:
+
+# Queries {{{
+  "query:→ Unread Articles:unread = \"yes\""
+  "query:→ Bookmarked Articles:flags # \"s\"" "Starred"
+  "query:→ Podcasts:tags # \"Podcasts\"" "Podcasts"
+  "query:→ YouTube:tags # \"YouTube\"" "YouTube"
+  "query:→ Twitch:tags # \"Twitch\"" "Twitch"
+  "query:→ Blogs:tags # \"Blog\"" "Blog"
+  "query:→ Browsers:tags # \"Browsers\"" "Browsers"
+  "query:→ Comics:tags # \"Comics\"" "Comics"
+  "query:→ CSS:tags # \"CSS\"" "CSS"
+  "query:→ Design:tags # \"Design\"" "Design"
+  "query:→ Engineering:tags # \"Engineering\"" "Engineering"
+  "query:→ Friends:tags # \"Friends\"" "Friends"
+  "query:→ Github:tags # \"Github\"" "Github"
+  "query:→ HTML:tags # \"HTML\"" "HTML"
+  "query:→ JavaScript:tags # \"JavaScript\"" "JavaScript"
+  # "query:→ Clojure:tags # \"Clojure\" and \"ClojureScript\"" "Clojure"
+  "query:→ Clojure:tags # \"Clojure\"" "Clojure"
+  "query:→ logo:tags # \"logo\"" "logo"
+  "query:→ Mobile:tags # \"Mobile\"" "Mobile"
+  "query:→ Must:tags # \"Must\"" "Must"
+  "query:→ node.js:tags # \"node.js\"" "node"
+  "query:→ Performance:tags # \"Performance\"" "Performance"
+  "query:→ Python:tags # \"Python\"" "Python"
+  "query:→ Typography:tags # \"Typography\"" "Typography"
+  "query:→ UI:tags # \"UI\"" "UI"
+  "query:→ Unix:tags # \"Unix\"" "Unix"
+  "query:→ Usability:tags # \"Usability\"" "Usability"
+  "query:→ xmas:tags # \"xmas\"" "xmas"
+  "query:→ Football:tags # \"football\"" "football"
+# }}}
+
+# Blog {{{
+  http://feeds.feedburner.com/GoMakeThings "Blog"
+  https://adamwathan.me/rss/index.xml "Blogs" "CSS" "JavaScript"
+# }}}
+
+# Browsers {{{
+  http://hacks.mozilla.org/feed/ "Browsers"
+  https://developer.microsoft.com/en-us/microsoft-edge/platform/changelog/rss/ "Browsers" "Edge"
+  http://www.chromestatus.com/features.xml "Browsers" "Chrome"
+  http://googlechromereleases.blogspot.com/atom.xml "Browsers" "Chrome"
+  http://blog.chromium.org/feeds/posts/default "Browsers" "Chromium"
+  https://webkit.org/feed/ "Browsers" "Safari"
+# }}}
+
+# Comics {{{
+  http://xkcd.com/rss.xml "Comics"
+# }}}
+
+# CSS {{{
+  http://feeds.feedburner.com/csswizardry "CSS"
+  http://iamvdo.me/en/rss "CSS"
+  http://meyerweb.com/eric/thoughts/rss2/full "CSS"
+  http://nicolasgallagher.com/feed/ "CSS"
+  http://simurai.com/rss "CSS"
+  http://snook.ca/jonathan/index.rdf "CSS"
+  http://www.stubbornella.org/content/feed/ "CSS"
+  http://www.thecssninja.com/feed "CSS"
+  http://www.useragentman.com/blog/feed/ "CSS"
+  http://www.xanthir.com/blog/atom/ "CSS"
+# }}}
+
+# Design {{{
+  http://blog.capwatkins.com/feed "Design"
+  http://feeds2.feedburner.com/retinart/ "Design"
+  http://tylergaw.com/rss.xml "Design"
+  http://tobiasahlin.com/feed/ "Design"
+# }}}
+
+# Engineering {{{
+  http://blog.xebia.com/feed/ "Engineering"
+  http://devblog.coolblue.nl/feed/ "Engineering"
+  http://engineroom.ft.com/feed/ "Engineering"
+  http://feeds.cognitect.com/blog/feed.rss "Engineering"
+  http://techblog.netflix.com/feeds/posts/default "Engineering"
+  https://medium.com/feed/@Pinterest_Engineering "Engineering"
+  https://blog.twitter.com/api/blog.rss?name=engineering "~twitter Engineering" "Engineering"
+  https://deliveroo.engineering/feed.xml "Engineering"
+  https://artsy.github.io/feed "Engineering"
+  https://tech.wayfair.com/feed/ "Engineering"
+# }}}
+
+# Misc. {{{
+  http://stratechery.com/feed/ "Tech" "News" "Analysis"
+# }}}
+
+
+# JavaScript {{{
+  http://blog.npmjs.org/rss "JavaScript"
+  http://blog.pamelafox.org/feeds/posts/default "JavaScript"
+  http://feeds.feedburner.com/jlongster "JavaScript"
+  http://feeds.feedburner.com/remysharp "JavaScript"
+  http://feeds.nczonline.net/blog/ "JavaScript"
+  http://jsforallof.us/feed.xml "JavaScript"
+  http://paulirish.com/feed/ "JavaScript"
+  http://perfectionkills.com/feed.xml "JavaScript"
+  http://raganwald.com/atom.xml "JavaScript"
+  http://www.phpied.com/feed/ "JavaScript"
+  https://glebbahmutov.com/blog/atom.xml "JavaScript"
+  https://www.webreflection.co.uk/blog/feed.atom "JavaScript"
+  http://jasonformat.com/rss/ "~Jason Miller @_developit (Preact)" "JavaScript"
+# }}}
+
+# logo {{{
+  http://feeds.feedburner.com/IdentityDesigned "logo"
+# }}}
+
+# Mobile {{{
+  http://www.cloudfour.com/feed/ "Mobile"
+  http://mobiforge.com/rss.xml "Mobile"
+# }}}
+
+# node.js {{{
+  http://blog.nodejs.org/feed/ "node.js"
+# }}}
+
+# Performance {{{
+  http://feeds.igvita.com/igvita "Performance"
+  https://speedcurve.com/blog/rss/ "Performance"
+  http://wpostats.com/feed.xml "Performance"
+# }}}
+
+# Python {{{
+  http://jpadilla.com/rss "Python"
+  http://lucumr.pocoo.org/feed.atom "Python" "Programming" "Rust" "Blog"
+  http://nedbatchelder.com/blog/rss.xml "Python"
+  http://wyattbaldwin.com/feed/ "Python"
+  http://jhamrick.mit.edu/feed/ "Python"
+  http://feeds.feedblitz.com/hackersgonnahack "Python"
+# }}}
+
+# Tech {{{
+  http://randsinrepose.com/feed/ "Tech"
+  https://code.facebook.com/posts/rss "Tech"
+  http://martinfowler.com/feed.atom "Tech"
+  http://swannodette.github.com/atom.xml "Tech"
+# }}}
+
+# Typography {{{
+  http://www.khaledhosny.org/node/feed "Typography"
+  http://blog.typekit.com/feed/ "Typography"
+  https://www.fsd.it/feed/ "Typography"
+# }}}
+
+# UI {{{
+  http://www.minimallyminimal.com/blog/rss.xml "UI"
+  http://ignorethecode.net/blog/rss/ "UI"
+  http://bjango.com/rss/articles.xml "UI"
+  http://mrmrs.github.io/writing/feed.xml "UI" "CSS" "Front-end"
+# }}}
+
+# Unix {{{
+  http://blog.sanctum.geek.nz/feed/ "Unix"
+  https://michaelheap.com/category/unix-toolbox/feed/ "Unix"
+# }}}
+
+# usability {{{
+  http://feeds.feedburner.com/baymard "usability"
+# }}}
+
+# UX {{{
+  http://feeds2.feedburner.com/konigi "UX"
+  http://www.paciellogroup.com/blog/?feed=rss2 "UX"
+  https://www.cennydd.com/writing?format=RSS "UX"
+  http://feeds.feedburner.com/FunctioningForm "UX"
+  https://www.justinobeirne.com/rss?format=rss "UX"
+  https://grumpy.website/feed.xml "UX"
+# }}}
+
+# Podcasts {{{
+  https://rss.simplecast.com/podcasts/4151/rss "Podcasts"
+# }}}
+
+# YouTube {{{
+  https://www.youtube.com/feeds/videos.xml?user=destinws2 "YouTube"
+  https://www.youtube.com/feeds/videos.xml?user=99baddawg "YouTube" "JavaScript" "Programming" "Tooling"
+  https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA "YouTube" "CLI"
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCO1cgjhGzsSYb1rsB4bFe4Q "YouTube" "JavaScript" "Programming"
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCRtiU-lpcBSi-ipFKyfIkug "YouTube" # Bayyinah Institute
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCKjVLbSDoM-8-eEM7A30igA "YouTube" # Brian Lonsdorf
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCGp4u0WHLsK8OAxnvwiTyhA "YouTube" # British Pathé
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCXpmUxvG37qpckRHdkstf5w "YouTube" # chantastic
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCF6F8LdCSWlRwQm_hfA2bcQ "YouTube" # Coding Math
+  https://www.youtube.com/feeds/videos.xml?channel_id=UC5kNJl1oZjnGjc6V9xChszA "YouTube" # Functional Cave
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCnUYZLuoy1rq1aVMwx4aTzw "YouTube" # Google Chrome Developers
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCXPHFM88IlFn68OmLwtPmZA "YouTube" # Greg Hurrell
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCUgxpaK7ySR-z6AXA5-uDuw "YouTube" # Haskell at Work
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCZ_EWaQZCZuGGfnuqUoHujw "YouTube" # Hello Rust!
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCkQX1tChV7Z7l1LFF4L9j_g "YouTube" # InfoQ
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCEUONva3AYwX1k2fWhYXw7g "YouTube" # innovati
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCYNHDPTYc6jeZCnF0KjJxLw "YouTube" # Jared Forsyth
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCnty0z0pNRDgnuoirYXnC5A "YouTube" # Jason Lengstorf
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCyTrGwFxpkFRGMOmxmI0dwQ "YouTube" # Justin Jackson
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCz-BYvuntVRt_VpfR6FKXJw "YouTube" # Kent C. Dodds
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCW6TXMZ5Pq6yL6_k5NZ2e0Q "YouTube" # Socratica
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCEbYhDd6c6vngsF5PQpFVWg "YouTube" "CLI" "Haskell" # Tsoding
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCHnyfMqiRRG1u-2MsSQLbXA "YouTube" # Veritasium
+  https://www.youtube.com/feeds/videos.xml?channel_id=UC6nSFpj9HTCZ5t-N3Rm3-HA "YouTube" # Vsauce
+  https://www.youtube.com/feeds/videos.xml?channel_id=UC806fwFWpiLQV5y-qifzHnA "YouTube" # William Candillon
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg "YouTube" "CLI" "Terminal" "Unix" # DistroTube
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCRPMAqdtSgd0Ipeef7iFsKw "YouTube" "Algorithms" "Data Structure" "System Design" # Gaurav Sen
+  https://www.youtube.com/feeds/videos.xml?channel_id=UC-RKpEc4eE9PwJaupN91xYQ "YouTube" # Sprouts
+  https://www.youtube.com/feeds/videos.xml?channel_id=UCHqC8N7FMMRRNIo-hUNtiQA "YouTube" "FP" "Haskell" # Brian McKenna
+# }}}
