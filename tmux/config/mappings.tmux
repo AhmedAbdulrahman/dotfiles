@@ -17,12 +17,6 @@ bind-key r \
 	source-file ~/.tmux.conf \; \
 	display-message ' (!) ~/.tmux.conf reloaded.'
 
-# Vim style pane selection
-bind-key h select-pane -L
-bind-key j select-pane -D
-bind-key k select-pane -U
-bind-key l select-pane -R
-
 # Use Alt-Vim keys without prefix key to switch panes 
 bind-key -n M-h select-pane -L
 bind-key -n M-j select-pane -D
@@ -30,47 +24,33 @@ bind-key -n M-k select-pane -U
 bind-key -n M-l select-pane -R
 
 # Switch windows.
-bind-key -n M-p select-window -t :- # Previous window.
-bind-key -n M-n select-window -t :+ # Next window.
+bind-key -n S-Right next-window
+bind-key -n S-Left previous-window
 
-# Toggle zoom.
-bind-key -n M-z resize-pane -Z
-
-# Split pane with same directory.
-unbind-key '"'
-unbind-key %
-bind-key - split-window -v -c '#{pane_current_path}'
-bind-key \ split-window -h -c '#{pane_current_path}'
-bind-key _ split-window -fv -c '#{pane_current_path}' # Full width.
-bind-key | split-window -fh -c '#{pane_current_path}' # Full height.
-# Or use vim-like keys for splits and windows
+# Use vim-like keys for splits and windows
 bind-key v split-window -h -c "#{pane_current_path}"
 bind-key s split-window -v -c "#{pane_current_path}"
 
 # Resize panes.
-unbind-key C-Up
-unbind-key C-Down
-unbind-key C-Left
-unbind-key C-Right
-bind-key -n M-H resize-pane -L 2
-bind-key -n M-J resize-pane -D 1
-bind-key -n M-K resize-pane -U 1
-bind-key -n M-L resize-pane -R 2
+unbind-key Left
+unbind-key Right
+unbind-key Down
+unbind-key Up
+bind-key -r Left resize-pane -L 10
+bind-key -r Right resize-pane -R 10
+bind-key -r Down resize-pane -D 10
+bind-key -r Up resize-pane -U 10
+
+# Toggle pane full screen
+bind-key Z resize-pane -Z
+# Toggle zoom.
+bind-key -n M-z resize-pane -Z
 
 # Vim-like key bindings for pane navigation (default uses cursor keys)
 bind-key -n M-Left select-pane -L
 bind-key -n M-Right select-pane -R
 bind-key -n M-Up select-pane -U
 bind-key -n M-Down select-pane -D
-
-# Toggle pane full screen
-bind-key Z resize-pane -Z
-
-# Move panes.
-unbind-key {
-unbind-key }
-bind-key -r H swap-pane -U
-bind-key -r L swap-pane -D
 
 # Kill panes without prompt.
 bind-key X kill-pane
@@ -79,9 +59,6 @@ bind-key X kill-pane
 # right. No need to use the modifier (C-b).
 bind-key -n C-S-Left swap-window -t -1
 bind-key -n C-S-Right swap-window -t +1
-
-bind-key -n S-Right next-window
-bind-key -n S-Left previous-window
 
 # Kill windows without prompt.
 unbind-key &
@@ -117,17 +94,10 @@ bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pb
 # running
 bind-key * command-prompt -p 'save history to filename:' -I '~/tmux.history' 'capture-pane -S -32768 ; save-buffer %1 ; delete-buffer'
 
-# # Copy
-# bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'clipboard' # Copy to system clipboard.
-# bind-key -T copy-mode-vi Y send-keys -X copy-pipe-and-cancel 'clipboard; tmux paste-buffer -s ""' # Copy and paste immediately to shell prompt.
-# bind-key -T copy-mode-vi Escape send -X cancel
-# bind-key -T copy-mode-vi L      send -X end-of-line
-# bind-key -T copy-mode-vi H      send -X start-of-line
-# # Paste
-# unbind-key ]
-# bind-key p paste-buffer -s '' # Paste without CR feed.
-# unbind-key =
-# bind-key P choose-buffer "paste-buffer -b '%%' -s ''"
+# Buffers
+bind b list-buffers  # list paste buffers
+bind p paste-buffer  # paste from the top paste buffer
+bind P choose-buffer -Z # choose which buffer to paste from
 
 # Search
 bind-key -T copy-mode-vi / command-prompt -i -p '/' 'send-keys -X search-forward-incremental "%%%"'
@@ -150,10 +120,3 @@ bind-key -T copy-mode-vi J \
 	send-keys -X cursor-down \; \
 	send-keys -X cursor-down \; \
 	send-keys -X cursor-down \;
-
-# ----------------------
-# set some pretty colors
-# ----------------------
-# colorize messages in the command line
-set -g message-style bg=default,fg=brightred #base02
-set -g message-command-style bg=black,fg=blue
