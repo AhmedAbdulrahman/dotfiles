@@ -46,11 +46,11 @@ cdpath=(
 
 # Set the list of directories that Zsh searches for programs.
 path=(
-  ./bin(N-/)
   ./node_modules/.bin
-  ${ZDOTDIR:-$HOME}/bin(N-/)
+  ${DOTFILES}/extras/bin(N-/)
+  ${ZDOTDIR}/bin(N-/)
   ${HOME}/.bin/local(N-/)
-  ${HOME}/.bin(N-/)
+  ${HOME}/.local/bin(N-/)
   ${HOME}/.cargo/bin(N-/)
   ${HOMEBREW_PREFIX}/opt/python/libexec/bin(N-/)
   ${HOMEBREW_PREFIX}/{bin,sbin}(N-/)
