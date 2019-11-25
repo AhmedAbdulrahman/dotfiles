@@ -32,6 +32,63 @@ let g:coc_global_extensions = [
   \ 'coc-highlight'
 \ ]
 
+" Language servers Config."
+let s:LSP_CONFIG = [
+	\ ['flow', {
+	\   'command': exepath('flow'),
+	\   'args': ['lsp'],
+	\   'filetypes': ['javascript', 'javascript.jsx'],
+	\   'initializationOptions': {},
+	\   'requireRootPattern': 1,
+	\   'settings': {},
+	\   'rootPatterns': ['.flowconfig']
+	\ }],
+	\ ['ocaml', {
+	\   'command': exepath('ocaml-language-server'),
+	\   'args': ['--stdio'],
+	\   'filetypes': ['ocaml', 'reason']
+	\ }],
+	\ ['bash', {
+	\   'command': exepath('bash-language-server'),
+	\   'args': ['start'],
+	\   'filetypes': ['sh', 'bash'],
+	\   'ignoredRootPaths': ['~']
+	\ }],
+	\ ['docker', {
+	\   'command': exepath('docker-langserver'),
+	\   'args': ['--stdio'],
+	\   'filetypes': ['Dockerfile', 'dockerfile']
+	\ }],
+	\ ['golang', {
+	\   'command': exepath('gopls'),
+	\   'rootPatterns': ['go.mod', '.vim/', '.git/', '.hg/'],
+	\   'filetypes': ['go'],
+	\   'initializationOptions': {
+	\     'usePlaceholders': 1
+	\   }
+	\  }],
+	\ ['haskell', {
+	\    'command': exepath('hie-wrapper'),
+	\    'filetypes': ['hs', 'lhs', 'haskell'],
+	\    'rootPatterns': ['stack.yaml', 'cabal.config', 'package.yaml'],
+	\    'settings': {
+	\      'languageServerHaskell': {
+	\        'hlintOn': empty(exepath('hlint')) ? 1 : 0,
+	\      }
+	\    }
+	\  }],
+	\ ['elm', {
+	\    'command': exepath('elm-language-server'),
+	\    'filetypes': ['elm'],
+	\    'rootPatterns': ['elm.json'],
+	\    'initializationOptions': { 'elmAnalyseTrigger': 'change' },
+	\  }],
+\]
+
+let g:coc_filetype_map = {
+	\ 'html.twig': 'html',
+\ }
+
 " User configuration "
 let g:coc_user_config = {
 	\ 'suggest': {
@@ -171,7 +228,6 @@ let g:coc_user_config = {
 			\ 'filetypes': ['gitcommit', 'markdown.ghpull'],
 		\ },
 	\ },
-	\ 'languageserver': {},
 	\ 'snippets': {
 		\ 'priority': 200,
 		\ 'shortcut': 'S',
@@ -184,18 +240,31 @@ let g:coc_user_config = {
 		\ 'document.enable': v:true,
 		\ 'colors.enable': v:true
 	\ },
-  \ 'emmet': {
+	\  'python': {
+		\ 'jediEnabled': 0,
+		\ 'linting': { 'pylintUseMinimalCheckers': 0 },
+	\ },
+	\ 'emmet': {
 		\ 'includeLanguages': { 'javascript': 'javascriptreact' },
 	\ },
-	\ 'golang': {
-		\ 'command': exepath('gopls'),
-		\ 'rootPatterns': ['go.mod', '.vim/', '.git/', '.hg/'],
-		\ 'filetypes': ['go'],
-		\ 'initializationOptions': {
-		\ 	'usePlaceholders': 1,
-		\  },
+	\ 'rust': {
+		\ 'clippy_preference': 'on',
 	\ },
 \ }
+
+let s:languageservers = {}
+for [lsp, config] in s:LSP_CONFIG
+  " COC chokes on emptykcommands https://github.com/neoclide/coc.nvim/issues/418#issuecomment-462106680"
+  let s:not_empty_cmd = !empty(get(config, 'command'))
+  if s:not_empty_cmd | let s:languageservers[lsp] = config | endif
+
+  " Disable tsserver when flow is loaded"
+  if lsp ==# 'flow' && s:not_empty_cmd | call coc#config('tsserver', { 'enableJavascript': 0 }) | endif
+endfor
+
+if !empty(s:languageservers)
+  call coc#config('languageserver', s:languageservers)
+endif
 
 " Go to definition of word under cursor "
 nmap <silent> <Leader>dd <Plug>(coc-definition) 
