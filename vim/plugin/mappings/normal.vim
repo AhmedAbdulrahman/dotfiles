@@ -165,10 +165,15 @@
     nnoremap <leader>l <C-w>l
 
     " Toggle terminal buffer."
-    au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-    nnoremap <silent> <leader>tt :call ahmed#mappings#normal#terminal#()<Enter>
-    nnoremap <silent> <leader>tv :vnew<CR>:call ahmed#mappings#normal#terminal#()<Enter>
+    " - Toggle terminal buffer in Terminal Mode"
+    tnoremap <silent> <C-z> <C-\><C-n>:call ahmed#mappings#normal#terminal#()<Enter> 
+    "- Toggle terminal buffer in Normal Mode"
+    nnoremap <silsent> <C-z> :call ahmed#mappings#normal#terminal#()<Enter> 
+    " - Open SHELL in Vertical Split"
+    nnoremap <silent> <leader>tv :vnew<CR>:call ahmed#mappings#normal#terminal#()<Enter> 
+    "- Open SHELL in Horizontal Split"
     nnoremap <silent> <leader>th :new<CR>:call ahmed#mappings#normal#terminal#()<Enter>
+    "- Quite SHELL"
     tnoremap <C-x> <C-\><C-n><C-w>q
 
     " Toggle zoom current buffer in the new tab."
