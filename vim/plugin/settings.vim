@@ -206,36 +206,36 @@ endif
 
 if has('nvim')
   " dark0 + gray"
-  let g:terminal_color_0 = '#282828'
-  let g:terminal_color_8 = '#928374'
+  let g:terminal_color_0 = '#555863'
+  let g:terminal_color_8 = '#81848b'
 
   " neurtral_red + bright_red"
-  let g:terminal_color_1 = '#cc241d'
-  let g:terminal_color_9 = '#fb4934'
+  let g:terminal_color_1 = '#d0476a'
+  let g:terminal_color_9 = '#f55780'
 
   " neutral_green + bright_green"
-  let g:terminal_color_2 = '#98971a'
-  let g:terminal_color_10 = '#b8bb26'
+  let g:terminal_color_2 = '#52b994'
+  let g:terminal_color_10 = '#61dbaf'
 
   " neutral_yellow + bright_yellow"
-  let g:terminal_color_3 = '#d79921'
-  let g:terminal_color_11 = '#fabd2f'
+  let g:terminal_color_3 = '#d6b168'
+  let g:terminal_color_11 = '#ffcc66'
 
   " neutral_blue + bright_blue"
-  let g:terminal_color_4 = '#458588'
-  let g:terminal_color_12 = '#83a598'
+  let g:terminal_color_4 = '#6788cb'
+  let g:terminal_color_12 = '#82abff'
 
   " neutral_purple + bright_purple"
-  let g:terminal_color_5 = '#b16286'
-  let g:terminal_color_13 = '#d3869b'
+  let g:terminal_color_5 = '#cf869e'
+  let g:terminal_color_13 = '#ffa7c4'
 
   " neutral_aqua + faded_aqua"
-  let g:terminal_color_6 = '#689d6a'
-  let g:terminal_color_14 = '#8ec07c'
+  let g:terminal_color_6 = '#68b6a7'
+  let g:terminal_color_14 = '#7edbca'
 
   " light4 + light1"
-  let g:terminal_color_7 = '#a89984'
-  let g:terminal_color_15 = '#ebdbb2'
+  let g:terminal_color_7 = '#c5c8c6'
+  let g:terminal_color_15 = '#dddddd'
 endif
 
 if has('mksession')
