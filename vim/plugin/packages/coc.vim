@@ -9,6 +9,9 @@ let g:coc_auto_copen = v:false
 
 let g:coc_node_path=exepath('node')
 
+let g:coc_snippet_next='<c-j>'
+let g:coc_snippet_prev='<c-k>'
+
 " List of extensions."
 let g:coc_global_extensions = [
   \ 'coc-css',
