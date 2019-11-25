@@ -28,7 +28,6 @@ set breakindent " Wrapped lines will be indented with same amount of space. "
 set clipboard=unnamedplus " Sync unnamed register with system clipboard. "
 set comments= " Clear default 'comments' value, let the filetype handle it."
 
-set shell=zsh " Set ZSH as the prompt for Vim"
 set confirm " Seek for confirmation for certain commands instead of giving errors. "
 set display=lastline " As much as possible of the last line in a window will be displayed. "
 set keywordprg= " Disable definition search by default. "
@@ -177,23 +176,7 @@ endif
 " Neovim "
 if has('nvim')
 	set inccommand=nosplit " Show live substitution results as you type."
-	set fillchars+=eob:\  " Hide end of buffer tilde symbols."
 	set display+=msgsep " Only scroll lines on command line pager, not the entire screen."
-	"set wildoptions+=pum" " Display the completion matches using the popupmenu."
-
-  " For neovim terminal :term"
-  " nnoremap <leader>t  :vsplit +terminal<cr>"
-  tnoremap <expr> <esc> &filetype == 'fzf' ? "\<esc>" : "\<c-\>\<c-n>"
-  tnoremap <M-h> <c-\><c-n><c-w>h
-  tnoremap <M-j> <c-\><c-n><c-w>j
-  tnoremap <M-k> <c-\><c-n><c-w>k
-  tnoremap <M-l> <c-\><c-n><c-w>l
-  augroup MyTerm
-    autocmd!
-    autocmd TermOpen * setl nonumber norelativenumber
-    autocmd TermOpen term://* startinsert
-    autocmd TermClose term://* stopinsert
-  augroup END
 endif
 
 if has('gui_running')
