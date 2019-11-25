@@ -256,7 +256,9 @@ if has('nvim')
 endif
 
 if has('mksession')
-  let &viewdir=$VIMHOME.'/cache/view' " override ~/.vim/view default "
+  if !has('nvim')
+    let &viewdir=$XDG_DATA_HOME.'/nvim/view' " override ~/.vim/view default"
+  endif
   set viewoptions=cursor,folds        " save/restore just these (with `:{mk,load}view`)"
 endif
 
@@ -265,7 +267,9 @@ if exists('$SUDO_USER')
   set nobackup                        " Don't create root-owned files "
   set nowritebackup                   " Don't create root-owned files "
 else
-  let &backupdir=$VIMHOME.'/cache/backup//' " Keep undo files out of the way "
+  if !has('nvim')
+    let &backupdir=$XDG_DATA_HOME.'/nvim/backup' " keep backup files out of the way"
+  endif
   set backupdir+=.
 endif
 
@@ -273,7 +277,9 @@ endif
 if exists('$SUDO_USER')
   set noswapfile                      " Don't create root-owned files "
 else
-  let &directory=$VIMHOME.'/cache/swap//' " Keep swap files out of the way "
+  if !has('nvim')
+    let &directory=$XDG_DATA_HOME.'/nvim/swap//' " keep swap files out of the way"
+  endif
   set directory+=.
 endif
 
@@ -283,7 +289,9 @@ if has('persistent_undo')
   if exists('$SUDO_USER')
     set noundofile                    " Don't create root-owned files "
   else
-    let &undodir=$VIMHOME.'/cache/undo/' " Keep undo files out of the way"
+    if !has('nvim')
+      let &undodir=$XDG_DATA_HOME.'/nvim/undo/' " keep undo files out of the way"
+    endif
     set undodir+=.
     set undofile                      " Actually use undo files when exiting a buffer "
   endif
@@ -298,12 +306,12 @@ if exists('$SUDO_USER')               " Don't create root-owned files "
 else
   if has('nvim')
     " default in nvim: !,'100,<50,s10,h "
-    execute "set shada=!,'100,<500,:10000,/10000,s10,h,n".$VIMHOME.'/cache/main.shada'
+    set shada=!,'100,<500,:10000,/10000,s10,h
     augroup MyNeovimShada
       autocmd!
       autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
     augroup END
   else
-    execute "set viminfo=!,'100,<500,:10000,/10000,s10,h,n".$VIMHOME.'/cache/viminfo'
+    execute "set viminfo=!,'100,<500,:10000,/10000,s10,h,n".$XDG_DATA_HOME.'/nvim/viminfo'
   endif
 endif
