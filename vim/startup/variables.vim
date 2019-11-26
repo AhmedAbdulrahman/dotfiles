@@ -1,7 +1,3 @@
-" Yep - the space bar is my leader keyset 👀" 
-let g:mapleader = "\<Space>"
-let g:maplocalleader = '\'
-
 " Set internal g:clipboard to save some startup time." 
 if has('mac') && executable('pbpaste')
 	let g:clipboard = {
