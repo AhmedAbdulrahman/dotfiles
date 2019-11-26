@@ -83,6 +83,9 @@ if has('linebreak')
   let &showbreak='↳  '                " DOWNWARDS ARROW WITH TIP RIGHTWARDS"
 endif
 
+" Make tilde command behave like an operator."
+set tildeop
+
 set relativenumber " Show relative line numbers alongside numbers. "
 
 " Always draw the sign column even there is no sign in it. "
