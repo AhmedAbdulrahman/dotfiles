@@ -144,6 +144,14 @@ if has('nvim-0.4')
   set pumheight=50 " Maximum number of items to show in the popup menu for Insert mode completion."
 endif
 
+if has('syntax')
+  set spellcapcheck=                  " Don't check for capital letters at start of sentence"
+  " https://robots.thoughtbot.com/opt-in-project-specific-vim-spell-checking-and-word-completion"
+  set spelllang=en,nl
+  set spellsuggest=30
+  let &spellfile=$VIMHOME.'/spell/en.utf-8.add'
+endif
+
 " Indentation "
 set tabstop=4 " Spaces per tab. "
 set shiftwidth=2 " Number of spaces to use for each step of auto indent operators. (when shifting) "
