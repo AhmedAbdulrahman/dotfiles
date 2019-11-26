@@ -12,6 +12,8 @@ let g:loaded_getscriptPlugin = v:true
 let g:loaded_logipat = v:true
 let g:loaded_tutor_mode_plugin = v:true
 let g:loaded_matchit = v:true
+" Skip loading menu.vim, saves ~100ms"
+let g:did_install_default_menus = v:true
 
 " Disable navigate tab page mappings."
 nnoremap gt <Nop>
