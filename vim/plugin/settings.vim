@@ -2,8 +2,8 @@
 set encoding=UTF-8 " Default encoding. (vim-only) "
 scriptencoding UTF-8 " Default encoding for current script. "
 set fileformats=unix " Only use Unix end-of-line format. "
-
-let $VIMHOME = expand($HOME.'/.vim')
+set fileencoding=utf-8 " Default file encoding set to utf-8"
+set termencoding=utf-8 " Default terminal encoding set to utf-8"
 
 " Change to English version"
 let $LANG = 'en_US'
