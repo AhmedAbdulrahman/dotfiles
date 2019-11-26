@@ -39,7 +39,6 @@ set noshowmatch " When a bracket is inserted, do not jump to the matching one. "
 set nostartofline " Prevent the cursor from changing the current column when jumping. "
 set nowrap " Prevent wrapping for long lines. "
 set nrformats=bin,hex " Only accept binary and hexadecimal numbers. "
-set pumheight=10 " Maximum number of items to show in the pop-up menu for completion. "
 set regexpengine=1 " Use old regular expression engine. "
 set report=0 " Threshold for reporting number of lines changed. "
 set scrolloff=8 " Minimum number of screen lines to keep above and below the cursor. "
@@ -113,10 +112,37 @@ set formatoptions+=r1
 set linespace=41
 
 " Completion "
-set complete=.,w,b,k,t " Options for keyword completion. "
-set completeopt=longest,menuone " Options for insert mode completion. "
+set wildcharm=<C-z> " The key to start wildcard expansion inside macro. "
+set wildignorecase " Ignore case when completing in command menu. "
+set wildmenu " Command-line completion operates in an enhanced mode. "
+set wildmode=longest:full,list,full " zsh-like command autocompletion. "
+set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem,*.pyc,.hg,.bzr " Version control "
+set wildignore+=*.swp,*~,*/.DS_Store         " Apple OS X "
+set wildignore+=Thumbs.db                    " Windows "
+set wildignore+=*.pyc                        " Python "
+set wildignore+=*/tmp/*,/dist/*,/node_modules/*,*.so,*.swp,*.zip "to limit ctrlp search"
 set path=.,** " List of directories which will be searched when using related features. "
-set pumheight=8 " Maximum height of the popup menu for insert mode completion. "
+set complete+=kspell " Options for keyword completion. "
+
+" Disable unsafe commands."
+" Only run autocommands owned by me"
+" http://andrew.stwrt.ca/posts/project-specific-vimrc/"
+set secure
+
+if has('virtualedit')
+  set virtualedit=block               " Allow cursor to move where there is no text in visual block mode"
+endif
+
+set whichwrap=b,h,l,s,<,>,[,],~       " Allow <BS>/h/l/<Left>/<Right>/<Space>, ~ to cross line boundaries"
+set completeopt+=menuone
+set completeopt+=noinsert
+set completeopt-=preview
+
+if has('nvim-0.4')
+  set wildoptions=pum
+  set pumblend=10 " Enables pseudo-transparency for the Popup-menu"
+  set pumheight=50 " Maximum number of items to show in the popup menu for Insert mode completion."
+endif
 
 " Indentation "
 set tabstop=4 " Spaces per tab. "
@@ -159,15 +185,7 @@ set cmdwinheight=5 " Height of the command window size for commands like `q:` an
 set history=10000 " Define maximum command history size. "
 set noshowcmd " Disable displaying key presses at the right bottom. "
 set noshowmode " Disable native mode indicator. showmode"
-set wildcharm=<C-z> " The key to start wildcard expansion inside macro. "
-set wildignorecase " Ignore case when completing in command menu. "
-set wildmenu " Command-line completion operates in an enhanced mode. "
-set wildmode=list:longest,full " zsh-like command autocompletion. "
-set wildignore+=.hg,.git,.svn,.bzr " Version control "
-set wildignore+=*.DS_Store         " Apple OS X "
-set wildignore+=Thumbs.db          " Windows "
-set wildignore+=*.pyc              " Python "
-set wildignore+=*/tmp/*,/dist/*,/node_modules/*,*.so,*.swp,*.zip "to limit ctrlp search"
+
 "set esckeys" "Allow cursor keys in insert mode"
 " Vim "
 if !has('nvim') && !has('gui')
