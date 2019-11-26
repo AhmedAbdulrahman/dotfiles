@@ -105,9 +105,13 @@ set diffopt+=vertical,algorithm:histogram,indent-heuristic,hiddenoff
 call ahmed#settings#customize_diff()
 
 " Formatting "
-let &formatprg = 'par b1 e1 g1 q1 r3 w80 R1 T4 B=.,\?_A_a Q=_s\>' " External formatter program that will be used with `gq` operator. "
-set formatoptions=croqnj " General text formatting options used by many mechanics. "
+if !has('nvim') && (v:version > 703 || v:version == 703 && has('patch541'))
+  set formatoptions+=j                " Remove comment leader when joining comment lines"
+endif
+set formatoptions+=n                  " Smart auto-indenting inside numbered lists"
+set formatoptions+=r1
 set linespace=41
+
 " Completion "
 set complete=.,w,b,k,t " Options for keyword completion. "
 set completeopt=longest,menuone " Options for insert mode completion. "
