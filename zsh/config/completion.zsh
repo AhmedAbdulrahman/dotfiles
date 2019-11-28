@@ -82,5 +82,10 @@ zstyle ':completion:*:rm:*' file-patterns '*:all-files'
 #...package-lock.json and yarn.lock
 zstyle ':completion:*:*:(nvim|vim|e|l|less):*' file-patterns '^(package-lock.json|yarn.lock):source-files' '*:all-files'        
 
+zstyle ':notify:*' error-icon "https://media3.giphy.com/media/10ECejNtM1GyRy/200_s.gif"
+zstyle ':notify:*' error-title "wow such #fail"
+zstyle ':notify:*' success-icon "https://s-media-cache-ak0.pinimg.com/564x/b5/5a/18/b55a1805f5650495a74202279036ecd2.jpg"
+zstyle ':notify:*' success-title "very #success. wow"
+
 # Menu select
 zmodload -i zsh/complist
