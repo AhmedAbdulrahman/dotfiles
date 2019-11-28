@@ -223,7 +223,7 @@
     inoremap <silent> <C-t> <esc>:tabnew<cr>:silent! Startify<cr> "Insert mode"
     nnoremap <silent> <leader>to <esc>:tabonly<cr>
     nnoremap <silent> <leader>tc <esc>:tabclose<cr> "Normal mode"
-    inoremap <silent> <C-w> <esc>:tabclose<cr> "Insert mode"
+    "inoremap <silent> <C-w> <esc>:tabclose<cr>" "Insert mode"
     nnoremap <silent> <leader>tm <esc>:tabmove<Space>
     nnoremap <silent> <leader>tb <esc>:tab ball<cr>
     nnoremap <silent> <leader>tl <esc>:tabs<cr>
