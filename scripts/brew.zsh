@@ -116,6 +116,7 @@ main() {
   brew tap zegervdv/zathura
   brew tap xo/xo
   brew tap dandavison/delta https://github.com/dandavison/delta
+  brew tap homebrew-ffmpeg/ffmpeg
   # Core
   brew_install openssl
   brew_install git
@@ -178,7 +179,7 @@ main() {
   brew_install w3m
   brew_install htop                           # Improved top (interactive process viewer) for OS X
   brew_install namespace                      # Port scanning utility for large networks
-  brew_install ffmpeg --with-libvpx
+  brew_install homebrew-ffmpeg/ffmpeg/ffmpeg --HEAD
   brew_install gifski
   brew_install terminal-notifier
   brew_install lsd
