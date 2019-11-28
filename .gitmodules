@@ -91,6 +91,3 @@
 [submodule "vim/pack/bundle/start/mustache-handlebars"]
 	path = vim/pack/bundle/start/mustache-handlebars
 	url = https://github.com/mustache/vim-mustache-handlebars.git
-[submodule "vim/pack/bundle/start/ultisnips"]
-	path = vim/pack/bundle/start/ultisnips
-	url = https://github.com/SirVer/ultisnips.git
