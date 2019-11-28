@@ -1,6 +1,12 @@
-"Move lines"
+"Move highlighted lines"
 xnoremap <silent> K :call ahmed#mappings#visual#movelines#moveup()<CR>
 xnoremap <silent> J :call ahmed#mappings#visual#movelines#movedown()<CR>
+
+"Jump 5 lines/character UP|DOWN|RIGHT|LEFT"
+xnoremap <C-j> 5j
+xnoremap <C-k> 5k
+xnoremap <C-h> 5h
+xnoremap <C-l> 5l
 
 " Stay in visual mode when indenting."
 xnoremap < <gv
