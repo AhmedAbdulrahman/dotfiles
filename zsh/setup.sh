@@ -8,5 +8,5 @@ mkdir -p $HOME/.zsh
 echo "✓ ZSH folder created successfully! \\n"
 
 echo "→ Symlinking ~/.zshenv..."
-ln -sfnv "$SCRIPT_DIR/.zshenv"   "$HOME/.zshenv"
+ln -nfs "$SCRIPT_DIR/.zshenv"   "$HOME/.zshenv"
 echo "✓ ~/.zshenv linked successfully! \\n"
