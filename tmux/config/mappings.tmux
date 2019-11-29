@@ -103,10 +103,9 @@ bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pb
 # running
 bind-key * command-prompt -p 'save history to filename:' -I '~/tmux.history' 'capture-pane -S -32768 ; save-buffer %1 ; delete-buffer'
 
-# Buffers
-bind b list-buffers  # list paste buffers
-bind p paste-buffer  # paste from the top paste buffer
-bind P choose-buffer -Z # choose which buffer to paste from
+# Paste
+bind-key -T prefix p paste-buffer -s '' # Paste without CR feed.
+bind-key -T prefix P choose-buffer "paste-buffer -b '%%' -s ''" # choose which buffer to paste from
 
 # Search
 bind-key -T copy-mode-vi / command-prompt -i -p '/' 'send-keys -X search-forward-incremental "%%%"'
