@@ -7,12 +7,12 @@ mkdir -p $HOME/.tmux
 echo "✓ TMUX folder created successfully!\\n"
 
 echo "→ Symlinking ~/.tmux.conf..."
-ln -sfnv "$SCRIPT_DIR/.tmux.conf"   "$HOME/.tmux.conf"
+ln -nfs "$SCRIPT_DIR/.tmux.conf"   "$HOME/.tmux.conf"
 echo "✓ ~/.tmux.conf linked successfully! \\n"
 
 if [[ $(uname) == *Darwin* ]]; then
     echo "→ Symlinking ~/.tmux_osx.conf..."
-    ln -sfnv "$SCRIPT_DIR/.tmux_osx.conf" "$HOME/.tmux_osx.conf"
+    ln -nfs "$SCRIPT_DIR/.tmux_osx.conf" "$HOME/.tmux_osx.conf"
     echo "✓ ~/.tmux_osx.conf linked successfully! \\n"
 fi
 
