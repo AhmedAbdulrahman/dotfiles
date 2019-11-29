@@ -17,7 +17,16 @@ bind-key r \
 	source-file ~/.tmux.conf \; \
 	display-message ' (!) ~/.tmux.conf reloaded.'
 
-# Use Alt-Vim keys without prefix key to switch panes 
+# Launch command prompt.
+bind-key -T prefix : command-prompt
+
+# Show clock.
+bind-key -T prefix t clock-mode
+
+# Launch tree mode.
+bind-key -T prefix w choose-tree -Zw
+
+# Use Alt-Vim keys without prefix key to switch panes
 bind-key -n M-h select-pane -L
 bind-key -n M-j select-pane -D
 bind-key -n M-k select-pane -U
