@@ -7,30 +7,17 @@ scriptencoding UTF-8
 " Disable automatically opening quickfix list upon errors."
 let g:coc_auto_copen = v:false
 
+" List of extensions."
+let g:coc_extension_root = $VIMHOME . '/coc/extensions'
+
+" Environment node"
 let g:coc_node_path=exepath('node')
 
-let g:coc_snippet_next='<c-j>'
-let g:coc_snippet_prev='<c-k>'
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim"
+let g:coc_snippet_next = '<c-j>'
 
-" List of extensions."
-let g:coc_global_extensions = [
-  \ 'coc-css',
-  \ 'coc-emmet',
-  \ 'coc-emoji',
-  \ 'coc-github',
-  \ 'coc-html',
-  \ 'coc-json',
-  \ 'coc-phpls',
-  \ 'coc-python',
-  \ 'coc-rls',
-  \ 'coc-snippets',
-  \ 'coc-svg',
-  \ 'coc-tailwindcss',
-  \ 'coc-tsserver',
-  \ 'coc-vimlsp',
-  \ 'coc-yaml',
-  \ 'coc-highlight'
-\ ]
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim"
+let g:coc_snippet_prev = '<c-k>'
 
 " Language servers Config."
 let s:LSP_CONFIG = [
@@ -293,6 +280,7 @@ augroup cocsettings
 	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 	" Highlight symbol under cursor on CursorHold"
 	autocmd CursorHold * silent call CocActionAsync('highlight')
-
+	autocmd BufWritePost coc.vim source % | CocRestart
+	autocmd BufWritePost coc-settings.json CocRestart
 	autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport'
 augroup end
