@@ -15,15 +15,6 @@ bind-key S \
 	set-window-option allow-rename off \; \
 	rename-window stig
 
-# trackma
-bind-key T \
-	new-window -n trackma trackma-curses \; \
-	split-window -h -l 55 -c $HOME/Downloads \; \
-	send-keys "r --cmd='set viewmode!'" 'Enter' \; \
-	select-pane -L \; \
-	set-window-option allow-rename off \; \
-	rename-window trackma
-
 # htop
 bind-key H \
 	new-window -n htop htop \; \
