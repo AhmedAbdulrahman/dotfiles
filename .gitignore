@@ -3,12 +3,16 @@
 # However, in order to prevent issues. We also ignore editors' files here.
 .idea
 .vscode
-.vim/vim-persisted-undo
 *.log
 .DS_STORE
 
 vim/cache/
-vim/coc/extensions/node_modules
+vim/coc/memos.json
+vim/coc/ultisnips
+vim/coc/extensions/*
+!vim/coc/extensions/package.json
+!vim/coc/extensions/yarn.lock
+vim/vim-persisted-undo
 
 tmux/cache/
 
