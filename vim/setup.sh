@@ -16,10 +16,6 @@ echo "→ Creating COC folder inside ~/.config directory..."
 mkdir -p $HOME/.config/coc
 echo "✓ ZSH folder created successfully!\\n"
 
-echo "→ Copying COC snippets..."
-cp -a "$SCRIPT_DIR/snippets/." $HOME/.config/coc/ultisnips/
-echo "✓ COC snippets copied successfully!\\n"
-
 echo "→ Creating VIM cache folder..."
 mkdir -p $HOME/.vim/cache
 echo "✓ ZSH folder created successfully!\\n"
