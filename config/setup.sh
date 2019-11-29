@@ -13,8 +13,8 @@ mkdir -p $HOME/.config
 echo "✓ ~/.config folder created successfully! \\n"
 
 echo "→ Symlinking ~/.gitconfig & ~/.gitconfig.local ..."
-ln -sfnv "$SCRIPT_DIR/.gitconfig"   "$HOME/.gitconfig"
-ln -sfnv "$SCRIPT_DIR/.gitconfig.local"   "$HOME/.gitconfig.local"
+ln -nfs "$SCRIPT_DIR/.gitconfig"   "$HOME/.gitconfig"
+ln -nfs "$SCRIPT_DIR/.gitconfig.local"   "$HOME/.gitconfig.local"
 echo "✓ git files linked successfully! \\n"
 
 echo "→ Symlinking taskwarrior files..."
