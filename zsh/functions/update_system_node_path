@@ -1,0 +1,6 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Update system node path to nvm default node path
+
+SYSTEM_NODE_PATH="/usr/local/bin/node"
+NVM_DEFAULT_NODE_PATH="$(nvm which default)"
+ln -Ffsv "$NVM_DEFAULT_NODE_PATH" "$SYSTEM_NODE_PATH"
