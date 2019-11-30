@@ -8,6 +8,7 @@
 
 vim/cache/
 vim/coc/memos.json
+vim/coc/history.json
 vim/coc/ultisnips
 vim/coc/extensions/*
 !vim/coc/extensions/package.json
