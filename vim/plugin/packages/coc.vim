@@ -281,6 +281,6 @@ augroup cocsettings
 	" Highlight symbol under cursor on CursorHold"
 	autocmd CursorHold * silent call CocActionAsync('highlight')
 	autocmd BufWritePost coc.vim source % | CocRestart
-	autocmd BufWritePost coc-settings.json CocRestart
+	autocmd BufWritePost {coc-settings,tsconfig}.json,.flowconfig CocRestart
 	autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport'
 augroup end
