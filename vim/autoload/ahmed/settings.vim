@@ -68,24 +68,26 @@ function! ahmed#settings#has_floating_window() abort
 endfunction
 
 function! ahmed#settings#floating_fzf() abort
-  let l:buf = nvim_create_buf(v:false, v:true)
-  call setbufvar(buf, '&signcolumn', 'no')
-  call setbufvar(l:buf, '&filetype', 'fzf')
+   let l:buf = nvim_create_buf(v:false, v:true)
 
-  let height = &lines - 3
-  let width = float2nr(&columns - (&columns * 2 / 40))
-  let col = float2nr((&columns - width) / 2)
+  let l:height = float2nr(&lines * 0.6)
+  let l:width = float2nr(&columns * 0.9)
+  let l:col = (&columns - width) / 2
+  let l:row = (&lines - height) / 2
 
   let l:opts = {
         \ 'relative': 'editor',
-        \ 'row': 5,
-        \ 'col': col,
-        \ 'width': width,
-        \ 'height': height,
-        \ 'style': 'minimal',
+        \ 'row': l:row,
+        \ 'col': l:col,
+        \ 'width': l:width,
+        \ 'height': l:height,
+        \ 'style': 'minimal'
         \ }
 
-  call nvim_open_win(l:buf, v:true, l:opts)
+  let l:win = nvim_open_win(l:buf, v:true, l:opts)
+  if exists('&winblend')
+    call setwinvar(win, '&winblend', 5)
+  endif
 endfunction
 
 function! ahmed#settings#fzf_window() abort
