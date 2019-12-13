@@ -100,7 +100,7 @@ let g:coc_user_config = {
 		\ 'timeout': 2000,
 		\ 'minTriggerInputLength': 1,
 		\ 'triggerCompletionWait': 60,
-		\ 'echodocSupport': v:true,
+		\ 'echodocSupport': v:false,
 		\ 'acceptSuggestionOnCommitCharacter': v:false,
 		\ 'noselect': v:false,
 		\ 'keepCompleteopt': v:true,
