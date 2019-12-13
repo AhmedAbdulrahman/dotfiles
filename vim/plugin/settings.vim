@@ -165,7 +165,7 @@ set smartindent " Automatically inserts one extra level of indentation in some c
 " Folding "
 if has('folding')
   set foldtext=ahmed#settings#foldtext()
-  set foldmethod=indent               " not as cool as syntax, but faster"
+  "set foldmethod=indent"               " not as cool as syntax, but faster"
   set foldlevelstart=99               " start unfolded"
 endif
 
