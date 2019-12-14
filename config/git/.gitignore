@@ -70,8 +70,6 @@ sublime/User/Package Control.merged-ca-bundle
 #vim
 *~
 *.un~
-tags
-tags.*
 .local.vim
 Session.vim
 .sw[a-p]
