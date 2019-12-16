@@ -2,9 +2,7 @@
 " Fuzzy finder fzf as Vim plugin."
 ""
 
-if !empty(expand($FZF_CTRL_T_OPTS))
-  let g:fzf_files_options = $FZF_CTRL_T_OPTS
-endif
+let g:fzf_files_options = '--preview "bat --color always --wrap never --style numbers,changes {2..} | head -'.&lines.'"'
 
 if !empty(expand($VIM_FZF_LOG))
   let g:fzf_commits_log_options = $VIM_FZF_LOG
@@ -37,7 +35,7 @@ let g:fzf_action = {
 \ }
 
 " History directory."
-let g:fzf_history_dir = $HOME . '/.vim/cache/share/fzf/'
+let g:fzf_history_dir = $HOME . '/.vim/cache/share/fzf'
 
 " Customize `fzf` colors to match current color scheme."
 let g:fzf_colors = {
@@ -69,7 +67,7 @@ if executable('rg')
 	" Ripgrep and fzf settings"
 	command! -bang -nargs=* Rg
 		\ call fzf#vim#grep(
-		\ 'rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!*/dist/*" --glob "!.git/*" --glob "!*/plugins/*" -g "!*.sql" -g "!*.min.js" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1,
+		\ 'rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!*/dist/*" --glob "!.git/*" --glob "!*/plugins/*" -g "!*.sql" -g "!*.min.js" --color "always" '.shellescape(<q-args>), 1,
 		\ <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%', '?')
 		\ 		  : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'down:60%:hidden', '?'),
 		\ <bang>0)
@@ -92,9 +90,8 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " Define key mappings."
 nnoremap <silent> <leader>/ :Rg<cr>
-nnoremap <silent><expr> <leader><tab> ahmed#settings#is_git() ? ':GFiles<CR>' : ':Files<CR>'
-
-nnoremap <silent> <Leader><C-p> :FFiles<Enter>
+nnoremap <silent> <leader><tab> :Files<CR>
+nnoremap <silent> <Leader><C-p> :GFiles<CR>
 nnoremap <silent> <M-x> :FCommands<Enter>
 nnoremap <silent> <M-b> :Buffers<Enter>
 nnoremap <silent> <C-f> :FTags<Enter>
