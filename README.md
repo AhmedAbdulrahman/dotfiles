@@ -21,29 +21,32 @@ Missing feature? 🍴 Fork this repo and make it better!
 
 _It’s not a fork of any, since I wanted to build from scratch and really only include what I need, while improving my understanding of how things work along the way._
 
-## Installation
+# Getting Started with Ahmed's dotfiles
+This guide will take you through setting up dotfiles configuration.
 
 #### ⚠️ Disclaimer ⚠️
 
 These are **my** dotfiles, so please feel free to take anything you want but do so **at your own risk** 😉.
 
-1. #### Clone the repo
+### Step 1: Installation
+
+1. ##### With `installer.sh` script:
 
     Dotfiles are installed by running one of the following commands in your terminal:
 
-    via `curl`
+    via `curl`:
 
     ```bash
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh)"
     ```
 
-    via `wget`
+    via `wget`:
 
     ```bash
     bash -c "$(wget https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh -O -)"
     ```
 
-2. #### Clone with Git
+2. ##### With `git clone`:
 
    On a fresh install of macOS, run:
 
@@ -52,9 +55,9 @@ These are **my** dotfiles, so please feel free to take anything you want but do 
    source ~/dotfiles/installer.sh
    ```
 
-3. #### Configurations
+### Step 2: Configurations
 
-    You will be prompt with few questions, answer based on your need then type what config file you want to install see below:
+`Installer` script provides a prompt interface with few questions you need to pick to install specific configuration in my dotfiles as seen below:
 
     ```bash
     What you want to do?
@@ -63,7 +66,7 @@ These are **my** dotfiles, so please feel free to take anything you want but do 
     2) Install package manager  6) Change shell
     3) Clone Ahmeds dotfiles    7) Install XCode tools
     4) Symlink files            8) Quit
-    Enter your choice (must be a number): # here you type number of config you want to install
+    Enter your choice (must be a number): # Choose a number
     ```
 
 ## Essentials 👩‍💻☕️ - ZSH (Plugins)
