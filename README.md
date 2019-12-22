@@ -4,7 +4,7 @@
 
 The color scheme is [**Aylin**](https://github.com/AhmedAbdulrahman/aylin-iterm-theme) for _iTerm2_ and the font is [**IBM Plex Mono**](https://github.com/IBM/plex) with [**DroidSansMono Nerd Font**](https://github.com/ryanoasis/nerd-fonts) as Non-ASCII Font
 
-![Screenshot](intro.gif)
+![Screenshot](intro.png)
 
 There are tons of useful things in here:
 - [🚀 Spaceships ZSH](https://github.com/denysdovhan/spaceship-prompt) as a prompt.
