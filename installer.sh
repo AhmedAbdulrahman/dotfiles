@@ -350,7 +350,7 @@ symlink_files() {
   info "Trying to detect if you have already cloned Ahmed's dotfiles..."
 
   if [[ -d $DOTFILES ]]; then
-
+    success "Seems like you have Ahmed's dotfiles installed!"
     echo "What files you want to Symlink?"
 
     PS3="Enter your choice (must be a number): "
