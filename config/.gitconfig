@@ -13,56 +13,14 @@
 
 [alias]
 	# branch
-	br = branch --sort=-committerdate --verbose --format='%(HEAD) %(color:red)%(objectname:short)%(color:reset) - %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) - %(color:green)(%(committerdate:relative))%(color:reset) %(color:blue)<%(authorname)>%(color:reset)'
-	brs = br -a
-	co = checkout
-	cb = checkout -b
-	# commit
-	amend = commit --amend --no-edit
-	cm = commit
-	# diff
-	d = diff --patch-with-stat
-	dc = d --staged
-	dm = d --word-diff-regex=.
 	doctor = remote -v show origin
-	stat = --no-pager diff --stat
-
-	fl = l -u
-	grr = grep --break --heading --line-number
 	hide = update-index --assume-unchanged
 	unhide = update-index --no-assume-unchanged
 	hidden = !git ls-files -v | grep \"^[a-z]\"
 	# list
 	la = l --all --simplify-by-decoration
-	lastchange = log -p --follow -n 1
-	ll = log --cc
-	lnm = l --no-merges
-
-	cherry = cherry-pick
-	
-	cp = cherry-pick
 	addall = !sh -c 'git add . && git add -u'
-	ign = ls-files -o -i --exclude-standard	# Show files ignored by git
-	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"	# Show the diff between the latest commit and the current state
-
-	reup = rebase-update # depot_tools specific
-	git = !exec git
-	rb = "!sh -c \"git rebase -i HEAD~$1\" -"
-	recentall = for-each-ref --count=10 --sort=-committerdate --format='%(committerdate:short) %(refname:short) [%(committername)]'
-	recentlocal = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(refname:short) [%(committername)]'
-
-	patch = !git --no-pager diff --no-color | pbcopy | echo "Patch copied to clipboard"
-	st = status -sb
-	stashes = stash list
-	# push
-	force = push --force-with-lease
-	track = push origin -u HEAD
-
-	undo = reset --soft HEAD^
 	who = shortlog -sne
-	wt = whatchanged --pretty=format:\"%C(blue)%h %Creset- %C(green)(%cr) %C(cyan)<%aN> %Creset%aE %C(magenta)%d %n %C(yellow)%s %n%Creset\" --date=auto:human
-	unpushed-branches = log --branches --not --remotes --no-walk --decorate --oneline
-	# utils
 	# Rename branch name local & remote. Usage: $ git rename old_branch new_branch, and it's done.
 	rename = "!change() { git branch -m $1 $2; git push origin :$1; git push --set-upstream origin $2; }; change" 
 	# list commited files name, Usage: $ git cf <COMMIT_ID>
