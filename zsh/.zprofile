@@ -30,7 +30,7 @@ promptinit # enables prompt command which is useful to list installed prompts
 # Get the original manpath, then modify it.
 (( $+commands[manpath] )) && MANPATH="`manpath`"
 manpath=(
-    ${HOMEBREW_ROOT:-/usr/local}/opt/*/libexec/gnuman(N-/)
+    ${HOMEBREW_PREFIX:-/usr/local}/opt/*/libexec/gnuman(N-/)
     "$manpath[@]"
 )
 
@@ -54,15 +54,16 @@ path=(
   ${HOMEBREW_PREFIX}/opt/openssl@*/bin(Nn[-1]-/)
   ${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin(N-/)
   ${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin(N-/)
+  ${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin(N-/)
   ${HOMEBREW_PREFIX}/opt/python/libexec/bin(N-/)
   ${HOME}/.cargo/bin(N-/)
-  # ${XDG_CONFIG_HOME}/yarn/global/node_modules/.bin(N-/)
+  ${XDG_CONFIG_HOME}/yarn/global/node_modules/.bin(N-/)
   ${GOBIN}(N-/)
   $HOME/Library/Python/3.*/bin(Nn[-1]-/)
   $HOME/Library/Python/2.*/bin(Nn[-1]-/)
   ${HOMEBREW_PREFIX}/opt/ruby/bin(N-/)
   ${HOMEBREW_PREFIX}/lib/ruby/gems/*/bin(Nn[-1]-/)
-  /usr/local/{bin,sbin}
+  ${HOMEBREW_PREFIX}{bin,sbin}(N-/)
   ${HOMEBREW_CELLAR}/git/*/share/git-core/contrib/git-jump(Nn[-1]-/)
   $path
 )
