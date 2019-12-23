@@ -218,3 +218,13 @@ elif (( $+commands[curl] )); then
 elif (( $+commands[wget] )); then
   alias get='wget --continue --progress=bar --timestamping'
 fi
+
+if (( $+commands[htop] )); then
+  alias top=htop
+fi
+
+# Ranger file explorer
+if (( $+commands[ranger] )); then
+    unalias r 2>/dev/null
+    alias r=ranger
+fi
