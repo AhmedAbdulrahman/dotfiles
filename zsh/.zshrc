@@ -131,6 +131,15 @@
     export BAT_CONFIG_PATH="${HOME}/.config/bat/config" # Bat
     # export RIPGREP_CONFIG_PATH="${HOME}/.rgrc"
 
+    # ------------------------------------------------------
+    # Make sure git completions are the good ones
+    # For reference: https://github.com/github/hub/pull/1962
+    # ------------------------------------------------------
+    (
+    if [ -e /usr/local/share/zsh/site-functions/_git ]; then
+        command mv -f /usr/local/share/zsh/site-functions/{,disabled.}_git
+    fi
+    ) &!
 
     (( $+commands[thefuck] )) && source <(thefuck --alias 2>/dev/null)
     (( $+commands[pyenv]   )) && source <(pyenv init -)
