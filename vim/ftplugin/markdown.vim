@@ -1,6 +1,11 @@
 " Enable spell checking."
 setlocal spell
 
+" Enable linebreak."
+setlocal linebreak
+
+setlocal nolist
+
 " Wrap lines longer than the width of the window."
 setlocal wrap
 
@@ -10,3 +15,5 @@ setlocal norelativenumber
 
 " Toggle local preview server."
 nnoremap <buffer><silent> <LocalLeader>r :call ahmed#ftplugin#markdown#preview()<Enter>
+
+let b:undo_ftplugin = 'setlocal spell< linebreak< nolist<'
