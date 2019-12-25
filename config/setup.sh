@@ -17,6 +17,10 @@ ln -nfs "$SCRIPT_DIR/.gitconfig"   "$HOME/.gitconfig"
 ln -nfs "$SCRIPT_DIR/.gitconfig.local"   "$HOME/.gitconfig.local"
 echo "✓ git files linked successfully! \\n"
 
+echo "→ Symlinking ~/.pyrc.py ..."
+ln -nfs "$SCRIPT_DIR/.pyrc.py"   "$HOME/.pyrc.py"
+echo "✓ pyrc file linked successfully! \\n"
+
 echo "→ Symlinking taskwarrior files..."
 stow --restow -vv --target="$HOME" --dir=$SCRIPT_DIR taskwarrior
 echo "✓ taskwarrior files linked successfully! \\n"

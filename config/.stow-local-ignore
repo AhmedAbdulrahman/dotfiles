@@ -1,5 +1,6 @@
 .gitconfig
 .gitconfig.local
+.pyrc.py
 taskwarrior
 timewarrior
 setup.sh
