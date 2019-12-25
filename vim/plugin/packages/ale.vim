@@ -5,6 +5,7 @@
 scriptencoding UTF-8
 
 let g:ale_enabled = v:true
+let g:ale_fix_on_save = v:true
 let g:ale_shell = &shell
 let g:ale_shell_arguments = &shellcmdflag
 let g:ale_command_wrapper = ''
@@ -13,7 +14,7 @@ let g:ale_max_signs = -1
 let g:ale_maximum_file_size = v:null
 let g:ale_cache_executable_check_failures = v:false
 let g:ale_warn_about_trailing_blank_lines = v:true
-let g:ale_warn_about_trailing_whitespace = v:false
+let g:ale_warn_about_trailing_whitespace = v:true
 let g:ale_set_balloons = v:false
 let g:ale_set_balloons_legacy_echo = v:null
 
@@ -47,7 +48,7 @@ let g:ale_echo_msg_warning_str = '[WARNING]'
 let g:ale_echo_msg_info_str = '[INFO]'
 
 " Define the form of the echoed message."
-let g:ale_echo_msg_format = '%severity% %linter% -> [%code%] -> %s'
+let g:ale_echo_msg_format = '%severity% -> %linter% -> %code% %s'
 let g:ale_statusline_format = ['E•%d', 'W•%d', 'OK']
 
 " Disable highlighting underline on errors and warnings."
@@ -73,8 +74,8 @@ au! OptionSet textwidth let g:ale_javascript_prettier_options = <SID>PRETTIER_OP
 
 " Define Linters for 'ALElinters' command."
 let g:ale_linters = {
-      \ 'javascript': 		['eslint'],
-      \ 'typescript':		['eslint'],
+      \ 'javascript': 	['eslint'],
+      \ 'typescript': 	['tsserver', 'tslint'],
       \}
 
 " Define fixers for 'ALEFix' command."
@@ -135,7 +136,9 @@ let g:ale_lint_on_save = v:true
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_linter_aliases = {
 	\ 'Dockerfile': 'dockerfile',
-	\ 'zsh': 'sh'
+	\ 'zsh': 'sh',
+	\ 'mail': 'markdown',
+	\ 'html': ['html', 'css']
 \ }
 let g:ale_linters_explicit = v:false
 let g:ale_linters_ignore = {}
@@ -150,8 +153,8 @@ let g:ale_list_vertical = v:false
 let g:ale_list_window_size = 10
 let g:ale_loclist_msg_format = ' %linter%: %s (%severity%)'
 let g:ale_open_list = v:false
-let g:ale_set_loclist = v:true
-let g:ale_set_quickfix = v:false
+let g:ale_set_loclist = v:false
+let g:ale_set_quickfix = v:true
 let g:ale_echo_delay = 10
 let g:ale_use_global_executables = v:null
 let g:ale_virtualenv_dir_names = ['.env', '.venv', 'env', 've-py3', 've', 'virtualenv', 'venv']
