@@ -11,4 +11,7 @@ else
   setlocal makeprg=yarn
 endif
 
+" List of file extensions which are used with `gf` like commands."
+setlocal suffixesadd=.ts,.tsx
+
 let b:undo_ftplugin = 'setl conceallevel< makeprg< isfname<'
