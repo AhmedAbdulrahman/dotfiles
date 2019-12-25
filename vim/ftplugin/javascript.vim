@@ -1,3 +1,14 @@
+setlocal conceallevel=2
+
+let s:package_lock = findfile('package-lock.json', expand('%:p').';')
+
+if filereadable(s:package_lock)
+  setlocal makeprg=npm
+else
+  setlocal makeprg=yarn
+endif
+
+
 " List of file extensions which are used with `gf` like commands."
 setlocal suffixesadd=.js,.jsx
 
@@ -12,3 +23,5 @@ nnoremap <buffer><silent> <C-w>gf :call ahmed#ftplugin#javascript#gotofile(expan
 
 " Execute current file."
 nnoremap <buffer><silent> <LocalLeader>r :execute 'split <Bar> terminal node' shellescape(@%, 1)<Enter>
+
+let b:undo_ftplugin = 'setlocal conceallevel< makeprg<'
