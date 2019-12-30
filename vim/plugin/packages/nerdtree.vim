@@ -89,6 +89,7 @@ let g:NERDTreeMapQuit = ''
 let g:NERDTreeMapToggleFiles = ''
 let g:NERDTreeMapToggleFilters = ''
 let g:NERDTreeMapUpdir = ''
+let g:NERDTreeMapCustomOpen = '<CR>'
 
 " Define mappings."
 nnoremap <silent> <Leader>f :packadd nerdtree <Bar> NERDTreeToggle <Bar> wincmd p<Enter>
