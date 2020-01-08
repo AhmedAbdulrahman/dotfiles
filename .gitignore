@@ -6,20 +6,8 @@
 *.log
 .DS_STORE
 
-vim/cache/
-vim/coc/memos.json
-vim/coc/history.json
-vim/coc/ultisnips
-vim/coc/extensions/*
-!vim/coc/extensions/package.json
-!vim/coc/extensions/yarn.lock
-vim/vim-persisted-undo
-
-tmux/cache/
-
-.zcompdump*
-.zhistory
+*.un~
 *.zwc
 *.old
-.zcompcache
-.zcalc_history
+*.zwc.old
+vim/coc/
