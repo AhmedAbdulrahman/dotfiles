@@ -38,6 +38,7 @@ export DOTFILES="${HOME}/dotfiles"
 export GOPATH="${HOME}/.go"
 export GOBIN="${GOPATH}/bin"
 export PROJECTS="${HOME}/Projects"
+export NOTES_DIR="${HOME}Documents/notes"
 
 # Ensure that a non-login, non-interactive shell has a defined environment.
 # (Only once) if it was not sourced before, becuase .zshenv is always sourced
