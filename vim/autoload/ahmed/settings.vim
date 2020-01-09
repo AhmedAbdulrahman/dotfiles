@@ -68,26 +68,35 @@ function! ahmed#settings#has_floating_window() abort
 endfunction
 
 function! ahmed#settings#floating_fzf() abort
-   let l:buf = nvim_create_buf(v:false, v:true)
+  " Size and position"
+  let width = float2nr(&columns * 0.9)
+  let height = float2nr(&lines * 0.7)
+  let row = float2nr((&lines - height) / 2)
+  let col = float2nr((&columns - width) / 2)
 
-  let l:height = float2nr(&lines * 0.6)
-  let l:width = float2nr(&columns * 0.9)
-  let l:col = (&columns - width) / 2
-  let l:row = (&lines - height) / 2
+  " Border"
+  let top = '╭' . repeat('─', width - 2) . '╮'
+  let mid = '│' . repeat(' ', width - 2) . '│'
+  let bot = '╰' . repeat('─', width - 2) . '╯'
+  let border = [top] + repeat([mid], height - 2) + [bot]
 
-  let l:opts = {
-        \ 'relative': 'editor',
-        \ 'row': l:row,
-        \ 'col': l:col,
-        \ 'width': l:width,
-        \ 'height': l:height,
-        \ 'style': 'minimal'
-        \ }
+  " Draw frame"
+  let s:frame = ahmed#settings#create_float('Comment', {'row': row, 'col': col, 'width': width, 'height': height})
+  call nvim_buf_set_lines(s:frame, 0, -1, v:true, border)
 
-  let l:win = nvim_open_win(l:buf, v:true, l:opts)
-  if exists('&winblend')
-    call setwinvar(win, '&winblend', 5)
-  endif
+  " Draw viewport"
+  call ahmed#settings#create_float('Normal', {'row': row + 1, 'col': col + 2, 'width': width - 4, 'height': height - 2})
+  autocmd BufWipeout <buffer> execute 'bwipeout' s:frame
+
+endfunction
+
+function! ahmed#settings#create_float(hl, opts) abort
+  let buf = nvim_create_buf(v:false, v:true)
+  let opts = extend({'relative': 'editor', 'style': 'minimal'}, a:opts)
+  let win = nvim_open_win(buf, v:true, opts)
+  call setwinvar(win, '&winhighlight', 'NormalFloat:'.a:hl)
+  call setwinvar(win, '&colorcolumn', '')
+  return buf
 endfunction
 
 function! ahmed#settings#fzf_window() abort
