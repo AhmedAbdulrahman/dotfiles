@@ -30,6 +30,11 @@ export HOMEBREW_CELLAR=${HOMEBREW_CELLAR:-"/usr/local/Cellar"}
 export HOMEBREW_REPOSITORY=${HOMEBREW_REPOSITORY:-"/usr/local/Homebrew"}
 
 # ---------------------------------------------
+# Ripgrep
+# ---------------------------------------------
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
+# ---------------------------------------------
 # Other useful environment settings
 # ---------------------------------------------
 export OSTYPE=$(uname -s)
@@ -38,7 +43,7 @@ export DOTFILES="${HOME}/dotfiles"
 export GOPATH="${HOME}/.go"
 export GOBIN="${GOPATH}/bin"
 export PROJECTS="${HOME}/Projects"
-export NOTES_DIR="${HOME}Documents/notes"
+export NOTES_DIR="${HOME}/Documents/notes"
 
 # Ensure that a non-login, non-interactive shell has a defined environment.
 # (Only once) if it was not sourced before, becuase .zshenv is always sourced
