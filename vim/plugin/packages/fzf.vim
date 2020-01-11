@@ -64,35 +64,36 @@ command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 
 " Ripgrep Search"
 if executable('rg')
-    set grepprg=rg\ --vimgrep\ --color=never\ --glob\ '"!*/plugins/*"'
 
-	" Ripgrep and fzf settings"
+	" Search in all files"
 	command! -bang -nargs=* Rg
 		\ call fzf#vim#grep(
-		\ 'rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!*/dist/*" --glob "!.git/*" --glob "!*/plugins/*" -g "!*.sql" -g "!*.min.js" --color "always" '.shellescape(<q-args>), 1,
-		\ <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%', '?')
-		\ 		  : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'down:60%:hidden', '?'),
+		\ "rg --column --line-number --no-heading --color=always --smart-case --fixed-strings --ignore-case --hidden --follow ".shellescape(<q-args>), 1,
+		\ fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'down:60%:hidden', '?'),
 		\ <bang>0)
 
 endif
 
-command! -bang -nargs=? -complete=dir GFiles
-	\ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview('down:60%', '?'), <bang>0)
-
+" Search for files"
 command! -bang -nargs=? -complete=dir Files
-	\ call fzf#vim#files(<q-args>, fzf#vim#with_preview('down:60%', '?'), <bang>0)
+	\ call fzf#run(fzf#wrap(fzf#vim#with_preview({
+	\   'source': "rg --files --hidden --follow --no-messages --smart-case ".expand(<q-args>)
+	\ }, 'down:60%:hidden', '?')))
 
+" Search for buffers"
 command! -bang -nargs=* -complete=buffer Buffers
-  	\ call fzf#vim#buffers(<q-args>, fzf#vim#with_preview('down:60%', '?'), <bang>0)
+  	\ call fzf#vim#buffers(<q-args>, fzf#vim#with_preview('down:60%:hidden', '?'), <bang>0)
 
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
+inoremap <expr> <c-x><c-d> fzf#vim#complete#path('blsd')
 imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " Define key mappings."
 nnoremap <silent> <leader>/ :Rg<cr>
-nnoremap <silent> <leader><tab> :Files<CR>
+nnoremap <silent> <leader><leader>/ :GRg<cr>
+nnoremap <silent> <expr> <leader><tab> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nnoremap <silent> <Leader><C-p> :GFiles<CR>
 nnoremap <silent> <M-x> :FCommands<Enter>
 nnoremap <silent> <M-b> :Buffers<Enter>
