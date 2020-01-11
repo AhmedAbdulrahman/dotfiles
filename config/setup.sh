@@ -32,3 +32,7 @@ echo "✓ ~/.timewarrior files linked successfully! \\n"
 echo "→ Symlinking ~/.timewarrior files..."
 stow --restow -vv --target="$HOME/.timewarrior" --dir=$SCRIPT_DIR timewarrior
 echo "✓ ~/.timewarrior/timewarrior.cfg files linked successfully! \\n"
+
+echo "→ Symlinking ~/.ripgreprc..."
+ln -nfs "$SCRIPT_DIR/.ripgreprc"   "$HOME/.ripgreprc"
+echo "✓ ripgreprc file linked successfully! \\n"

@@ -1,0 +1,51 @@
+# Grep hidden files
+--hidden
+
+# Follow symbolic links
+--follow
+
+# Don't respect ignore files (.gitignore, .ignore, etc.).
+--no-ignore
+
+# Exclude directories (Ignore patterns)
+--glob=!{.git,.svn,.tldr,node_modules,Trash,vendor,dist,.next,log,vscode,idea}
+--glob=!vim/pack/*
+--glob=!wp-content/uploads/*
+
+# Exclude file types.
+--glob=!*.{map,direnv,envrc,pyc,png,jpg,jpeg,mp4,mkv,obj,ttf,sketch,zip,sql,min.js,DS_Store,un~,zwc,old,zwc.old,sw,local}
+--glob=!*.{lock}
+--glob=!*.{log}
+--glob=!*.{elc}
+--glob=!*.{spl}
+
+# Exclude files.
+--glob=!{package-lock.json,Session.vim}
+
+# Case-insensitive search when pattern is lowercase
+--smart-case
+
+# Sort by file path.
+--sort=path
+
+# Trim whitespace
+--trim
+
+# Don't print lines longer than this limit, and don't show preview.
+--max-columns=10000
+--no-max-columns-preview
+
+# Add web type
+--type-add=web:*.{html,css,scss,ts,tsx,js,jsx}*
+
+# Add test type
+--type-add=test:*_test.*
+--type-add=test:*.test.*
+
+# Configure color settings and styles.
+--colors=path:bg:0x3b,0x3b,0x3b
+--colors=path:fg:white
+--colors=line:fg:0xf2,0xc2,0x60
+--colors=match:bg:0x2b,0x83,0xa6
+--colors=match:fg:0xff,0xff,0xff
+--colors=match:style:nobold
