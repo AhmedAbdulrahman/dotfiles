@@ -162,6 +162,12 @@ if ! (tmux has-session -t "${SESSION}" >/dev/null 2>&1); then
     elif [ -d "${PROJECTS}/_Fork/${NAMESPACE}/${PROJECT_NAME}" ]; then
         echo "Found _Fork at ${PROJECTS}/_Fork/${NAMESPACE}/${PROJECT_NAME}"
         WORKINGDIR="${PROJECTS}/_Fork/${NAMESPACE}/${PROJECT_NAME}"
+    elif [ -d "${PROJECTS}/_Repo/${NAMESPACE}/${PROJECT_NAME}" ]; then
+        echo "Found _Repo at ${PROJECTS}/_Repo/${NAMESPACE}/${PROJECT_NAME}"
+        WORKINGDIR="${PROJECTS}/_Repo/${NAMESPACE}/${PROJECT_NAME}"
+    elif [ -d "${PROJECTS}/_Playground/${NAMESPACE}/${PROJECT_NAME}" ]; then
+        echo "Found _Playground at ${PROJECTS}/_Playground/${NAMESPACE}/${PROJECT_NAME}"
+        WORKINGDIR="${PROJECTS}/_Playground/${NAMESPACE}/${PROJECT_NAME}"
     elif [ -d "${PROJECTS}/${NAMESPACE}/$PROJECT_NAME" ]; then
         echo "Found project at ${HOME}/${NAMESPACE}/$PROJECT_NAME"
         WORKINGDIR="${PROJECTS}/${NAMESPACE}/$PROJECT_NAME"
