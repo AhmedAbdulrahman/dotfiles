@@ -64,7 +64,7 @@ set laststatus=2 " Always show the status line. "
 
 " Show trailing whitespace"
 set list
-set listchars=nbsp:░,tab:▷\ ,extends:»,precedes:«,trail:• " Strings to use when 'list' option set. "
+set listchars=tab:………,nbsp:░,extends:»,precedes:«,trail:• " Strings to use when 'list' option set. "
 set nojoinspaces " Disable inserting two spaces after `.`, `?`, `!` with join command. "
 set concealcursor=n
 
