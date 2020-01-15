@@ -53,6 +53,7 @@ if &background == "light"
 endif
 let colorgroup['MatchParen']   = {"GUIFG": _black, "GUIBG":  _l_white}
 let colorgroup['ModeMsg']      = {"GUIFG": _black, "GUIBG":  _marzipan}
+let colorgroup['Whitespace']   = {"GUIFG": _semiblack, "CTERMFG":235}
 let colorgroup['Pmenu']        = {"GUIFG": _l_white,     "GUIBG":  _gray_dark}
 let colorgroup['PmenuSel']     = {"GUIFG": _black, "GUIBG":  _marzipan}
 let colorgroup['PmenuSbar']    = {"GUIBG":  _black}
