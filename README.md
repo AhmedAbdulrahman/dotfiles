@@ -1,25 +1,29 @@
-# Ahmed’s dotfiles adapted for ZSH
+# Ahmed’s dotfiles
 
 > Running [**iTerm2**](https://www.iterm2.com/) with custom [**Spaceship-zsh**](https://github.com/denysdovhan/spaceship-zsh-theme) theme.
 
-The color scheme is [**Aylin**](https://github.com/AhmedAbdulrahman/aylin-iterm-theme) for _iTerm2_ and the font is [**IBM Plex Mono**](https://github.com/IBM/plex) with [**DroidSansMono Nerd Font**](https://github.com/ryanoasis/nerd-fonts) as Non-ASCII Font
+The color scheme is [**Aylin**](https://github.com/AhmedAbdulrahman/aylin-iterm-theme) for _iTerm2_ and the font is [**Recursive**](https://www.recursive.design/) with [**DroidSansMono Nerd Font**](https://github.com/ryanoasis/nerd-fonts) as Non-ASCII Font
 
 ![Screenshot](intro.png)
 
-There are tons of useful things in here:
-- [🚀 Spaceships ZSH](https://github.com/denysdovhan/spaceship-prompt) as a prompt.
-- [🌺 ZPLUG](https://zplug.sh) for dependency management.
-- ⚡️ Power up and beautify terminal with ZSH completions.
-- 💄 Syntax highlighting of commands.
-- ⌨️  Autosuggestions for most of commands.
-- 🕵️‍ Fuzzy Finder for VIM, Git and ZSH
-- 🏎 ZSH [vim](./zsh/config/mappings.zsh) bindings for VIM nerds.
-- 🏎 Useful [aliases](./zsh/config/aliases.zsh).
-- 🛠 Git [.gitconfig](./config/git/.gitconfig), global [.gitignore](./config/git/.gitignore) file and aliases.
+## What's in it?
+This is where I keep all my configs and automated scripts for Mac setup including:
+- [`Homebrew`](https://brew.sh/): used to Manage and Installing most of the macOS dependencies and [`Cask`](https://github.com/caskroom/homebrew-cask) for installing GUI apps like Chrome, Firefox, VSCode,...etc.
+- [`Tmux`](http://tmux.sourceforge.net/)
+  ![Screenshot](tmux.png)
+- [`Neovim`](https://neovim.io)
+- [`ZSH`](http://www.zsh.org/) with various customization:
+  - [`🚀Spaceships ZSH`](https://github.com/denysdovhan/spaceship-prompt) as a prompt.
+  - [`🌺ZPLUG`](https://zplug.sh) for dependency management.
+  - ⚡️ Power up and beautify terminal with ZSH completions.
+  - 💄 Syntax highlighting of commands.
+  - ⌨️  Autosuggestions for most of commands.
+  - 🕵️‍ Fuzzy Finder for VIM, Git and ZSH
+  - 🏎 ZSH [`VIM`](./zsh/config/mappings.zsh) bindings for VIM nerds.
+  - 🏎 Useful [`aliases`](./zsh/config/aliases.zsh).
+  - 🛠 [`Git config`](./files/.gitconfig), global [`.gitignore`](./files/.config/git/.gitignore) file and aliases.
 
-Missing feature? 🍴 Fork this repo and make it better!
-
-_It’s not a fork of any, since I wanted to build from scratch and really only include what I need, while improving my understanding of how things work along the way._
+Missing feature? 🍴 Fork this repo and make it better ❤️
 
 # Getting Started with Ahmed's dotfiles
 This guide will take you through setting up dotfiles configuration.
@@ -110,14 +114,14 @@ These are **my** dotfiles, so please feel free to take anything you want but do 
 
 This repo is inspired and influenced by
 
-- GitHub 💞 [dotfiles](http://dotfiles.github.io/)
-- Niclas Pahlfer’s [dotfiles](https://github.com/Npahlfer)
-- Mathias Bynens’ [dotfiles](https://github.com/mathiasbynens/dotfiles)
-- Paul Irish’s [dotfiles](https://github.com/paulirish/dotfiles)
-- Denys Dovhan’s [dotfiles](https://github.com/denysdovhan/dotfiles)
-- Adam Eivy’s [dotfiles](https://github.com/atomantic/dotfiles)
-- Matthew J Morrison’s [dotfiles](https://github.com/mattjmorrison/dotfiles)
+- GitHub 💞 [`dotfiles`](http://dotfiles.github.io/)
+- Niclas Pahlfer’s [`dotfiles`](https://github.com/Npahlfer)
+- Mathias Bynens’ [`dotfiles`](https://github.com/mathiasbynens/dotfiles)
+- Paul Irish’s [`dotfiles`](https://github.com/paulirish/dotfiles)
+- Denys Dovhan’s [`dotfiles`](https://github.com/denysdovhan/dotfiles)
+- Adam Eivy’s [`dotfiles`](https://github.com/atomantic/dotfiles)
+- Matthew J Morrison’s [`dotfiles`](https://github.com/mattjmorrison/dotfiles)
 
 ## License
 
-MIT © [Ahmed Abdulrahman](https://github.com/AhmedAbdulrahman)
+MIT © [`Ahmed Abdulrahman`](https://github.com/AhmedAbdulrahman)
