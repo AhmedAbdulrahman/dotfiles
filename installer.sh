@@ -354,11 +354,11 @@ symlink_files() {
     echo "What files you want to Symlink?"
 
     PS3="Enter your choice (must be a number): "
-    files=("All" "ZSH" "VIM" "TMUX" "CONFIG" "HAMMERSPOON" "Quit")
+    files=("All" "ZSH" "VIM" "TMUX" "FILES" "HAMMERSPOON" "Quit")
 
     select file in "${files[@]}"; do
       case $file in
-      All|ZSH|VIM|TMUX|CONFIG|HAMMERSPOON)
+      All|ZSH|VIM|TMUX|FILES|HAMMERSPOON)
         cd "$DOTFILES" && make --ignore-errors link file="$(echo "$file" | tr '[:upper:]' '[:lower:]')"
         break
         ;;
