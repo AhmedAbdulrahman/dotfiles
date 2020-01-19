@@ -5,23 +5,26 @@ SHELL:=/bin/zsh
 DOTFILES="$(HOME)/dotfiles"
 SCRIPTS="$(DOTFILES)/scripts"
 INSTALL="$(DOTFILES)/installer.sh"
-file=not_override
+dir=not_override
 
 # This is to symlink all files when All is selected in prompt
-CANDIDATES = $(wildcard config hammerspoon tmux vim zsh newsboat)
+CANDIDATES = $(wildcard hammerspoon tmux vim zsh newsboat)
 EXCLUSIONS := .DS_Store .git .gitmodules .travis.yml
 DIRS   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 
 link:
 	@echo "→ Setup Environment Settings"
 
-    ifeq "$(file)" "all"
+    ifeq "$(dir)" "all"
 		@echo "→ Symlinking $(DIRS) files"
 		@$(foreach val, $(DIRS), sh $(DOTFILES)/$(val)/setup.sh && /usr/local/bin/stow --restow -vv --ignore ".DS_Store" --target="$(HOME)/.$(val)" --dir="$(DOTFILES)" $(val);)
+    else ifeq "$(dir)" "files"
+		@echo "→ Symlinking $(dir) dir"
+		/usr/local/bin/stow --restow -vv --ignore ".DS_Store" --target="$(HOME)" --dir="$(DOTFILES)" $(dir)
     else
-		@echo "→ Symlinking $(file) file"
-		sh $(DOTFILES)/$(file)/setup.sh
-		/usr/local/bin/stow --restow -vv --ignore ".DS_Store" --target="$(HOME)/.$(file)" --dir="$(DOTFILES)" $(file)
+		@echo "→ Symlinking $(dir) dir"
+		sh $(DOTFILES)/$(dir)/setup.sh
+		/usr/local/bin/stow --restow -vv --ignore ".DS_Store" --target="$(HOME)/.$(dir)" --dir="$(DOTFILES)" $(dir)
     endif
 
 bootstrap:
