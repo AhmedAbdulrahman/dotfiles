@@ -8,7 +8,7 @@
 --no-ignore
 
 # Exclude directories (Ignore patterns)
---glob=!{.git,.svn,.tldr,node_modules,Trash,vendor,dist,.next,log,vscode,idea}
+--glob=!{.git,.svn,.tldr,node_modules,Trash,vendor,dist,.next,log,vscode,idea,.cache}
 --glob=!vim/pack/*
 --glob=!wp-content/uploads/*
 
