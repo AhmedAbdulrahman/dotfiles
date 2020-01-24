@@ -9,11 +9,19 @@ The color scheme is [**Aylin**](https://github.com/AhmedAbdulrahman/aylin-iterm-
 Table of Contents
 -----------------
 
-* [❓What's it](#whats-it)
-* [📦What's inside](#whats-in-it)
-* [🔧Setup Environment](#setup)
-* [📚Resources](#setup)
-* [📄License](#license)
+- [Ahmed’s dotfiles](#ahmeds-dotfiles)
+  - [Table of Contents](#table-of-contents)
+  - [What's it](#whats-it)
+  - [What's inside](#whats-inside)
+  - [Setup](#setup)
+      - [⚠️ Disclaimer! ⚠️](#%e2%9a%a0%ef%b8%8f-disclaimer-%e2%9a%a0%ef%b8%8f)
+  - [Customize](#customize)
+    - [Local Settings](#local-settings)
+      - [`~/.zshrc.local`](#zshrclocal)
+      - [`~/.gitconfig.local`](#gitconfiglocal)
+      - [`~/.vimrc.local`](#vimrclocal)
+  - [Resources](#resources)
+  - [License](#license)
 
 What's it
 ----------
@@ -81,6 +89,45 @@ The installer attempts to only select relevant script based on your choice. Say 
 * Install applications and command-line tools for [`macOS`](scripts/brew.zsh), [`Nodejs`](scripts/nodejs.zsh) including global packages, and [`Python`](scripts/python-packages.zsh) packages.
 * Set custom [`macOS`](extras/macos/.macos) preferences.
 * Install [`vim plugins`](vim/pack/bundle/start) as [`Git Submodules`](https://git-scm.com/book/en/v2/Git-Tools-Submodules), and [`zsh plugins`](zsh/config/zplug.zsh).
+
+Customize
+---------
+
+### Local Settings
+
+My `dotfiles` config can be easily extended to suit additional local
+requirements by using the following files:
+
+#### `~/.zshrc.local`
+
+You can add or overwrite any existing aliases, settings, `PATH`, ... etc for `zsh` by adding `~/.zshrc.local` file to your `$HOME` dir, and it will be automatically sourced after all the other `zsh`.
+
+```bash
+#!/usr/bin/env zsh
+
+# Example: Set local aliases.
+alias vim="nvim"
+
+# Set PATH additions.
+PATH="$PATH:$HOME/projects/dotfiles/src/bin" # Here we are adding bin directory to PATH
+export PATH  # Then export it
+```
+
+#### `~/.gitconfig.local`
+
+You can use `~/.gitconfig.local` file to store sensitive information such as your git credentials and this file will be automatically included after the configurations from `~/.gitconfig`.
+
+```bash
+[user]
+
+    name = Ahmed Abdulrahman
+    email = account@example.com
+    signingkey = XXXXXXXX
+```
+
+#### `~/.vimrc.local`
+
+You can add or overwrite any `vim` settings you want by adding `~/.vimrc.local` file to your `$HOME` dir and it will be automatically sourced after `~/.vimrc`.
 
 Resources
 ---------
