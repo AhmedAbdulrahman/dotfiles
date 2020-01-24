@@ -53,11 +53,11 @@ These are **my** dotfiles, so **DO NOT** just run the `installer` snippet if you
 
 To set up the my `dotfiles`, run the appropriate snippet in the terminal:
 
-| OS     | Snippet                                                                                                   |
-| :----- | :-------------------------------------------------------------------------------------------------------- |
-| `curl` | `bash -c "$(curl -fsSL https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh)"` |
-| `wget` | `bash -c "$(wget https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh -O -)"`  |
-| `git`  | `git clone git@github.com:AhmedAbdulrahman/dotfiles.git ~/dotfiles && source ~/dotfiles/installer.sh`     |
+| Downloader | Snippet                                                                                                   |
+| :--------- | :-------------------------------------------------------------------------------------------------------- |
+| `curl`     | `bash -c "$(curl -fsSL https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh)"` |
+| `wget`     | `bash -c "$(wget https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh -O -)"`  |
+| `git`      | `git clone git@github.com:AhmedAbdulrahman/dotfiles.git ~/dotfiles && source ~/dotfiles/installer.sh`     |
 
 That's it! 🎉. When `installer` is run, you are prompted to choose one option from the list as seen below:
     ```bash
