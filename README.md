@@ -60,7 +60,8 @@ To set up the my `dotfiles`, run the appropriate snippet in the terminal:
 | `git`      | `git clone git@github.com:AhmedAbdulrahman/dotfiles.git ~/dotfiles && source ~/dotfiles/installer.sh`     |
 
 That's it! 🎉. When `installer` is run, you are prompted to choose one option from the list as seen below:
-    ```bash
+
+```bash
     What you want to do?
 
     1) All                      5) Install macOS Apps
@@ -69,7 +70,7 @@ That's it! 🎉. When `installer` is run, you are prompted to choose one option 
     4) Symlink files            8) Quit
 
     Enter your choice (must be a number):               # Choose a number
-    ```
+```
 The installer attempts to only select relevant script based on your choice. Say you choose `1` for `All`, then the process does a few things:
 
 * Download `Homebrew` our main macOS dependency manager.
