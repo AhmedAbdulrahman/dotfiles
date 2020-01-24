@@ -81,7 +81,7 @@ The installer attempts to only select relevant script based on your choice. Say 
 * Symlink [`zsh`](zsh), [`vim`](vim), [`tmux`](tmux), [`files`](files), [`newsboat`](newsboat), [`extras/bin`](extras/bin) files.
 * Install applications and command-line tools for [`macOS`](scripts/brew.zsh), [`Nodejs`](scripts/nodejs.zsh) including global packages, and [`Python`](scripts/python-packages.zsh) packages.
 * Set custom [`macOS`](extras/macos/.macos) preferences.
-* Install [`vim` plugins](vim/pack/bundle/start) as [`Git Submodules`](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
+* Install [`vim plugins`](vim/pack/bundle/start) as [`Git Submodules`](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
 
 ## Essentials 👩‍💻☕️ - ZSH (Plugins)
 
