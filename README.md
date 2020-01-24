@@ -6,6 +6,9 @@ The color scheme is [**Aylin**](https://github.com/AhmedAbdulrahman/aylin-iterm-
 
 ![Screenshot](assets/intro.png)
 
+Table of Contents
+-----------------
+
 * [❓What's it](#whats-it)
 * [📦 What's inside](#whats-in-it)
 * [🔧 Setup Environment](#setup)
