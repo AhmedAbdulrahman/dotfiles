@@ -39,8 +39,8 @@ A lot of stuff and you can check them out in the file browser above. Main compon
   - 🛠 Custom [`Git config`](./files/.gitconfig), global [`.gitignore`](./files/.config/git/.gitignore) file and aliases.
 - [`Hammerspoon`](https://www.hammerspoon.org/): a MacOS automation solution  using Lua to solve interesting problems in an easy way
 - [`Newsboat`](https://newsboat.org/): an **RSS** feed reader for the text terminals.
-- [`Files`]: directory where all extra configs live that will be symlink intoyour `$HOME`.
-- [`Extras/bin`]: Anything in bin will get added to your `$PATH` and be made available everywhere.
+- [`Files`](files): directory where all extra configs live that will be symlink intoyour `$HOME`.
+- [`Extras/bin`](extras/bin): Anything in bin will get added to your `$PATH` and be made available everywhere.
 
 Missing feature? 🍴 Fork this repo and make it better ❤️
 
