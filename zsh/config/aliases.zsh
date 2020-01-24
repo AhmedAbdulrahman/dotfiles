@@ -154,7 +154,8 @@ alias rm_modules="find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"	# Recursively delete `.DS_Store` files
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 # alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes;sudo rm -rfv ~/.Trash"
-alias flushdns="sudo killall -HUP mDNSResponder"
+alias flushdns="sudo dscacheutil -flushcache; \
+                       sudo killall -HUP mDNSResponder"
 
 # ---------------------------------------------
 # Useful stuff - for LiveStream
