@@ -9,19 +9,16 @@ The color scheme is [**Aylin**](https://github.com/AhmedAbdulrahman/aylin-iterm-
 Table of Contents
 -----------------
 
-- [Ahmed’s dotfiles](#ahmeds-dotfiles)
-  - [Table of Contents](#table-of-contents)
-  - [What's it](#whats-it)
-  - [What's inside](#whats-inside)
-  - [Setup](#setup)
-      - [⚠️ Disclaimer! ⚠️](#%e2%9a%a0%ef%b8%8f-disclaimer-%e2%9a%a0%ef%b8%8f)
-  - [Customize](#customize)
-    - [Local Settings](#local-settings)
-      - [`~/.zshrc.local`](#zshrclocal)
-      - [`~/.gitconfig.local`](#gitconfiglocal)
-      - [`~/.vimrc.local`](#vimrclocal)
-  - [Resources](#resources)
-  - [License](#license)
+  * [💡What's it](#whats-it)
+  * [📦What's inside](#whats-inside)
+  * [🔧Setup](#setup)
+  * [💄Customize](#customize)
+    * [🌐 Local Settings](#local-settings)
+      * [🐚`~/.zshrc.local`](#zshrclocal)
+      * [🔁`~/.gitconfig.local`](#gitconfiglocal)
+      * [⌨️ `~/.vimrc.local`](#vimrclocal)
+  * [📚Resources](#resources)
+  * [📄License](#license)
 
 What's it
 ----------
