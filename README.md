@@ -22,7 +22,7 @@ Table of Contents
 
 What's it
 ----------
-This is where I keep all my configs and automated scripts that I use when I set up a new environment for macOS.
+This is where I keep all my dotfiles and configs, and as well as all the tools I commonly use. Every time I set up a new OS X machine I can execute a single command to `bootstrap` a new system and pull down all of my dotfiles and configs.
 
 What's inside
 -------------
@@ -141,5 +141,5 @@ This repo is inspired and influenced by
 
 License
 -------
-
-MIT © [`Ahmed Abdulrahman`](LICENSE.txt)
+Copyright © 2020 Ahmed Abdulrahman
+Licensed under the MIT [`license`](LICENSE.txt).
