@@ -151,6 +151,7 @@ main() {
   brew_install tmux --HEAD
   brew_install neovim --HEAD
   brew_install tree
+  brew_install lf
   brew_install newsboat                       # an RSS/Atom feed reader for the text console
   brew_install n                              # Interactively Manage Your Node.js Versions
   brew_install hub                            # an extension to command-line git that helps you do everyday GitHub tasks without ever leaving the terminal.
@@ -184,6 +185,7 @@ main() {
   brew_install terminal-notifier
   brew_install lsd
   brew_install grep
+  brew_install streamlink
   brew_install testssl
   brew_install exiftool
   brew_install rsync
@@ -203,6 +205,7 @@ main() {
   # Desktop applications
   brew_install cask firefox
   brew_install cask google-chrome
+  brew_install cask figma
   brew_install cask iterm2                      # iTerm2 is a replacement for Terminal and the successor to iTerm.
   brew_install cask visual-studio-code          # code editor
   brew_install cask karabiner                   # A powerful and stable keyboard customizer for macOS.
