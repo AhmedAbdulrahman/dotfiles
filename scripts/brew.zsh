@@ -151,7 +151,6 @@ main() {
   brew_install tmux --HEAD
   brew_install neovim --HEAD
   brew_install tree
-  brew_install lf
   brew_install newsboat                       # an RSS/Atom feed reader for the text console
   brew_install n                              # Interactively Manage Your Node.js Versions
   brew_install hub                            # an extension to command-line git that helps you do everyday GitHub tasks without ever leaving the terminal.
