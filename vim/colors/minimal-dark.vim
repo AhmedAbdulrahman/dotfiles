@@ -216,6 +216,7 @@ hi link cssUnitDecorators           String
 
 " GraphQL "
 hi link graphqlName           Function
+hi link graphqlString         Comment
 
 " HAML "
 hi link hamlTag               Character
