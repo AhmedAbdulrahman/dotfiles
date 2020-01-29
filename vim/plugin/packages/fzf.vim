@@ -94,7 +94,8 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 nnoremap <silent> <leader>/ :Rg<cr>
 nnoremap <silent> <leader><leader>/ :GRg<cr>
 nnoremap <silent> <expr> <leader><tab> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
-nnoremap <silent> <Leader><C-p> :GFiles<CR>
+nnoremap <silent> <Leader><C-p> :FGitFiles<Enter>
+nnoremap <silent> <Leader><C-s> :FGFiles?<Enter>
 nnoremap <silent> <M-x> :FCommands<Enter>
 nnoremap <silent> <M-b> :Buffers<Enter>
 nnoremap <silent> <C-f> :FTags<Enter>
