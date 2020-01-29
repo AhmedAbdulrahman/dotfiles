@@ -1,66 +1,47 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# Safer bash scripts with 'set -euxo pipefail'
-set -Eueo pipefail
-trap on_error SIGKILL SIGTERM
+declare -r GITHUB_REPOSITORY="AhmedAbdulrahman/dotfiles"
+declare -r GITHUB_REPO_URL_BASE="https://github.com/$GITHUB_REPOSITORY"
+declare -r HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
+declare -r LINUXBREW_INSTALLER_URL="https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh"
+declare -r DOTFILES_UTILS_URL="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/master/scripts/utils.sh"
 
-DOTFILES="$HOME/dotfiles"
-GITHUB_REPO_URL_BASE="https://github.com/AhmedAbdulrahman/dotfiles"
-HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
-LINUXBREW_INSTALLER_URL="https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh"
+declare -r DOTFILES="$HOME/dotfiles"
 
-e='\033'
-RESET="${e}[0m"
-BOLD="${e}[1m"
-CYAN="${e}[0;96m"
-RED="${e}[0;91m"
-YELLOW="${e}[0;93m"
-GREEN="${e}[0;92m"
+download() {
+    local url="$1"
+    local output="$2"
 
-_exists() {
-  command -v $1 > /dev/null 2>&1
+    if command -v "curl" &> /dev/null; then
+        curl -LsSo "$output" "$url" &> /dev/null
+        return $?
+
+    elif command -v "wget" &> /dev/null; then
+        wget -qO "$output" "$url" &> /dev/null
+        return $?
+    fi
+    return 1
 }
 
-# Success reporter
-info() {
-  echo -e "${CYAN}${*}${RESET}"
-}
+download_utils() {
+    local tmpFile=""
+    tmpFile="$(mktemp /tmp/XXXXX)"
 
-# Error reporter
-error() {
-  echo -e "${RED}${*}${RESET}"
-}
-
-# Success reporter
-success() {
-  echo -e "${GREEN}${*}${RESET}"
-}
-
-# End section
-finish() {
-  success "Done!"
-  echo
-  sleep 1
-}
-
-get_permission() {
-  # Ask for the administrator password upfront.
-  sudo -v
-  # Keep-alive: update existing `sudo` time stamp until the script has finished.
-  while true; do
-    sudo -n true
-    sleep 60
-    kill -0 "$$" || exit
-  done 2>/dev/null &
+    download "$DOTFILES_UTILS_URL" "$tmpFile" \
+        && . "$tmpFile" \
+        && rm -rf "$tmpFile" \
+        && return 0
+   return 1
 }
 
 print_prompt() {
-  echo "What you want to do?"
+  print_question "What you want to do?"
 
   PS3="Enter your choice (must be a number): "
-  options=("All" "Install package manager" "Clone Ahmed's dotfiles" "Symlink files" "Install macOS Apps" "Change shell" "Install XCode tools" "Quit")
+  
+  MENU_OPTIONS=("All" "Install package manager" "Clone Ahmed's dotfiles" "Symlink files" "Install macOS Apps" "Change shell" "Install XCode tools" "Quit")
 
-  select opt in "${options[@]}"; do
+  select opt in "${MENU_OPTIONS[@]}"; do
     case $opt in
     "All")
       all
@@ -85,7 +66,7 @@ print_prompt() {
       break
       ;;
     "Change shell")
-      get_permission
+      ask_for_sudo_permission
       install_package_manager
       install_zsh
       break
@@ -99,41 +80,25 @@ print_prompt() {
       break
       ;;
     *)
-      echo "Invalid option"
-      break
-      ;;
-    esac
+       print_error "Invalid option!"
+       PS3=$( echo -e $BLUE"Enter a valid choice? ") # this displays the common prompt
+       ;;
+     esac
   done
 }
 
 on_start() {
 
-  info  "   _____   ____ _______ ______ _____ _      ______  _____  "
-  error "  |  __ \ / __ \__   __|  ____|_   _| |    |  ____|/ ____| "
-  info  "  | |  | | |  | | | |  | |__    | | | |    | |__  | (___   "
-  error "  | |  | | |  | | | |  |  __|   | | | |    |  __|  \___ \  "
-  info  "  | |__| | |__| | | |  | |     _| |_| |____| |____ ____) | "
-  error "  |_____/ \____/  |_|  |_|    |_____|______|______|_____/  "
-  error "                                                           "
-  info  "                  by @AhmedAbdulrahman                     "
+  print_header
 
+  print_repo_info $DOTFILES
 
-  if [ -d "$DOTFILES/.git" ]; then
-command cat <<EOF
-      *******************************************
-              $(git --git-dir "$DOTFILES/.git" --work-tree "$DOTFILES" log -n 1 --pretty=format:'%C(yellow)Last commit SHA:  %h')
-              $(git --git-dir "$DOTFILES/.git" --work-tree "$DOTFILES" log -n 1 --pretty=format:'%C(red)Commit date:    %ad' --date=short)
-              $(git --git-dir "$DOTFILES/.git" --work-tree "$DOTFILES" log -n 1 --pretty=format:'%C(cyan)Author:  %an')
-      ********************************************
-EOF
-  fi
+  print_info "This script will guide you through installing essentials for your (Mac/Linux/Windows WIP)OS."
+  print_info "It won't install anything without your agreement!"
 
-  info "This script will guide you through installing essentials for your (Mac/Linux/Windows WIP)OS."
-  info "It won't install anything without your agreement!"
-  echo
-  read -p "Do you want to proceed with installation? [y/N] " -n 1 answer
-  echo
-  if [ ${answer} != "y" ]; then
+  ask_for_confirmation "Do you want to proceed with installation?"
+
+  if ! answer_is_yes; then
     exit 1
   fi
 
@@ -146,22 +111,23 @@ install_cli_tools() {
     return
   fi
 
-  info "Trying to detect installed Command Line Tools..."
+  print_info "Trying to detect installed Command Line Tools..."
 
   if ! [ $(xcode-select -p) ]; then
-    echo "You don't have Command Line Tools installed!"
+    print_info "You don't have Command Line Tools installed!"
     read -p "Do you agree to install Command Line Tools? [y/N] " -n 1 answer
-    echo
-    if [ ${answer} != "y" ]; then
+    ask_for_confirmation "Do you agree to install Command Line Tools?"
+
+    if ! answer_is_yes; then
       exit 1
     fi
 
-    info "Installing Command Line Tools..."
-    echo "Please, wait until Command Line Tools will be installed, before continue."
+    print_info "Installing Command Line Tools..."
+    print_info "Please, wait until Command Line Tools will be installed, before continue."
 
     xcode-select --install
   else
-    success "You already have Command Line Tools installed, nothing to do here skipping ... 💨"
+    print_info "You already have Command Line Tools installed, nothing to do here skipping ... 💨"
   fi
 
   finish
@@ -172,45 +138,43 @@ install_package_manager() {
   # macOS 
   if [ `uname` == 'Darwin' ]; then
 
-    info "Checking if Homebrew is installed..."
+    print_info "Checking if Homebrew is installed..."
     
-    if ! _exists $BREW_PATH; then
-      echo "Seems like you don't have Homebrew installed!"
-      read -p "Do you agree to proceed with Homebrew installation? [y/N] " -n 1 answer
-      echo
+    if ! cmd_exists $BREW_PATH; then
+      print_warning "Seems like you don't have Homebrew installed!"
+      ask_for_confirmation "Do you agree to proceed with Homebrew installation?"
 
-      if [ ${answer} != "y" ]; then
+      if ! answer_is_yes; then
         exit 1
       fi
 
-      info "Installing Homebrew..."
-      echo "This may take a while"
+      print_info "Installing Homebrew..."
+      print_info "This may take a while"
       
       ruby -e "$(curl -fsSL ${HOMEBREW_INSTALLER_URL})"
       # Make sure we’re using the latest Homebrew.
       $BREW_PATH update
       $BREW_PATH install stow
     else
-      success "You already have Homebrew installed, nothing to do here skipping ... 💨"
+      print_info "You already have Homebrew installed, nothing to do here skipping ... 💨"
       $BREW_PATH -v
     fi
 
   # Linux 
   elif [ `uname` == 'Linux' ]; then
     # You can choose something else for linux specifc like Linuxbrew, apt-get, yum, etc...
-    info "Checking if Linuxbrew is installed..."
+    print_info "Checking if Linuxbrew is installed..."
 
     if [! -d "$HOME/.linuxbrew" ]; then
-      echo "Seems like you don't have Linuxbrew installed!"
-      read -p "Do you agree to proceed with Linuxbrew installation? [y/N] " -n 1 answer
-      echo
+      print_info "Seems like you don't have Linuxbrew installed!"
+      ask_for_confirmation "Do you agree to proceed with Linuxbrew installation?"
 
-      if [ ${answer} != "y" ]; then
+      if ! answer_is_yes; then
         exit 1
       fi
 
-      info "Installing Linuxbrew..."
-      echo "This may take a while"
+      print_info "Installing Linuxbrew..."
+      print_info "This may take a while"
 
       ruby -e "$(curl -fsSL ${LINUXBREW_INSTALLER_URL})"
       # Make sure we’re using the latest Homebrew.
@@ -224,7 +188,7 @@ install_package_manager() {
       ln -s /usr/lib64/libstdc++.so.6 /lib64/libgcc_s.so.1 $HOME/.linuxbrew/lib/
 
     else
-      success "You already have Linuxbrew installed, nothing to do here skipping... 💨"
+      print_info "You already have Linuxbrew installed, nothing to do here skipping... 💨"
     fi
   
   fi
@@ -233,29 +197,30 @@ install_package_manager() {
 }
 
 install_git() {
-  info "Trying to detect installed Git..."
+  print_info "Trying to detect installed Git..."
   local BREW_PATH="/usr/local/bin/brew"
 
-  if ! _exists git; then
-    echo "Seems like you don't have Git installed!"
-    read -p "Do you agree to proceed with Git installation? [y/N] " -n 1 answer
-    echo
-    if [ ${answer} != "y" ]; then
+  if ! cmd_exists "git"; then
+    print_info "Seems like you don't have Git installed!"
+
+    ask_for_confirmation "Do you agree to proceed with Git installation?"
+
+    if ! answer_is_yes; then
       exit 1
     fi
 
-    info "Installing Git..."
+    print_info "Installing Git..."
 
     if [ `uname` == 'Darwin' ]; then
       $BREW_PATH install git
     elif [ `uname` == 'Linux' ]; then
       sudo apt-get install git
     else
-      error "Error: Failed to install Git!"
+      print_error "Error: Failed to install Git!"
       exit 1
     fi
   else
-    success "You already have Git installed. Skipping..."
+    print_info "You already have Git installed. Skipping..."
   fi
 
   finish
@@ -264,49 +229,51 @@ install_git() {
 install_zsh() {
   
   #Install ZSH
-  info "Trying to detect installed Zsh..."
+  print_info "Trying to detect installed Zsh..."
 
-  if ! _exists zsh; then
-    echo "Seems like you don't have Zsh installed!"
-    read -p "Do you agree to proceed with Zsh installation? [y/N] " -n 1 answer
-    echo
-    if [ ${answer} != "y" ]; then
+  if ! cmd_exists "zsh"; then
+    print_info "Seems like you don't have Zsh installed!"
+    ask_for_confirmation "Do you agree to proceed with Zsh installation?"
+
+    if ! answer_is_yes; then
       exit 1
     fi
 
-    info "Installing Zsh..."
+    print_info "Installing Zsh..."
 
     if [ `uname` == 'Darwin' ] || [ `uname` == 'Linux' ]; then
       brew install zsh
     else
-      error "Error: Failed to install Zsh!"
+      print_error "Failed to install Zsh!"
       exit 1
     fi
   else
-    success "You already have Zsh installed, nothing to do here skipping ... 💨"
+    print_info "You already have Zsh installed, nothing to do here skipping ... 💨"
   fi
 
-  if _exists zsh; then
-    info "Setting up Zsh as default shell..."
+  if cmd_exists "zsh"; then
     local BREW_ZSH_PATH="/usr/local/bin/zsh"
+    local ZSH_PATH=$(which zsh)
 
-    echo "The script will ask you the password for sudo when changing your default shell via chsh -s"
-    echo
+    print_info "Setting up Zsh as default shell..."
+
+    print_info "The script will ask you the password for sudo when changing your default shell via chsh -s"
 
     if ! grep -q "$BREW_ZSH_PATH" /etc/shells; then
-      info "Switching shell to zsh..."
-      local ZSH_PATH=$(which zsh)
+      print_info "Switching shell to zsh..."
 
       if [ -x "$BREW_ZSH_PATH" ]; then
         ZSH_PATH="$BREW_ZSH_PATH"
       else
-        info "Using system (outdated) zsh...."
+        print_info "Using system (outdated) zsh...."
       fi
+
       echo "$ZSH_PATH" | sudo tee -a /etc/shells >/dev/null
       chsh -s "$ZSH_PATH" "$(whoami)"
-      echo "You'll need to log out for this to take effect"
+      print_info "You'll need to log out for this to take effect"
+
     else
-        info "No need to switch ZSH shell!"
+      print_info "No need to switch ZSH shell!"
     fi
   fi
 
@@ -314,17 +281,18 @@ install_zsh() {
 }
 
 clone_dotfiles() {
-  info "Trying to detect if Ahmed's dotfiles is installed in $DOTFILES..."
+  print_question "Trying to detect if Ahmed's dotfiles is installed in $DOTFILES..."
 
   if [ ! -d $DOTFILES ]; then
-    echo "Seems like you don't have Ahmed's dotfiles installed!"
-    read -p "Do you agree to proceed with Ahmed's dotfiles installation? [y/N] " -n 1 answer
-    echo
-    if [ ${answer} != "y" ]; then
+    print_info "Seems like you don't have Ahmed's dotfiles installed!"
+
+    ask_for_confirmation "Do you agree to proceed with Ahmed's dotfiles installation?"
+
+    if ! answer_is_yes; then
       exit 1
     fi
 
-    echo "Cloning Ahmed's dotfiles"
+    print_info "Cloning Ahmed's dotfiles"
     git clone --recursive "$GITHUB_REPO_URL_BASE.git" $DOTFILES
 
     # Setup repo origin & mirrors
@@ -332,26 +300,26 @@ clone_dotfiles() {
       git remote set-url origin git@github.com:AhmedAbdulrahman/dotfiles.git
 
   else
-    success "You already have Ahmed's dotfiles installed. Skipping..."
-    echo "Pulling latest update..."
-    cd "$DOTFILES" &&
-      git stash -u &&
-      git checkout master &&
-      git reset --hard origin/master &&
-      git submodule update --init --recursive &&
-      git checkout - &&
-      git stash pop
+    print_info "You already have Ahmed's dotfiles installed. Skipping..."
+    print_info "Pulling latest update..."
+    # cd "$DOTFILES" &&
+    #   git stash -u &&
+    #   git checkout master &&
+    #   git reset --hard origin/master &&
+    #   git submodule update --init --recursive &&
+    #   git checkout - &&
+    #   git stash pop
   fi
 
   finish
 }
 
 symlink_files() {
-  info "Trying to detect if you have already cloned Ahmed's dotfiles..."
+  print_info "Trying to detect if you have already cloned Ahmed's dotfiles..."
 
   if [[ -d $DOTFILES ]]; then
-    success "Seems like you have Ahmed's dotfiles installed!"
-    echo "What files you want to Symlink?"
+    print_info "Seems like you have Ahmed's dotfiles installed!"
+    print_info "What files you want to Symlink?"
 
     PS3="Enter your choice (must be a number): "
     files=("All" "ZSH" "VIM" "TMUX" "FILES" "HAMMERSPOON" "Quit")
@@ -363,66 +331,39 @@ symlink_files() {
         break
         ;;
       "Quit")
-        info "We are done..."
         break
         ;;
       *)
-        error "Invalid option!"
+        print_error "Invalid option!"
         PS3="Enter a valid choice? " # this displays the common prompt
         ;;
       esac
     done
   else
-    error "You don't  Ahmed's dotfiles $DOTFILES in your machine!"
+    print_info "You don't Ahmed's dotfiles $DOTFILES in your machine!"
   fi
 }
 
 bootstrap_macOS_apps() {
   if [[ -d $DOTFILES ]]; then
-    echo "Seems like you have Ahmed's dotfiles installed!"
-    read -p "Would you like to bootstrap your environment by installing Homebrew formulae? [y/N] " -n 1 answer
-    echo
-    if [ ${answer} != "y" ]; then
-      return
+    print_info "Seems like you have Ahmed's dotfiles installed!"
+
+    ask_for_confirmation "Would you like to bootstrap your environment by installing Homebrew formulae?"
+
+    if ! answer_is_yes; then
+      exit 1
     fi
 
     cd "$DOTFILES" && make --ignore-errors bootstrap
   else
-    error "You don't  Ahmed's dotfiles $DOTFILES in your machine!"
+    print_info "You don't  Ahmed's dotfiles $DOTFILES in your machine!"
   fi
 
   finish
 }
 
-on_finish() {
-  echo
-  success "Setup was successfully done!"
-  success "Happy Coding!"
-  echo
-  echo -ne $RED'-_-_-_-_-_-_-_-_-_-_-_-_-_-_'
-  echo -e  $RESET$BOLD',------,'$RESET
-  echo -ne $YELLOW'-_-_-_-_-_-_-_-_-_-_-_-_-_-_'
-  echo -e  $RESET$BOLD'|   /\_/\\'$RESET
-  echo -ne $GREEN'-_-_-_-_-_-_-_-_-_-_-_-_-_-'
-  echo -e  $RESET$BOLD'~|__( ^ .^)'$RESET
-  echo -ne $CYAN'-_-_-_-_-_-_-_-_-_-_-_-_-_-_'
-  echo -e  $RESET$BOLD'""  ""'$RESET
-  echo
-  info "P.S: Don't forget to restart your terminal ;)"
-  echo "Cheers"
-  echo
-}
-
-on_error() {
-  echo
-  error "Wow... Something serious happened!"
-  error "In case if you need any help, raise an issue -> ${CYAN}${GITHUB_REPO_URL_BASE}issues/new${RESET}"
-  echo
-  exit 1
-}
-
 all() {
-  get_permission
+  ask_for_sudo_permission
   install_package_manager
   install_git
   install_cli_tools
@@ -434,13 +375,28 @@ all() {
   FAILED_COMMAND=$(fc -ln -1)
 
   if [ $? -eq 0 ]; then
-    success "Done."
+    print_success "Done."
   else
-    error "Something went wrong, [ Failed on: $FAILED_COMMAND ]"
+    print_error "Something went wrong, [ Failed on: $FAILED_COMMAND ]"
   fi
 }
 
 main() {
+
+  # Ensure that the following actions
+  # are made relative to this file's path.
+
+  cd "$(dirname "${BASH_SOURCE[0]}")" \
+      || exit 1
+  
+  # Load utils
+
+    if [ -x "scripts/utils.sh" ]; then
+        . "scripts/utils.sh" || exit 1
+    else
+        download_utils || exit 1
+    fi
+
   on_start
   print_prompt
   on_finish
