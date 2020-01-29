@@ -162,7 +162,7 @@ print_question() {
 
 # Warning reporter
 print_warning() {
-    echo -e "${YELLOW}[⚠] ${*}${RESET}"
+    echo -e "${YELLOW}[⚠ ] ${*}${RESET}"
 }
 
 # Info reporter
@@ -232,6 +232,6 @@ on_error() {
 
 # End section
 finish() {
-  echo -e $GREEN "Done!"
+  print_success "Done."
   sleep 1
 }
