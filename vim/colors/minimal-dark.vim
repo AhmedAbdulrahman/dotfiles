@@ -104,6 +104,11 @@ let colorgroup['GitGutterChange']         = {"GUIFG": _sap, "GUIBG":  _black}
 let colorgroup['GitGutterDelete']         = {"GUIFG": _pink, "GUIBG":  _black}
 let colorgroup['GitGutterChangeDelete']   = {"GUIFG": _sap, "GUIBG":  _black}
 
+let colorgroup['DiffAdd']           = {"GUIFG": _green, "GUIBG":  _black, "GUI":"NONE"}
+let colorgroup['DiffChange']        = {"GUIFG": _white, "GUIBG":  _black, "GUI":"NONE"}
+let colorgroup['DiffDelete']        = {"GUIFG": _pink, "GUIBG":  _black, "GUI":"NONE"}
+let colorgroup['DiffText']          = {"GUIFG": _pink, "GUIBG":  _black, "GUI":"NONE"}
+
 " Own highlighting groups "
 let colorgroup['UnderlinedBold']   = {"GUIFG": _marzipan, "GUI": "underline,bold"}
 
@@ -133,12 +138,19 @@ hi link Typedef               Type
 " ---------------------------------------------------------------------- "
 " CtrlP "
 hi link CtrlPMatch             Character
+
 " Git commit "
 hi link gitcommitBranch        Constant
 hi link gitcommitSelectedFile  Statement
 hi link gitcommitDiscardedFile Structure
 hi link gitcommitUntrackedFile Structure
 hi link gitcommitSummary       String
+
+" Fugitive "
+hi link DiffAdd DiffAdd
+hi link DiffChange DiffChange
+hi link DiffDelete DiffDelete
+hi link DiffText DiffText
 
 " GitGutter "
 hi link GitGutterAdd          GitGutterAdd
@@ -206,12 +218,12 @@ hi link cssProp               Function
 hi link cssPseudoClass        Character
 hi link cssPseudoClassId      Character
 hi link cssSelectorOp         Character
-hi link cssTagName           Identifier 
-hi link cssDefinition           Identifier 
-hi link cssNoise           Punctuation 
-hi link cssBraces           Punctuation 
-hi link cssIdentifier           Punctuation 
-hi link cssIncludeKeyword           Punctuation 
+hi link cssTagName           Identifier
+hi link cssDefinition           Identifier
+hi link cssNoise           Punctuation
+hi link cssBraces           Punctuation
+hi link cssIdentifier           Punctuation
+hi link cssIncludeKeyword           Punctuation
 hi link cssUnitDecorators           String
 
 " GraphQL "
@@ -244,7 +256,7 @@ hi link javascriptFuncKeyword Statement
 hi link javascriptOpSymbols   Type
 hi link javascriptParens      Punctuation
 hi link javascriptEndcolons   Character
-hi link jsArrowFuncArgs       Normal 
+hi link jsArrowFuncArgs       Normal
 hi link jsArrowFunction       Identifier
 hi link jsBraces              Punctuation
 hi link jsBrackets            Punctuation
@@ -272,7 +284,7 @@ hi link jsModuleBraces        Normal
 hi link jsModuleKeyword       Tag
 hi link jsNoise               Delimiter
 hi link jsObjectBraces        Punctuation
-hi link jsObjectKey           Normal 
+hi link jsObjectKey           Normal
 hi link jsObjectValue         PreProc
 hi link jsObjectProp          Function
 hi link jsObjectColon         Punctuation
@@ -288,8 +300,8 @@ hi link jsonKeywordMatch      Punctuation
 hi link jsonQuote             Attr
 hi link jsonNoise             Punctuation
 hi link jsonString            Punctuation
-hi link jsonBraces            Normal 
-hi link jsonBoolean           WarningMsg 
+hi link jsonBraces            Normal
+hi link jsonBoolean           WarningMsg
 
 hi link jsonNumError Comment
 hi link jsonCommentError Comment
@@ -339,8 +351,8 @@ hi link phpSuperglobals Normal "Global functions"
 hi link phpMagicConstants Normal "__CLASS__"
 hi link phpServerVars WarningMsg
 hi link phpMethods WarningMsg
-hi link phpMethodsVar Label 
-hi link phpSplatOperator Label 
+hi link phpMethodsVar Label
+hi link phpSplatOperator Label
 hi link phpStringDelimiter String "String Quotes"
 hi link phpStructure Label
 hi link phpStringSingle String
@@ -429,17 +441,17 @@ hi link sassId                Type
 hi link sassProperty          Type
 hi link scssProperty          Identifier
 hi link scssMixin          Identifier
-hi link scssVariable         Attr 
-hi link scssInclude         Identifier 
-hi link scssExtend         Identifier 
-hi link scssFunctionDefinition         Identifier 
-hi link scssReturn         Identifier 
-hi link scssEachKeyword         Identifier 
-hi link scssForKeyword         Identifier 
-hi link scssImport         Identifier 
-hi link scssSemicolon         Punctuation 
-hi link scssAtRoot         Identifier 
-hi link scssSelectorName         String 
+hi link scssVariable         Attr
+hi link scssInclude         Identifier
+hi link scssExtend         Identifier
+hi link scssFunctionDefinition         Identifier
+hi link scssReturn         Identifier
+hi link scssEachKeyword         Identifier
+hi link scssForKeyword         Identifier
+hi link scssImport         Identifier
+hi link scssSemicolon         Punctuation
+hi link scssAtRoot         Identifier
+hi link scssSelectorName         String
 
 " Slim "
 hi link slimBegin             Normal
