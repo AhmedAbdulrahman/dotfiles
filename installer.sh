@@ -302,13 +302,14 @@ clone_dotfiles() {
   else
     print_info "You already have Ahmed's dotfiles installed. Skipping..."
     print_info "Pulling latest update..."
-    # cd "$DOTFILES" &&
-    #   git stash -u &&
-    #   git checkout master &&
-    #   git reset --hard origin/master &&
-    #   git submodule update --init --recursive &&
-    #   git checkout - &&
-    #   git stash pop
+
+    cd "$DOTFILES" &&
+      git stash -u &&
+      git checkout master &&
+      git reset --hard origin/master &&
+      git submodule update --init --recursive &&
+      git checkout - &&
+      git stash pop
   fi
 
   finish
