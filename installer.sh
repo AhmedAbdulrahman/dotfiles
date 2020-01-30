@@ -115,7 +115,7 @@ install_cli_tools() {
 
   if ! [ $(xcode-select -p) ]; then
     print_info "You don't have Command Line Tools installed!"
-    read -p "Do you agree to install Command Line Tools? [y/N] " -n 1 answer
+
     ask_for_confirmation "Do you agree to install Command Line Tools?"
 
     if ! answer_is_yes; then
