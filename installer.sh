@@ -119,7 +119,7 @@ install_cli_tools() {
     ask_for_confirmation "Do you agree to install Command Line Tools?"
 
     if ! answer_is_yes; then
-      exit 1
+      return
     fi
 
     print_info "Installing Command Line Tools..."
@@ -138,13 +138,14 @@ install_package_manager() {
   # macOS 
   if [ `uname` == 'Darwin' ]; then
 
-    print_info "Checking if Homebrew is installed..."
+    print_info "Trying to detect if Homebrew is installed..."
     
     if ! cmd_exists $BREW_PATH; then
       print_warning "Seems like you don't have Homebrew installed!"
       ask_for_confirmation "Do you agree to proceed with Homebrew installation?"
 
       if ! answer_is_yes; then
+        print_warning "Keep in mind if you dont install in your machine you can't symlink files"
         exit 1
       fi
 
@@ -206,7 +207,7 @@ install_git() {
     ask_for_confirmation "Do you agree to proceed with Git installation?"
 
     if ! answer_is_yes; then
-      exit 1
+      return
     fi
 
     print_info "Installing Git..."
@@ -236,7 +237,7 @@ install_zsh() {
     ask_for_confirmation "Do you agree to proceed with Zsh installation?"
 
     if ! answer_is_yes; then
-      exit 1
+      return
     fi
 
     print_info "Installing Zsh..."
@@ -245,7 +246,7 @@ install_zsh() {
       brew install zsh
     else
       print_error "Failed to install Zsh!"
-      exit 1
+      return
     fi
   else
     print_info "You already have Zsh installed, nothing to do here skipping ... 💨"
@@ -284,12 +285,12 @@ clone_dotfiles() {
   print_question "Trying to detect if Ahmed's dotfiles is installed in $DOTFILES..."
 
   if [ ! -d $DOTFILES ]; then
-    print_info "Seems like you don't have Ahmed's dotfiles installed!"
+    print_info "Seems like you don't have Ahmed's dotfiles clone!"
 
     ask_for_confirmation "Do you agree to proceed with Ahmed's dotfiles installation?"
 
     if ! answer_is_yes; then
-      exit 1
+      return
     fi
 
     print_info "Cloning Ahmed's dotfiles"
@@ -303,13 +304,13 @@ clone_dotfiles() {
     print_info "You already have Ahmed's dotfiles installed. Skipping..."
     print_info "Pulling latest update..."
 
-    cd "$DOTFILES" &&
-      git stash -u &&
-      git checkout master &&
-      git reset --hard origin/master &&
-      git submodule update --init --recursive &&
-      git checkout - &&
-      git stash pop
+    # cd "$DOTFILES" &&
+    #   git stash -u &&
+    #   git checkout master &&
+    #   git reset --hard origin/master &&
+    #   git submodule update --init --recursive &&
+    #   git checkout - &&
+    #   git stash pop
   fi
 
   finish
@@ -352,12 +353,12 @@ bootstrap_macOS_apps() {
     ask_for_confirmation "Would you like to bootstrap your environment by installing Homebrew formulae?"
 
     if ! answer_is_yes; then
-      exit 1
+      break
     fi
 
     cd "$DOTFILES" && make --ignore-errors bootstrap
   else
-    print_info "You don't  Ahmed's dotfiles $DOTFILES in your machine!"
+    print_info "Skipping ... 💨!"
   fi
 
   finish
