@@ -60,7 +60,7 @@ kill_all_subprocesses() {
 
 }
 
-execute_cmd() {
+execute() {
 
     local -r CMDS="$1"
     local -r MSG="${2:-$1}"
