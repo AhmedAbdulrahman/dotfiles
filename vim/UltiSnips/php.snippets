@@ -1,0 +1,230 @@
+snippet pretty "Prettify Dump Output" b
+echo '<pre>'; print_r($1); echo '</pre>';${2}
+endsnippet
+
+# Helper Functions
+snippet dataUri "Create Data URI" b
+snippet forceLeadingZero "Force Leading Zero" b
+/**
+ *
+ * Create Data URI
+ *
+ * @param    file  $file The file to convert
+ * @param    mime  $mime The mime type
+ * @return   string
+ *
+ */
+
+function dataUri($1, $2) {
+  $contents = file_get_contents($1);
+  $base64   = base64_encode($contents);
+  return "data:$2;base64,$base64";
+}
+
+endsnippet
+
+snippet getUrl "Get Current Page URL" b
+function getUrl() {
+  $url  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://'.$_SERVER["SERVER_NAME"] :  'https://'.$_SERVER["SERVER_NAME"];
+  $url .= ( $_SERVER["SERVER_PORT"] !== 80 ) ? ":".$_SERVER["SERVER_PORT"] : "";
+  $url .= $_SERVER["REQUEST_URI"];
+  return $url;
+}
+endsnippet
+
+snippet getUserIP "Get Users IP Address" b
+/**
+ *
+ * Get Users IP Address
+ *
+ * @return   number
+ *
+ */
+
+function getUserIP() {
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip=$_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+        $ip=$_SERVER['REMOTE_ADDR'];
+    }
+    return $ip;
+}
+
+endsnippet
+
+snippet foreach "Looping" b
+foreach ($1 as $2 => $3) {
+ $4
+}
+endsnippet
+
+snippet unzipFile "Unzip Files" b
+/**
+ *
+ * Unzip Files
+ *
+ * @param    file  $file The zip file
+ * @return   void
+ *
+ */
+
+function unzipFile($1) {
+    $zip = zip_open($1);
+    if (is_resource($zip)) {
+    while ($zip_entry = zip_read($zip)) {
+        $fp = fopen("zip/".zip_entry_name($zip_entry), "w");
+        if (zip_entry_open($zip, $zip_entry, "r")) {
+        $buf = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+        fwrite($fp,"$buf");
+        zip_entry_close($zip_entry);
+        fclose($fp);
+        }
+    }
+    zip_close($zip);
+    }
+}
+endsnippet
+
+snippet getUrl "Sanitize Database Inputs" b
+/**
+ *
+ * Sanitize Database Inputs
+ *
+ * @param    string  $1 User input
+ * @return   string
+ *
+ */
+
+function sanitize($1) {
+    if (is_array($1)) {
+        foreach($1 as $var=>$val) {
+            $output[$var] = sanitize($val);
+        }
+    }
+    else {
+        if (get_magic_quotes_gpc()) {
+            $1 = stripslashes($1);
+        }
+        $search = array(
+            '@<script[^>]*?>.*?</script>@si',   // Strip out javascript
+            '@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
+            '@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
+            '@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
+        );
+    
+        $clean_input = preg_replace($search, '', $1);
+        $output = mysql_real_escape_string($cleanInput);
+    }
+    return $output;
+}
+endsnippet
+
+snippet forceLeadingZero "Force Leading Zero" b
+/**
+ *
+ * Force Leading Zero
+ *
+ * @param    number  $number The number to force leading
+ * @return   number
+ *
+ */
+
+function forceLeadingZero($1) {
+    return (int)sprintf('%02d',$1);
+}
+
+endsnippet
+
+snippet getZeroPaddedNumber "Zero Padded Numbers" b
+/**
+ *
+ * Zero Padded Numbers
+ *
+ * @param    number  $1 Value
+ * @param    number  $2 Padding
+ * @return   string|number
+ *
+ */
+
+function getZeroPaddedNumber($1, $2) {
+    return str_pad($1, $2, "0", STR_PAD_LEFT);
+}
+
+endsnippet
+
+snippet generateCsv "Generate CSV from Array" b
+/**
+ *
+ * Generate CSV from Array
+ *
+ * @param    array   $1 Data
+ * @param    string  $2 Delimiter
+ * @param    string  $2 Enclosure
+ * @return   string
+ *
+ */
+
+function generateCsv($1, $2 = ',', $3 = '"') {
+    $handle = fopen('php://temp', 'r+');
+    foreach ($1 as $line) {
+            fputcsv($handle, $line, $2, $3);
+    }
+    rewind($handle);
+    while (!feof($handle)) {
+            $contents .= fread($handle, 8192);
+    }
+    fclose($handle);
+    return $contents;
+}
+
+endsnippet
+
+snippet isValidEmail "Email Address Validation" b
+/**
+ *
+ * Email Address Validation
+ *
+ * @param    string   $1 The email address to validate
+ * @return   boolean
+ *
+ */
+
+function isValidEmail($1) {
+    // Perform a basic syntax-Check
+    // If this check fails, theres no need to continue
+    if(!filter_var($1, FILTER_VALIDATE_EMAIL))
+    {
+        return false;
+    }
+
+    //  extract host
+    list($user, $host) = explode("@", $1);
+    //  check, if host is accessible
+    if (!checkdnsrr($host, "MX") && !checkdnsrr($host, "A"))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+endsnippet
+
+snippet slugify "Create URL Slug from Post Title" b
+/**
+ *
+ * Create URL Slug from Post Title
+ *
+ * @param    string   $1 The Title to convert to slug
+ * @return   string
+ *
+ */
+
+function slugify($1){
+   $slug  =  preg_replace('/[^A-Za-z0-9-]+/', '-', $1);
+   return $slug;
+}
+
+endsnippet
