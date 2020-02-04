@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Safer bash scripts with 'set -euxo pipefail'
-set -Eueo pipefail
-trap on_error SIGKILL SIGTERM
-
 e='\033'
 RESET="${e}[0m"
 BOLD="${e}[1m"
@@ -145,42 +141,85 @@ is_git_repository() {
     git rev-parse &> /dev/null
 }
 
+print_in_color() {
+    printf "%b" \
+        "$(tput setaf "$2" 2> /dev/null)" \
+        "$1" \
+        "$(tput sgr0 2> /dev/null)"
+}
+
+print_in_green() {
+    print_in_color "$1" 2
+}
+
+print_in_purple() {
+    print_in_color "$1" 5
+}
+
+print_in_red() {
+    print_in_color "$1" 1
+}
+
+print_in_yellow() {
+    print_in_color "$1" 3
+}
+
+print_in_blue() {
+    print_in_color "$1" 4
+}
+
+print_question() {
+    print_in_yellow "   [?] $1"
+}
+
 # Success reporter
 print_success() {
-    echo -e "${GREEN}[✔] ${*}${RESET}"
+    print_in_green "   [✔] $1\n"
 }
 
 # Error reporter
 print_error() {
-    echo -e "${RED}[✖] ${*}${RESET}"
+    print_in_red "   [✖] $1 $2\n"
 }
 
 # question reporter
 print_question() {
-    echo -e "${CYAN}[?] ${*}${RESET}"
+    print_in_yellow "   [?] $1"
 }
 
 # Warning reporter
 print_warning() {
-    echo -e "${YELLOW}[⚠ ] ${*}${RESET}"
+    print_in_yellow "   [⚠] $1\n"
 }
 
 # Info reporter
 print_info() {
-    echo -e "${BLUE}[!] ${*}${RESET}"
+    print_in_blue "   [!] $1\n"
+}
+
+# Result reporter
+print_result() {
+
+    if [ "$1" -eq 0 ]; then
+        print_success "$2"
+    else
+        print_error "$2"
+    fi
+
+    return "$1"
+
 }
 
 # Print Banner
 print_header() {
-    # printf "%*s\n" $(((${#title}+$COLUMNS)/2)) "$title"
-    echo -e "$GREEN      _____   ____ _______ ______ _____ _      ______  _____  "
-    echo -e "$GREEN     |  __ \ / __ \__   __|  ____|_   _| |    |  ____|/ ____| "
-    echo -e "$GREEN     | |  | | |  | | | |  | |__    | | | |    | |__  | (___   "
-    echo -e "$GREEN     | |  | | |  | | | |  |  __|   | | | |    |  __|  \___ \  "
-    echo -e "$GREEN     | |__| | |__| | | |  | |     _| |_| |____| |____ ____) | "
-    echo -e "$GREEN     |_____/ \____/  |_|  |_|    |_____|______|______|_____/  "
-    echo -e "$GREEN                                                              "
-    echo -e "$GREEN                     by @AhmedAbdulrahman             ${RESET}"
+    print_in_green "    _____   ____ _______ ______ _____ _      ______  _____  \n"
+    print_in_green "   |  __ \ / __ \__   __|  ____|_   _| |    |  ____|/ ____| \n"
+    print_in_green "   | |  | | |  | | | |  | |__    | | | |    | |__  | (___   \n"
+    print_in_green "   | |  | | |  | | | |  |  __|   | | | |    |  __|  \___ \  \n"
+    print_in_green "   | |__| | |__| | | |  | |     _| |_| |____| |____ ____) | \n"
+    print_in_green "   |_____/ \____/  |_|  |_|    |_____|______|______|_____/  \n"
+    print_in_green "                                                            \n"
+    print_in_green "                   by @AhmedAbdulrahman                     \n"
 }
 
 # Print repo Info
@@ -206,27 +245,19 @@ set_trap() {
 }
 
 on_finish() {
-  echo
-  echo -e $GREEN"Setup was successfully done!"
-  echo -e $GREEN"Happy Coding!"
-  echo
-  echo -ne $RED'-_-_-_-_-_-_-_-_-_-_-_-_-_-_'
-  echo -e  $RESET$BOLD',------,'$RESET
-  echo -ne $YELLOW'-_-_-_-_-_-_-_-_-_-_-_-_-_-_'
-  echo -e  $RESET$BOLD'|   /\_/\\'$RESET
-  echo -ne $GREEN'-_-_-_-_-_-_-_-_-_-_-_-_-_-'
-  echo -e  $RESET$BOLD'~|__( ^ .^)'$RESET
-  echo -ne $CYAN'-_-_-_-_-_-_-_-_-_-_-_-_-_-_'
-  echo -e  $RESET$BOLD'""  ""'$RESET
-  echo
-  print_warning "P.S: Don't forget to restart your terminal ;)"
-  echo
+  print_in_green   "    Setup was successfully done! \n"
+  print_in_green   "    Happy Coding!\n\n"
+  print_in_red     '   -_-_-_-_-_-_-_-_-_-_-_-_-_-_'',------,'
+  print_in_yellow  '\n   -_-_-_-_-_-_-_-_-_-_-_-_-_-_''|   /\_/\\'
+  print_in_green   '\n   -_-_-_-_-_-_-_-_-_-_-_-_-_-''~|__( ^ .^)'
+  print_in_blue    '\n   -_-_-_-_-_-_-_-_-_-_-_-_-_-_''""  ""\n\n'
+  
+  print_warning    "P.S: Don't forget to restart your terminal ;)"
 }
 
 on_error() {
   print_error "Wow... Something serious happened!"
   print_error "In case if you need any help, raise an issue -> ${CYAN}${GITHUB_REPO_URL_BASE}issues/new${RESET}"
-  echo
   exit 1
 }
 
@@ -245,4 +276,75 @@ restart() {
     if answer_is_yes; then
         sudo shutdown -r now &> /dev/null
     fi
+}
+
+show_spinner() {
+
+    local -r FRAMES='/-\|'
+
+    # shellcheck disable=SC2034
+    local -r NUMBER_OR_FRAMES=${#FRAMES}
+
+    local -r CMDS="$2"
+    local -r MSG="$3"
+    local -r PID="$1"
+
+    local i=0
+    local frameText=""
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Note: In order for the Travis CI site to display
+    # things correctly, it needs special treatment, hence,
+    # the "is Travis CI?" checks.
+
+    if [ "$TRAVIS" != "true" ]; then
+
+        # Provide more space so that the text hopefully
+        # doesn't reach the bottom line of the terminal window.
+        #
+        # This is a workaround for escape sequences not tracking
+        # the buffer position (accounting for scrolling).
+        #
+        # See also: https://unix.stackexchange.com/a/278888
+
+        printf "\n\n\n"
+        tput cuu 3
+
+        tput sc
+
+    fi
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    # Display spinner while the commands are being executed.
+
+    while kill -0 "$PID" &>/dev/null; do
+
+        frameText="   [${FRAMES:i++%NUMBER_OR_FRAMES:1}] $MSG"
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        # Print frame text.
+
+        if [ "$TRAVIS" != "true" ]; then
+            printf "%s\n" "$frameText"
+        else
+            printf "%s" "$frameText"
+        fi
+
+        sleep 0.2
+
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        # Clear frame text.
+
+        if [ "$TRAVIS" != "true" ]; then
+            tput rc
+        else
+            printf "\r"
+        fi
+
+    done
+
 }
