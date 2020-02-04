@@ -35,11 +35,11 @@ download_utils() {
 }
 
 print_prompt() {
-  print_question "What you want to do?"
+  print_question "What you want to do?\n"
 
   PS3="Enter your choice (must be a number): "
   
-  MENU_OPTIONS=("All" "Install package manager" "Clone Ahmed's dotfiles" "Symlink files" "Install macOS Apps" "Change shell" "Install XCode tools" "Quit")
+  MENU_OPTIONS=("All" "Install package manager" "Clone Ahmed's dotfiles" "Symlink files" "Install macOS Apps" "Override macOS System Settings" "Change shell" "Install XCode tools" "Quit")
 
   select opt in "${MENU_OPTIONS[@]}"; do
     case $opt in
@@ -63,6 +63,10 @@ print_prompt() {
     "Install macOS Apps")
       install_package_manager
       bootstrap_macOS_apps
+      break
+      ;;
+    "Override macOS System Settings")
+      override_macOS_system_settings
       break
       ;;
     "Change shell")
@@ -304,13 +308,13 @@ clone_dotfiles() {
     print_info "You already have Ahmed's dotfiles installed. Skipping..."
     print_info "Pulling latest update..."
 
-    # cd "$DOTFILES" &&
-    #   git stash -u &&
-    #   git checkout master &&
-    #   git reset --hard origin/master &&
-    #   git submodule update --init --recursive &&
-    #   git checkout - &&
-    #   git stash pop
+    cd "$DOTFILES" &&
+      git stash -u &&
+      git checkout master &&
+      git reset --hard origin/master &&
+      git submodule update --init --recursive &&
+      git checkout - &&
+      git stash pop
   fi
 
   finish
@@ -364,6 +368,24 @@ bootstrap_macOS_apps() {
   finish
 }
 
+override_macOS_system_settings() {
+  if [[ -d $DOTFILES ]]; then
+
+    ask_for_confirmation "Would you like to Override macOS System Settings?"
+
+    if ! answer_is_yes; then
+      break
+    fi
+
+    cd "$DOTFILES" && make --ignore-errors macos
+    restart
+  else
+    print_info "Skipping ... 💨!"
+  fi
+
+  finish
+}
+
 all() {
   ask_for_sudo_permission
   install_package_manager
@@ -373,6 +395,7 @@ all() {
   install_zsh
   symlink_files
   bootstrap_macOS_apps
+  override_macOS_system_settings
 
   FAILED_COMMAND=$(fc -ln -1)
 

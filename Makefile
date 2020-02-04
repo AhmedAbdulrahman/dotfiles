@@ -33,3 +33,6 @@ bootstrap:
 
 python:
 	$(SCRIPTS)/python-packages.zsh
+
+macos:
+	sh $(DOTFILES)/extras/macos/setup.sh
