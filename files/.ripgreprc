@@ -10,7 +10,9 @@
 # Exclude directories (Ignore patterns)
 --glob=!{.git,.svn,.tldr,node_modules,Trash,vendor,dist,.next,log,vscode,idea,.cache}
 --glob=!vim/pack/*
---glob=!wp-content/uploads/*
+--glob=!wp/*
+--glob=!wp-content/{uploads,plugins,upgrade,cache,wflogs,w3tc-config}/*
+--glob=!wp-{admin,includes}/*
 
 # Exclude file types.
 --glob=!*.{map,direnv,envrc,pyc,png,jpg,jpeg,mp4,mkv,obj,ttf,sketch,zip,sql,min.js,DS_Store,un~,zwc,old,zwc.old,sw,local}
