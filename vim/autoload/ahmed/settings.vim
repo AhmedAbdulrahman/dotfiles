@@ -100,7 +100,7 @@ function! ahmed#settings#create_float(hl, opts) abort
 endfunction
 
 function! ahmed#settings#fzf_window() abort
-  return ahmed#settings#has_floating_window() ? 'call ahmed#settings#floating_fzf()' : 'silent 18split enew'
+  return ahmed#settings#has_floating_window() ? { 'width': 0.8 , 'height': 0.8 } : 'enew'
 endfunction
 
 function! ahmed#settings#attempt_select_last_file() abort
