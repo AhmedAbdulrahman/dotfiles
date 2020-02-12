@@ -121,6 +121,12 @@
     export HOMEBREW_FORCE_BREWED_GIT=1
 
     # ---------------------------------------------
+    # Telemetry
+    # ---------------------------------------------
+    export DO_NOT_TRACK=1
+    export GATSBY_TELEMETRY_DISABLED=1
+
+    # ---------------------------------------------
     # Direnv
     # ---------------------------------------------
     if [ $(command -v direnv) ]; then
