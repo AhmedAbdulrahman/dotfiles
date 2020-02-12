@@ -5,7 +5,7 @@
     "coc-emmet": ">=1.1.4",
     "coc-emoji": ">=1.2.3",
     "coc-github": ">=1.0.1",
-    "coc-html": ">=1.2.1",
+    "coc-html": ">=1.2.3",
     "coc-json": ">=1.2.4",
     "coc-phpls": ">=2.1.7",
     "coc-python": ">=1.2.7",
@@ -15,7 +15,7 @@
     "coc-tailwindcss": ">=0.4.0",
     "coc-tsserver": ">=1.4.9",
     "coc-vimlsp": ">=0.4.5",
-    "coc-yaml": ">=1.0.2",
+    "coc-yaml": ">=1.0.3",
     "wordpress-toolbox": "https://github.com/jason-pomerleau/vscode-wordpress-toolbox"
   }
 }
