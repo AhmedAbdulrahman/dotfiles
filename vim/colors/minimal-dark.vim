@@ -193,13 +193,20 @@ hi link StartifyFile          Normal
 
 " Languages/Tools "
 " ---------------------------------------------------------------------- "
+
 " highlight clear ALEErrorSign "
-"hi link ALEErrorSign          Type"
-"hi link ALEWarningSign        Special"
-hi link ALEErrorSign WarningMsg
-hi link ALEWarningSign WarningMsg
-hi link ALEVirtualTextError WarningMsg
-hi link ALEVirtualTextWarning WarningMsg
+if exists('g:ale_enabled')
+  hi! link ALEError WarningMsg
+  hi! link ALEWarning WarningMsg
+  hi! link ALEInfo WarningMsg
+
+  hi! link ALEErrorSign WarningMsg
+  hi! link ALEWarningSign WarningMsg
+  hi! link ALEInfoSign WarningMsg
+  hi! link ALEVirtualTextWarning WarningMsg
+  hi! link ALEVirtualTextError WarningMsg
+endif
+
 
 " Apache "
 hi link apacheDeclaration     PreProc
