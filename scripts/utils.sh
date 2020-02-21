@@ -182,6 +182,12 @@ print_error() {
     print_in_red "   [✖] $1 $2\n"
 }
 
+print_error_stream() {
+    while read -r line; do
+        print_error "↳ ERROR: $line"
+    done
+}
+
 # question reporter
 print_question() {
     print_in_yellow "   [?] $1"
