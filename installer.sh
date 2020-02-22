@@ -325,26 +325,15 @@ symlink_files() {
 
   if [[ -d $DOTFILES ]]; then
     print_info "Seems like you have Ahmed's dotfiles installed!"
-    print_info "What files you want to Symlink?"
 
-    PS3="Enter your choice (must be a number): "
-    files=("All" "ZSH" "VIM" "TMUX" "FILES" "HAMMERSPOON" "Quit")
+    print_info "Symlinking files/folders..."
+    
+    cd "$DOTFILES" &&
+      cp files/.gitconfig.local $HOME/.gitconfig.local &&
+      cp zsh/.zshrc.local $HOME/.zshrc.local &&
+      make symlink &&
+      make gpg
 
-    select file in "${files[@]}"; do
-      case $file in
-      All|ZSH|VIM|TMUX|FILES|HAMMERSPOON)
-        cd "$DOTFILES" && make --ignore-errors link file="$(echo "$file" | tr '[:upper:]' '[:lower:]')"
-        break
-        ;;
-      "Quit")
-        break
-        ;;
-      *)
-        print_error "Invalid option!"
-        PS3="Enter a valid choice? " # this displays the common prompt
-        ;;
-      esac
-    done
   else
     print_info "You don't Ahmed's dotfiles $DOTFILES in your machine!"
   fi
@@ -352,15 +341,24 @@ symlink_files() {
 
 bootstrap_macOS_apps() {
   if [[ -d $DOTFILES ]]; then
-    print_info "Seems like you have Ahmed's dotfiles installed!"
-
     ask_for_confirmation "Would you like to bootstrap your environment by installing Homebrew formulae?"
 
     if ! answer_is_yes; then
       break
     fi
 
-    cd "$DOTFILES" && make --ignore-errors bootstrap
+    if [ "$(uname)" = "Darwin" ]; then
+
+      if [ "$(echo "$0" | tr '[:upper:]' '[:lower:]')" == "work"  ]; then
+        cd "$DOTFILES" && make --ignore-errors homebrew-work
+      else
+        cd "$DOTFILES" && make --ignore-errors homebrew-personal
+      fi
+
+    else
+      print_info "Install Linux packages here..."
+    fi
+
   else
     print_info "Skipping ... 💨!"
   fi
@@ -401,6 +399,9 @@ all() {
 
   if [ $? -eq 0 ]; then
     print_success "Done."
+    print_info "Open a new tab & change to \"cd ~/dotfiles, then type make\" to Install Node packages, Python packages & macOS Settings" \
+      "Don't forget to generate SSH keys & import gpg keys"
+      command vim -u NONE $HOME/.{gitconfig,zshrc}.local
   else
     print_error "Something went wrong, [ Failed on: $FAILED_COMMAND ]"
   fi
