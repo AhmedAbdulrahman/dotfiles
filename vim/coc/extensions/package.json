@@ -8,7 +8,7 @@
     "coc-html": ">=1.2.3",
     "coc-json": ">=1.2.4",
     "coc-phpls": ">=2.1.7",
-    "coc-python": ">=1.2.8",
+    "coc-python": ">=1.2.9",
     "coc-rls": ">=1.1.4",
     "coc-snippets": ">=2.1.19",
     "coc-svg": ">=0.0.13",
