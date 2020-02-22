@@ -47,7 +47,6 @@ cdpath=(
 # Set the list of directories that Zsh searches for programs.
 path=(
   ./node_modules/.bin
-  ${XDG_CONFIG_HOME}/yarn/global/node_modules/.bin(N-/)
   ${DOTFILES}/extras/bin(N-/)
   ${HOME}/.local/bin(N-/)
   ${HOMEBREW_PREFIX}/opt/curl/bin(N-/)
