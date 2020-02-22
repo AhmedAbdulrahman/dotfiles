@@ -228,6 +228,28 @@ print_header() {
     print_in_green "                   by @AhmedAbdulrahman                     \n"
 }
 
+print_macos_header() {
+    print_in_green "                         ____   _____    \n"
+    print_in_green "                        / __ \ / ____|   \n"
+    print_in_green "  _  __  ___   __ _  ___| |  | | (___    \n"
+    print_in_green "  | | _ / _ \ / _\ | / __| |  | |\___ \  \n"
+    print_in_green "  | |  | | | | (_| | (__| |__| |____) |  \n"
+    print_in_green "  |_|  |_| |_|\__,_|\___|\____/|_____/   \n"
+    print_in_green "                                         \n"
+    print_in_green "          by @AhmedAbdulrahman           \n"
+}
+
+print_node_header() {
+    print_in_green "   _   _           _           _  _____  "
+    print_in_green "  | \ | |         | |         | |/ ____| "
+    print_in_green "  |  \| | ___   __| | ___     | | (___   "
+    print_in_green "  | . ' |/ _ \ / _' |/ _ \_   | |\___ \  "
+    print_in_green "  | |\  | (_) | (_| |  __/ |__| |____) | "
+    print_in_green "  |_| \_|\___/ \__,_|\___|\____/|_____/  "
+    print_in_green "                                         "
+    print_in_green "          by @AhmedAbdulrahman           \n"
+}
+
 # Print repo Info
 print_repo_info() {
     if is_git_repository; then
