@@ -8,6 +8,6 @@
 
 *.un~
 *.zwc
+!.ignore
 *.old
-*.zwc.old
-vim/coc/
+log.*.txt

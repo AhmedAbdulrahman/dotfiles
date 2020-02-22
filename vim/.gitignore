@@ -1,8 +1,8 @@
-vim/coc/
+coc/
 vim/tmp/
 vim/cache/
-vim/vim-persisted-undo
-!vim/coc/extensions/yarn.lock
-!vim/coc/extensions/package.json
+vim-persisted-undo
+!coc/extensions/yarn.lock
+!coc/extensions/package.json
 *.spl
 *.sug
