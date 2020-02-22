@@ -162,6 +162,8 @@ main() {
   mas install 552383089
   # Alfred
   mas install 405843582
+  
+  finish
 }
 
 main
