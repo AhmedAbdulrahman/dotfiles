@@ -1,4 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
+cd "$(dirname "${BASH_SOURCE[0]}")" \
+    && . "./utils.sh"
 
 type pip3 >/dev/null 2>&1 || {
   echo >&2 "# pip3 must be installed."
@@ -30,3 +33,5 @@ for package in "${PACKAGES[@]}"; do
 done
 
 unset -v PACKAGES FLAGS
+
+finish
