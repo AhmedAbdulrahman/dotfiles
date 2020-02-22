@@ -12,27 +12,35 @@ CANDIDATES = $(wildcard hammerspoon tmux vim zsh newsboat)
 EXCLUSIONS := .DS_Store .git .gitmodules .travis.yml
 DIRS   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 
-link:
+all: node python macos
+
+symlink:
 	@echo "→ Setup Environment Settings"
+	@echo "→ Symlinking $(DIRS) files"
 
-    ifeq "$(dir)" "all"
-		@echo "→ Symlinking $(DIRS) files"
-		@$(foreach val, $(DIRS), sh $(DOTFILES)/$(val)/setup.sh && /usr/local/bin/stow --restow -vv --ignore ".DS_Store" --target="$(HOME)/.$(val)" --dir="$(DOTFILES)" $(val);)
-    else ifeq "$(dir)" "files"
-		@echo "→ Symlinking $(dir) dir"
-		/usr/local/bin/stow --restow -vv --ignore ".DS_Store" --target="$(HOME)" --dir="$(DOTFILES)" $(dir)
-    else
-		@echo "→ Symlinking $(dir) dir"
-		sh $(DOTFILES)/$(dir)/setup.sh
-		/usr/local/bin/stow --restow -vv --ignore ".DS_Store" --target="$(HOME)/.$(dir)" --dir="$(DOTFILES)" $(dir)
-    endif
+	@$(foreach val, $(DIRS), sh $(DOTFILES)/$(val)/setup.sh && stow --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)/.$(val)" --dir="$(DOTFILES)" $(val);)
+	stow --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)" --dir="$(DOTFILES)" files
 
-bootstrap:
-	$(SCRIPTS)/brew.zsh
-	$(SCRIPTS)/nodejs.zsh
+gpg: symlink
+	# Fix gpg folder/file permissions after symlinking
+	chmod 700 $(HOME)/.gnupg && chmod 600 $(HOME)/.gnupg/*
+
+homebrew:
+	sh $(SCRIPTS)/brew.sh
+
+homebrew-personal: homebrew
+	sh $(SCRIPTS)/brew-personal.sh
+
+homebrew-work: homebrew
+	sh $(SCRIPTS)/brew-work.sh
 
 python:
-	$(SCRIPTS)/python-packages.zsh
+	sh $(SCRIPTS)/python-packages.sh
+
+node:
+	sh $(SCRIPTS)/nodejs.sh
 
 macos:
 	sh $(DOTFILES)/extras/macos/setup.sh
+
+.PHONY: all symlink homebrew homebrew-personal homebrew-work node python macos
