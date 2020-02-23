@@ -24,12 +24,14 @@ alias oo='open .'
 # Copy & Move
 # ---------------------------------------------
 # `rm` and `mv` are so dangerous, they must always ask for confirmation.
-alias rm='trash' # Use `trash` program instead of built-in irrecoverable way to delete nodes.
-alias mv='mv --interactive --verbose' # Move nodes with interactive mode and extra verbosity.
-alias cp='cp --interactive --verbose' # Copy nodes with interactive mode and extra verbosity.
-alias mkdir='mkdir --parents' # Make missing parent directories when creating folders.
+alias rm="${aliases[rm]:-rm} -i"
+alias mv="${aliases[mv]:-mv} -iv"
+alias cp="${aliases[cp]:-cp} -iv"
+alias ln="${aliases[ln]:-ln} -iv"
+alias mkdir="${aliases[mkdir]:-mkdir} -p"
 alias e="${(z)VISUAL:-${(z)EDITOR}}"
 alias which='which -a'
+alias type='type -a'
 alias trimcopy="tr -d '\n' | pbcopy"	# Trim new lines and copy to clipboard
 
 # ---------------------------------------------
