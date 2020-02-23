@@ -14,7 +14,7 @@ main() {
   brew cleanup
 
   # Finish
-  print_in_green "\n Applications & CLI Tools for Work were successfully installed on your macOS machine!"
+  print_in_green "\n   Work related Applications & CLI Tools were successfully installed on your macOS machine! \n\n"
 }
 
 main
