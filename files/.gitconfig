@@ -2,14 +2,28 @@
 ; vim: ft=gitconfig
 
 [user]
-	useconfigonly=true
+	useconfigonly = true
 
 # use separate file for username / github token / etc
 [include]
 	path = ~/.gitconfig.local
 
+[gpg]
+  program = /usr/local/bin/gpg
+
 [commit]
   verbose = true
+  gpgsign = true
+
+[core]
+	editor = $EDITOR
+	commitGraph = true
+	whitespace=fix,space-before-tab,tab-in-indent,trailing-space,cr-at-eol
+	excludesfile = ~/.config/git/.gitignore
+  	attributesfile = ~/.config/git/.gitattributes
+	untrackedCache = true
+	pager = diff-so-fancy | less --tabs=4 -RFX
+	commentChar = %
 
 [alias]
 	# branch
@@ -25,17 +39,6 @@
 	rename = "!change() { git branch -m $1 $2; git push origin :$1; git push --set-upstream origin $2; }; change" 
 	# list commited files name, Usage: $ git cf <COMMIT_ID>
 	cf = "!show_commited_files() { git diff-tree --no-commit-id --name-only -r $1; }; show_commited_files"  
-
-
-[core]
-	editor = $EDITOR
-	commitGraph = true
-	whitespace=fix,space-before-tab,tab-in-indent,trailing-space,cr-at-eol
-	excludesfile = ~/.config/git/.gitignore
-  	attributesfile = ~/.config/git/.gitattributes
-	untrackedCache = true
-	pager = diff-so-fancy | less --tabs=4 -RFX
-	commentChar = %
 
 [branch]
   autosetupmerge = always
