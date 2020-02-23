@@ -47,7 +47,7 @@ alias KABOOM="yarn global upgrade --latest;brew update; brew upgrade; brew clean
 # ---------------------------------------------
 # Git
 # ---------------------------------------------
-alias commit='git commit -m'
+alias commit='git commit -S -s -m'
 alias amend="git commit --amend"
 alias master="git checkout master"
 alias develop="git checkout develop"
@@ -55,10 +55,6 @@ alias status="git status"
 alias push="git push"
 alias pull='git pull'
 alias save='git stash save -u'
-alias logf='git log --date-order --all --graph --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
-alias logs='git log --date-order --all --graph --name-status --format="%C(green)%h%Creset %C(yellow)%an%Creset %C(blue bold)%ar%Creset %C(red bold)%d%Creset%s"'
-alias loga='git log --graph --decorate --pretty=oneline --abbrev-commit --all'
-alias logd='git log --graph --decorate --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative --all'
 alias undo='git reset HEAD~'			# Undo commit and unstage all files
 alias undosoft='git reset --soft HEAD~'	# Undo commit and keep all files staged
 alias undohard='git reset --hard HEAD~'	# Undo the commit and completely remove all changes

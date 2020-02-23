@@ -1,0 +1,4 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+unalias log-all 2> /dev/null
+
+git log --graph --decorate --pretty=oneline --abbrev-commit --all
