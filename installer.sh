@@ -138,31 +138,27 @@ install_cli_tools() {
 }
 
 install_package_manager() {
-  local BREW_PATH="/usr/local/bin/brew"
   # macOS 
   if [ `uname` == 'Darwin' ]; then
 
     print_info "Trying to detect if Homebrew is installed..."
     
-    if ! cmd_exists $BREW_PATH; then
+    if ! cmd_exists "brew"; then
       print_warning "Seems like you don't have Homebrew installed!"
-      ask_for_confirmation "Do you agree to proceed with Homebrew installation?"
-
-      if ! answer_is_yes; then
-        print_warning "Keep in mind if you dont install in your machine you can't symlink files"
-        exit 1
-      fi
-
-      print_info "Installing Homebrew..."
-      print_info "This may take a while"
+      print_info "Installing Homebrew...This may take a while"
       
-      ruby -e "$(curl -fsSL ${HOMEBREW_INSTALLER_URL})"
+      printf "\n" | ruby -e "$(curl -fsSL ${HOMEBREW_INSTALLER_URL})" &> /dev/null
+
+      print_result $? "Homebrew"
+
+      brew_opt_out_of_analytics
+
       # Make sure we’re using the latest Homebrew.
-      $BREW_PATH update
-      $BREW_PATH install stow
+      brew_update
+      brew_install "Stow" "stow"
+
     else
       print_info "You already have Homebrew installed, nothing to do here skipping ... 💨"
-      $BREW_PATH -v
     fi
 
   # Linux 
@@ -203,7 +199,6 @@ install_package_manager() {
 
 install_git() {
   print_info "Trying to detect installed Git..."
-  local BREW_PATH="/usr/local/bin/brew"
 
   if ! cmd_exists "git"; then
     print_info "Seems like you don't have Git installed!"
@@ -217,11 +212,11 @@ install_git() {
     print_info "Installing Git..."
 
     if [ `uname` == 'Darwin' ]; then
-      $BREW_PATH install git
+      brew_install "Git" "git"
     elif [ `uname` == 'Linux' ]; then
       sudo apt-get install git
     else
-      print_error "Error: Failed to install Git!"
+      print_error "Failed to install Git!"
       exit 1
     fi
   else
