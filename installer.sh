@@ -115,24 +115,12 @@ install_cli_tools() {
     return
   fi
 
-  print_info "Trying to detect installed Command Line Tools..."
+  print_info "Trying to detect installed Command Line Tools..." 
 
-  if ! [ $(xcode-select -p) ]; then
-    print_info "You don't have Command Line Tools installed!"
-
-    ask_for_confirmation "Do you agree to install Command Line Tools?"
-
-    if ! answer_is_yes; then
-      return
-    fi
-
-    print_info "Installing Command Line Tools..."
-    print_info "Please, wait until Command Line Tools will be installed, before continue."
-
-    xcode-select --install
-  else
-    print_info "You already have Command Line Tools installed, nothing to do here skipping ... 💨"
-  fi
+  install_xcode_command_line_tools
+  install_xcode
+  set_xcode_developer_directory
+  agree_with_xcode_licence
 
   finish
 }
