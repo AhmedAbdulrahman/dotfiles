@@ -59,7 +59,11 @@ main() {
   brew_install "Httpie" "httpie"
   # Install `wget` with IRI support.
   brew_install "Wget" "wget"
+  
+  print_in_purple "\n   GPG\n\n"
+  brew_install "GPG" "gpg"
   brew_install "Pinentry" "pinentry-mac"
+
   brew_install "ZSH" "zsh"
   # Install a modern version of Bash.
   brew_install "Modern version of Bash" "bash"
