@@ -21,6 +21,8 @@ main() {
   # Start
   on_start
 
+  print_in_purple "\n • Installing macOS Essential Apps and CLI Utils\n\n"
+
   # Make sure we’re using the latest Homebrew.
   brew_update
   # Upgrade any already-installed formulae.
@@ -43,7 +45,6 @@ main() {
   brew_install "Git" "git"
   brew_install "Git" "hub"
   brew_install "Python" "python"
-  brew_install "Python@2" "python@2"
   brew_install "Gawk" "gawk"
   # Install GNU `sed`, overwriting the built-in `sed`.
   brew_install "GNU-sed" "gnu-sed"
@@ -155,7 +156,8 @@ main() {
   brew_install "Webp Quicklook" "webpquicklook" "homebrew/cask" "cask"
   brew_install "Fira Code Font" "font-fira-code" "homebrew/cask" "cask"
   brew_install "Hack Nerd Font" "font-hack-nerd-font" "homebrew/cask" "cask"
-  
+
+  print_in_purple "\n   Installing Apps from the App Store...\n" 
   # Spark
   mas install 1176895641
   # The Unarchiver

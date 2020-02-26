@@ -4,6 +4,9 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
     && . "./utils.sh"
 
 main() {
+
+  print_in_purple "\n • Installing Personal Preferred Apps and CLI Utils\n\n"
+
   brew_tap "zegervdv/zathura"
 
   # goes here ....
@@ -28,6 +31,7 @@ main() {
   brew_install "Notion" "notion" "homebrew/cask" "cask"
   brew_install "DB Browser for SQLite" "db-browser-for-sqlite" "homebrew/cask" "cask"
 
+  print_in_purple "\n   Installing Apps from the App Store...\n"
   # Byword'
   mas install 420212497
   # Giphy Capture
@@ -45,7 +49,7 @@ main() {
   brew cleanup
 
   # Finish
-  print_in_green "\n Personal Applications & CLI Tools were successfully installed on your macOS machine!"
+  print_in_green "\n  Applications & CLI Tools were successfully installed on your macOS machine! \n\n"
 }
 
 main
