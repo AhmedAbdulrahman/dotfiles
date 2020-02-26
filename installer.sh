@@ -197,7 +197,7 @@ install_git() {
       return
     fi
 
-    print_info "Installing Git..."
+    print_in_purple "\n • Installing Git\n\n"
 
     if [ `uname` == 'Darwin' ]; then
       brew_install "Git" "git"
@@ -207,6 +207,19 @@ install_git() {
       print_error "Failed to install Git!"
       exit 1
     fi
+
+    print_in_purple "\n • Set up GitHub SSH keys\n\n"
+    if ! is_git_repository; then
+        print_error "Not a Git repository"
+        exit 1
+    fi
+    ssh -T git@github.com &> /dev/null
+
+    if [ $? -ne 1 ]; then
+        set_github_ssh_key
+    fi
+
+    print_result $? "Set up GitHub SSH keys"
   else
     print_info "You already have Git installed. Skipping..."
   fi
