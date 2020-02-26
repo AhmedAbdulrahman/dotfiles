@@ -1,7 +1,0 @@
-# vim:ft=zsh:
-
-echo "Feel free to keep and secret keys here"
-
-export NPM_AUTH_TOKEN=
-export GITHUB_TOKEN=
-export HOMEBREW_GITHUB_API_TOKEN=

@@ -309,11 +309,14 @@ symlink_files() {
   if [[ -d $DOTFILES ]]; then
     print_info "Seems like you have Ahmed's dotfiles installed!"
 
-    print_info "Symlinking files/folders..."
-    
+    print_in_purple "\n • Create local config files\n\n"
+
+    create_gitconfig_local
+    create_zshrc_local
+    create_vimrc_local
+
+    print_in_purple "\n • Symlinking files/folders\n\n"
     cd "$DOTFILES" &&
-      cp files/.gitconfig.local $HOME/.gitconfig.local &&
-      cp zsh/.zshrc.local $HOME/.zshrc.local &&
       make symlink &&
       make gpg
 
