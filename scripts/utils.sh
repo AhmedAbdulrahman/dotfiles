@@ -550,3 +550,51 @@ set_xcode_developer_directory() {
     print_result $? "Make 'xcode-select' developer directory point to the appropriate directory from within Xcode.app"
 
 }
+
+create_gitconfig_local() {
+    declare -r FILE_PATH="$HOME/.gitconfig.local"
+
+    if [ ! -e "$FILE_PATH" ] || [ -z "$FILE_PATH" ]; then
+
+        printf "%s\n" \
+"; vim: ft=gitconfig
+
+[commit]
+    # Sign commits using GPG.
+    # gpgsign = true
+[user]
+    name =
+    email =
+    # signingkey =" \
+        >> "$FILE_PATH"
+    fi
+    print_result $? "$FILE_PATH"
+}
+
+create_zshrc_local() {
+    declare -r FILE_PATH="$HOME/.zshrc.local"
+
+    if [ ! -e "$FILE_PATH" ] || [ -z "$FILE_PATH" ]; then
+        printf "%s\n" \
+"#!/bin/bash
+
+# Feel free to keep all your secret keys here
+
+export NPM_AUTH_TOKEN=
+export GITHUB_TOKEN=
+export HOMEBREW_GITHUB_API_TOKEN=" \
+        >> "$FILE_PATH"
+    fi
+
+    print_result $? "$FILE_PATH"
+}
+
+create_vimrc_local() {
+    declare -r FILE_PATH="$HOME/.vimrc.local"
+
+    if [ ! -e "$FILE_PATH" ]; then
+        printf "" >> "$FILE_PATH"
+    fi
+
+    print_result $? "$FILE_PATH"
+}
