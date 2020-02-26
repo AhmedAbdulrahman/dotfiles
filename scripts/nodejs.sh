@@ -20,23 +20,22 @@ on_start() {
 
 configure_npm() {
   # Ask required parameters
-  print_info "Configure NPM\n"
+  print_info "NPM Configuration\n"
 
-  # Defaults
-  local name="Ahmed Abdulrahman"
-  local email="a.kasapbashi@live.com"
+  local name=""
+  local email=""
 
-  ask "What is your name? ($name): " && read NAME
-  ask "What is your email? ($email): " && read EMAIL
+  ask "What is your name: " && printf "\n"
+  name="$(get_answer)"
 
-  # If required parameters are not entered, set them default values
-  : ${NAME:="$name"}
-  : ${EMAIL:="$email"}
+  ask "What is your email: " && printf "\n"
+  email="$(get_answer)"
 
-  print_info "Author name set as: $NAME \n"
-  npm set init.author.name "$NAME"
-  print_info "\n Author email set as: $EMAIL \n"
-  npm set init.author.email "$EMAIL"
+  print_success "Author name set as: $name \n"
+  npm set init.author.name "$name"
+
+  print_success "\n Author email set as: $email \n"
+  npm set init.author.email "$email"
 
   finish
 }
