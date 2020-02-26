@@ -6,7 +6,7 @@
     "coc-emoji": ">=1.2.3",
     "coc-github": ">=1.0.1",
     "coc-html": ">=1.2.3",
-    "coc-json": ">=1.2.4",
+    "coc-json": ">=1.2.5",
     "coc-phpls": ">=2.1.7",
     "coc-python": ">=1.2.9",
     "coc-rls": ">=1.1.4",
