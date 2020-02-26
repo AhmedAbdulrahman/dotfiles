@@ -11,10 +11,6 @@
 [gpg]
   program = /usr/local/bin/gpg
 
-[commit]
-  verbose = true
-  gpgsign = true
-
 [core]
 	editor = $EDITOR
 	commitGraph = true
