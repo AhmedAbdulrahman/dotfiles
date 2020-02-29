@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+__WIFI_NAME=$(wifi)
+
+case $__WIFI_NAME in
+LS* | Lightspeed*)
+  __LOCATION="Stockholm"
+  ;;
+*)
+  __LOCATION=""
+  ;;
+esac
+
+printf "%s#[fg=#8d929b] ⦁ " "$(curl -s "https://wttr.in/$__LOCATION?format=%l:+%c+%t+%w" 2>/dev/null)"
