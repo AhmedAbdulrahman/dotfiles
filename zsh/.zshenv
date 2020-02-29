@@ -7,8 +7,8 @@
 
 # set -o noclobber
 
-# # True color
-# export COLORTERM=truecolor
+# True color
+export COLORTERM='truecolor'
 
 # ---------------------------------------------
 # Environment
