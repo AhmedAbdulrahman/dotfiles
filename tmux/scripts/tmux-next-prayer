@@ -33,8 +33,9 @@ AGENTS = [
     "Mozilla",
 ]
 
+
 def get_api():
-    url = "https://api.aladhan.com/v1/timingsByCity?city={city}&country={country}&method={method}&tune=0,-18,0,0,0,0,0,12,0".format(
+    url = "https://api.aladhan.com/v1/timingsByCity?city={city}&country={country}&method={method}&tune=0,-23,-5,7,7,7,0,-25,0".format(
         city=CITY, country=COUNTRY, method=METHOD
     )
 
