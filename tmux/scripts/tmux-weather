@@ -11,4 +11,4 @@ LS* | Lightspeed*)
   ;;
 esac
 
-printf "%s#[fg=#8d929b] ⦁ " "$(curl -s "https://wttr.in/$__LOCATION?format=%l:+%c+%t+%w" 2>/dev/null)"
+printf "%s#[fg=#8d929b] ⦁ " "$(curl -s "https://wttr.in/$__LOCATION?format=%c+%t" 2>/dev/null)"
