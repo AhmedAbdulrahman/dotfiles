@@ -38,8 +38,8 @@ print_prompt() {
   print_question "What you want to do?\n"
 
   PS3="Enter your choice (must be a number): "
-  
-  MENU_OPTIONS=("All" "Install package manager" "Clone Ahmed's dotfiles" "Symlink files" "Install macOS Apps" "Override macOS System Settings" "Change shell" "Install XCode tools" "Quit")
+
+  MENU_OPTIONS=("All" "Install package manager" "Install Git and Setup SSH" "Clone Ahmed's dotfiles" "Symlink files" "Install macOS Apps" "Override macOS System Settings" "Change shell" "Install XCode tools" "Quit")
 
   select opt in "${MENU_OPTIONS[@]}"; do
     case $opt in
@@ -49,6 +49,10 @@ print_prompt() {
       ;;
     "Install package manager")
       install_package_manager
+      break
+      ;;
+    "Install Git and Setup SSH")
+      install_git
       break
       ;;
     "Clone Ahmed's dotfiles")
@@ -109,13 +113,13 @@ on_start() {
 }
 
 install_cli_tools() {
-  # Install Cli Tools. 
+  # Install Cli Tools.
   # Note:There's not need to install XCode tools on Linux
   if [ `uname` == 'Linux' ]; then
     return
   fi
 
-  print_info "Trying to detect installed Command Line Tools..." 
+  print_info "Trying to detect installed Command Line Tools..."
 
   install_xcode_command_line_tools
   install_xcode
@@ -126,15 +130,15 @@ install_cli_tools() {
 }
 
 install_package_manager() {
-  # macOS 
+  # macOS
   if [ `uname` == 'Darwin' ]; then
 
     print_info "Trying to detect if Homebrew is installed..."
-    
+
     if ! cmd_exists "brew"; then
       print_warning "Seems like you don't have Homebrew installed!"
       print_info "Installing Homebrew...This may take a while"
-      
+
       printf "\n" | ruby -e "$(curl -fsSL ${HOMEBREW_INSTALLER_URL})" &> /dev/null
 
       print_result $? "Homebrew"
@@ -149,7 +153,7 @@ install_package_manager() {
       print_info "You already have Homebrew installed, nothing to do here skipping ... 💨"
     fi
 
-  # Linux 
+  # Linux
   elif [ `uname` == 'Linux' ]; then
     # You can choose something else for linux specifc like Linuxbrew, apt-get, yum, etc...
     print_info "Checking if Linuxbrew is installed..."
@@ -179,7 +183,7 @@ install_package_manager() {
     else
       print_info "You already have Linuxbrew installed, nothing to do here skipping... 💨"
     fi
-  
+
   fi
 
   finish
@@ -208,27 +212,36 @@ install_git() {
       exit 1
     fi
 
-    print_in_purple "\n • Set up GitHub SSH keys\n\n"
-    if ! is_git_repository; then
-        print_error "Not a Git repository"
-        exit 1
-    fi
-    ssh -T git@github.com &> /dev/null
-
-    if [ $? -ne 1 ]; then
-        set_github_ssh_key
-    fi
-
-    print_result $? "Set up GitHub SSH keys"
   else
-    print_info "You already have Git installed. Skipping..."
+    print_info "You already have Git installed! nothing to do here skipping... 💨"
   fi
+
+  ask_for_confirmation "Do you want to setup SSH?"
+
+  if ! answer_is_yes; then
+   return
+  fi
+
+  print_in_purple "\n • Set up GitHub SSH keys\n\n"
+
+  if ! is_git_repository; then
+    print_error "Not a Git repository"
+    exit 1
+  fi
+
+  ssh -T git@github.com &> /dev/null
+
+  if [ $? -ne 1 ]; then
+   set_github_ssh_key
+  fi
+
+  print_result $? "Set up GitHub SSH keys"
 
   finish
 }
 
 install_zsh() {
-  
+
   #Install ZSH
   print_info "Trying to detect installed Zsh..."
 
@@ -413,7 +426,7 @@ main() {
 
   cd "$(dirname "${BASH_SOURCE[0]}")" \
       || exit 1
-  
+
   # Load utils
 
     if [ -x "scripts/utils.sh" ]; then
