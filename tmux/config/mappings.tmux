@@ -128,3 +128,5 @@ bind-key -T copy-mode-vi J \
 	send-keys -X cursor-down \; \
 	send-keys -X cursor-down \; \
 	send-keys -X cursor-down \;
+
+if-shell 'test -f "~/.tmux.config.local"' 'source -q ~/.tmux.config.local'
