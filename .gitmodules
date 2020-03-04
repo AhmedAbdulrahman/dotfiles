@@ -93,4 +93,4 @@
 	url = https://github.com/mustache/vim-mustache-handlebars.git
 [submodule "vim/pack/bundle/opt/goyo"]
 	path = vim/pack/bundle/opt/goyo
-	url = git@github.com:junegunn/goyo.vim.git
+	url = https://github.com/junegunn/goyo.vim.git
