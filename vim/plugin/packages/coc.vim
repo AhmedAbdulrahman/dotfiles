@@ -8,7 +8,7 @@ scriptencoding UTF-8
 let g:coc_auto_copen = v:false
 
 " List of extensions."
-let g:coc_extension_root = $VIMHOME . '/coc/extensions'
+let g:coc_data_home = $VIMHOME . '/coc/extensions'
 
 " Environment node"
 let g:coc_node_path=exepath('node')
@@ -218,7 +218,7 @@ let g:coc_user_config = {
 	\ 'snippets': {
 		\ 'priority': 200,
 		\ 'shortcut': 'S',
-		\ 'ultisnips': { 
+		\ 'ultisnips': {
 			\ 'enable': v:true
 		\ },
 	\ },
@@ -254,12 +254,12 @@ if !empty(s:languageservers)
 endif
 
 " Go to definition of word under cursor "
-nmap <silent> <Leader>dd <Plug>(coc-definition) 
+nmap <silent> <Leader>dd <Plug>(coc-definition)
 nmap <silent> <Leader>dt <Plug>(coc-type-definition)
 " Find references "
-nmap <silent> <Leader>dr <Plug>(coc-references) 
+nmap <silent> <Leader>dr <Plug>(coc-references)
 " Go to implementation "
-nmap <silent> <Leader>dj <Plug>(coc-implementation) 
+nmap <silent> <Leader>dj <Plug>(coc-implementation)
 
 " rename the current word in the cursor "
 nmap <Leader>rn  <Plug>(coc-rename)
