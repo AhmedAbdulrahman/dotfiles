@@ -4,11 +4,6 @@
 () {
 
     # ---------------------------------------------
-    # Python
-    # ---------------------------------------------
-    export PYTHONSTARTUP="${HOME}/.pyrc.py" 
-    
-    # ---------------------------------------------
     # Z
     # ---------------------------------------------
     [[ -f "${HOMEBREW_PREFIX}/etc/profile.d/z.sh" ]] && source "${HOMEBREW_PREFIX}/etc/profile.d/z.sh"
@@ -17,19 +12,13 @@
     # FZF
     # ---------------------------------------------
 
-    if [[ -f "${HOME}/.fzf.zsh" ]]; then
-        source "${HOME}/.fzf.zsh"
+    if [[ -f "${XDG_CONFIG_HOME}/fzf/fzf.zsh" ]]; then
+        source "${XDG_CONFIG_HOME}/fzf/fzf.zsh"
     else
         echo "y" | "${HOMEBREW_PREFIX}/opt/fzf/install" --xdg --no-update-rc
     fi
 
     export VIM_FZF_LOG=$(git config --get alias.l 2>/dev/null | awk '{$1=""; print $0;}' | tr -d '\r')
-    FZF_FILE_HIGHLIGHTER='cat {}'
-    (( $+commands[rougify]   )) && FZF_FILE_HIGHLIGHTER='rougify'
-    (( $+commands[coderay]   )) && FZF_FILE_HIGHLIGHTER='coderay'
-    (( $+commands[highlight] )) && FZF_FILE_HIGHLIGHTER='highlight -O ansi -l {}'
-    (( $+commands[bat]       )) && FZF_FILE_HIGHLIGHTER='bat --theme="OneHalfDark" --style=numbers,changes --wrap never --color always {}'
-    export FZF_FILE_HIGHLIGHTER
 
     FZF_DIR_HIGHLIGHTER='ls -l --color=always'
     (( $+commands[tree] )) && FZF_DIR_HIGHLIGHTER='tree -CtrL2'
@@ -41,7 +30,7 @@
 
     typeset -AU __FZF
     if (( $+commands[fd] )); then
-        __FZF[CMD]='fd --hidden --follow --no-ignore-vcs --exclude ".git/*" --exclude ".git" --exclude "node_modules/*" --exclude "tags"'
+		__FZF[CMD]='fd --hidden --no-ignore-vcs --exclude ".git" --exclude "node_modules" --exclude ".DS_Store" --exclude "tags"'
         __FZF[DEFAULT]="${__FZF[CMD]} --type f"
         __FZF[ALT_C]="${__FZF[CMD]} --type d ."
         __FZF[ALT_E]="${__FZF[CMD]} --type f"
@@ -53,58 +42,15 @@
     fi
 
     export FZF_DEFAULT_COMMAND="${__FZF[DEFAULT]}"  # FZF DEFAULT CMD
+	export FZF_PREVIEW_COMMAND="bat --style=numbers,changes --wrap never --color always {} || cat {} || tree -C {}"
     export FZF_CTRL_T_COMMAND="${__FZF[CMD]} | iconful -f "    # FZF: Ctrl + T
     export FZF_ALT_C_COMMAND="${__FZF[ALT_C]} | iconful -d"  # FZF: ALT + C
     export FZF_ALT_E_COMMAND="${__FZF[ALT_E]} | iconful -f"  # FZF: ALT + E
 
-    export FZF_DEFAULT_OPTS="
-    --height 80%
-    --tabstop 2 
-    --extended
-    --ansi
-    --reverse
-    --cycle
-    --bind ctrl-s:toggle-sort
-    --bind ?:toggle-preview
-    --bind \"ctrl-y:execute-silent(ruby -e 'puts ARGV' {+} | pbcopy)+abort\"
-    --bind 'alt-e:execute($EDITOR {} >/dev/tty </dev/tty)'
-    --preview \"($FZF_FILE_HIGHLIGHTER {} || $FZF_DIR_HIGHLIGHTER {}) 2>/dev/null | head -200\"
-    --preview-window right:60%
-    --color=fg:#d0d0d0,bg:#25262e,hl:#d7005f
-    --color=fg+:#d0d0d0,bg+:#25262e,hl+:#5fd7ff
-    --color=info:#afaf87,prompt:#d7005f,pointer:#7edbca
-    --color=marker:#ffa7c4,spinner:#ffa7c4
-    "
-
-    export FZF_CTRL_T_OPTS="
-    --min-height 30 
-    --preview \"($FZF_FILE_HIGHLIGHTER {$FZF_PATH_LOC} || $FZF_DIR_HIGHLIGHTER {$FZF_PATH_LOC}) 2>/dev/null | head -200\"
-    --bind 'enter:execute(echo {$FZF_PATH_LOC})+abort'
-    --bind 'alt-e:execute($EDITOR {$FZF_PATH_LOC} >/dev/tty </dev/tty)'
-    --bind \"ctrl-y:execute-silent(ruby -e 'puts ARGV' {+$FZF_PATH_LOC} | pbcopy)+abort\"
-    --preview-window right:70%
-    --color=bg+:24
-    --color=fg:#d0d0d0,bg:#25262e,hl:#5f87af
-    --color=fg+:#d0d0d0,bg+:#25262e,hl+:#5fd7ff
-    --color=info:#afaf87,prompt:#d7005f,pointer:#7edbca
-    --color=marker:#ffa7c4,spinner:#ffa7c4
-    "
-
-    export FZF_CTRL_R_OPTS="
-    --preview 'echo {}'
-    --preview-window 'down:2:wrap'
-    --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
-    --header 'Press CTRL-Y to copy command into clipboard'
-    --exact
-    --expect=ctrl-x
-    --border
-    "
-    export FZF_ALT_C_OPTS="
-    --exit-0
-    --bind 'enter:execute(echo {$FZF_PATH_LOC})+abort'
-    --preview 'tree -C {} 2> /dev/null'
-    --preview-window=right:60%
-    "
+	export FZF_DEFAULT_OPTS="--reverse --tabstop 2 --multi --color=bg+:-1 --bind '?:toggle-preview'"
+	export FZF_CTRL_T_OPTS="--preview '($FZF_PREVIEW_COMMAND) 2> /dev/null' --preview-window down:60%:noborder"
+	export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:wrap:hidden --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard'"
+	export FZF_ALT_C_OPTS="--preview 'tree -C {} 2> /dev/null'"
 
     export FZF_ALT_E_OPTS="
     --preview \"($FZF_FILE_HIGHLIGHTER {$FZF_PATH_LOC} || $FZF_DIR_HIGHLIGHTER {$FZF_PATH_LOC}) 2>/dev/null | head -200\"
@@ -113,47 +59,30 @@
     --preview-window=down:60%
     "
 
-    # ---------------------------------------------
-    # HOMEBREW
-    # ---------------------------------------------
-    export HOMEBREW_INSTALL_BADGE="🏎"
-    export HOMEBREW_NO_ANALYTICS=1
-    export HOMEBREW_FORCE_BREWED_GIT=1
-
-    # ---------------------------------------------
-    # Telemetry
-    # ---------------------------------------------
-    export DO_NOT_TRACK=1
-    export GATSBY_TELEMETRY_DISABLED=1
-
-    # ---------------------------------------------
-    # Direnv
-    # ---------------------------------------------
-    if [ $(command -v direnv) ]; then
-    export NODE_VERSIONS="${HOME}/.node-versions"
-    export NODE_VERSION_PREFIX=""
-    eval "$(direnv hook zsh)"
-    fi
-
-    # ---------------------------------------------
-    # Others
-    # ---------------------------------------------
-    export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
-    export BAT_CONFIG_PATH="${HOME}/.config/bat/config" # Bat
-    # export RIPGREP_CONFIG_PATH="${HOME}/.rgrc"
-
     # ------------------------------------------------------
     # Make sure git completions are the good ones
     # For reference: https://github.com/github/hub/pull/1962
     # ------------------------------------------------------
-    (
-    if [ -e /usr/local/share/zsh/site-functions/_git ]; then
-        command mv -f /usr/local/share/zsh/site-functions/{,disabled.}_git
-    fi
-    ) &!
+	if [ "$(uname)" = "Darwin" ]; then
+		(
+		if [ -e /usr/local/share/zsh/site-functions/_git ]; then
+			command mv -f /usr/local/share/zsh/site-functions/{,disabled.}_git
+		fi
+		) &!
+	fi
+
+	if [[ -f ${HOME}/.zshrc.local ]]; then
+		source $HOME/.zshrc.local
+	else
+		[[ -z "${HOMEBREW_GITHUB_API_TOKEN}" ]] && echo "⚠ HOMEBREW_GITHUB_API_TOKEN not set." && _has_unset_config=yes
+		[[ -z "${GITHUB_TOKEN}" ]] && echo "⚠ GITHUB_TOKEN not set." && _has_unset_config=yes
+		[[ -z "${GITHUB_USER}" ]] && echo "⚠ GITHUB_USER not set." && _has_unset_config=yes
+		[[ ${_has_unset_config:-no} == "yes" ]] && echo "Set the missing configs in ~/.zshrc"
+	fi
 
     (( $+commands[thefuck] )) && source <(thefuck --alias 2>/dev/null)
     (( $+commands[pyenv]   )) && source <(pyenv init -)
+    (( $+commands[hub] )) && eval "$(hub alias -s)"
 
     # Profile
     # Uncomment the line below and start a new shell. Don't forget to uncomment the

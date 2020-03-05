@@ -25,17 +25,42 @@ export XDG_DATA_HOME=${XDG_DATA_HOME_HOME:-$HOME/.local/share}
 # ---------------------------------------------
 # Homebrew
 # ---------------------------------------------
+export HOMEBREW_INSTALL_BADGE="🍄"
 export HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-"/usr/local"}
 export HOMEBREW_CELLAR=${HOMEBREW_CELLAR:-"/usr/local/Cellar"}
 export HOMEBREW_REPOSITORY=${HOMEBREW_REPOSITORY:-"/usr/local/Homebrew"}
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_FORCE_BREWED_GIT=1
 
 # ---------------------------------------------
-# Ripgrep
+# Telemetry
 # ---------------------------------------------
-export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+export DO_NOT_TRACK=1
+export GATSBY_TELEMETRY_DISABLED=1
 
 # ---------------------------------------------
-# Other useful environment settings
+# Python
+# ---------------------------------------------
+export PYTHONSTARTUP="${HOME}/.pyrc.py"
+
+# ---------------------------------------------
+# Direnv
+# ---------------------------------------------
+if [ $(command -v direnv) ]; then
+   export NODE_VERSIONS="${HOME}/.node-versions"
+   export NODE_VERSION_PREFIX=""
+   eval "$(direnv hook zsh)"
+fi
+
+# ---------------------------------------------
+# Others
+# ---------------------------------------------
+export BAT_CONFIG_PATH="${HOME}/.batrc"
+export RIPGREP_CONFIG_PATH="${HOME}/.rgrc"
+
+
+# ---------------------------------------------
+# Environment settings
 # ---------------------------------------------
 export OSTYPE=$(uname -s)
 export HOSTNAME=$(hostname)
