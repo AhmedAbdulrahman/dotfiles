@@ -15,7 +15,7 @@
 --map-syntax h:cpp
 
 # Use "gitignore" highlighting for ".ignore" files
---map-syntax .ignore:.gitignore
+--map-syntax .ignore:gitignore
 
 # Use "gitconfig" highlighting for ".gitconfig" file
 --map-syntax .gitconfig.local:gitconfig
