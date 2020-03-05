@@ -94,3 +94,6 @@
 [submodule "vim/pack/bundle/opt/goyo"]
 	path = vim/pack/bundle/opt/goyo
 	url = https://github.com/junegunn/goyo.vim.git
+[submodule "vim/pack/bundle/opt/limelight"]
+	path = vim/pack/bundle/opt/limelight
+	url = https://github.com/junegunn/limelight.vim.git

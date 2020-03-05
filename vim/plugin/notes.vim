@@ -25,4 +25,7 @@ func! s:note_edit(...)
   else
     exec "normal ggO\<c-r>=strftime('%Y-%m-%d %H:%M')\<cr>\<cr>\<esc>G"
   endif
+
+  silent! packadd goyo
+  silent! Goyo
 endfunc
