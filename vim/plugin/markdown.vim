@@ -66,8 +66,43 @@ function! s:goyo_leave() abort
   endif
 endfunction
 
+" Goyo Presentation mode"
+" copied from https://gist.github.com/davidmh/f4337f9ea9eca6789b3f8222b8333a35"
+" use <left> and <right> to navigate the slides "
+
+function! s:enter_presentation() abort
+    " Increase conceal level "
+    set conceallevel=3
+    " Open first fold "
+    normal ggzo
+    " Add navigation "
+    " C-n next slide "
+        " zc - close current fold "
+        " zj - move to the next "
+        " zo - and open it "
+        " [z - move to the start of the current fold "
+        " j  - move the cursor out of the way "
+    nnoremap <buffer> <right> zczjzo[z<esc>j
+    " C-p previous slide "
+        " zc - close current fold "
+        " zk - move to the previous "
+        " zo - and open it "
+        " [z - move to the start of the current fold "
+        " j  - move the cursor out of the way "
+    nnoremap <buffer> <left> zczkzo[zj
+endfunction
+
+function! s:exit_presentation() abort
+    " Reset conceal level "
+    set conceallevel=0
+    nunmap <buffer> <left>
+    nunmap <buffer> <right>
+endfunction
+
 augroup MyMarkdownGoyo
   autocmd!
   autocmd User GoyoEnter call <SID>goyo_enter()
   autocmd User GoyoLeave call <SID>goyo_leave()
+  "autocmd User GoyoEnter call <SID>enter_presentation()"
+  "autocmd User GoyoLeave call <SID>exit_presentation"
 augroup END
