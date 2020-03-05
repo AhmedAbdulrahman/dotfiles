@@ -2,7 +2,9 @@
 " Fuzzy finder fzf as Vim plugin."
 ""
 
-let g:fzf_files_options = '--preview "bat --color always --wrap never --style numbers,changes {2..} | head -'.&lines.'"'
+if !empty(expand($FZF_CTRL_T_OPTS))
+  let g:fzf_files_options = $FZF_CTRL_T_OPTS
+endif
 
 if !empty(expand($VIM_FZF_LOG))
   let g:fzf_commits_log_options = $VIM_FZF_LOG
@@ -10,7 +12,7 @@ endif
 
 "Override `fzf` options."
 if !empty(expand($FZF_DEFAULT_OPTS))
-  let $FZF_DEFAULT_OPTS .=" --layout=reverse --margin='1,3' --no-inline-info --bold --color='fg+:15,bg+:-1,info:8,prompt:0,pointer:12'"
+  let $FZF_DEFAULT_OPTS .= ' --margin=1,3'
 endif
 
 " Add prefix 'Fzf' commands for grouping."
