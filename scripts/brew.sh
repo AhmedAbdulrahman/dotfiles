@@ -60,7 +60,7 @@ main() {
   brew_install "Httpie" "httpie"
   # Install `wget` with IRI support.
   brew_install "Wget" "wget"
-  
+
   print_in_purple "\n   GPG\n\n"
   brew_install "GPG" "gpg"
   brew_install "Pinentry" "pinentry-mac"
@@ -83,6 +83,8 @@ main() {
   brew_install "Newsboat" "newsboat"
 
   print_in_purple "\n   Core Utils\n"
+  brew_install "Pyenv" "pyenv"
+  brew_install "Pip Env" "pipenv"
   brew_install "Tree" "tree"
   brew_install "Hub" "hub"
   brew_install "Fzf" "fzf"
@@ -126,7 +128,7 @@ main() {
   brew_install "Tldr" "tldr"
     # A simple command line interface for the Mac App Store
   brew_install "MAS -> Mac App Store command line interface" "mas"
-  
+
   print_in_purple "\n   Desktop applications\n"
   brew_install "Chrome" "google-chrome" "homebrew/cask" "cask"
   brew_install "Chrome Canary" "google-chrome-canary" "homebrew/cask-versions" "cask"
@@ -135,8 +137,8 @@ main() {
   brew_install "Firefox Developer" "firefox-developer-edition" "homebrew/cask-versions" "cask"
   brew_install "Firefox Nightly" "firefox-nightly" "homebrew/cask-versions" "cask"
   brew_install "iTerm2" "iterm2" "homebrew/cask" "cask"
-  brew_install "VSCode" "visual-studio-code" "homebrew/cask" "cask" 
-  brew_install "Karabiner Elements" "karabiner-elements" "homebrew/cask" "cask" 
+  brew_install "VSCode" "visual-studio-code" "homebrew/cask" "cask"
+  brew_install "Karabiner Elements" "karabiner-elements" "homebrew/cask" "cask"
   brew_install "Spectacle" "spectacle" "homebrew/cask" "cask"
   brew_install "Hammerspoon" "hammerspoon" "homebrew/cask" "cask"
   brew_install "Insomnia" "insomnia" "homebrew/cask" "cask"
@@ -145,19 +147,19 @@ main() {
   brew_install "Kap" "kap" "homebrew/cask" "cask"
   brew_install "ImageOptim" "imageoptim" "homebrew/cask" "cask"
   brew_install "MPV" "mpv" "homebrew/cask" "cask"
-  brew_install "Qlcolorcode" "qlcolorcode" "homebrew/cask" "cask" 
-  brew_install "Qlmarkdown" "qlmarkdown" "homebrew/cask" "cask" 
-  brew_install "Quicklook JSON" "quicklook-json" "homebrew/cask" "cask" 
-  brew_install "Quicklook CSV" "quicklook-csv" "homebrew/cask" "cask" 
+  brew_install "Qlcolorcode" "qlcolorcode" "homebrew/cask" "cask"
+  brew_install "Qlmarkdown" "qlmarkdown" "homebrew/cask" "cask"
+  brew_install "Quicklook JSON" "quicklook-json" "homebrew/cask" "cask"
+  brew_install "Quicklook CSV" "quicklook-csv" "homebrew/cask" "cask"
   brew_install "Qlstephen" "qlstephen" "homebrew/cask" "cask"
-  brew_install "Qlimagesize" "qlimagesize" "homebrew/cask" "cask" 
-  brew_install "Qlprettypatch" "qlprettypatch" "homebrew/cask" "cask" 
+  brew_install "Qlimagesize" "qlimagesize" "homebrew/cask" "cask"
+  brew_install "Qlprettypatch" "qlprettypatch" "homebrew/cask" "cask"
   brew_install "Qlvideo" "qlvideo" "homebrew/cask" "cask"
   brew_install "Webp Quicklook" "webpquicklook" "homebrew/cask" "cask"
   brew_install "Fira Code Font" "font-fira-code" "homebrew/cask" "cask"
   brew_install "Hack Nerd Font" "font-hack-nerd-font" "homebrew/cask" "cask"
 
-  print_in_purple "\n   Installing Apps from the App Store...\n" 
+  print_in_purple "\n   Installing Apps from the App Store...\n"
   # Spark
   mas install 1176895641
   # The Unarchiver
@@ -168,7 +170,7 @@ main() {
   mas install 552383089
   # Alfred
   mas install 405843582
-  
+
   finish
 }
 

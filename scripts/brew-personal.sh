@@ -14,8 +14,6 @@ main() {
   brew_install "Asciinema" "asciinema"
   brew_install "Zathura" "zathura"
   brew_install "Zathura PDF Poppler" "zathura-pdf-poppler"
-  brew_install "Pip Env" "pipenv"
-  brew_install "Pip Env" "pipenv"
   brew_install "Youtube Downloader" "youtube-dl"
 
   brew_install "Adopt Open JDK 8" "adoptopenjdk8" "homebrew/cask" "cask"
