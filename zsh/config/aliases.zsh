@@ -129,7 +129,6 @@ alias reload="exec ${SHELL} -l"	# Reload the shell (i.e. invoke as a login shell
 alias path='echo -e ${PATH//:/\\n}'	# Print each PATH entry on a separate line
 alias apache="sudo apachectl"
 alias chmox='chmod -x'
-alias python=python3
 alias bye='sudo shutdown -h now'
 alias ios='open -a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
 alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"	# Kill all the tabs in Chrome to free up memory
