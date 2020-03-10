@@ -242,56 +242,50 @@ install_git() {
 
 install_zsh() {
 
-  #Install ZSH
-  print_info "Trying to detect installed Zsh..."
+	print_info "Trying to detect installed ZSH..."
 
-  if ! cmd_exists "zsh"; then
-    print_info "Seems like you don't have Zsh installed!"
-    ask_for_confirmation "Do you agree to proceed with Zsh installation?"
+	if ! cmd_exists "zsh"; then
+		print_info "Seems like you don't have ZSH installed!"
+		ask_for_confirmation "Do you agree to proceed with ZSH installation?"
 
-    if ! answer_is_yes; then
-      return
-    fi
+		if ! answer_is_yes; then
+			return
+		fi
 
-    print_info "Installing Zsh..."
+		print_in_purple "\n • Installing ZSH\n\n"
 
-    if [ `uname` == 'Darwin' ] || [ `uname` == 'Linux' ]; then
-      brew install zsh
-    else
-      print_error "Failed to install Zsh!"
-      return
-    fi
-  else
-    print_info "You already have Zsh installed, nothing to do here skipping ... 💨"
-  fi
+		if [ `uname` == 'Darwin' ] || [ `uname` == 'Linux' ]; then
+			brew install zsh
+		else
+			print_error "Failed to install Zsh!"
+			return
+		fi
 
-  if cmd_exists "zsh"; then
-    local BREW_ZSH_PATH="/usr/local/bin/zsh"
-    local ZSH_PATH=$(which zsh)
+		# Switching ZSH shell
+		local BREW_ZSH_PATH="/usr/local/bin/zsh"
+		if ! grep -q "$BREW_ZSH_PATH" /etc/shells; then
 
-    print_info "Setting up Zsh as default shell..."
+			print_in_purple "\n • Switching to ZSH Shell\n\n"
+			local ZSH_PATH=$(which zsh)
 
-    print_info "The script will ask you the password for sudo when changing your default shell via chsh -s"
+			if [ -x "$BREW_ZSH_PATH" ]; then
+				ZSH_PATH="$BREW_ZSH_PATH"
+			else
+				print_warning "Your system is using (outdated) ZSH shell"
+			fi
 
-    if ! grep -q "$BREW_ZSH_PATH" /etc/shells; then
-      print_info "Switching shell to zsh..."
+			echo "$ZSH_PATH" | sudo tee -a /etc/shells >/dev/null
+			chsh -s "$ZSH_PATH" "$(whoami)"
+			print_warning "You'll need to log out for this to take effect!"
+		else
+			print_info "No need to switch shell, you are using Homebrew zsh already"
+		fi
 
-      if [ -x "$BREW_ZSH_PATH" ]; then
-        ZSH_PATH="$BREW_ZSH_PATH"
-      else
-        print_info "Using system (outdated) zsh...."
-      fi
+	else
+		print_info "ZSH already installed, nothing to do here skipping ... 💨"
+	fi
 
-      echo "$ZSH_PATH" | sudo tee -a /etc/shells >/dev/null
-      chsh -s "$ZSH_PATH" "$(whoami)"
-      print_info "You'll need to log out for this to take effect"
-
-    else
-      print_info "No need to switch ZSH shell!"
-    fi
-  fi
-
-  finish
+	finish
 }
 
 clone_dotfiles() {
