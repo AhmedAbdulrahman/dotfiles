@@ -58,6 +58,7 @@ path=(
   ${GOBIN}(N-/)
   ${HOME}/Library/Python/3.*/bin(Nn[-1]-/)
   ${HOME}/Library/Python/2.*/bin(Nn[-1]-/)
+  ${HOME}/.pyenv/bin(N-/)
   ${HOMEBREW_PREFIX}/opt/ruby/bin(N-/)
   ${HOMEBREW_PREFIX}/lib/ruby/gems/*/bin(Nn[-1]-/)
   /usr/local/{bin,sbin}

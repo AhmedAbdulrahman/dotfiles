@@ -81,8 +81,6 @@
 	fi
 
     (( $+commands[thefuck] )) && source <(thefuck --alias 2>/dev/null)
-    (( $+commands[pyenv]   )) && source <(pyenv init -)
-    (( $+commands[hub] )) && eval "$(hub alias -s)"
 
     # Profile
     # Uncomment the line below and start a new shell. Don't forget to uncomment the
