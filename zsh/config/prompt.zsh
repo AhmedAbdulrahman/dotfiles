@@ -4,9 +4,18 @@
 #  Created: 2019-10-20 20:20
 #===============================================================================
 
-# ------------------------------------------------------------------------------
+# If starship is installed, use starship:
+if (( $+commands[starship] )); then
+	export STARSHIP_CONFIG="${XDG_CONFIG_HOME}/.starship.toml"
+    eval "$(starship init zsh)"
+    return
+fi
+
+# Otherwise, use spaceship with custom configuration below
+
+# ------------------
 # Configuration
-# ------------------------------------------------------------------------------
+# ------------------
 
 # REACT
 SPACESHIP_REACT_SHOW="${SPACESHIP_REACT_SHOW:=true}"
@@ -15,9 +24,9 @@ SPACESHIP_REACT_SYMBOL="${SPACESHIP_REACT_SYMBOL:="⚛️ "}"
 SPACESHIP_REACT_DEFAULT_VERSION="${SPACESHIP_REACT_DEFAULT_VERSION:=""}"
 SPACESHIP_REACT_COLOR="${SPACESHIP_REACT_COLOR:="cyan"}"
 
-# ------------------------------------------------------------------------------
+# ------------------
 # Section
-# ------------------------------------------------------------------------------
+# ------------------
 
 _is_react_project() {
 	# Uncomment if you are not using jq tool
@@ -54,9 +63,9 @@ spaceship_react() {
   )
 
 
-# ------------------------------------------------------------------------------
+# ------------------------
 # Generate Random Emojis
-# ------------------------------------------------------------------------------
+# ------------------------
 
 EMOJIS=(👻 🚀 🐞 🎨 🍕 🐭 ☕️ 💀 👀 🐼 🐶 🐬 🐳 💰 💞 🍪 🐌 🍄 )
 
@@ -71,5 +80,6 @@ SPACESHIP_EXIT_CODE_SUFFIX=") "
 SPACESHIP_EXIT_CODE_SYMBOL="✘ "
 SPACESHIP_EXIT_CODE_COLOR="red"
 
-# autoload -Uz promptinit;
-# promptinit
+autoload -Uz promptinit;
+promptinit
+prompt spaceship
