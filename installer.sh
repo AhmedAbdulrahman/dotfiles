@@ -337,7 +337,8 @@ symlink_files() {
 
     print_in_purple "\n • Symlinking files/folders\n\n"
     cd "$DOTFILES" &&
-      make symlink &&
+      make --ignore-errors symlink dir=all &&
+      make --ignore-errors symlink dir=files &&
       make gpg
 
   else
