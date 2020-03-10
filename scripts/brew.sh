@@ -58,17 +58,13 @@ main() {
   brew_install "Moreutils" "moreutils"
   brew_install "CURL" "curl"
   brew_install "Httpie" "httpie"
-  # Install `wget` with IRI support.
-  brew_install "Wget" "wget"
 
   print_in_purple "\n   GPG\n\n"
   brew_install "GPG" "gpg"
   brew_install "Pinentry" "pinentry-mac"
 
-  brew_install "ZSH" "zsh"
-  # Install a modern version of Bash.
-  brew_install "Modern version of Bash" "bash"
-  brew_install "Bash Completion" "bash-completion2"
+  brew_install "Starship Prompt" "starship"
+
   brew_install "Transcrypt" "transcrypt"
 
   print_in_purple "\n   Languages\n"
