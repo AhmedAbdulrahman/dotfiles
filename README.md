@@ -1,5 +1,10 @@
 # Ahmed’s dotfiles
 
+![Github commits (since latest release)](https://img.shields.io/github/commits-since/filipekiss/dotfiles/latest.svg?colorA=5a5a5a&colorB=45b91f&style=plastic)
+![GitHub last commit](https://img.shields.io/github/last-commit/AhmedAbdulrahman/dotfiles.svg?colorA=5a5a5a&colorB=45b91f&style=plastic)
+![Github Commits Last Year](https://img.shields.io/github/commit-activity/y/AhmedAbdulrahman/dotfiles.svg?colorA=5a5a5a&colorB=45b91f&style=plastic)
+![GitHub repo size](https://img.shields.io/github/repo-size/AhmedAbdulrahman/dotfiles.svg?colorA=5a5a5a&colorB=45b91f&style=plastic)
+
 > Running [**iTerm2**](https://www.iterm2.com/) with custom [**Spaceship-zsh**](https://github.com/denysdovhan/spaceship-zsh-theme) theme.
 
 The color scheme is [**Aylin**](https://github.com/AhmedAbdulrahman/aylin-iterm-theme) for _iTerm2_ and the font is [**Recursive**](https://www.recursive.design/) with [**DroidSansMono Nerd Font**](https://github.com/ryanoasis/nerd-fonts) as Non-ASCII Font
