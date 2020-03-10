@@ -16,10 +16,18 @@ all: node python macos
 
 symlink:
 	@echo "→ Setup Environment Settings"
-	@echo "→ Symlinking $(DIRS) files"
 
-	@$(foreach val, $(DIRS), sh $(DOTFILES)/$(val)/setup.sh && stow --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)/.$(val)" --dir="$(DOTFILES)" $(val);)
-	stow --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)" --dir="$(DOTFILES)" files
+    ifeq "$(dir)" "all"
+		@echo "→ Symlinking $(DIRS) files"
+		@$(foreach val, $(DIRS), sh $(DOTFILES)/$(val)/setup.sh && stow --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)/.$(val)" --dir="$(DOTFILES)" $(val);)
+    else ifeq "$(dir)" "files"
+		@echo "→ Symlinking files dir"
+		stow --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)" --dir="$(DOTFILES)" files
+    else
+		@echo "→ Symlinking $(dir) dir"
+		sh $(DOTFILES)/$(dir)/setup.sh
+		stow --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)/.$(dir)" --dir="$(DOTFILES)" $(dir)
+    endif
 
 gpg: symlink
 	# Fix gpg folder/file permissions after symlinking
