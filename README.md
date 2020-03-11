@@ -1,5 +1,6 @@
 # Ahmed’s dotfiles
 
+[![License](https://img.shields.io/github/license/AhmedAbdulrahman/dotfiles)](https://github.com/AhmedAbdulrahman/dotfiles/blob/master/LICENSE.txt)
 ![Github commits (since latest release)](https://img.shields.io/github/commits-since/filipekiss/dotfiles/latest.svg?colorA=5a5a5a&colorB=45b91f&style=plastic)
 ![GitHub last commit](https://img.shields.io/github/last-commit/AhmedAbdulrahman/dotfiles.svg?colorA=5a5a5a&colorB=45b91f&style=plastic)
 ![Github Commits Last Year](https://img.shields.io/github/commit-activity/y/AhmedAbdulrahman/dotfiles.svg?colorA=5a5a5a&colorB=45b91f&style=plastic)
