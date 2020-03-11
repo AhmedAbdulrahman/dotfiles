@@ -54,6 +54,9 @@ execute "defaults write com.apple.dock show-recents -bool false" \
 execute "defaults write com.apple.dock showhidden -bool true" \
     "Make Dock icons of hidden applications translucent"
 
+execute "defaults write com.apple.dock hide-mirror -bool true" \
+    "Make Dock more transparent"
+
 execute "defaults write com.apple.dock showLaunchpadGestureEnabled -int 0" \
     "Disable the Launchpad gesture (pinch with thumb and three fingers)"
 
@@ -66,7 +69,36 @@ execute "defaults write com.apple.dock dashboard-in-overlay -bool true" \
 execute "defaults write com.apple.dock tilesize -int 36" \
     "Set the icon size of Dock items to 36 pixels"
 
-find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
+execute "find '${HOME}/Library/Application Support/Dock' -name '*-*.db' -maxdepth 1 -delete" \
+		"Reset Launchpad, but keep the desktop wallpaper intact"
+
+print_in_purple "\n • Configuring Hot Corners\n\n"
+# Possible values:
+#  0: no-op
+#  2: Mission Control
+#  3: Show application windows
+#  4: Desktop
+#  5: Start screen saver
+#  6: Disable screen saver
+#  7: Dashboard
+# 10: Put display to sleep
+# 11: Launchpad
+# 12: Notification Center
+
+execute "defaults write com.apple.dock wvous-tl-corner -int 2 \
+		defaults write com.apple.dock wvous-tl-modifier -int 0" \
+		"Top left screen corner → Mission Control"
+
+execute "defaults write com.apple.dock wvous-tr-corner -int 4 \
+		defaults write com.apple.dock wvous-tr-modifier -int 0" \
+		"Top right screen corner → Desktop"
+
+execute "defaults write com.apple.dock wvous-br-corner -int 5 \
+		defaults write com.apple.dock wvous-br-modifier -int 0" \
+		"Bottom right screen corner → Start screen saver"
+
+execute "defaults write com.apple.dock orientation right" \
+		"Position Dock on right"
 
 # Add iOS & Watch Simulator to Launchpad
 sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "/Applications/Simulator.app"
