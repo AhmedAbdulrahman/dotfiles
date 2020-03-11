@@ -8,7 +8,7 @@
 
 > Running [**iTerm2**](https://www.iterm2.com/) with custom [**Spaceship-zsh**](https://github.com/denysdovhan/spaceship-zsh-theme) theme.
 
-The color scheme is [**Aylin**](https://github.com/AhmedAbdulrahman/aylin-iterm-theme) for _iTerm2_ and the font is [**Recursive**](https://www.recursive.design/) with [**DroidSansMono Nerd Font**](https://github.com/ryanoasis/nerd-fonts) as Non-ASCII Font
+The color scheme is [**Aylin**](https://github.com/AhmedAbdulrahman/aylin-iterm-theme) for _iTerm2_ and the font is [**JetBrains Mono**](https://www.jetbrains.com/lp/mono/) with [**Nerd Fonts**](https://github.com/ryanoasis/nerd-fonts) as `Non-ASCII Font`
 
 ![Screenshot](assets/intro.png)
 
