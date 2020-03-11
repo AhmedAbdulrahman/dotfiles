@@ -5,6 +5,9 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 print_in_purple "\n • Finder\n\n"
 
+execute "defaults write com.apple.finder _FXSortFoldersFirst -bool true" \
+	"Keep folders on top when sorting by name (version 10.12 and later)"
+
 execute "defaults write com.apple.finder QuitMenuItem -bool true" \
     "Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons"
 
@@ -22,6 +25,9 @@ execute "defaults write com.apple.finder DisableAllAnimations -bool true" \
 execute "defaults write com.apple.finder WarnOnEmptyTrash -bool false" \
     "Disable the warning before emptying the Trash"
 
+execute "defaults write com.apple.finder EmptyTrashSecurely -bool true" \
+		"Empty Trash securely by default"
+
 execute "defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true" \
     "Enable AirDrop over Ethernet and on unsupported Macs running Lion"
 
@@ -32,10 +38,10 @@ execute "sudo chflags nohidden /Volumes" /
     "Show the /Volumes folder"
 
 execute "defaults write com.apple.finder FXInfoPanesExpanded -dict \
-	General -bool true \
-	OpenWith -bool true \
-	Privileges -bool true" \
-    "Expand the following File Info panes"
+		General -bool true \
+		OpenWith -bool true \
+		Privileges -bool true" \
+		"Expand the following File Info panes: 'General', 'Open with', and 'Sharing & Permissions'"
 
 execute "defaults write com.apple.finder FXDefaultSearchScope -string 'SCcf'" \
     "Search the current directory by default"
@@ -58,24 +64,37 @@ execute "defaults write com.apple.frameworks.diskimages skip-verify -bool true &
 execute "defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false" \
     "Disable warning when changing a file extension"
 
+# Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
 execute "defaults write com.apple.finder FXPreferredViewStyle -string 'Nlsv'" \
     "Use list view in all Finder windows by default"
 
 execute "defaults write com.apple.finder NewWindowTarget -string 'PfDe' && \
-         defaults write com.apple.finder NewWindowTargetPath -string 'file://$HOME/Desktop/'" \
-    "Set 'Desktop' as the default location for new Finder windows"
+		defaults write com.apple.finder NewWindowTargetPath -string 'file://${$HOME}/Desktop/'" \
+		"Set 'Desktop' as the default location for new Finder windows"
 
 execute "defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true && \
-         defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true && \
-         defaults write com.apple.finder ShowMountedServersOnDesktop -bool true && \
-         defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true" \
-    "Show icons for hard drives, servers, and removable media on the desktop"
+		defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true && \
+		defaults write com.apple.finder ShowMountedServersOnDesktop -bool true && \
+		defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true" \
+		"Show icons for hard drives, servers, and removable media on the desktop"
 
 execute "defaults write com.apple.finder ShowRecentTags -bool false" \
-    "Do not show recent tags"
+		"Do not show recent tags"
+
+execute "defaults write com.apple.finder AppleShowAllFiles -bool true" \
+		"Show hidden files by default"
 
 execute "defaults write -g AppleShowAllExtensions -bool true" \
-    "Show all filename extensions"
+		"Show all filename extensions"
+
+execute "defaults write com.apple.finder ShowStatusBar -bool true" \
+		"Show status bar"
+
+execute "defaults write com.apple.finder ShowPathbar -bool true" \
+		"Show path bar"
+
+execute "defaults write com.apple.finder QLEnableTextSelection -bool true" \
+		"Allow text selection in Quick Look"
 
 execute "/usr/libexec/PlistBuddy -c 'Set :DesktopViewSettings:IconViewSettings:iconSize 72' ~/Library/Preferences/com.apple.finder.plist && \
          /usr/libexec/PlistBuddy -c 'Set :StandardViewSettings:IconViewSettings:iconSize 72' ~/Library/Preferences/com.apple.finder.plist" \
