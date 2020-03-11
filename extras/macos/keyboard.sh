@@ -11,11 +11,12 @@ execute "defaults write -g AppleKeyboardUIMode -int 3" \
 execute "defaults write -g ApplePressAndHoldEnabled -bool false" \
     "Disable press-and-hold in favor of key repeat"
 
+execute "defaults write NSGlobalDomain KeyRepeat -int 1 && \
+	defaults write NSGlobalDomain InitialKeyRepeat -int 15" \
+	"Set a blazingly fast keyboard repeat rate"
+
 execute "defaults write -g 'InitialKeyRepeat_Level_Saved' -int 10" \
     "Set delay until repeat"
-
-execute "defaults write -g KeyRepeat -int 1" \
-    "Set the key repeat rate to fast"
 
 execute "defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false" \
     "Disable automatic capitalization"
@@ -32,19 +33,23 @@ execute "defaults write -g NSAutomaticDashSubstitutionEnabled -bool false" \
 execute "defaults write -g NSAutomaticQuoteSubstitutionEnabled -bool false" \
     "Disable smart quotes"
 
+execute "defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true \
+	defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144" \
+	"Use scroll gesture with the Ctrl (^) modifier key to zoom"
+
 execute "defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true" \
-    "Follow the keyboard focus while zoomed in"
+	"Follow the keyboard focus while zoomed in"
 
 # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
 # `Inches`, `en_GB` with `en_US`, and `true` with `false`.
-execute "defaults write NSGlobalDomain AppleLanguages -array 'en' 'tr' 'ar' 'sv' && \
-         defaults write NSGlobalDomain AppleLocale -string 'en_GB@currency=EUR' && \
-         defaults write NSGlobalDomain AppleMeasurementUnits -string 'Centimeters' \
-         defaults write NSGlobalDomain AppleMetricUnits -bool true" \
-    "Set language and text formats"
+execute "defaults write NSGlobalDomain AppleLanguages -array 'en' 'se' && \
+	defaults write NSGlobalDomain AppleLocale -string 'en_SE@currency=SEK' && \
+	defaults write NSGlobalDomain AppleMeasurementUnits -string 'Centimeters' && \
+	defaults write NSGlobalDomain AppleMetricUnits -bool true" \
+	"Set language and text formats  (English/US + Swedish)"
 
-execute "sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true"
-    "Show language menu in the top right corner of the boot screen"
+# execute "sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true"
+#     "Show language menu in the top right corner of the boot screen"
 
-execute "sudo systemsetup -settimezone 'Europe/Stockholm' > /dev/null"
-    "Set the timezone; see 'sudo systemsetup -listtimezones' for other values"
+# execute "sudo systemsetup -settimezone 'Europe/Stockholm' > /dev/null"
+#     "Set the timezone; see 'sudo systemsetup -listtimezones' for other values"
