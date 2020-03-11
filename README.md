@@ -68,15 +68,21 @@ To set up the my `dotfiles`, run the appropriate snippet in the terminal:
 | `wget`     | `bash -c "$(wget https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh -O -)"`  |
 | `git`      | `git clone git@github.com:AhmedAbdulrahman/dotfiles.git ~/dotfiles && source ~/dotfiles/installer.sh`     |
 
+By default it will Install `Personal` prefered stuff, for `Work` related stuff you need to pass `work` as an argument to the `snippet` :
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh)" work
+```
+
 That's it! 🎉. When `installer` is run, you are prompted to choose one option from the list as seen below:
 
 ```bash
     What you want to do?
 
-    1) All                      5) Install macOS Apps
-    2) Install package manager  6) Change shell
-    3) Clone Ahmeds dotfiles    7) Install XCode tools
-    4) Symlink files            8) Quit
+    1) All                        6) Install macOS Apps
+    2) Install package manager    7) Override macOS System Settings
+    3) Install Git and Setup SSH  8) Change shell
+    4) Clone Ahmeds dotfiles      9) Install XCode tools
+    5) Symlink files             10) Quit
 
     Enter your choice (must be a number):               # Choose a number
 ```
