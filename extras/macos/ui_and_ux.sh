@@ -8,15 +8,6 @@ print_in_purple "\n • General UI & UX\n\n"
 execute "sudo pmset -a hibernatemode 0" \
     "Disable hibernation (speeds up entering sleep mode)"
 
-execute "sudo rm /private/var/vm/sleepimage" \
-    "Remove the sleep image file to save disk space"
-
-execute "sudo touch /private/var/vm/sleepimage" \
-    "Create a zero-byte file instead…"
-
-execute "sudo chflags uchg /private/var/vm/sleepimage" \
-    "…and make sure it can’t be rewritten"
-
 execute "defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true && \
          defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true" \
    "Avoid creating '.DS_Store' files on network or USB volumes"
@@ -44,31 +35,6 @@ execute "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServ
 
 execute "defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true" \
     "Display ASCII control characters using caret notation in standard text views"
-
-execute "defaults write com.apple.screencapture disable-shadow -bool true" \
-    "Disable shadow in screenshots"
-
-execute "defaults write com.apple.screencapture location -string '$HOME/Desktop'" \
-    "Save screenshots to the Desktop"
-
-execute "defaults write com.apple.screencapture show-thumbnail -bool false" \
-    "Do not show thumbnail"
-
-execute "defaults write com.apple.screencapture type -string 'png'" \
-    "Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)"
-
-execute "defaults write com.apple.screensaver askForPassword -int 1 && \
-         defaults write com.apple.screensaver askForPasswordDelay -int 0" \
-    "Require password immediately after into sleep or screen saver mode"
-
-execute "defaults write com.apple.screencapture location -string '${HOME}/Desktop/screenshots'" \
-    "Save screenshots to the desktop"
-
-execute "defaults write -g AppleFontSmoothing -int 2" \
-    "Enable subpixel font rendering on non-Apple LCDs Reference: https://github.com/kevinSuttle/macOS-Defaults/issues/17#issuecomment-266633501"
-
-execute "sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true"
-    "Enable HiDPI display modes (requires restart)"
 
 execute "defaults write -g AppleShowScrollBars -string 'Always'" \
     "Always show scrollbars"
@@ -109,9 +75,6 @@ execute "defaults write -g PMPrintingExpandedStateForPrint -bool true" \
 execute "defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false" \
     "Save to disk (not to iCloud) by default"
 
-execute "defaults write com.apple.universalaccess reduceTransparency -bool true" \
-    "Disable transparency in the menu bar and elsewhere on Yosemite"
-
 execute "defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true" \
     "Expand print panel by default"
 
@@ -136,7 +99,7 @@ execute "defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool fa
 execute "defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false" \
     "Disable automatic period substitution as it’s annoying when typing code"
 
-execute "defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false" \ 
+execute "defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false" \
     "Disable smart quotes as they’re annoying when typing code"
 
 execute "defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false" \
