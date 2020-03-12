@@ -37,7 +37,6 @@ main() {
   brew_tap "sachaos/todoist"
   brew_tap "dbcli/tap"
   brew_tap "xo/xo"
-  brew_tap "dandavison/delta https://github.com/dandavison/delta"
   brew_tap "homebrew-ffmpeg/ffmpeg"
 
   print_in_purple "\n   Core\n"
@@ -94,7 +93,7 @@ main() {
   brew_install "Loc" "loc"
   brew_install "Tokei" "tokei"
   brew_install "Diff-So-Fancy" "diff-so-fancy"
-  brew_install "Git Delta" "dandavison/delta/git-delta"
+  brew_install "Git Delta" "git-delta"
   brew_install "Z - jump around" "z"
   brew_install "Image Magick" "imagemagick"
   brew_install "Rename" "rename"
