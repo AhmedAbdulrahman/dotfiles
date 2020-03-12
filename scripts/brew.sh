@@ -154,6 +154,9 @@ main() {
   brew_install "Webp Quicklook" "webpquicklook" "homebrew/cask" "cask"
   brew_install "Fira Code Font" "font-fira-code" "homebrew/cask" "cask"
   brew_install "Hack Nerd Font" "font-hack-nerd-font" "homebrew/cask" "cask"
+  brew_install "Jetbrains Mono" "font-jetbrains-mono" "homebrew/cask" "cask"
+  brew_install "Jetbrains Mono Nerd Font" "font-jetbrainsmono-nerd-font" "homebrew/cask" "cask"
+  brew_install "Jetbrains Mono Nerd Font Mono" "font-jetbrainsmono-nerd-font-mono" "homebrew/cask" "cask"
 
   print_in_purple "\n   Installing Apps from the App Store...\n"
   # Spark
