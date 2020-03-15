@@ -105,11 +105,11 @@ Customize
 ### Local Settings
 
 My `dotfiles` config can be easily extended to suit additional local
-requirements by using the following files:
+requirements by using `*.local` files which will be created using `installer` script
 
 #### `~/.zshrc.local`
 
-You can add or overwrite any existing aliases, settings, `PATH`, ... etc for `zsh` by adding `~/.zshrc.local` file to your `$HOME` dir, and it will be automatically sourced after all the other `zsh`.
+You can add or overwrite any existing aliases, settings, `PATH`, ... etc for `zsh` using `~/.zshrc.local` file located in your `$HOME` dir, and it will be automatically sourced after all the other `zsh`. Then you can add your own configs ;)
 
 ```bash
 #!/usr/bin/env zsh
@@ -122,9 +122,9 @@ PATH="$PATH:$HOME/projects/dotfiles/src/bin" # Here we are adding bin directory 
 export PATH  # Then export it
 ```
 
-#### `~/.gitconfig.local`
+#### `~/.gitconfig.local` and `~/.vimrc.local`
 
-You can use `~/.gitconfig.local` file to store sensitive information such as your git credentials and this file will be automatically included after the configurations from `~/.gitconfig`.
+Same goes for `git` and `vim`. You can add or overwrite your custom config to `~/.gitconfig.local` file including your sensitive information such as your `git credentials` and this file will be automatically included after the configurations from `~/.gitconfig`.
 
 ```bash
 [user]
@@ -133,10 +133,6 @@ You can use `~/.gitconfig.local` file to store sensitive information such as you
     email = account@example.com
     signingkey = XXXXXXXX
 ```
-
-#### `~/.vimrc.local`
-
-You can add or overwrite any `vim` settings you want by adding `~/.vimrc.local` file to your `$HOME` dir and it will be automatically sourced after `~/.vimrc`.
 
 Resources
 ---------
