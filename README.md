@@ -69,7 +69,7 @@ To set up the my `dotfiles`, run the appropriate snippet in the terminal:
 | `wget`     | `bash -c "$(wget https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh -O -)"`  |
 | `git`      | `git clone git@github.com:AhmedAbdulrahman/dotfiles.git ~/dotfiles && source ~/dotfiles/installer.sh`     |
 
-By default it will Install `Personal` prefered stuff, for `Work` related stuff you need to pass `work` as an argument to the `snippet` :
+By default it Installs `Personal` prefered stuff, for `Work` related stuff you need to pass `work` as an argument to the `snippet`:
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/AhmedAbdulrahman/dotfiles/master/installer.sh)" work
 ```
