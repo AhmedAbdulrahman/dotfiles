@@ -3,6 +3,7 @@ vim/tmp/
 vim/cache/
 vim-persisted-undo
 !coc/extensions/yarn.lock
+!coc/extensions/package-lock.json
 !coc/extensions/package.json
 *.spl
 *.sug
