@@ -80,7 +80,15 @@
 		[[ ${_has_unset_config:-no} == "yes" ]] && echo "Set the missing configs in ~/.zshrc"
 	fi
 
-    (( $+commands[thefuck] )) && source <(thefuck --alias 2>/dev/null)
+	# ---------------------------------------------
+	# PYENV
+	# ---------------------------------------------
+	if [ $(command -v pyenv) ]; then
+		export PYENV_ROOT="${HOME}/.pyenv"
+		eval "$(pyenv init -)"
+	fi
+
+	(( $+commands[thefuck] )) && source <(thefuck --alias 2>/dev/null)
 
     # Profile
     # Uncomment the line below and start a new shell. Don't forget to uncomment the

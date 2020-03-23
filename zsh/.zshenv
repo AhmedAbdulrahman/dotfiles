@@ -53,14 +53,6 @@ if [ $(command -v direnv) ]; then
 fi
 
 # ---------------------------------------------
-# PYENV
-# ---------------------------------------------
-if [ $(command -v pyenv) ]; then
-	export PYENV_ROOT="${HOME}/.pyenv"
-	eval "$(pyenv init - zsh)"
-fi
-
-# ---------------------------------------------
 # HUB
 # ---------------------------------------------
 if [ $(command -v hub) ]; then
