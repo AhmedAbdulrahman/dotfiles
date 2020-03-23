@@ -1,48 +1,88 @@
--- A global variable for the Hyper Mode
-k = hs.hotkey.modal.new({}, "F17")
+-- global stuff
+require('console').init()
+require('overrides').init()
 
--- HYPER+L: Open news.google.com in the default browser
-lfun = function()
-  news = "app = Application.currentApplication(); app.includeStandardAdditions = true; app.doShellScript('open http://news.google.com')"
-  hs.osascript.javascript(news)
-  k.triggered = true
-end
-k:bind('', 'n', nil, lfun)
+-- ensure IPC is there
+hs.ipc.cliInstall()
 
-local focusKeys = {
-  s='Slack',
-  c='Google Chrome',
-  i='iTerm',
-  e='Simulator',
-  m='Spark',
-  d='Discord',
-  f='Finder',
+-- lower logging level for hotkeys
+require('hs.hotkey').setLogLevel("warning")
+
+-- global config
+config = {
+  apps = {
+    terms    = { 'iTerm'                   },
+    browsers = { 'Google Chrome', 'Safari' },
+    chat     = { 'Slack', 'Discord'         },
+  },
+
+  wm = {
+    defaultDisplayLayouts = {
+      ['Color LCD']    = 'monocle',
+      ['DELL U3818DW'] = 'main-center'
+    },
+
+    displayLayouts = {
+      ['Color LCD']    = { 'monocle', 'main-right', 'side-by-side'     },
+      ['DELL U3818DW'] = { 'main-center', 'main-right', 'side-by-side' }
+    }
+  },
+
+  window = {
+    highlightBorder = false,
+    highlightMouse  = true,
+    historyLimit    = 0
+  },
+
+  network = {
+    home = 'Skynet 5G'
+  },
+
+  homebridge = {
+    studioSpeakers = { aid = 10, iid = 11, name = "Studio Speakers" },
+    studioLights   = { aid = 9,  iid = 11, name = "Studio Lights"   },
+    tvLights       = { aid = 6,  iid = 11, name = "TV Lights"       }
+  }
 }
 
-for key in pairs(focusKeys) do
-  k:bind('', key, function()
-    hs.application.launchOrFocus(focusKeys[key])
-  end)
-end
+-- requires
+bindings                    = require('bindings')
+controlplane                = require('utils.controlplane')
+watchables                  = require('utils.watchables')
+watchers                    = require('utils.watchers')
+wm                          = require('utils.wm')
 
-k:bind('', "r", function()
-  hs.reload()
+-- no animations
+hs.window.animationDuration = 0.0
+
+-- hints
+hs.hints.fontName           = 'Helvetica-Bold'
+hs.hints.fontSize           = 22
+hs.hints.hintChars          = { 'A', 'S', 'D', 'F', 'J', 'K', 'L', 'Q', 'W', 'E', 'R', 'Z', 'X', 'C' }
+hs.hints.iconAlpha          = 1.0
+hs.hints.showTitleThresh    = 0
+
+-- controlplane
+controlplane.enabled        = { 'autohome', 'automount' }
+
+-- watchers
+watchers.enabled            = { 'urlevent' }
+watchers.urlPreference      = config.apps.browsers
+
+-- bindings
+bindings.enabled            = { 'ask-before-quit', 'block-hide', 'ctrl-esc', 'f-keys', 'focus', 'global', 'tiling', 'term-ctrl-i', 'viscosity' }
+bindings.askBeforeQuitApps  = config.apps.browsers
+
+-- start/stop modules
+local modules               = { bindings, controlplane, watchables, watchers, wm }
+
+hs.fnutils.each(modules, function(module)
+  if module then module.start() end
 end)
 
--- Enter Hyper Mode when F18 (Hyper/Capslock) is pressed
-pressedF18 = function()
-  k.triggered = false
-  k:enter()
+-- stop modules on shutdown
+hs.shutdownCallback = function()
+  hs.fnutils.each(modules, function(module)
+    if module then module.stop() end
+  end)
 end
-
--- Leave Hyper Mode when F18 (Hyper/Capslock) is pressed,
---   send ESCAPE if no other keys are pressed.
-releasedF18 = function()
-  k:exit()
-  if not k.triggered then
-    hs.eventtap.keyStroke({}, 'ESCAPE')
-  end
-end
-
--- Bind the Hyper key
-f18 = hs.hotkey.bind({}, 'F18', pressedF18, releasedF18)
