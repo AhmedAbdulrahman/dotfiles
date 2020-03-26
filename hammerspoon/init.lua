@@ -70,7 +70,7 @@ watchers.enabled            = { 'urlevent' }
 watchers.urlPreference      = config.apps.browsers
 
 -- bindings
-bindings.enabled            = { 'ask-before-quit', 'block-hide', 'ctrl-esc', 'f-keys', 'focus', 'global', 'tiling', 'term-ctrl-i', 'viscosity' }
+bindings.enabled            = { 'ask-before-quit', 'block-hide', 'ctrl-esc', 'f-keys', 'focus', 'global', 'tiling', 'term-ctrl-i' }
 bindings.askBeforeQuitApps  = config.apps.browsers
 
 -- start/stop modules
