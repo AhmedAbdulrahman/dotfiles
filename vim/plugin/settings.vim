@@ -93,6 +93,11 @@ if has('nvim-0.4.2')
 else
   set signcolumn=yes
 endif
+
+if exists('+emoji')
+  set noemoji
+endif
+
 set title " Show title as in 'titlestring' in title bar of window. "
 set titlestring=%f " Format of the title used by 'title'. %F\ -\ vim"
 
