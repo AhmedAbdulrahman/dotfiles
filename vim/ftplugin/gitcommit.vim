@@ -1,2 +1,3 @@
-" Always enable spell checking." 
-setlocal spell
+if has('folding')
+  setlocal nofoldenable
+endif
