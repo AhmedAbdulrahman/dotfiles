@@ -88,12 +88,14 @@ let g:NERDTreeMapPreviewVSplit = ''
 let g:NERDTreeMapQuit = ''
 let g:NERDTreeMapToggleFiles = ''
 let g:NERDTreeMapToggleFilters = ''
-let g:NERDTreeMapUpdir = ''
 let g:NERDTreeMapCustomOpen = '<CR>'
 
 " Define mappings."
 nnoremap <silent> <Leader>f :packadd nerdtree <Bar> NERDTreeToggle <Bar> wincmd p<Enter>
 nnoremap <silent> <Leader>F :packadd nerdtree <Bar> NERDTreeFind<Enter>
+
+" Move up a directory using '-' like vim-vinegar (usually u does this)."
+nmap <buffer> <expr> - g:NERDTreeMapUpdir
 
 "map <C-Right> :tabn<cr>"
 "map <C-Left> :tabp<cr>"
@@ -108,6 +110,8 @@ augroup nerdtreesettings
 			\ nocursorline
 			\ signcolumn=no
 			\ conceallevel=3 concealcursor=nvic
+			\ nofoldenable
+			\ colorcolumn=
 
 	" Hide current working directory line."
 	autocmd FileType nerdtree syntax match NERDTreeHideCWD #^[</].*$# conceal
