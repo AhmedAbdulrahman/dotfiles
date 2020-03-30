@@ -7,3 +7,7 @@ if exists('g:polyglot_disabled') && index(get(g:, 'polyglot_disabled'), 'go') < 
   let g:polyglot_disabled += ['go']
   packadd go.vim
 endif
+
+setlocal noexpandtab
+setlocal shiftwidth=4
+setlocal tabstop=4
