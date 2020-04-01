@@ -235,6 +235,9 @@ let g:coc_user_config = {
 			\ 'enable': v:true,
 			\ 'directories': ['UltiSnips']
 		\ },
+		\ 'extends': {
+			\ "javascriptreact": ["javascript"]
+		\ },
 	\ },
 	\ 'highlight': {
 		\ 'disableLanguages': '',
