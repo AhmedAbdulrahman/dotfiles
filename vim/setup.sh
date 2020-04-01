@@ -12,10 +12,6 @@ echo "\\n → Creating VIM folder in root directory..."
 mkdir -p $HOME/.vim
 echo "✓ ZSH folder created successfully!\\n"
 
-echo "→ Creating COC folder inside ~/.config directory..."
-mkdir -p $HOME/.config/coc
-echo "✓ ZSH folder created successfully!\\n"
-
 echo "→ Creating VIM cache folder..."
 mkdir -p $HOME/.vim/cache
 echo "✓ ZSH folder created successfully!\\n"
