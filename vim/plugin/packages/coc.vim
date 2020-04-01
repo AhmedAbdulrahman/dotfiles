@@ -7,17 +7,8 @@ scriptencoding UTF-8
 " Disable automatically opening quickfix list upon errors."
 let g:coc_auto_copen = v:false
 
-" List of extensions."
-let g:coc_data_home = $VIMHOME . '/coc/extensions'
-
 " Environment node"
 let g:coc_node_path=exepath('node')
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim"
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim"
-let g:coc_snippet_prev = '<c-k>'
 
 " Language servers Config."
 let s:LSP_CONFIG = [
@@ -75,6 +66,28 @@ let s:LSP_CONFIG = [
 let g:coc_filetype_map = {
 	\ 'html.twig': 'html',
 \ }
+
+" List of extensions."
+let g:coc_global_extensions = [
+	\ 'coc-css',
+	\ 'coc-html',
+	\ 'coc-json',
+	\ 'coc-tag',
+	\ 'coc-snippets',
+	\ 'coc-stylelint',
+	\ 'coc-tsserver',
+	\ 'coc-eslint',
+	\ 'coc-prettier',
+	\ 'coc-conjure',
+	\ 'coc-phpls',
+	\ 'coc-python',
+	\ 'coc-svg',
+	\ 'coc-tsserver',
+	\ 'coc-tailwindcss',
+	\ 'coc-vimlsp',
+	\ 'coc-yaml',
+	\ 'coc-emmet'
+\ ]
 
 " User configuration "
 let g:coc_user_config = {
@@ -219,7 +232,8 @@ let g:coc_user_config = {
 		\ 'priority': 200,
 		\ 'shortcut': 'S',
 		\ 'ultisnips': {
-			\ 'enable': v:true
+			\ 'enable': v:true,
+			\ 'directories': ['UltiSnips']
 		\ },
 	\ },
 	\ 'highlight': {
@@ -256,14 +270,19 @@ endif
 " Go to definition of word under cursor "
 nmap <silent> <Leader>dd <Plug>(coc-definition)
 nmap <silent> <Leader>dt <Plug>(coc-type-definition)
+nmap <silent> <Backspace> <Plug>(coc-range-select)
+xmap <silent> <Backspace> <Plug>(coc-range-select)
+
 " Find references "
 nmap <silent> <Leader>dr <Plug>(coc-references)
+
 " Go to implementation "
 nmap <silent> <Leader>dj <Plug>(coc-implementation)
 
 " rename the current word in the cursor "
 nmap <Leader>rn  <Plug>(coc-rename)
 nmap <Leader>fs  <Plug>(coc-format-selected)
+nmap <Leader>cr <Plug>(coc-refactor)
 
 " restart when tsserver gets wonky "
 nnoremap <silent> <Leader>cr  :<C-u>CocRestart<CR>
@@ -274,12 +293,17 @@ nnoremap <silent> K :call <SID>ahmed#autocmds#showdocumentation#()<CR>
 " manage extensions "
 nnoremap <silent> <Leader>cx  :<C-u>CocList extensions<cr>
 
+nnoremap <silent> <Leader><C-f> :<C-u>CocList --top outline<Enter>
+nnoremap <silent> <LocalLeader>f :CocCommand prettier.formatFile<Enter>
+
 augroup cocsettings
 	autocmd!
 	" Update signature help on jump placeholder."
 	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+
 	" Highlight symbol under cursor on CursorHold"
 	autocmd CursorHold * silent call CocActionAsync('highlight')
+
 	autocmd BufWritePost coc.vim source % | CocRestart
 	autocmd BufWritePost {coc-settings,tsconfig}.json,.flowconfig CocRestart
 	autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport'
