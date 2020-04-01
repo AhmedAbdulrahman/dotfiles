@@ -63,8 +63,8 @@
     "Jump 5 lines/character UP|DOWN|RIGHT|LEFT"
     nnoremap <C-j> 5j
     nnoremap <C-k> 5k
-    nnoremap <C-h> 5h
-    nnoremap <C-l> 5l
+    "nnoremap <C-h> 5h"
+    "nnoremap <C-l> 5l"
 
     " Alternative beginning and end of line mappings."
     nnoremap H ^
@@ -135,8 +135,8 @@
     nnoremap <silent> <leader>bb <C-^>
 
     " Go to Next/Previous Buffer"
-    nnoremap <silent> <S-Tab> :bn<CR>
-    nnoremap <silent> <Tab> :bp<CR>
+    nnoremap <silent> <C-h> :bn<CR>
+    nnoremap <silent> <C-l> :bp<CR>
 
     " Close buffer"
     nnoremap <silent> <C-w> :bd<CR>
@@ -166,11 +166,11 @@
 
     " Toggle terminal buffer."
     " - Toggle terminal buffer in Terminal Mode"
-    tnoremap <silent> <C-z> <C-\><C-n>:call ahmed#mappings#normal#terminal#()<Enter> 
+    tnoremap <silent> <C-z> <C-\><C-n>:call ahmed#mappings#normal#terminal#()<Enter>
     "- Toggle terminal buffer in Normal Mode"
-    nnoremap <silsent> <C-z> :call ahmed#mappings#normal#terminal#()<Enter> 
+    nnoremap <silsent> <C-z> :call ahmed#mappings#normal#terminal#()<Enter>
     " - Open SHELL in Vertical Split"
-    nnoremap <silent> <leader>tv :vnew<CR>:call ahmed#mappings#normal#terminal#()<Enter> 
+    nnoremap <silent> <leader>tv :vnew<CR>:call ahmed#mappings#normal#terminal#()<Enter>
     "- Open SHELL in Horizontal Split"
     nnoremap <silent> <leader>th :new<CR>:call ahmed#mappings#normal#terminal#()<Enter>
     "- Quite SHELL"
