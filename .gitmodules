@@ -16,6 +16,7 @@
 [submodule "vim/pack/bundle/start/coc"]
 	path = vim/pack/bundle/start/coc
 	url = https://github.com/neoclide/coc.nvim.git
+	branch = release
 [submodule "vim/pack/bundle/start/fugitive"]
 	path = vim/pack/bundle/start/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
