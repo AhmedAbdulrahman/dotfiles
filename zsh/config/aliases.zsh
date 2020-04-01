@@ -24,12 +24,11 @@ alias oo='open .'
 # Copy & Move
 # ---------------------------------------------
 # `rm` and `mv` are so dangerous, they must always ask for confirmation.
-alias rm="${aliases[rm]:-rm} -i"
-alias mv="${aliases[mv]:-mv} -iv"
-alias cp="${aliases[cp]:-cp} -iv"
-alias ln="${aliases[ln]:-ln} -iv"
-alias mkdir="${aliases[mkdir]:-mkdir} -p"
-alias e="${(z)VISUAL:-${(z)EDITOR}}"
+alias mv='mv --interactive --verbose'
+alias cp='cp --interactive --verbose'
+alias ln='ln --interactive --verbose'
+alias mkdir='mkdir --parents' # Make missing parent directories when creating folders.
+alias ln='ln --interactive --verbose'
 alias which='which -a'
 alias type='type -a'
 alias trimcopy="tr -d '\n' | pbcopy"	# Trim new lines and copy to clipboard
