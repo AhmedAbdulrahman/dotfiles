@@ -12,7 +12,7 @@ CANDIDATES = $(wildcard hammerspoon tmux vim zsh newsboat)
 EXCLUSIONS := .DS_Store .git .gitmodules .travis.yml
 DIRS   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 
-all: node python macos
+all: node python neovim macos
 
 symlink:
 	@echo "→ Setup Environment Settings"
@@ -51,4 +51,8 @@ node:
 macos:
 	sh $(DOTFILES)/extras/macos/setup.sh
 
-.PHONY: all symlink homebrew homebrew-personal homebrew-work node python macos
+# Neovim providers (optional)
+neovim:
+	gem install neovim
+
+.PHONY: all symlink homebrew homebrew-personal homebrew-work node python macos neovim
