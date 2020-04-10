@@ -59,26 +59,20 @@ bindkey -M menuselect '^[[Z' reverse-menu-complete # <S-Tab> to select completio
 bindkey -r '^G'
 
 # ZLE hooks for prompt's vi mode status
-# Change cursor shape for different vi modes.
-zle-keymap-select() {
-  if [[ ${KEYMAP} == vicmd ]] ||
-     [[ $1 = 'block' ]]; then
-    echo -ne '\e[1 q'
-  elif [[ ${KEYMAP} == main ]] ||
-       [[ ${KEYMAP} == viins ]] ||
-       [[ ${KEYMAP} = '' ]] ||
-       [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'
-  fi
-}
-zle -N zle-keymap-select
-
-zle-line-init() {
-    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-    echo -ne "\e[5 q"
+function zle-keymap-select zle-line-init zle-line-finish {
+    case "${KEYMAP}" in
+        main|viins)
+            printf '\033[6 q' # line cursor
+            ;;
+        vicmd)
+            printf '\033[2 q' # block cursor
+            ;;
+    esac
 }
 
 zle -N zle-line-init
+zle -N zle-line-finish
+zle -N zle-keymap-select
 
 # Ensure no delay when changing modes
 export KEYTIMEOUT=1
