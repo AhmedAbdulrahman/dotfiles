@@ -80,6 +80,10 @@ export GPG_TTY=`tty`
 
 # Ensure that a non-login, non-interactive shell has a defined environment.
 # (Only once) if it was not sourced before, becuase .zshenv is always sourced
-if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprofile"
+if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-${HOME}/dotfiles/zsh}/.zprofile" ]]; then
+  source "${ZDOTDIR:-${HOME}/dotfiles/zsh}/.zprofile"
+fi
+
+if [[ -f ${HOME}/.zshenv.local ]]; then
+    source ${HOME}.zshenv.local
 fi
