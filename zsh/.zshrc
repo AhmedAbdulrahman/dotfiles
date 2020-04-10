@@ -28,9 +28,8 @@
     (( $+commands[iconful] )) && FZF_PATH_LOC='2..' || FZF_PATH_LOC=''
     export FZF_PATH_LOC
 
-    typeset -AU __FZF
     if (( $+commands[fd] )); then
-		__FZF[CMD]='fd --hidden --no-ignore-vcs --exclude ".git" --exclude "node_modules" --exclude ".DS_Store" --exclude "tags"'
+		__FZF[CMD]='fd --hidden --follow --no-ignore-vcs --exclude ".git/*" --exclude ".git" --exclude "node_modules/*" --exclude "tags"'
         __FZF[DEFAULT]="${__FZF[CMD]} --type f"
         __FZF[ALT_C]="${__FZF[CMD]} --type d ."
         __FZF[ALT_E]="${__FZF[CMD]} --type f"
@@ -42,15 +41,19 @@
     fi
 
     export FZF_DEFAULT_COMMAND="${__FZF[DEFAULT]}"  # FZF DEFAULT CMD
-	export FZF_PREVIEW_COMMAND="bat --style=numbers,changes --wrap never --color always {} || cat {} || tree -C {}"
-    export FZF_CTRL_T_COMMAND="${__FZF[CMD]} | iconful -f "    # FZF: Ctrl + T
-    export FZF_ALT_C_COMMAND="${__FZF[ALT_C]} | iconful -d"  # FZF: ALT + C
+	export FZF_DEFAULT_OPTS="--prompt='» ' --min-height 30 --bind esc:cancel --height 50% --reverse --tabstop 2 --multi --color=bg+:-1 --preview-window wrap --cycle --bind '?:toggle-preview'"
+    export FZF_PREVIEW_COMMAND="bat --style=numbers,changes --wrap never --color always {} || cat {} || tree -C {}"
+
+	export FZF_CTRL_T_COMMAND="${__FZF[CMD]} | iconful -f "    # FZF: Ctrl + T
+    export FZF_CTRL_T_OPTS="--preview '($FZF_PREVIEW_COMMAND) 2> /dev/null'"
+
+
+	export FZF_ALT_C_COMMAND="${__FZF[ALT_C]} | iconful -d"  # FZF: ALT + C
+    export FZF_ALT_C_OPTS="--preview 'tree -C {} 2> /dev/null'"
+
     export FZF_ALT_E_COMMAND="${__FZF[ALT_E]} | iconful -f"  # FZF: ALT + E
 
-	export FZF_DEFAULT_OPTS="--reverse --tabstop 2 --multi --color=bg+:-1 --bind '?:toggle-preview'"
-	export FZF_CTRL_T_OPTS="--preview '($FZF_PREVIEW_COMMAND) 2> /dev/null' --preview-window down:60%:noborder"
-	export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:wrap:hidden --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard'"
-	export FZF_ALT_C_OPTS="--preview 'tree -C {} 2> /dev/null'"
+	export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview' --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort' --header 'Press CTRL-Y to copy command into clipboard' --border"
 
     export FZF_ALT_E_OPTS="
     --preview \"($FZF_FILE_HIGHLIGHTER {$FZF_PATH_LOC} || $FZF_DIR_HIGHLIGHTER {$FZF_PATH_LOC}) 2>/dev/null | head -200\"
