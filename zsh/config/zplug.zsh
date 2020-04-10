@@ -22,22 +22,19 @@ fi
 # source "$ZPLUG_HOME/init.zsh"
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
-# Spaceship Prompt
-zplug "denysdovhan/spaceship-prompt", as:theme, use:"spaceship.zsh"
-
 # For installing, updating and loading NVM
 zplug "lukechilds/zsh-nvm"
 
-# Toggle "sudo" before the current/previous command by pressing [ESC][ESC] 
-zplug "hcgraf/zsh-sudo", from:github 
+# Toggle "sudo" before the current/previous command by pressing [ESC][ESC]
+zplug "hcgraf/zsh-sudo", from:github
 zplug "zsh-users/zsh-completions", from:github
 zplug "hlissner/zsh-autopair", defer:2, from:github
 zplug "zsh-users/zsh-history-substring-search", from:github
 zplug 'bobthecow/git-flow-completion', from:github
 # Command-line translator using Google Translate, Bing Translator, Yandex.Translate
-zplug 'soimort/translate-shell', at:'develop', from:github	
+zplug 'soimort/translate-shell', at:'develop', from:github
 # Colorifies man pages
-zplug "ael-code/zsh-colored-man-pages", from:github	
+zplug "ael-code/zsh-colored-man-pages", from:github
 # Extracts archive file
 zplug "thetic/extract", from:github
 # Add npm aliases
@@ -45,9 +42,9 @@ zplug "igoradamenko/npm.plugin.zsh", from:github
 # Adds tab completion for npm
 zplug "lukechilds/zsh-better-npm-completion", defer:2, from:github
 # Add autocompletions for yarn add, yarn remove and yarn run.
-zplug "g-plane/zsh-yarn-autocompletions", hook-build:"./zplug.zsh", defer:2, from:github 
+zplug "g-plane/zsh-yarn-autocompletions", hook-build:"./zplug.zsh", defer:2, from:github
 # Generates a GitHub short URL using git.io
-zplug "denysdovhan/gitio-zsh", as:command, use:"gitio.zsh", rename-to:"gitio", from:github 
+zplug "denysdovhan/gitio-zsh", as:command, use:"gitio.zsh", rename-to:"gitio", from:github
 # People ask you for the Wi-Fi password. Answer quickly. macOS only
 if [ "$(uname)" = "Darwin" ]; then
     zplug "rauchg/wifi-password", as:command, use:"wifi-password.sh", rename-to:"wifi-password", from:github
@@ -153,7 +150,7 @@ ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(
         yank-pop
     )
 
-    # Manage local plugins/completions/etc 
+    # Manage local plugins/completions/etc
     # zplug "$ZDOTDIR/aliases", from:local
 
 # Conditionally Install plugins

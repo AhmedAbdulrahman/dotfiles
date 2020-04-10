@@ -3,6 +3,11 @@
 # Anonymous function to create a closure to no leak local variables
 () {
 
+	typeset -AU __FZF
+
+	# Set Spaceship ZSH as a prompt
+	prompt spaceship
+
     # ---------------------------------------------
     # Z
     # ---------------------------------------------

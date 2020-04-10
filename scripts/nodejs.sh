@@ -41,6 +41,14 @@ configure_npm() {
 }
 
 install_global_packages() {
+
+	type yarn >/dev/null 2>&1 || {
+		echo >&2 "# yarn and node must be installed."
+		echo >&2 "# Please, install node and yarn and try again"
+		echo >&2 "# Skipping node packages installation…"
+		exit 1
+	}
+
 	print_info "Installing NPM global packages"
 
 	NPM_PACKAGES=(
@@ -58,7 +66,8 @@ install_global_packages() {
 	"npkill"
 	"expo-cli"
 	"nodemon"
-  "gatsby-cli"
+	"gatsby-cli"
+	"spaceship-prompt"
 	)
 
 	yarn global add "${NPM_PACKAGES[@]}"
@@ -69,8 +78,8 @@ install_global_packages() {
 
 
 main() {
-  on_start
-  configure_npm
+#   on_start
+#   configure_npm
   install_global_packages
 
   print_success "\n Done with NPM global packages and Configuration \n\n"

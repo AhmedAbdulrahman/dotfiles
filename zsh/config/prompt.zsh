@@ -4,14 +4,7 @@
 #  Created: 2019-10-20 20:20
 #===============================================================================
 
-# If starship is installed, use starship:
-if (( $+commands[starship] )); then
-	export STARSHIP_CONFIG="${XDG_CONFIG_HOME}/.starship.toml"
-    eval "$(starship init zsh)"
-    return
-fi
-
-# Otherwise, use spaceship with custom configuration below
+# Spaceship custom configuration
 
 # ------------------
 # Configuration
@@ -79,7 +72,3 @@ SPACESHIP_EXIT_CODE_PREFIX="("
 SPACESHIP_EXIT_CODE_SUFFIX=") "
 SPACESHIP_EXIT_CODE_SYMBOL="✘ "
 SPACESHIP_EXIT_CODE_COLOR="red"
-
-autoload -Uz promptinit;
-promptinit
-prompt spaceship
