@@ -74,15 +74,15 @@ NVM_LAZY_LOAD=true
 # Configurations
 # The array is used to load the settings in the desired order
 zconfig=(
+	zplug
 	aliases
-	environment
-	prompt
 	completion
-  compdefs
+	compdefs
+	environment
 	history
-  widgets
+	widgets
 	mappings
-  zplug
+	prompt
 )
 
-for config (${ZDOTDIR:-$HOME}/config/${^zconfig}.zsh) source $config && unset config
+for config (${ZDOTDIR:-${HOME}/dotfiles/zsh}/config/${^zconfig}.zsh) source $config && unset config
