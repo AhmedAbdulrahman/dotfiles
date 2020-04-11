@@ -34,9 +34,29 @@
 	addall = !sh -c 'git add . && git add -u'
 	who = shortlog -sne
 	# Rename branch name local & remote. Usage: $ git rename old_branch new_branch, and it's done.
-	rename = "!change() { git branch -m $1 $2; git push origin :$1; git push --set-upstream origin $2; }; change" 
+	rename = "!change() { git branch -m $1 $2; git push origin :$1; git push --set-upstream origin $2; }; change"
 	# list commited files name, Usage: $ git cf <COMMIT_ID>
-	cf = "!show_commited_files() { git diff-tree --no-commit-id --name-only -r $1; }; show_commited_files"  
+	cf = "!show_commited_files() { git diff-tree --no-commit-id --name-only -r $1; }; show_commited_files"
+
+	# ------------------------------------------------------------
+	# Emoji-Log
+	# ------------------------------------------------------------
+
+	# Git Commit, Add all and Push — in one step.
+	cap = "!f() { git add .; git commit -m \"$@\"; git push; }; f"
+
+	# NEW.
+	new1 = "!f() { git cap \"📦 $@\"; }; f"
+	# IMPROVE.
+	imp = "!f() { git cap \"👌 $@\"; }; f"
+	# FIX.
+	fix = "!f() { git cap \"🐛 $@\"; }; f"
+	# RELEASE.
+	rlz = "!f() { git cap \"🚀 $@\"; }; f"
+	# DOC.
+	doc = "!f() { git cap \"📖 $@\"; }; f"
+	# TEST.
+	tst = "!f() { git cap \"✅ $@\"; }; f"
 
 [branch]
   autosetupmerge = always
