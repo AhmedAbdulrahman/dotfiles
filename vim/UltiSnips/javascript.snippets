@@ -1,9 +1,29 @@
-snippet pretty "pretty-print JSON-able data" b
-console.log(
-JSON.stringify({
-	$1
-}, null, 2)
-)
+snippet const "JS Const" b
+const ${1:name} = ${0};
+endsnippet
+
+snippet ter "Ternary OP" b
+${1:cond} ? ${2:true} : ${3: false}
+endsnippet
+
+snippet cln "JS Console" b
+console.log(${1:'here'})$0
+endsnippet
+
+snippet clog "JS Log" b
+console.log('$1', $1)$0
+endsnippet
+
+snippet olog "JS Object Log" b
+console.log({$1})$0
+endsnippet
+
+snippet ts "Template String" b
+`${$1}`
+endsnippet
+
+snippet jlog "Stringfy Log" b
+console.log(JSON.stringify({$1}, null, 2))
 endsnippet
 
 # Functions
@@ -16,7 +36,7 @@ endsnippet
 
 # Loops
 
-snippet arrinstance "new array"
+snippet narray "new array"
 Array.from(new Array(${1}), (val, index) => (${2}))
 endsnippet
 
@@ -34,9 +54,9 @@ endsnippet
 
 snippet forin "for each loop" b
 for (let ${1:key} in ${2:object}) {
-if ($2.hasOwnProperty($1)) {
+  if ($2.hasOwnProperty($1)) {
 	${0:let ${3:value} = $2[$1];}
-}
+  }
 }
 endsnippet
 
@@ -79,6 +99,79 @@ break;
 endsnippet
 
 # React
+
+snippet useState "React useState" b
+const [${1}, set${2}] = React.useState(${3});${0}
+endsnippet
+
+snippet useEffect "React useEffect" b
+React.useEffect(() => {
+	${1},
+}, [${2}]);${0}
+endsnippet
+
+snippet map "map" b
+${1:iterable}.map(${2:item} =>
+	${0},
+)
+endsnippet
+
+snippet filter "JS Filter" b
+${1:iterable}.filter((${2:item}) => {
+  ${0}
+})
+endsnippet
+
+snippet reducer "JS Reducer" b
+${1:iterable}.reduce((${2:curr}, ${3:val}) => {
+	${0}
+}${4:, initial})
+endsnippet
+
+snippet find "JS Find" b
+${1:iterable}.find((${2:item}) => {
+	${0}
+})
+endsnippet
+
+snippet returnPromise "Return a promise" b
+return new Promise((resolve, reject) => {
+  ${0}
+})
+endsnippet
+
+snippet imp "import x from x" b
+import { $1 } from '../$2';$0
+endsnippet
+
+snippet imr "import React from 'react'" b
+import React from 'react';
+endsnippet
+
+snippet tl "Throw log" b
+throw new Error(JSON.stringify({$0}, null, 2))
+endsnippet
+
+snippet try "Try/Catch" b
+try {
+  $1
+}catch (error) {
+  $0
+}
+endsnippet
+
+snippet async "Async Function" b
+async function $1($2) {
+  $0
+}
+endsnippet
+
+snippet slog "Spaced console.lo" b
+console.log('**************************************************************************\\\\n\\\\n\\\\n')
+console.log($0)
+console.log('\\\\n\\\\n\\\\n**************************************************************************')
+endsnippet
+
 snippet ctor "constructor()" b
 constructor(props) {
 super(props)
