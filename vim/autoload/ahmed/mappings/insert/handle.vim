@@ -17,7 +17,8 @@ function! ahmed#mappings#insert#handle#tab(options) abort
 		" Trigger completion upon written words."
 		else
 			if exists('g:did_coc_loaded')
-				return coc#refresh()
+			  return coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+					\ coc#refresh()
 			endif
 		endif
 	endif
