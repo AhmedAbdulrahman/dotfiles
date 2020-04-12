@@ -46,11 +46,13 @@ alias KABOOM="yarn global upgrade --latest;brew update; brew upgrade; brew clean
 # ---------------------------------------------
 # Git
 # ---------------------------------------------
+alias gt='git status'
+alias ga='git add --all'
+alias gc='git commit'
 alias commit='git commit -S -s -m'
 alias amend="git commit --amend"
 alias master="git checkout master"
 alias develop="git checkout develop"
-alias status="git status"
 alias push="git push"
 alias pull='git pull'
 alias save='git stash save -u'
@@ -59,6 +61,10 @@ alias undosoft='git reset --soft HEAD~'	# Undo commit and keep all files staged
 alias undohard='git reset --hard HEAD~'	# Undo the commit and completely remove all changes
 alias undopush='git push -f origin HEAD^:master'
 alias unstage='git reset --'
+alias gfs='git flow feature start'
+alias gff='git flow feature finish'
+alias gfrs='git flow release start'
+alias gfrf='git flow release finish'
 
 # ---------------------------------------------
 # Timewarrior & Taskwarrior
