@@ -10,6 +10,8 @@ let g:coc_auto_copen = v:false
 " Environment node"
 let g:coc_node_path=exepath('node')
 
+let g:coc_snippet_next = '<tab>'
+
 " Language servers Config."
 let s:LSP_CONFIG = [
 	\ ['flow', {
@@ -290,6 +292,7 @@ nnoremap <silent> <Leader>cr  :<C-u>CocRestart<CR>
 
 " Use K for show documentation in preview window"
 nnoremap <silent> K :call <SID>ahmed#autocmds#showdocumentation#()<CR>
+
 
 " manage extensions "
 nnoremap <silent> <Leader>cx  :<C-u>CocList extensions<cr>
