@@ -1,0 +1,16 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Commit the current changes and push to the current branch
+
+br=`git branch | grep "*"`
+ it add --all
+if (($# > 1)); then
+  params=''
+  for i in $*;
+  do
+	params=" $params $i"
+  done
+  git commit -m "$params"
+else
+  git commit -m "$1"
+fi
+git push origin ${br/* /}
