@@ -55,12 +55,6 @@ bind-key Z resize-pane -Z
 # Toggle zoom.
 bind-key -n M-z resize-pane -Z
 
-# Vim-like key bindings for pane navigation (default uses cursor keys)
-bind-key -n M-Left select-pane -L
-bind-key -n M-Right select-pane -R
-bind-key -n M-Up select-pane -U
-bind-key -n M-Down select-pane -D
-
 # Kill panes without prompt.
 bind-key X kill-pane
 
