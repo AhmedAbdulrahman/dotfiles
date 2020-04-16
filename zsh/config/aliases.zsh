@@ -46,7 +46,6 @@ alias KABOOM="yarn global upgrade --latest;brew update; brew upgrade; brew clean
 # ---------------------------------------------
 # Git
 # ---------------------------------------------
-alias gt='git status'
 alias ga='git add --all'
 alias gc='git commit'
 alias commit='git commit -S -s -m'
@@ -56,6 +55,7 @@ alias develop="git checkout develop"
 alias push="git push"
 alias pull='git pull'
 alias save='git stash save -u'
+alias status='git status'
 alias undo='git reset HEAD~'			# Undo commit and unstage all files
 alias undosoft='git reset --soft HEAD~'	# Undo commit and keep all files staged
 alias undohard='git reset --hard HEAD~'	# Undo the commit and completely remove all changes
