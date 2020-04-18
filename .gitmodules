@@ -98,3 +98,13 @@
 [submodule "vim/pack/bundle/opt/limelight"]
 	path = vim/pack/bundle/opt/limelight
 	url = https://github.com/junegunn/limelight.vim.git
+[submodule "vim/pack/bundle/opt/github-hub"]
+	path = vim/pack/bundle/opt/github-hub
+	url = https://github.com/jez/vim-github-hub.git
+[submodule "vim/pack/bundle/start/styled-components"]
+	path = vim/pack/bundle/start/styled-components
+	url = https://github.com/styled-components/vim-styled-components.git
+	branch = main
+[submodule "vim/pack/bundle/opt/LanguageClient-neovim"]
+	path = vim/pack/bundle/opt/LanguageClient-neovim
+	url = https://github.com/autozimu/LanguageClient-neovim.git

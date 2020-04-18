@@ -1,1 +1,17 @@
+snippet reactStatlessTS "Create React Stateless"
+import React from 'react'
+
+const ${1:MyComponent}: React.FC = () => {
+
+	return (
+		<${2:div}>
+		  ${4:children}
+		</${2:div}>
+	)
+}
+
+export default ${1:MyComponent}
+endsnippet
+
 extends javascript
+extends javascriptreact

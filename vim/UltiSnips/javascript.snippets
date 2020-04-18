@@ -2,112 +2,18 @@ snippet const "JS Const" b
 const ${1:name} = ${0};
 endsnippet
 
-snippet ter "Ternary OP" b
-${1:cond} ? ${2:true} : ${3: false}
-endsnippet
-
-snippet cln "JS Console" b
-console.log(${1:'here'})$0
-endsnippet
-
-snippet clog "JS Log" b
-console.log('$1', $1)$0
-endsnippet
-
-snippet olog "JS Object Log" b
-console.log({$1})$0
-endsnippet
-
 snippet ts "Template String" b
 `${$1}`
 endsnippet
 
-snippet jlog "Stringfy Log" b
-console.log(JSON.stringify({$1}, null, 2))
+snippet ter "Ternary OP" b
+${1:cond} ? ${2:true} : ${3: false}
 endsnippet
-
-# Functions
 
 snippet iife
 ((${1:window, document, undefined}) => {
 ${0:${VISUAL}}
 }(${2:win, doc}))
-endsnippet
-
-# Loops
-
-snippet narray "new array"
-Array.from(new Array(${1}), (val, index) => (${2}))
-endsnippet
-
-snippet for "for loop" !
-for (let ${1:i} = 0, len = ${2:array}.length; $1 < len; $1++) {
-$0${2/([^.]+).*/$1/}[$1]
-}
-endsnippet
-
-snippet forof "for of loop" b
-for (let ${1:value} of ${2:Things}) {
-${0:${VISUAL}}
-}
-endsnippet
-
-snippet forin "for each loop" b
-for (let ${1:key} in ${2:object}) {
-  if ($2.hasOwnProperty($1)) {
-	${0:let ${3:value} = $2[$1];}
-  }
-}
-endsnippet
-
-# Modules
-
-
-# Conditionals
-
-snippet if "if" b
-if (${1}) {
-${0:${VISUAL}}
-}
-endsnippet
-
-snippet el "else"
-else {
-${0:${VISUAL}}
-}
-endsnippet
-
-snippet eif "else if" !
-else if (${1}) {
-${0:${VISUAL}}
-}
-endsnippet
-
-
-# Switches
-
-snippet sw "switch" b
-switch (${1}) {
-${0:${VISUAL}}
-}
-endsnippet
-
-snippet case "case" b
-case ${1}:
-${0:${VISUAL}}
-break;
-endsnippet
-
-# React
-
-snippet useState "React useState" b
-const [${1}, set${2}] = React.useState(${3});${0}
-endsnippet
-
-snippet useEffect "React useEffect" b
-React.useEffect(() => {
-	${1},
-}, [${2}]);${0}
 endsnippet
 
 snippet map "map" b
@@ -140,12 +46,50 @@ return new Promise((resolve, reject) => {
 })
 endsnippet
 
-snippet imp "import x from x" b
-import { $1 } from '../$2';$0
+snippet sleep "Simulate Fake Async Request" b
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 endsnippet
 
-snippet imr "import React from 'react'" b
-import React from 'react';
+snippet arrinstance "new array"
+Array.from(new Array(${1}), (val, index) => (${2}))
+endsnippet
+
+snippet for "for loop" !
+for (let ${1:i} = 0, len = ${2:array}.length; $1 < len; $1++) {
+$0${2/([^.]+).*/$1/}[$1]
+}
+endsnippet
+
+snippet forof "for of loop" b
+for (let ${1:value} of ${2:Things}) {
+${0:${VISUAL}}
+}
+endsnippet
+
+snippet forin "for each loop" b
+for (let ${1:key} in ${2:object}) {
+if ($2.hasOwnProperty($1)) {
+	${0:let ${3:value} = $2[$1];}
+}
+}
+endsnippet
+
+snippet if "if" b
+if (${1}) {
+${0:${VISUAL}}
+}
+endsnippet
+
+snippet el "else"
+else {
+${0:${VISUAL}}
+}
+endsnippet
+
+snippet eif "else if" !
+else if (${1}) {
+${0:${VISUAL}}
+}
 endsnippet
 
 snippet tl "Throw log" b
@@ -172,203 +116,34 @@ console.log($0)
 console.log('\\\\n\\\\n\\\\n**************************************************************************')
 endsnippet
 
-snippet ctor "constructor()" b
-constructor(props) {
-super(props)
-$0
+# Switches
+snippet sw "switch" b
+switch (${1}) {
+${0:${VISUAL}}
 }
 endsnippet
 
-snippet dse "getDerivedStateFromError" b
-static getDerivedStateFromError(${1:error}) {
-$0
-}
+snippet case "case" b
+case ${1}:
+${0:${VISUAL}}
+break;
 endsnippet
 
-snippet dsp "getDerivedStateFromProps" b
-static getDerivedStateFromProps(${1:nextProps}, ${2:prevState}) {
-$0
-}
-endsnippet
-
-snippet sbu "getSnapshotBeforeUpdate" b
-getSnapshotBeforeUpdate(${1:prevProps}, ${2:prevState}) {
-$0
-}
-endsnippet
-
-snippet cdc "componentDidCatch" b
-componentDidCatch() {
-$0
-}
-endsnippet
-
-snippet cdm "componentDidMount" b
-componentDidMount() {
-$0
-}
-endsnippet
-
-snippet cdu "componentDidUpdate" b
-componentDidUpdate(prevProps, prevState) {
-$0
-}
-endsnippet
-
-snippet cwum "componentWillUnmount" b
-componentWillUnmount() {
-$0
-}
-endsnippet
-
-snippet scu "shouldComponentUpdate" b
-shouldComponentUpdate(nextProps, nextState) {
-return ${1:true};
-}
-endsnippet
-
-snippet reactClass "Create React Class"
-import React from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
-
-class ${1:MyComponent} extends React.Component {
-	render() {
-		const {className, children, ...other} = this.props
-		return (
-			<${2:div}
-				className={classnames(styles.${3:root}, className)}
-				{...other}
-			>
-				${4:children}
-			</${2:div}>
-		)
-	}
-}
-
-${1:MyComponent}.propTypes = {
-	children: PropTypes.node.isRequired,
-	classes: PropTypes.object.isRequired,
-	className: PropTypes.string,
-}
-
-export default ${1:MyComponent}
-endsnippet
-
-snippet reactClassJSS "Create React Class JSS"
-import React from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
-import withStyles from '../styles/withStyles'
-
-export const styles = theme => ({
-	root: {},
-})
-
-class ${1:MyComponent} extends React.Component {
-	render() {
-		const { children, classes, className, ...other} = this.props
-
-		return (
-			<${2:div}
-				className={classnames(classes.root, className)}
-				{...other}
-			>
-				${3:children}
-			</${2:div}>
-		)
-	}
-}
-
-${1:MyComponent}.propTypes = {
-	children: PropTypes.node.isRequired,
-	classes: PropTypes.object.isRequired,
-	className: PropTypes.string,
-}
-
-export default withStyles(styles)(${1:MyComponent})
-endsnippet
-
-snippet reactStatless "Create React Stateless"
-import React from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
-
-const ${1:MyComponent} = (props) => {
-	const { className, children, ...other } = props
-
-	return (
-		<${2:div}
-		className={classnames(styles.${3:root}, className)}
-		{...other}
-		>
-		${4:children}
-		</${2:div}>
-	)
-}
-
-${1:MyComponent}.propTypes = {
-children: PropTypes.node.isRequired,
-className: PropTypes.string,
-}
-
-export default ${1:MyComponent}
-endsnippet
-
-snippet reactStatlessCSSModules "Create React Stateless CSS Modules"
-import React from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
-import styles from './${1}.module.css'
-
-const ${1:MyComponent} = props => {
-	const { children, className, ...other } = props
-
-	return (
-	<${2:div}
-		className={classnames(styles.${3:root}, className)}
-		{...other}
-	>
-		${4:children}
-	</${2:div}>
-	)
-}
-
-${1:MyComponent}.propTypes = {
-	children: PropTypes.node.isRequired,
-	className: PropTypes.string,
-}
-
-export default ${1:MyComponent}
-endsnippet
-
-snippet reactStory "Create React Story"
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { text, boolean } from '@storybook/addon-knobs'
-import ${1:Button} from './'
-
-const stories = storiesOf('Components/${1:Button}', module)
-
-export const Default = () => (
-	<${1:Button}
-		disabled={boolean('disabled', false)}
-	>
-		{text('children', 'Just a ${1:Button}')}
-	</${1:Button}>
-)
-
-stories.add('Default', Default)
-
-export default Default
-endsnippet
-
-snippet reactDanger "React dangerouslySet"
-dangerouslySetInnerHTML={{ __html: ${1} }}
-endsnippet
 # Console.Log
-snippet cl "console.log" b
-console.log(${1})
+snippet cln "JS Console" b
+console.log(${1:'here'})$0
+endsnippet
+
+snippet clog "JS Log" b
+console.log('$1', $1)$0
+endsnippet
+
+snippet olog "JS Object Log" b
+console.log({$1})$0
+endsnippet
+
+snippet pretty "Stringfy Log" b
+console.log(JSON.stringify({$1}, null, 2))
 endsnippet
 
 snippet ca "console.assert" b
@@ -408,7 +183,6 @@ console.groupEnd()$0
 endsnippet
 
 # JSDoc
-
 snippet ** "docblock" b
 /**
 ${VISUAL:/((?m)^)/ * /g}$0
@@ -425,7 +199,6 @@ endsnippet
 
 
 # Misc
-
 snippet fl "flow" b
 // @flow
 endsnippet
@@ -434,12 +207,8 @@ snippet "(use|strict)" "'use strict' declaration" br
 'use strict';
 endsnippet
 
-snippet jsc "JSX Comment"
-{/* ${0:${VISUAL}} */}
-endsnippet
 
 # Jest
-
 snippet describe "describe" b
 describe('${1}', () => {
 ${0:${VISUAL}}
@@ -462,3 +231,4 @@ ${0:debugger}
 endsnippet
 
 # vim:ft=snippets:
+
