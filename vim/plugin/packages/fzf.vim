@@ -99,8 +99,8 @@ nnoremap <silent> <expr> <leader><tab> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-
 nnoremap <silent> <Leader><C-p> :FGitFiles<Enter>
 nnoremap <silent> <Leader><C-s> :FGFiles?<Enter>
 nnoremap <silent> <M-x> :FCommands<Enter>
-nnoremap <silent> <M-b> :Buffers<Enter>
-nnoremap <silent> <C-f> :FTags<Enter>
+" nnoremap <silent> <M-b> :Buffers<Enter>"
+" nnoremap <silent> <C-f> :FTags<Enter>"
 nnoremap <silent> <Leader>h :FHelptags<Enter>
 nnoremap <silent> <Leader>: :FHistory:<Enter>
 nnoremap <silent> <Leader>; :FHistory/<Enter>
