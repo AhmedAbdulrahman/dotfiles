@@ -65,17 +65,23 @@ let g:ale_virtualtext_prefix = '  '
 
 let g:ale_javascript_prettier_use_local_config = 1
 function! s:PRETTIER_OPTIONS()
-  return '--config-precedence prefer-file --single-quote --no-bracket-spacing --prose-wrap always --trailing-comma all --no-semi --end-of-line  lf --print-width ' . &textwidth
+  return '--config-precedence prefer-file --single-quote --no-bracket-spacing --prose-wrap always --arrow-parens always --trailing-comma all --no-semi --end-of-line  lf --print-width ' . &textwidth
 endfunction
 let g:ale_javascript_prettier_options = <SID>PRETTIER_OPTIONS()
 " Auto update the option when textwidth is dynamically set or changed in a ftplugin file"
 au! OptionSet textwidth let g:ale_javascript_prettier_options = <SID>PRETTIER_OPTIONS()
 
+let g:ale_linter_aliases = {
+	  \ 'Dockerfile': 'dockerfile',
+	  \ 'zsh': 'sh',
+	  \ 'mail': 'markdown',
+	  \ 'html': ['html', 'css']
+	  \ }
 
 " Define Linters for 'ALElinters' command."
 let g:ale_linters = {
       \ 'javascript': 	['eslint'],
-      \ 'typescript': 	['tsserver', 'tslint'],
+      \ 'typescript': 	['eslint'],
       \}
 
 " Define fixers for 'ALEFix' command."
@@ -85,10 +91,8 @@ let g:ale_fixers = {
 	\ 'css': 			['prettier', 'stylelint'],
 	\ 'scss': 			['prettier'],
 	\ 'yaml': 			['prettier'],
-	\ 'javascript': 	['eslint', 'prettier'],
-	\ 'javascript.jsx': ['eslint', 'prettier'],
+	\ 'javascript': 	['prettier'],
 	\ 'typescript': 	['prettier'],
-	\ 'typescriptreact':['prettier'],
 	\ 'json': 			['prettier'],
 	\ 'graphql': 		['prettier'],
 	\ 'markdown': 		['prettier'],
@@ -97,18 +101,17 @@ let g:ale_fixers = {
 	\ 'bash': 			['shfmt'],
 	\ 'go': 			['gofmt'],
 \ }
-let g:ale_fix_on_save = v:false
 
 " Don't auto auto-format files inside `node_modules`, `forks`, `repo`, `playground` directories, minified files and jquery (for legacy codebases)"
 let g:ale_pattern_options_enabled = v:true
 let g:ale_pattern_options = {
 	\   '\.min\.(js\|css)$': {
 	\       'ale_linters': [],
-	\       'ale_fixers': g:ale_fixers['*']
+	\       'ale_fixers': []
 	\   },
 	\   'jquery.*': {
 	\       'ale_linters': [],
-	\       'ale_fixers': g:ale_fixers['*']
+	\       'ale_fixers': []
 	\   },
 	\   'node_modules/.*': {
 	\       'ale_linters': [],
@@ -118,13 +121,13 @@ let g:ale_pattern_options = {
 	\       'ale_fixers': g:ale_fixers['*']
 	\   },
 	\   'Projects/_Fork/.*': {
-	\       'ale_fixers': []
+	\       'ale_fixers': g:ale_fixers['*']
 	\   },
 	\   'Projects/_Repo/.*': {
-	\       'ale_fixers': []
+	\       'ale_fixers': g:ale_fixers['*']
 	\   },
 	\   'Projects/_Playground/.*': {
-	\       'ale_fixers': []
+	\       'ale_fixers': g:ale_fixers['*']
 	\   },
 \ }
 
@@ -134,12 +137,6 @@ let g:ale_lint_on_filetype_changed = v:true
 let g:ale_lint_on_insert_leave = v:true
 let g:ale_lint_on_save = v:true
 let g:ale_lint_on_text_changed = 'normal'
-let g:ale_linter_aliases = {
-	\ 'Dockerfile': 'dockerfile',
-	\ 'zsh': 'sh',
-	\ 'mail': 'markdown',
-	\ 'html': ['html', 'css']
-\ }
 let g:ale_linters_explicit = v:false
 let g:ale_linters_ignore = {}
 let g:ale_lsp_root = {}
@@ -150,8 +147,7 @@ let g:ale_cursor_detail = v:false
 let g:ale_close_preview_on_insert = v:true
 let g:ale_keep_list_window_open = v:false
 let g:ale_list_vertical = v:false
-let g:ale_list_window_size = 10
-let g:ale_loclist_msg_format = ' %linter%: %s (%severity%)'
+let g:ale_list_window_size = 5
 let g:ale_open_list = v:false
 let g:ale_set_loclist = v:false
 let g:ale_set_quickfix = v:true
