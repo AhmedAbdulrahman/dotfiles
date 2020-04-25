@@ -15,14 +15,14 @@ endfunction
 function! Light() abort
     echom "set bg=light"
     set bg=light
-    colorscheme minimal-light
+    colorscheme aylin
     set list
 endfunction
 
 function! Dark() abort
     echom "set bg=dark"
     set bg=dark
-    colorscheme minimal-dark
+    colorscheme aylin
     "darcula fix to hide the indents:"
     set nolist
 endfunction

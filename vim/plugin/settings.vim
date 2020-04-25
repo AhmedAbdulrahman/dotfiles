@@ -14,12 +14,12 @@ set langmenu=en_US
 "set background=dark"  "Choose dark colors if available."
 
 let g:nd_themes = [
-  \ ['7:00',  'minimal-light', 'light' ],
-  \ ['18:00', 'minimal-dark', 'dark' ],
+  \ ['7:00',  'aylin', 'dark' ],
+  \ ['18:00', 'aylin', 'dark' ],
   \ ]
 
 set termguicolors " Enable True Color support. "
-colorscheme minimal-dark " Color scheme."
+colorscheme aylin " Color scheme."
 
 " Behaviour "
 set backspace=indent,eol,start " Allow backspacing over everything in insert mode. "
