@@ -108,3 +108,6 @@
 [submodule "vim/pack/bundle/opt/LanguageClient-neovim"]
 	path = vim/pack/bundle/opt/LanguageClient-neovim
 	url = https://github.com/autozimu/LanguageClient-neovim.git
+[submodule "vim/pack/bundle/start/aylin"]
+	path = vim/pack/bundle/start/aylin
+	url = https://github.com/AhmedAbdulrahman/aylin.vim.git
