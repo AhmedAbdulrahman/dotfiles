@@ -81,7 +81,7 @@ let g:ale_linter_aliases = {
 " Define Linters for 'ALElinters' command."
 let g:ale_linters = {
       \ 'javascript': 	['eslint'],
-      \ 'typescript': 	['eslint'],
+      \ 'typescript': 	['eslint', 'tslint'],
       \}
 
 " Define fixers for 'ALEFix' command."
