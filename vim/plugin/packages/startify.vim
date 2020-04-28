@@ -41,11 +41,12 @@ let g:startify_custom_header_quotes = startify#fortune#predefined_quotes() + [
       \ ['Work expands to fill the time available for its completion.', '', "― C. Northcote Parkinson (Parkinson's Law)"]
       \ ]
 
-let g:startify_list_order = [
-      \ ['   Sessions:'], 'sessions',
-      \ ['   Files:'], 'dir',
-      \ ['   MRU'], 'files',
-      \ ['   Bookmarks:'], 'bookmarks',
+let g:startify_lists = [
+      \ { 'type': 'commands' },
+      \ { 'header': [ '   Sessions' ], 'type': 'sessions' },
+      \ { 'header': [ '   Files [' . getcwd() . ']' ], 'type': 'dir' },
+      \ { 'header': [ '   Bookmarks' ], 'type': 'bookmarks' },
+      \ { 'header': [ '   MRU' ], 'type': 'files' },
       \ ]
 
 let g:startify_skiplist = [
