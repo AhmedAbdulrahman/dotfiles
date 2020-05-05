@@ -18,7 +18,8 @@
 	excludesfile = ~/.config/git/.gitignore
   	attributesfile = ~/.config/git/.gitattributes
 	untrackedCache = true
-	pager = diff-so-fancy | less --tabs=4 -RFX
+	pager = diff-so-fancy | less -iFMRSX
+	; hash (#) conflicts with Markdown when I use hb to open PRs etc...
 	commentChar = %
 
 [alias]
@@ -70,9 +71,13 @@
   fsckObjects = true
 
 [pager]
-	# insanely beautiful diffs ==> npm install -g diff-so-fancy
-	diff = diff-so-fancy | less --tabs=4 -RFX
-	show = diff-so-fancy | less --tabs=4 -RFX
+  # insanely beautiful diffs ==> npm install -g diff-so-fancy
+  show-branch = true
+  status = true
+  show = diff-so-fancy | less -iFMRSX --pattern='^(commit|diff)' +r
+  diff = diff-so-fancy | less -iFMRSX --pattern='^(commit|diff)' +r
+  log  = diff-so-fancy | less -iFMRSX --pattern='^(commit|diff)' +r
+  whatchanged = diff-so-fancy | less -iFMRSX --pattern='^(commit|diff)' +r
 
 # [interactive]
   # disabled until github.com/so-fancy/diff-so-fancy/pull/172 is resolved :(
