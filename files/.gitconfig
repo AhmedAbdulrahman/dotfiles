@@ -18,7 +18,7 @@
 	excludesfile = ~/.config/git/.gitignore
   	attributesfile = ~/.config/git/.gitattributes
 	untrackedCache = true
-	pager = diff-so-fancy | less -iFMRSX
+	pager = diff-so-fancy | less --tabs=4 -RFX
 	; hash (#) conflicts with Markdown when I use hb to open PRs etc...
 	commentChar = %
 
