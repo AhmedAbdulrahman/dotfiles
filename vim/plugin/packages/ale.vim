@@ -90,6 +90,7 @@ let g:ale_fixers = {
 	\ 'html': 			['prettier'],
 	\ 'css': 			['prettier', 'stylelint'],
 	\ 'scss': 			['prettier'],
+	\ 'less': 			['prettier'],
 	\ 'yaml': 			['prettier'],
 	\ 'javascript': 	['prettier'],
 	\ 'typescript': 	['prettier'],
