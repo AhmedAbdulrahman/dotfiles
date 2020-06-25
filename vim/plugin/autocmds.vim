@@ -49,9 +49,3 @@ augroup makemissing
 	autocmd!
 	autocmd BufWritePre * call ahmed#autocmds#makemissing#(expand('<afile>:p:h'), v:cmdbang)
 augroup end
-
-" A simple way to create, edit and save files and directories."
-augroup createdir
-	autocmd!
-	autocmd BufWritePre,FileWritePre * call ahmed#autocmds#createdir#()
-augroup end

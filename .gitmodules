@@ -111,3 +111,6 @@
 [submodule "vim/pack/bundle/start/aylin"]
 	path = vim/pack/bundle/start/aylin
 	url = https://github.com/AhmedAbdulrahman/aylin.vim.git
+[submodule "vim/pack/bundle/start/vim-easydir"]
+	path = vim/pack/bundle/start/vim-easydir
+	url = https://github.com/duggiefresh/vim-easydir.git
