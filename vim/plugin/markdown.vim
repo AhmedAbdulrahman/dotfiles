@@ -1,5 +1,5 @@
 if !get(g:, 'mywaikikisetup_loaded', 0)
-  call mywaikiki#Load()
+  call ahmed#mywaikiki#Load()
   let g:mywaikikisetup_loaded = 1
 endif
 
