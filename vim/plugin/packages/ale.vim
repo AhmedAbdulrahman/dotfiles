@@ -84,6 +84,8 @@ let g:ale_linters = {
       \ 'typescript': 	['eslint', 'tslint'],
       \}
 
+let g:rust_cargo_use_clippy = executable('cargo-clippy')
+
 " Define fixers for 'ALEFix' command."
 let g:ale_fixers = {
 	\  '*':				['remove_trailing_lines', 'trim_whitespace'],
