@@ -15,6 +15,7 @@
 	editor = $EDITOR
 	commitGraph = true
 	whitespace=fix,space-before-tab,tab-in-indent,trailing-space,cr-at-eol
+	; https://git-scm.com/docs/git-update-index#_untracked_cache
 	excludesfile = ~/.config/git/.gitignore
   	attributesfile = ~/.config/git/.gitattributes
 	untrackedCache = true
@@ -74,10 +75,8 @@
   # insanely beautiful diffs ==> npm install -g diff-so-fancy
   show-branch = true
   status = true
-  show = diff-so-fancy | less -iFMRSX --pattern='^(commit|diff)' +r
-  diff = diff-so-fancy | less -iFMRSX --pattern='^(commit|diff)' +r
-  log  = diff-so-fancy | less -iFMRSX --pattern='^(commit|diff)' +r
-  whatchanged = diff-so-fancy | less -iFMRSX --pattern='^(commit|diff)' +r
+  show = diff-so-fancy | less --tabs=4 -RFXS --pattern '^(Date|added|deleted|modified): '
+  diff = diff-so-fancy | less --tabs=4 -RFXS --pattern '^(Date|added|deleted|modified): '
 
 # [interactive]
   # disabled until github.com/so-fancy/diff-so-fancy/pull/172 is resolved :(
