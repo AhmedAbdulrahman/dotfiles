@@ -117,3 +117,6 @@
 [submodule "vim/pack/bundle/start/vim-waikiki"]
 	path = vim/pack/bundle/start/vim-waikiki
 	url = https://github.com/fcpg/vim-waikiki.git
+[submodule "vim/pack/bundle/start/devdocs.vim"]
+	path = vim/pack/bundle/start/devdocs.vim
+	url = https://github.com/rhysd/devdocs.vim.git
