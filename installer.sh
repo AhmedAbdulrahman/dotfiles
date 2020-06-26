@@ -406,9 +406,6 @@ all() {
 
   if [ $? -eq 0 ]; then
     print_success "Done."
-    print_info "Open a new tab & change to \"cd ~/dotfiles, then type make\" to Install Node packages, Python packages & macOS Settings" \
-      "Don't forget to generate SSH keys & import gpg keys"
-      command vim -u NONE $HOME/.{gitconfig,zshrc}.local
   else
     print_error "Something went wrong, [ Failed on: $FAILED_COMMAND ]"
   fi
