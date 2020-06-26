@@ -1,26 +1,31 @@
+if !get(g:, 'mywaikikisetup_loaded', 0)
+  call mywaikiki#Load()
+  let g:mywaikikisetup_loaded = 1
+endif
+
 let g:vim_markdown_fenced_languages = [
-      \'css',
-      \'erb=eruby',
-      \'javascript',
-      \'js=javascript',
-      \'jsx=javascript.jsx',
-      \'ts=typescript',
-      \'tsx=typescript.tsx',
-      \'json',
-      \'json5',
-      \'ruby',
-      \'sass',
-      \'scss=sass',
-      \'xml',
-      \'html',
-      \'py=python',
-      \'python',
-      \'clojure',
-      \'clj=clojure',
-      \'clojurescript',
-      \'cljs=clojurescript',
-      \'stylus=css',
-      \'less=css'
+      \ 'css',
+      \ 'erb=eruby',
+      \ 'javascript',
+      \ 'js=javascript',
+      \ 'jsx=javascript.jsx',
+      \ 'ts=typescript',
+      \ 'tsx=typescript.tsx',
+      \ 'json',
+      \ 'json5',
+      \ 'ruby',
+      \ 'sass',
+      \ 'scss=sass',
+      \ 'xml',
+      \ 'html',
+      \ 'py=python',
+      \ 'python',
+      \ 'clojure',
+      \ 'clj=clojure',
+      \ 'clojurescript',
+      \ 'cljs=clojurescript',
+      \ 'stylus=css',
+      \ 'less=css'
       \]
 
 let g:goyo_width = '120'

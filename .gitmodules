@@ -114,3 +114,6 @@
 [submodule "vim/pack/bundle/start/vim-easydir"]
 	path = vim/pack/bundle/start/vim-easydir
 	url = https://github.com/duggiefresh/vim-easydir.git
+[submodule "vim/pack/bundle/start/vim-waikiki"]
+	path = vim/pack/bundle/start/vim-waikiki
+	url = https://github.com/fcpg/vim-waikiki.git
