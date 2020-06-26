@@ -254,6 +254,74 @@ let g:coc_user_config = {
 	\ 'rust': {
 		\ 'clippy_preference': 'on',
 	\ },
+	\ 'json': {
+		\ 'schemas': [
+			\ {
+			\ 'name': 'tsconfig.json',
+			\ 'description': 'TypeScript compiler configuration file',
+			\ 'fileMatch': ['tsconfig.json', 'tsconfig.*.json'],
+			\ 'url': 'http://json.schemastore.org/tsconfig'
+			\ },
+			\ {
+			\ 'name': 'tslint.json',
+			\ 'description': 'tslint configuration file',
+			\ 'fileMatch': ['tslint.json'],
+			\ 'url': 'http://json.schemastore.org/tslint'
+			\ },
+			\ {
+			\ 'name': 'lerna.json',
+			\ 'description': 'Lerna config',
+			\ 'fileMatch': ['lerna.json'],
+			\ 'url': 'http://json.schemastore.org/lerna'
+			\ },
+			\ {
+			\ 'name': '.babelrc.json',
+			\ 'description': 'Babel configuration',
+			\ 'fileMatch': ['.babelrc.json', '.babelrc', 'babel.config.json'],
+			\ 'url': 'http://json.schemastore.org/lerna'
+			\ },
+			\ {
+			\ 'name': '.eslintrc.json',
+			\ 'description': 'ESLint config',
+			\ 'fileMatch': ['.eslintrc.json', '.eslintrc'],
+			\ 'url': 'http://json.schemastore.org/eslintrc'
+			\ },
+			\ {
+			\ 'name': 'bsconfig.json',
+			\ 'description': 'Bucklescript config',
+			\ 'fileMatch': ['bsconfig.json'],
+			\ 'url': 'https://bucklescript.github.io/bucklescript/docson/build-schema.json'
+			\ },
+			\ {
+			\ 'name': '.prettierrc',
+			\ 'description': 'Prettier config',
+			\ 'fileMatch': ['.prettierrc', '.prettierrc.json', 'prettier.config.json'],
+			\ 'url': 'http://json.schemastore.org/prettierrc'
+			\ },
+			\ {
+			\ 'name': 'now.json',
+			\ 'description': 'ZEIT Now config',
+			\ 'fileMatch': ['now.json'],
+			\ 'url': 'http://json.schemastore.org/now'
+			\ },
+			\ {
+			\ 'name': '.stylelintrc.json',
+			\ 'description': 'Stylelint config',
+			\ 'fileMatch': ['.stylelintrc', '.stylelintrc.json', 'stylelint.config.json'],
+			\ 'url': 'http://json.schemastore.org/stylelintrc'
+			\ },
+		\ ]
+	\ },
+	\ 'yaml': {
+		\ 'schemas': {
+			\ 'http://json.schemastore.org/github-workflow': '.github/workflows/*.{yml,yaml}',
+			\ 'http://json.schemastore.org/github-action': '.github/action.{yml,yaml}',
+			\ 'http://json.schemastore.org/ansible-stable-2.9': 'roles/tasks/*.{yml,yaml}',
+			\ 'http://json.schemastore.org/prettierrc': '.prettierrc.{yml,yaml}',
+			\ 'http://json.schemastore.org/stylelintrc': '.stylelintrc.{yml,yaml}',
+			\ 'http://json.schemastore.org/circleciconfig': '.circleci/**/*.{yml,yaml}',
+		\ }
+	\ }
 \ }
 
 let s:languageservers = {}
