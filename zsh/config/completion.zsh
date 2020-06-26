@@ -5,7 +5,7 @@ if [[ ${TERM} == 'dumb' ]]; then
 fi
 
 # load and initialize the completion system
-autoload -Uz compinit && compinit -C -d "${ZDOTDIR:-${HOME}}/${zcompdump_file:-.zcompdump}"
+autoload -Uz compinit && compinit -C -d "${XDG_CACHE_HOME:-${HOME}}/${zcompdump_file:-.zcompdump}"
 
 # ZSH options
 setopt ALWAYS_TO_END    # If a completion is performed with the cursor within a word, and a full completion is inserted, the cursor is moved to the end of the word
