@@ -65,7 +65,8 @@ fi
 # ---------------------------------------------
 export BAT_CONFIG_PATH="${HOME}/.batrc"
 export RIPGREP_CONFIG_PATH="${HOME}/.rgrc"
-
+# Supress some npm ads
+export ADBLOCK=1
 
 # ---------------------------------------------
 # Environment settings
