@@ -84,7 +84,6 @@
 	else
 		[[ -z "${HOMEBREW_GITHUB_API_TOKEN}" ]] && echo "⚠ HOMEBREW_GITHUB_API_TOKEN not set." && _has_unset_config=yes
 		[[ -z "${GITHUB_TOKEN}" ]] && echo "⚠ GITHUB_TOKEN not set." && _has_unset_config=yes
-		[[ -z "${GITHUB_USER}" ]] && echo "⚠ GITHUB_USER not set." && _has_unset_config=yes
 		[[ ${_has_unset_config:-no} == "yes" ]] && echo "Set the missing configs in ~/.zshrc"
 	fi
 
