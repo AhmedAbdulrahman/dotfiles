@@ -55,7 +55,7 @@ install_global_packages() {
 	"bash-language-server"
 	"dockerfile-language-server-nodejs"
 	"netlify-cli"
-	"now"
+	"vercel"
 	"parker"
 	"prettier"
 	"serve"
