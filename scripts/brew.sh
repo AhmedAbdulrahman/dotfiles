@@ -140,6 +140,7 @@ main() {
   brew_install "Discord" "discord" "homebrew/cask" "cask"
   brew_install "Sequel Pro" "sequel-pro" "homebrew/cask" "cask"
   brew_install "Kap" "kap" "homebrew/cask" "cask"
+  brew_install "Figma" "figma" "homebrew/cask" "cask"
   brew_install "ImageOptim" "imageoptim" "homebrew/cask" "cask"
   brew_install "MPV" "mpv" "homebrew/cask" "cask"
   brew_install "Qlcolorcode" "qlcolorcode" "homebrew/cask" "cask"
