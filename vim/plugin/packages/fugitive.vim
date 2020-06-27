@@ -1,8 +1,8 @@
 ""
-" Fugitive Git client." 
+" Fugitive Git client."
 ""
 
-" Define mappings." 
+" Define mappings."
 nnoremap <silent> gib :Gblame<Enter>
 nnoremap <silent> gid :Gdiff<Enter>
 nnoremap <silent> gil :0Gllog<Enter>

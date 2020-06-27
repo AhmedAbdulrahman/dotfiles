@@ -32,26 +32,41 @@ let g:startify_custom_header_quotes = startify#fortune#predefined_quotes() + [
       \ ['Simplicity is a great virtue but it requires hard work to achieve it', 'and education to appreciate it. And to make matters worse: complexity sells better.', '', '― Edsger W. Dijkstra'],
       \ ['A common fallacy is to assume authors of incomprehensible code will be able to express themselves clearly in comments.'],
       \ ['Your time is limited, so don’t waste it living someone else’s life. Don’t be trapped by dogma — which is living with the results of other people’s thinking. Don’t let the noise of others’ opinions drown out your own inner voice. And most important, have the courage to follow your heart and intuition. They somehow already know what you truly want to become. Everything else is secondary.', '', '— Steve Jobs, June 12, 2005'],
-      \ ['My take: Animations are something you earn the right to include when the rest of the experience is fast and intuitive.', '', '— @jordwalke'],
       \ ['If a feature is sometimes dangerous, and there is a better option, then always use the better option.', '', '- Douglas Crockford'],
       \ ['The best way to make your dreams come true is to wake up.', '', '― Paul Valéry'],
       \ ['Fast is slow, but continuously, without interruptions', '', '– Japanese proverb'],
       \ ['A language that doesn’t affect the way you think about programming is not worth knowing.', '- Alan Perlis'],
       \ ['Bad programmers worry about the code. Good programmers worry about data structures and their relationships', '' , '― Linus Torvalds'],
-      \ ['Work expands to fill the time available for its completion.', '', "― C. Northcote Parkinson (Parkinson's Law)"]
+      \ ['Work expands to fill the time available for its completion.', '', "― C. Northcote Parkinson (Parkinson's Law)"],
+      \ ['Future regret minimization is a powerful force for good judgement.', '', '― Tobi Lutke'],
+      \ ['The works must be conceived with fire in the soul but executed with clinical coolness', '', '― Joan Miró']
       \ ]
 
+function! s:gitModified()
+	let files = systemlist('git ls-files -m 2>/dev/null')
+	return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+" same as above, but show untracked files, honouring .gitignore"
+function! s:gitUntracked()
+	let files = systemlist('git ls-files -o --exclude-standard 2>/dev/null')
+	return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
 let g:startify_lists = [
-      \ { 'type': 'commands' },
-      \ { 'header': [ '   Bookmarks' ], 'type': 'bookmarks' },
-      \ { 'header': [ '   Sessions' ], 'type': 'sessions' },
-      \ { 'header': [ '   Files [' . getcwd() . ']' ], 'type': 'dir' },
-      \ { 'header': [ '   MRU' ], 'type': 'files' },
-      \ ]
+	\ { 'type': 'commands' },
+	\ { 'header': [ '   Sessions' ], 'type': 'sessions' },
+	\ { 'header': [ '   Files [' . getcwd() . ']' ], 'type': 'dir' },
+	\ { 'header': [ '   Bookmarks' ], 'type': 'bookmarks' },
+	\ { 'type': function('s:gitModified'),  'header': ['   git modified']},
+	\ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
+	\ { 'header': [ '   MRU' ], 'type': 'files' },
+	\ ]
 
 let g:startify_skiplist = [
       \ 'COMMIT_EDITMSG',
-      \ '^/cache',
+      \ '^/tmp',
+	  \ '^/cache',
       \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
       \ 'plugged/.*/doc',
       \ 'pack/.*/doc',

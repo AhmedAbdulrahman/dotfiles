@@ -24,6 +24,8 @@ let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
 " Single-click to toggle directory nodes, double-click to open non-directory nodes."
 let g:NERDTreeMouseMode=2
 
+let g:NERDTreeShowBookmarks=1
+
 if has('autocmd')
   augroup AhmedNERDTree
     autocmd!
@@ -35,8 +37,16 @@ endif
 let g:NERDTreeIgnore = [
 	\ '^\.DS_Store$[[file]]',
 	\ '^\.git$[[dir]]',
-	\ '^node_modules$[[dir]]'
+	\ '^node_modules$[[dir]]',
+	\ '\.swp$',
+	\ '\.idea\/',
+	\ '\.pyc$',
+	\ '\.egg-info$',
+	\ '__pycache__',
+	\ '__pycache__'
 \ ]
+
+let g:NERDTreeSortOrder = ['\/$', '^\.']
 
 " Use natural sort order."
 let g:NERDTreeNaturalSort = v:true
@@ -86,12 +96,13 @@ let g:NERDTreeMapOpenInTabSilent = ''
 let g:NERDTreeMapPreviewSplit = ''
 let g:NERDTreeMapPreviewVSplit = ''
 let g:NERDTreeMapQuit = ''
+let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeMapToggleFiles = ''
 let g:NERDTreeMapToggleFilters = ''
 let g:NERDTreeMapCustomOpen = '<CR>'
 
 " Define mappings."
-nnoremap <silent> <Leader>f :packadd nerdtree <Bar> NERDTreeToggle <Bar> wincmd p<Enter>
+nnoremap <silent> <Leader>f :packadd nerdtree <Bar> NERDTreeToggle<RETURN>
 nnoremap <silent> <Leader>F :packadd nerdtree <Bar> NERDTreeFind<Enter>
 
 " Move up a directory using '-' like vim-vinegar (usually u does this)."

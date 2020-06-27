@@ -30,7 +30,7 @@
     nnoremap <silent> gt :call ahmed#mappings#normal#lookup#()<Enter>
 
     " Open URL under cursor in browser or open path in GUI explorer."
-    nnoremap <silent> gb :execute printf('silent !xdg-open "%s" 2>/dev/null', fnameescape(expand('<cfile>')))<Enter>
+    "nnoremap <silent> gb :execute printf('silent !xdg-open "%s" 2>/dev/null', fnameescape(expand('<cfile>')))<Enter>"
 
     " Scroll viewport faster."
     nnoremap <C-e> 2<C-e>
@@ -81,8 +81,8 @@
     nnoremap ? ?\v
 
     " Construct grep search."
-    nnoremap gs :Search ''<Left>
-    nnoremap gS :Search! ''<Left>
+    "nnoremap gs :Search ''<Left>"
+    "nnoremap gS :Search! ''<Left>"
 
     " Easy regex replace for current word"
     nnoremap <Leader>s :%s/\<<C-r><C-w>\>/

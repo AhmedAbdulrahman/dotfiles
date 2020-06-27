@@ -50,8 +50,7 @@ onoremap % <Nop>
 xnoremap % <Nop>
 
 " Disable scroll forward and backward mappings."
-nnoremap <C-f> <Nop>
-nnoremap <C-b> <Nop>
+
 
 " Disable basic up-down, left-right navigation mappings."
 nnoremap <Up> <Nop>

@@ -120,3 +120,6 @@
 [submodule "vim/pack/bundle/start/devdocs.vim"]
 	path = vim/pack/bundle/start/devdocs.vim
 	url = https://github.com/rhysd/devdocs.vim.git
+[submodule "vim/pack/bundle/opt/smoothie"]
+	path = vim/pack/bundle/opt/smoothie
+	url = https://github.com/psliwka/vim-smoothie.git
