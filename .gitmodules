@@ -123,3 +123,6 @@
 [submodule "vim/pack/bundle/opt/smoothie"]
 	path = vim/pack/bundle/opt/smoothie
 	url = https://github.com/psliwka/vim-smoothie.git
+[submodule "vim/pack/bundle/start/codi"]
+	path = vim/pack/bundle/start/codi
+	url = https://github.com/metakirby5/codi.vim.git
