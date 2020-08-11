@@ -6,4 +6,4 @@ let g:devdocs_filetype_map = {
 	\ 'typescript': 'typescript',
 \ }
 
-nmap <leader>d <Plug>(devdocs-under-cursor)
+nmap <leader>dc <Plug>(devdocs-under-cursor)
