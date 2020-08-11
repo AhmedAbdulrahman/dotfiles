@@ -137,12 +137,24 @@
     " Vertical Split with New Buffer "
     nnoremap <silent> <leader>bv :vnew<CR>
 
+	" Vertical Split with New Buffer "
+	nnoremap <leader>b :set nomore <Bar> :ls <Bar> :set more <CR>:b<Space>
+
+	"vertical split"
+	nnoremap <leader>vl :ls<cr>:vsp<space>\|<space>b<space>
+	"horizontal split"
+	nnoremap <leader>hl :ls<cr>:sp<space>\|<space>b<space>
+
     " Switch between Current and Last buffer"
     nnoremap <silent> <leader>bb <C-^>
 
-    " Go to Next/Previous Buffer"
-    nnoremap <silent> <C-h> :bn<CR>
-    nnoremap <silent> <C-l> :bp<CR>
+	" Cursor Movement in Windows"
+	nnoremap <C-l> <C-w>l
+	nnoremap <C-h> <C-w>h
+
+	" Go to Next/Previous Buffer"
+	nnoremap <silent> <Tab> :bn<CR>
+	nnoremap <silent> <S-Tab> :bp<CR>
 
     " Close buffer"
     nnoremap <silent> <C-w> :bd<CR>
@@ -153,22 +165,10 @@
     " List and Select Buffer "
     nnoremap <silent> <leader>bg :ls<CR>:buffer<Space>
 
-    " Window Split navigations "
-    nnoremap <S-J> <C-W><C-J>
-    nnoremap <S-K> <C-W><C-K>
-    nnoremap <S-L> <C-W><C-L>
-    nnoremap <S-H> <C-W><C-H>
-
     " Close Split"
     nnoremap <C-w>c :close<CR>
     nnoremap <C-w>q :q<CR>
     nnoremap <C-w>o :only<CR>
-
-    " Improved split keyboard navigation "
-    nnoremap <leader>h <C-w>h
-    nnoremap <leader>j <C-w>j
-    nnoremap <leader>k <C-w>k
-    nnoremap <leader>l <C-w>l
 
     " Toggle terminal buffer."
     " - Toggle terminal buffer in Terminal Mode"
