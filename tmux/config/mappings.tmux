@@ -1,13 +1,3 @@
-# Unbind default system defined prefi.
-unbind-key C-b
-
-# Set a new keybinding to C-Space
-set -g prefix C-Space
-
-# Bind 'C-a C-a' to send 'C-a'.
-# Dont mess up with other ctrl-a options by pressing ctrl-a twice
-bind-key C-a send-prefix
-
 # Edit tmux.conf in default $EDITOR
 bind-key e new-window -n '~/.tmux.conf' "zsh -c '\${EDITOR:-nvim} ~/.tmux.conf && tmux source ~/.tmux.conf && tmux display \"~/.tmux.conf sourced\"'"
 
