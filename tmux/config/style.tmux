@@ -49,4 +49,4 @@ status_date_time="#[fg=colour237]#[fg=#8d929b]%A, %d %b#[fg=colour237] "
 status_prayer_times="#[fg=#8d929b]#(~/.tmux/scripts/tmux-next-prayer) #[fg=#8383af]⦁ "
 
 set -g status-right-length 300
-set -g status-right "${status_prefix}${status_github}${status_node_version}${status_wifi}${status_weather}${status_prayer_times}${status_date_time}"
+set -g status-right "${status_github}${status_node_version}${status_wifi}${status_weather}${status_prayer_times}${status_date_time}"
