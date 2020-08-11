@@ -12,3 +12,6 @@ command -nargs=1 -bang Search call ahmed#commands#search#(<bang>v:false, <args>)
 
 " Preview Markdown files."
 command! -nargs=* -complete=file Preview call ahmed#commands#preview#(<f-args>)
+
+" ALE quick command to toggle fixing"
+command! ALEToggleFixer execute "let g:ale_fix_on_save = get(g:, 'ale_fix_on_save', 0) ? 0 : 1"
