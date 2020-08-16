@@ -15,3 +15,9 @@ command! -nargs=* -complete=file Preview call ahmed#commands#preview#(<f-args>)
 
 " ALE quick command to toggle fixing"
 command! ALEToggleFixer execute "let g:ale_fix_on_save = get(g:, 'ale_fix_on_save', 0) ? 0 : 1"
+
+" Pick color (only works on Mac or have python gtk module installed)"
+command! -nargs=0 PickColor :call CocAction('pickColor')
+
+" Pick a different color presentation of color"
+command! -nargs=0 Presentation :call CocAction('colorPresentation')
