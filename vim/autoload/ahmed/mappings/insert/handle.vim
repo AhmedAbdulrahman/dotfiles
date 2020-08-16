@@ -17,8 +17,7 @@ function! ahmed#mappings#insert#handle#tab(options) abort
 		" Trigger completion upon written words."
 		else
 			if exists('g:did_coc_loaded')
-			  return coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-					\ coc#refresh()
+				return coc#refresh()
 			endif
 		endif
 	endif
@@ -33,16 +32,17 @@ endfunction
 ""
 " Accept current completion when popup menu is visible."
 ""
-" inoremap <expr> <Enter> ahmed#mappings#insert#handle#enter()"
+" inoremap <expr> <CR> ahmed#mappings#insert#handle#cr()"
 ""
-function! ahmed#mappings#insert#handle#enter() abort
-	if !pumvisible()
+function! ahmed#mappings#insert#handle#cr() abort
+	" If it's selected."
+	if complete_info()['selected'] != -1
+		return "\<C-y>"
+	else
 		if exists('g:loaded_pear_tree')
 			return pear_tree#insert_mode#PrepareExpansion()
 		else
-			return "\<Enter>"
+			return "\<C-g>u\<CR>"
 		endif
 	endif
-
-	return "\<C-y>"
 endfunction
