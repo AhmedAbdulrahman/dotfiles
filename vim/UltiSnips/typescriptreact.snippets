@@ -1,7 +1,9 @@
-snippet reactStatlessTS "Create React Stateless"
-import React from 'react'
+snippet rfc "Create React Stateless"
+import * as React from 'react'
 
-const ${1:MyComponent}: React.FC = () => {
+interface Props {}
+
+const ${1:Component} = (props: Props) => {
 
 	return (
 		<${2:div}>
@@ -10,7 +12,37 @@ const ${1:MyComponent}: React.FC = () => {
 	)
 }
 
-export default ${1:MyComponent}
+export default ${1:Component}
 endsnippet
 
 extends javascript
+
+snippet muifc "Material UI Stateless"
+import * as React from 'react'
+import PropTypes from 'prop-types'
+import classnames from 'clsx'
+import withStyles from '@material-ui/core/styles/withStyles'
+
+interface Props {}
+
+interface Ref {}
+
+export const styles = () => ({
+	root: {}
+})
+
+const ${1:Component} = React.forwardRef<Ref, Props>(function ${1:Component}(props, ref) {
+	const { classes,...other } = props
+	return (
+		<div
+			className={classnames(classes.root)}
+			ref={ref}
+			{...other}
+		>
+			children
+		</div>
+	);
+})
+
+export default ${1:Component};
+endsnippet

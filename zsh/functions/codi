@@ -1,0 +1,13 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# SHELL Wrapper for Codi
+
+local syntax="${1:-javascript}"
+	shift
+	nvim -c \
+		"let g:startify_disable_at_vimenter = 1 |\
+		set bt=nofile ls=0 noru nonu nornu |\
+		hi CodiVirtualText guifg=cyan
+		hi ColorColumn ctermbg=NONE |\
+		hi VertSplit ctermbg=NONE |\
+		hi NonText ctermfg=0 |\
+		Codi $syntax" "$@"

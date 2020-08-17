@@ -123,3 +123,12 @@
 [submodule "vim/pack/bundle/start/codi"]
 	path = vim/pack/bundle/start/codi
 	url = https://github.com/metakirby5/codi.vim.git
+[submodule "vim/pack/bundle/start/jsdoc"]
+	path = vim/pack/bundle/start/jsdoc
+	url = https://github.com/heavenshell/vim-jsdoc.git
+[submodule "vim/pack/bundle/opt/pinnacle"]
+	path = vim/pack/bundle/opt/pinnacle
+	url = https://github.com/wincent/pinnacle.git
+[submodule "vim/pack/bundle/start/jsonc"]
+	path = vim/pack/bundle/start/jsonc
+	url = https://github.com/neoclide/jsonc.vim.git

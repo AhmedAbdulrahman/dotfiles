@@ -23,7 +23,7 @@ inoremap <silent><expr> <Tab> ahmed#mappings#insert#handle#tab({ 'key': "\<Tab>"
 inoremap <silent><expr> <S-Tab> ahmed#mappings#insert#handle#tab({ 'key': "\<S-Tab>" })
 
 " Accept completion or expand snippet when popup menu is visible."
-inoremap <expr> <Enter> ahmed#mappings#insert#handle#enter()
+inoremap <expr> <CR> ahmed#mappings#insert#handle#cr()
 
 "This keybinding allows you to jump to the end of the line and we are switched back to insert mode"
 inoremap <C-e> <C-o>$

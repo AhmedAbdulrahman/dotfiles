@@ -49,3 +49,9 @@ augroup makemissing
 	autocmd!
 	autocmd BufWritePre * call ahmed#autocmds#makemissing#(expand('<afile>:p:h'), v:cmdbang)
 augroup end
+
+" When switching buffers, preserve window view."
+if v:version >= 700
+   au BufLeave * if !&diff | let b:winview = winsaveview() | endif
+   au BufEnter * if exists('b:winview') && !&diff | call   winrestview(b:winview) | endif
+endif

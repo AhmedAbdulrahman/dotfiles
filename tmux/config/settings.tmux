@@ -1,9 +1,16 @@
-# Set default prefix.
-set-option -g prefix C-a
+# Unbind default system defined prefi.
+unbind C-b
+
+# Set a new keybinding to C-Space
+set -g prefix C-Space
+
+# Bind 'C-a C-a' to send 'C-a'.
+# Dont mess up with other ctrl-a options by pressing ctrl-a twice
+bind Space send-prefix
 
 # Default term.
-set-option -g default-terminal "screen-256color"
-
+# set-option -g default-terminal "screen-256color"
+set-option -g default-terminal "xterm-256color"
 # Enable vi style key bindings in command mode.
 set-option -g mode-keys vi
 set-option -g status-keys vi
@@ -35,7 +42,7 @@ set-option -g allow-rename on
 set-option -g visual-activity off
 
 # Enable supported focus events.
-set-option -g focus-events on
+# set-option -g focus-events on
 
 # Turn on automatic window renaming.
 set-option -g automatic-rename on
