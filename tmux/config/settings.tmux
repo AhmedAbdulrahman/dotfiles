@@ -1,12 +1,12 @@
 # Unbind default system defined prefi.
 unbind C-b
 
-# Set a new keybinding to C-Space
-set -g prefix C-Space
+# Set a new keybinding to C-a
+set -g prefix C-a
 
 # Bind 'C-a C-a' to send 'C-a'.
 # Dont mess up with other ctrl-a options by pressing ctrl-a twice
-bind Space send-prefix
+bind C-a send-prefix
 
 # Default term.
 # set-option -g default-terminal "screen-256color"

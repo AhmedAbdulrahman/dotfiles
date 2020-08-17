@@ -15,7 +15,7 @@ main() {
   brew_install "Zathura" "zathura"
   brew_install "Zathura PDF Poppler" "zathura-pdf-poppler"
   brew_install "Youtube Downloader" "youtube-dl"
-
+  brew_install "Quickjs interpreter for VIM Codi" "quickjs"
   brew_install "Adopt Open JDK 8" "adoptopenjdk8" "homebrew/cask" "cask"
   brew_install "VLC" "vlc" "homebrew/cask" "cask"
   brew_install "INNA -> The modern media player for macOS" "iina" "homebrew/cask" "cask"

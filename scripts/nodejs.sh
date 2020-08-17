@@ -64,6 +64,13 @@ install_global_packages() {
 	"nodemon"
 	"gatsby-cli"
 	"spaceship-prompt"
+	"typescript-language-server"
+	"ocaml-language-server"
+	'flow-bin'
+	'flow-typed'
+	"source-map-explorer"
+	"typescript"
+	"vim-language-server"
 	)
 
 	yarn global add "${NPM_PACKAGES[@]}"

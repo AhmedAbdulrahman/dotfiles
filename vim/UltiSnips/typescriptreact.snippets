@@ -1,4 +1,101 @@
-snippet rfc "Create React Stateless"
+extends typescript
+
+snippet imr "import React from 'react'" b
+import * as React from 'react';
+endsnippet
+
+# Hooks
+snippet useState "React useState" b
+const [${1}, set${2}] = React.useState(${3});${0}
+endsnippet
+
+snippet useEffect "React useEffect" b
+React.useEffect(() => {
+	${1}
+	return () => {}
+}, [${2}]);${0}
+endsnippet
+
+snippet useContext "React useContext hook" b
+const {$1} = React.useContext($2);
+endsnippet
+
+snippet useRef "React useRef() hook" b
+const $1 = React.useRef($2);
+endsnippet
+
+# Class Components LifeCycle
+snippet ctor "constructor()" b
+  constructor(props) {
+  super(props)
+  $0
+}
+endsnippet
+
+# Mounting
+snippet getDerivedState "Mounting: static getDerivedStateFromProps(nextProps, prevState)" b
+static getDerivedStateFromProps(nextProps: ${1:any}, prevState: ${2:any}) {
+$0
+}
+endsnippet
+
+snippet compDid "Mounting: componentDidMount()" b
+componentDidMount() {
+$0
+}
+endsnippet
+
+snippet render "Mounting: render()" b
+render() {
+	const {$0} = this.state
+	const {$1} = this.props
+
+	return (
+		$3
+	)
+}
+endsnippet
+
+# Unmounting
+snippet compUn "componentWillUnmount" b
+componentWillUnmount() {
+$0
+}
+endsnippet
+
+# Updating
+snippet shouldUp "shouldComponentUpdate" b
+shouldComponentUpdate(nextProps: ${1:}, nextState) {
+return ${1:true};
+}
+endsnippet
+
+snippet compUp "componentDidUpdate" b
+componentDidUpdate(prevProps: ${1:}, prevState) {
+$0
+}
+endsnippet
+
+snippet getSnapshot "getSnapshotBeforeUpdate" b
+getSnapshotBeforeUpdate(prevProps: ${1:any}, prevState: ${2:any})  {
+$0
+}
+endsnippet
+
+# Error Handling
+snippet getDerivedError "Error Handling: getDerivedStateFromError(error)" b
+static getDerivedStateFromError(error) {
+$0
+}
+endsnippet
+
+snippet compCatch "Error Handling: componentDidCatch(error, info)" b
+componentDidCatch(error: ${1:any}, info: ${2:any}) {
+$0
+}
+endsnippet
+
+snippet rfc "TS: Create React Stateless" b
 import * as React from 'react'
 
 interface Props {}
@@ -15,9 +112,7 @@ const ${1:Component} = (props: Props) => {
 export default ${1:Component}
 endsnippet
 
-extends javascript
-
-snippet muifc "Material UI Stateless"
+snippet muifc "TS: Material UI Stateless" b
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'clsx'
@@ -44,5 +139,28 @@ const ${1:Component} = React.forwardRef<Ref, Props>(function ${1:Component}(prop
 	);
 })
 
+export default ${1:Component};
+endsnippet
+
+snippet rcc "TS: Class Component" b
+import * as React from 'react'
+import PropTypes from 'prop-types'
+
+type ${1:Component}State = {}
+type ${1:Component}Props = {}
+
+class ${1:Component} extends Component<${1:Component}Props, ${1:Component}State> {
+	constructor(props: ${1:Component}Props) {
+		super(props)
+	}
+
+	render() {
+		return (
+			<div>
+				children
+			</div>
+		);
+	}
+}
 export default ${1:Component};
 endsnippet

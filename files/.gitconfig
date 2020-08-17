@@ -3,6 +3,8 @@
 
 [user]
 	useconfigonly = true
+	name = Ahmed Abdulrahman
+	email = a.kasapbashi@live.com
 
 # use separate file for username / github token / etc
 [include]

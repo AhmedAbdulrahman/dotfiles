@@ -47,9 +47,9 @@ set shellpipe=&> " Fix potentional screen flashing problems with not using `tee`
 set shortmess=filmnrwxoOstTIc " Use abbreviations and short messages in command menu line. "
 set sidescroll=5 " Columns to scroll horizontally when cursor is moved off the screen. "
 set sidescrolloff=5 " Minimum number of screen columns to keep to cursor right. "
-set synmaxcol=200 " Don't highlight very long lines. "
 syntax sync minlines=256   " Start highlighting from 256 lines backwards"
-set textwidth=0 " Prevent auto wrapping when using affecting keys. "
+set synmaxcol=300 " Don't highlight very long lines. "
+set textwidth=80 " Prevent auto wrapping when using affecting keys. "
 set timeoutlen=500 " Mapping delays in milliseconds. "
 set ttimeoutlen=10 " Key code delays in milliseconds. "
 set ttyfast " More characters will be sent to the screen for redrawing in terminal. (vim-only) "
@@ -85,14 +85,28 @@ endif
 " Make tilde command behave like an operator."
 set tildeop
 
-set relativenumber " Show relative line numbers alongside numbers. "
+set updatetime=1000
+
+if has("mac")
+  set nocursorline
+
+  if exists("+relativenumber")
+    set norelativenumber " Don't show relative line numbers alongside numbers. "
+  endif
+
+  " Folding "
+  if has('folding')
+	set foldtext=ahmed#settings#foldtext()
+	"set foldmethod=indent"               " not as cool as syntax, but faster"
+	set foldlevelstart=99               " start unfolded"
+	set foldlevel=0
+	set foldmethod=manual
+  endif
+
+endif
 
 " Always draw the sign column even there is no sign in it. "
-if has('nvim-0.4.2')
-  set signcolumn=yes:2
-else
-  set signcolumn=yes
-endif
+set signcolumn=yes
 
 if exists('+emoji')
   set noemoji
@@ -166,13 +180,6 @@ set nosmarttab " Tab key always inserts blanks according to 'tabstop'. "
 set autoindent " Copy indent from current line when starting a new line. "
 set shiftround " Round indent to multiple of 'shiftwidth'. Applies to > and < commands. "
 set smartindent " Automatically inserts one extra level of indentation in some cases. "
-
-" Folding "
-if has('folding')
-  set foldtext=ahmed#settings#foldtext()
-  "set foldmethod=indent"               " not as cool as syntax, but faster"
-  set foldlevelstart=99               " start unfolded"
-endif
 
 " Search "
 set ignorecase " Make default search is not case sensitive. "

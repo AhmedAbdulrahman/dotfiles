@@ -11,4 +11,7 @@ augroup filetypedetect
   autocmd BufRead,BufNewFile .prettierrc setfiletype yaml
   autocmd BufRead,BufNewFile .envrc setfiletype bash
   autocmd BufRead,BufNewFile *.conf setfiletype conf
+
+  " tsconfig.json is actually jsonc, help TypeScript set the correct filetype"
+	autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
 augroup END
