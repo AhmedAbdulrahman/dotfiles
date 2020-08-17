@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # ---------------------------------------------
-# Shortcust
+# Shortcusts
 # ---------------------------------------------
 alias dotfiles='cd ~/dotfiles'
 alias dl="cd ~/Downloads"
@@ -11,6 +11,7 @@ alias docs='cd ~/Documents/'
 alias ds='cd ~/.ssh'
 alias dp='cd ~/Dropbox'
 alias cdbin='cd /usr/local/bin/'
+alias :e="${aliases[:e]:-e}"
 
 # ---------------------------------------------
 # Moving around
@@ -37,6 +38,9 @@ alias trimcopy="tr -d '\n' | pbcopy"	# Trim new lines and copy to clipboard
 # Npm & Yarn
 # ---------------------------------------------
 alias npm-update="npx npm-check -u"
+alias nr="npm run"
+alias ni="npm install"
+alias nis="npm install --save"
 alias flush-npm="rm -rf node_modules && npm i && echo NPM is done"
 alias nicache="npm install --prefer-offline"
 alias yoff="yarn add --offline";

@@ -140,9 +140,10 @@ Resources
 This repo is inspired and influenced by
 
 - GitHub 💞 [`dotfiles`](http://dotfiles.github.io/)
-- Niclas Pahlfer’s [`dotfiles`](https://github.com/Npahlfer)
+- Niclas Pahlfer’s [`dotfiles`](https://github.com/Npahlfer/dotfiles)
 - Mathias Bynens’ [`dotfiles`](https://github.com/mathiasbynens/dotfiles)
 - Paul Irish’s [`dotfiles`](https://github.com/paulirish/dotfiles)
+- Ahmed El Gabri’s [`dotfiles`](https://github.com/ahmedelgabri/dotfiles)
 - Denys Dovhan’s [`dotfiles`](https://github.com/denysdovhan/dotfiles)
 - Adam Eivy’s [`dotfiles`](https://github.com/atomantic/dotfiles)
 - Matthew J Morrison’s [`dotfiles`](https://github.com/mattjmorrison/dotfiles)
