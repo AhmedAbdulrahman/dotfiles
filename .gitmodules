@@ -7,9 +7,6 @@
 [submodule "vim/pack/bundle/start/fzf-vim"]
 	path = vim/pack/bundle/start/fzf-vim
 	url = https://github.com/junegunn/fzf.vim.git
-[submodule "vim/pack/bundle/start/polyglot"]
-	path = vim/pack/bundle/start/polyglot
-	url = https://github.com/sheerun/vim-polyglot.git
 [submodule "vim/pack/bundle/start/signify"]
 	path = vim/pack/bundle/start/signify
 	url = https://github.com/mhinz/vim-signify.git
