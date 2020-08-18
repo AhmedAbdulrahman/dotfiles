@@ -91,7 +91,7 @@
     "nnoremap gS :Search! ''<Left>"
 
     " Easy regex replace for current word"
-    nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+    nnoremap <Leader>r :%s/\<<C-r><C-w>\>/
 
     " select but dont jump"
     nnoremap <Leader>8 *#
@@ -241,3 +241,7 @@
     nnoremap <silent> [g :pop<Enter>
     nnoremap <silent> ]g :tag<Enter>
 " }}} Tags "
+
+" Slugify word under cursor "
+nnoremap <silent> <Plug>SlugifyNormal ciw<C-R>=ahmed#mappings#normal#slugify#(getreg('"'))<CR> :silent! call repeat#set("\<Plug>SlugifyNormal")<CR>
+nmap <silent> <leader>s <Plug>SlugifyNormal
