@@ -97,17 +97,8 @@ function! s:enter_presentation() abort
     nnoremap <buffer> <left> zczkzo[zj
 endfunction
 
-function! s:exit_presentation() abort
-    " Reset conceal level "
-    set conceallevel=0
-    nunmap <buffer> <left>
-    nunmap <buffer> <right>
-endfunction
-
 augroup MyMarkdownGoyo
   autocmd!
   autocmd User GoyoEnter call <SID>goyo_enter()
   autocmd User GoyoLeave call <SID>goyo_leave()
-  "autocmd User GoyoEnter call <SID>enter_presentation()"
-  "autocmd User GoyoLeave call <SID>exit_presentation"
 augroup END
