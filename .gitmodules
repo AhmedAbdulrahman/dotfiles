@@ -129,3 +129,6 @@
 [submodule "vim/pack/bundle/start/jsonc"]
 	path = vim/pack/bundle/start/jsonc
 	url = https://github.com/neoclide/jsonc.vim.git
+[submodule "vim/pack/bundle/start/vim-polyglot"]
+	path = vim/pack/bundle/start/vim-polyglot
+	url = https://github.com/sheerun/vim-polyglot.git
