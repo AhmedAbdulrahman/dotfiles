@@ -14,6 +14,4 @@ setlocal nonumber
 setlocal norelativenumber
 
 " Toggle local preview server."
-nnoremap <buffer><silent> <LocalLeader>r :call ahmed#ftplugin#markdown#preview()<Enter>
-
-let b:undo_ftplugin = 'setlocal spell< linebreak< nolist<'
+nnoremap <buffer><silent> <LocalLeader>r :call ahmed#ftplugin#markdown#preview()<CR>

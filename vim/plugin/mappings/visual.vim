@@ -17,7 +17,7 @@ xnoremap / /\v
 xnoremap ? ?\v
 
 " Execute a macro over visual selection."
-xnoremap <silent> @ :<C-u>execute printf("'<,'>normal! @%s", nr2char(getchar()))<Enter>
+xnoremap <silent> @ :<C-u>execute printf("'<,'>normal! @%s", nr2char(getchar()))<CR>
 
 "easy regex replace for current word"
 xnoremap <leader>r :<c-u>%s/\%V
@@ -26,8 +26,8 @@ xnoremap <leader>r :<c-u>%s/\%V
 vnoremap <C-s> <C-c>:write<Cr>
 
 "Pressing * or # on Visual mode, and make current visual selection active search text."
-xnoremap * :<C-u>call ahmed#autocmds#visual#setsearch#('/')<Enter>/<C-r>=@/<Enter><Enter>
-xnoremap \# :<C-u>call ahmed#autocmds#visual#setsearch#('?')<Enter>?<C-r>=@/<Enter><Enter>
+xnoremap * :<C-u>call ahmed#autocmds#visual#setsearch#('/')<CR>/<C-r>=@/<CR><CR>
+xnoremap \# :<C-u>call ahmed#autocmds#visual#setsearch#('?')<CR>?<C-r>=@/<CR><CR>
 
 " Slugify word under cursor "
 vnoremap <silent> <Plug>SlugifyVisual c<C-R>=ahmed#mappings#normal#slugify#(getreg('"'))<CR> :silent! call repeat#set("\<Plug>SlugifyVisual")<CR>

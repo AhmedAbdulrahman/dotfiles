@@ -17,6 +17,6 @@ setlocal nonumber norelativenumber
 setlocal foldmethod=indent nofoldenable
 
 " Define mappings."
-nnoremap <buffer><silent> gO :call ahmed#ftplugin#man#showtoc()<Enter>
-nnoremap <buffer><silent> <C-]> :call ahmed#ftplugin#man#jumptag()<Enter>
-nnoremap <buffer><silent> [g :call ahmed#ftplugin#man#poptag()<Enter>
+nnoremap <buffer><silent> gO :call ahmed#ftplugin#man#showtoc()<CR>
+nnoremap <buffer><silent> <C-]> :call ahmed#ftplugin#man#jumptag()<CR>
+nnoremap <buffer><silent> [g :call ahmed#ftplugin#man#poptag()<CR>

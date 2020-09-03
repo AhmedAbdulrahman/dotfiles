@@ -31,5 +31,5 @@ let g:pear_tree_repeatable_expand = v:false
 " Set a timeout for the balance-checking functions used for smart pairs."
 let g:pear_tree_timeout = 60
 
-" Workaround for disabling default <Enter> mapping."
+" Workaround for disabling default <CR> mapping."
 imap <C-M-S-F12> <Plug>(PearTreeExpand)

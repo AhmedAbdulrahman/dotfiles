@@ -2,14 +2,14 @@
 " Markdown preview toggler.
 "
 " Description: See ahmed#statusline#markdownpreview() function for its indicator."
-" Usage: nnoremap <buffer><silent> <LocalLeader>r :call ahmed#ftplugin#markdown#preview()<Enter>"
+" Usage: nnoremap <buffer><silent> <LocalLeader>r :call ahmed#ftplugin#markdown#preview()<CR>"
 ""
 function! ahmed#ftplugin#markdown#preview() abort
 	if !has('nvim')
 		return v:false
 	endif
 
-	" Initialize global dictionary." 
+	" Initialize global dictionary."
 	if !exists('g:markdownpreview')
 		let g:markdownpreview = {
 			\ 'opts': {},
@@ -22,11 +22,11 @@ function! ahmed#ftplugin#markdown#preview() abort
 		endfunction
 	endif
 
-	" Stop the server if it's already running." 
+	" Stop the server if it's already running."
 	if g:markdownpreview.jobid
 		call jobstop(g:markdownpreview.jobid)
 
-	" Try to start the server." 
+	" Try to start the server."
 	else
 		let g:markdownpreview.jobid = jobstart(
 			\ printf(
@@ -35,6 +35,6 @@ function! ahmed#ftplugin#markdown#preview() abort
 			\ ),
 			\ g:markdownpreview.opts
 		\ )
-		let b:markdownpreview = v:true " For statusline indicator." 
+		let b:markdownpreview = v:true " For statusline indicator."
 	endif
 endfunction

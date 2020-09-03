@@ -96,15 +96,15 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 nnoremap <silent> <leader>/ :Rg<cr>
 nnoremap <silent> <leader><leader>/ :GRg<cr>
 nnoremap <silent> <expr> <leader><tab> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
-nnoremap <silent> <Leader><C-p> :FGitFiles<Enter>
-nnoremap <silent> <Leader><C-s> :FGFiles?<Enter>
-nnoremap <silent> <M-x> :FCommands<Enter>
-" nnoremap <silent> <M-b> :Buffers<Enter>"
-" nnoremap <silent> <C-f> :FTags<Enter>"
-nnoremap <silent> <Leader>h :FHelptags<Enter>
-nnoremap <silent> <Leader>: :FHistory:<Enter>
-nnoremap <silent> <Leader>; :FHistory/<Enter>
-nnoremap <silent> <Leader>m :FMarks<Enter>
+nnoremap <silent> <Leader><C-p> :FGitFiles<CR>
+nnoremap <silent> <Leader><C-s> :FGFiles?<CR>
+nnoremap <silent> <M-x> :FCommands<CR>
+" nnoremap <silent> <M-b> :Buffers<CR>"
+" nnoremap <silent> <C-f> :FTags<CR>"
+nnoremap <silent> <Leader>h :FHelptags<CR>
+nnoremap <silent> <Leader>: :FHistory:<CR>
+nnoremap <silent> <Leader>; :FHistory/<CR>
+nnoremap <silent> <Leader>m :FMarks<CR>
 
 function! s:fzf_statusline() abort
   setlocal statusline=%4*\ fzf\ %6*V:\ ctrl-v,\ H:\ ctrl-x,\ Tab:\ ctrl-t

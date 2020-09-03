@@ -1,8 +1,8 @@
 ""
 " Toggle terminal buffer or create new one if there is none."
 ""
-" nnoremap <silent> <C-z> :call ahmed#mappings#normal#terminal#()<Enter>"
-" tnoremap <silent> <C-z> <C-\><C-n>:call ahmed#mappings#normal#terminal#()<Enter>"
+" nnoremap <silent> <C-z> :call ahmed#mappings#normal#terminal#()<CR>"
+" tnoremap <silent> <C-z> <C-\><C-n>:call ahmed#mappings#normal#terminal#()<CR>"
 ""
 function! ahmed#mappings#normal#terminal#() abort
 	if !has('nvim')

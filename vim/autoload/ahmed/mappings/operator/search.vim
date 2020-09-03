@@ -1,13 +1,13 @@
 ""
 " Search and replace operator."
 ""
-" nnoremap <silent> go :set operatorfunc=ahmed#mappings#operator#search#<Enter>g@"
-" xnoremap <silent> go :<C-u>call ahmed#mappings#operator#search#(visualmode())<Enter>"
+" nnoremap <silent> go :set operatorfunc=ahmed#mappings#operator#search#<CR>g@"
+" xnoremap <silent> go :<C-u>call ahmed#mappings#operator#search#(visualmode())<CR>"
 ""
 " @param {string} [type] Type of motion."
 ""
 function ahmed#mappings#operator#search#(type) abort
-	" The operator doesn't support line-wise and block-wise motions.
+	" The operator doesn't support line-wise and block-wise motions."
 	if index(['line', 'block', 'V', "\<C-v>"], a:type) !=# -1
 		return v:false
 	endif

@@ -3,7 +3,7 @@
 ""
 
 " Define mappings."
-nnoremap <silent> gib :Gblame<Enter>
-nnoremap <silent> gid :Gdiff<Enter>
-nnoremap <silent> gil :0Gllog<Enter>
-nnoremap <silent> gis :Gstatus<Enter>
+nnoremap <silent> gib :Git blame<CR>
+nnoremap <silent> gid :Gdiffsplit<CR>
+nnoremap <silent> gil :0Gclog!<CR>
+nnoremap <silent> gil :0Gclog!<CR>

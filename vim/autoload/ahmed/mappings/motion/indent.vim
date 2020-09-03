@@ -1,16 +1,16 @@
 ""
-" Allow indented text blocks to be treated as text objects.
-"
-" onoremap <silent> ii :<C-u>call ahmed#mappings#motion#indent#({ 'mode': 'i' })<Enter>
-" xnoremap <silent> ii :<C-u>call ahmed#mappings#motion#indent#({ 'mode': 'i' })<Enter>
-" onoremap <silent> ai :<C-u>call ahmed#mappings#motion#indent#({ 'mode': 'a' })<Enter>
-" xnoremap <silent> ai :<C-u>call ahmed#mappings#motion#indent#({ 'mode': 'a' })<Enter>
-" onoremap <silent> io :<C-u>call ahmed#mappings#motion#indent#({ 'mode': 'o' })<Enter>
-" xnoremap <silent> io :<C-u>call ahmed#mappings#motion#indent#({ 'mode': 'o' })<Enter>
-"
-" @param {dictionary} options Configuration dictionary.
-" @param {string} options.mode Motion to select text, whether 'a' or 'i'.
+" Allow indented text blocks to be treated as text objects."
 ""
+" onoremap <silent> ii :<C-u>call ahmed#mappings#motion#indent#({ 'mode': 'i' })<CR>"
+" xnoremap <silent> ii :<C-u>call ahmed#mappings#motion#indent#({ 'mode': 'i' })<CR>"
+" onoremap <silent> ai :<C-u>call ahmed#mappings#motion#indent#({ 'mode': 'a' })<CR>"
+" xnoremap <silent> ai :<C-u>call ahmed#mappings#motion#indent#({ 'mode': 'a' })<CR>"
+" onoremap <silent> io :<C-u>call ahmed#mappings#motion#indent#({ 'mode': 'o' })<CR>"
+" xnoremap <silent> io :<C-u>call ahmed#mappings#motion#indent#({ 'mode': 'o' })<CR>"
+
+" @param {dictionary} options Configuration dictionary."
+" @param {string} options.mode Motion to select text, whether 'a' or 'i'."
+
 function! ahmed#mappings#motion#indent#(options) abort
 	let l:save = {
 		\ 'marks': {
@@ -22,7 +22,7 @@ function! ahmed#mappings#motion#indent#(options) abort
 	normal! ^
 	let l:virtcol = virtcol(getline('.') =~# '\v\c^\s*$' ? '$' : '.')
 
-	" Don't select entire buffer if no indentation found at current position.
+	" Don't select entire buffer if no indentation found at current position."
 	if l:virtcol ==# 1
 		return v:false
 	endif
@@ -31,7 +31,7 @@ function! ahmed#mappings#motion#indent#(options) abort
 	let l:start = search(l:pattern, 'bWn') + 1
 	let l:end = search(l:pattern, 'Wn') - 1
 
-	" Exclude or include empty lines depending on mode.
+	" Exclude or include empty lines depending on mode."
 	if a:options.mode ==# 'a'
 		execute printf('normal! %sG0V%sG$', l:start, l:end)
 

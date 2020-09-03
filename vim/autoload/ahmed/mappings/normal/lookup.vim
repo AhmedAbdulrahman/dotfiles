@@ -1,7 +1,7 @@
 ""
 " Lookup definition under cursor."
 ""
-" nnoremap <silent> gt :call ahmed#mappings#normal#lookup#()<Enter>"
+" nnoremap <silent> gt :call ahmed#mappings#normal#lookup#()<CR>"
 ""
 function! ahmed#mappings#normal#lookup#() abort
 	let l:supportedfiletypes = [

@@ -2,7 +2,7 @@
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
-" Navigate left and right characters." 
+" Navigate left and right characters."
 cnoremap <C-h> <Left>
 cnoremap <C-l> <Right>
 cnoremap <C-j> <Down>
@@ -15,4 +15,4 @@ cnoremap ;s substitute/\v//gc<Left><Left><Left><Left>
 cnoremap ;g global/\v/<Left>
 
 " Construct search and replace with populated quickfix list."
-cnoremap ;r cfdo %substitute/<C-r>=@/<Enter>//gce<Left><Left><Left><Left>
+cnoremap ;r cfdo %substitute/<C-r>=@/<CR>//gce<Left><Left><Left><Left>

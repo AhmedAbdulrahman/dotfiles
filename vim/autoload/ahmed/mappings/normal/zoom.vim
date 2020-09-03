@@ -1,7 +1,7 @@
 ""
 " Toggle zoom current buffer in the new tab."
 ""
-" nnoremap <silent> gz :call ahmed#mappings#normal#zoom#()<Enter>"
+" nnoremap <silent> gz :call ahmed#mappings#normal#zoom#()<CR>"
 ""
 function! ahmed#mappings#normal#zoom#() abort
 	if winnr('$') > 1

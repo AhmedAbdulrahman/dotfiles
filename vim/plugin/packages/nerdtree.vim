@@ -103,7 +103,7 @@ let g:NERDTreeMapCustomOpen = '<CR>'
 
 " Define mappings."
 nnoremap <silent> <Leader>f :packadd nerdtree <Bar> NERDTreeToggle<RETURN>
-nnoremap <silent> <Leader>F :packadd nerdtree <Bar> NERDTreeFind<Enter>
+nnoremap <silent> <Leader>F :packadd nerdtree <Bar> NERDTreeFind<CR>
 
 " Move up a directory using '-' like vim-vinegar (usually u does this)."
 nmap <buffer> <expr> - g:NERDTreeMapUpdir

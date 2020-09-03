@@ -1,8 +1,8 @@
 ""
 " Set search register to current visual selection."
 ""
-" xnoremap * :<C-u>call ahmed#mappings#visual#setsearch#('/')<Enter>/<C-r>=@/<Enter><Enter>"
-" xnoremap # :<C-u>call ahmed#mappings#visual#setsearch#('?')<Enter>?<C-r>=@/<Enter><Enter>"
+" xnoremap * :<C-u>call ahmed#mappings#visual#setsearch#('/')<CR>/<C-r>=@/<CR><CR>"
+" xnoremap # :<C-u>call ahmed#mappings#visual#setsearch#('?')<CR>?<C-r>=@/<CR><CR>"
 ""
 " @param {string} searchtype Direction for search command, either '/' or '?'.
 ""
