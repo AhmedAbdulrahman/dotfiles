@@ -27,7 +27,6 @@ set belloff=all " Turn off the bell upon all events. "
 set breakindent " Wrapped lines will be indented with same amount of space. "
 set clipboard=unnamedplus " Sync unnamed register with system clipboard. "
 set comments= " Clear default 'comments' value, let the filetype handle it."
-
 set confirm " Seek for confirmation for certain commands instead of giving errors. "
 set display=lastline " As much as possible of the last line in a window will be displayed. "
 set keywordprg= " Disable definition search by default. "
@@ -39,7 +38,6 @@ set noshowmatch " When a bracket is inserted, do not jump to the matching one. "
 set nostartofline " Prevent the cursor from changing the current column when jumping. "
 set nowrap " Prevent wrapping for long lines. "
 set nrformats=bin,hex " Only accept binary and hexadecimal numbers. "
-set regexpengine=1 " Use old regular expression engine. "
 set report=0 " Threshold for reporting number of lines changed. "
 set scrolloff=8 " Minimum number of screen lines to keep above and below the cursor. "
 set sessionoptions=blank,buffers,curdir,folds,help,localoptions,resize,tabpages,winsize " Options for `mksession` command. "
@@ -47,8 +45,6 @@ set shellpipe=&> " Fix potentional screen flashing problems with not using `tee`
 set shortmess=filmnrwxoOstTIc " Use abbreviations and short messages in command menu line. "
 set sidescroll=5 " Columns to scroll horizontally when cursor is moved off the screen. "
 set sidescrolloff=5 " Minimum number of screen columns to keep to cursor right. "
-syntax sync minlines=256   " Start highlighting from 256 lines backwards"
-set synmaxcol=300 " Don't highlight very long lines. "
 set textwidth=80 " Prevent auto wrapping when using affecting keys. "
 set timeoutlen=500 " Mapping delays in milliseconds. "
 set ttimeoutlen=10 " Key code delays in milliseconds. "
@@ -58,9 +54,6 @@ set visualbell " Use visual bell instead of beeping on errors. "
 
 " Interface "
 set cursorline " Highlight the line background of the cursor. "
-set lazyredraw " Don't bother updating screen during macro playback"
-set re=1
-set laststatus=2 " Always show the status line. "
 
 " Show trailing whitespace"
 set list
@@ -85,10 +78,8 @@ endif
 " Make tilde command behave like an operator."
 set tildeop
 
-set updatetime=1000
-
 if has("mac")
-  set nocursorline
+  "set nocursorline"
 
   if exists("+relativenumber")
     set norelativenumber " Don't show relative line numbers alongside numbers. "
@@ -107,6 +98,8 @@ endif
 
 " Always draw the sign column even there is no sign in it. "
 set signcolumn=yes
+
+set updatetime=1000
 
 if exists('+emoji')
   set noemoji
