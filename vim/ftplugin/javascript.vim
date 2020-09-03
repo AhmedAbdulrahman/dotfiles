@@ -21,5 +21,11 @@ else
   setlocal makeprg=yarn
 endif
 
+" Always use wrapper 'includeexpr', not just as fallback. "
+nnoremap <buffer><silent> gf :call ahmed#ftplugin#javascript#gotofile(expand('<cfile>'))<CR>
+nnoremap <buffer><silent> <C-w>f :call ahmed#ftplugin#javascript#gotofile(expand('<cfile>'), { 'command': 'split' })<CR>
+nnoremap <buffer><silent> <C-w><C-f> :call ahmed#ftplugin#javascript#gotofile(expand('<cfile>'), { 'command': 'split' })<CR>
+nnoremap <buffer><silent> <C-w>gf :call ahmed#ftplugin#javascript#gotofile(expand('<cfile>'), { 'command': 'tab split' })<CR>
+
 " Execute current file."
 nnoremap <buffer><silent> <LocalLeader>r :execute 'split <Bar> terminal node' shellescape(@%, 1)<CR>
