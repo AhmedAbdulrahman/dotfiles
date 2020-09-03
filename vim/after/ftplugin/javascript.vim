@@ -1,4 +1,4 @@
-" Undo filetype specific settings upon changing filetype.
+" Undo filetype specific settings upon changing filetype."
 let s:undo =
 	\      'setlocal suffixesadd< include< formatprg<'
 	\ .. " | execute 'nunmap <buffer> gf'"
