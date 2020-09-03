@@ -6,7 +6,7 @@
 	" Toggle colors to optimize based on light or dark background "
 	nnoremap <leader>c :call ahmed#mappings#normal#toggletheme#()<CR>
 	" toggle number "
-	nnoremap <leader>n :call ahmed#mappings#normal#numbertoggle#()<CR>
+	nnoremap <silent> <leader>n :call ahmed#mappings#normal#numbertoggle#()<CR>
 
 	" generate doc "
   	nnoremap <silent> <leader>gd :<C-u>call ahmed#mappings#normal#generatedoc#()<CR>
