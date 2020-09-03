@@ -50,6 +50,20 @@ augroup makemissing
 	autocmd BufWritePre * call ahmed#autocmds#makemissing#(expand('<afile>:p:h'), v:cmdbang)
 augroup end
 
+"Highlighting for large files"
+"Sometimes syntax highlighting can get out of sync in large JSX and TSX files. "
+"This was happening too often for me so I opted to enable syntax sync fromstart, "
+"which forces vim to rescan the entire buffer when highlighting. "
+"This does so at a performance cost, especially for large files. "
+"It is significantly faster in Neovim than in vim."
+"I prefer to enable this when I enter a JavaScript or TypeScript buffer, "
+"and disable it when I leave:"
+
+augroup highlighting
+	autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+	autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+augroup end
+
 " When switching buffers, preserve window view."
 if v:version >= 700
    au BufLeave * if !&diff | let b:winview = winsaveview() | endif
