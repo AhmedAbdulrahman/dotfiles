@@ -75,6 +75,8 @@ main() {
   brew_install "Tmux" "tmux --HEAD"
   brew_install "Neovim" "neovim --HEAD"
   brew_install "VIM" "vim"
+  brew_install "Perl" "perl"
+  brew_install "Cpanminus - get, unpack, build and install modules from CPAN" "cpanminus"
   brew_install "Newsboat" "newsboat"
 
   print_in_purple "\n   Core Utils\n"
