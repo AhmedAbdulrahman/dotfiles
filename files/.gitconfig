@@ -89,9 +89,10 @@
 	ui = auto
 
 [color "diff"]
-	meta = "#88b0ae"
-	frag = magenta bold
+	meta = 238 italic
+	frag = 240
 	old = red strike
+	new = green italic
 	whitespace = red reverse
 	commit = yellow bold
 
@@ -125,6 +126,9 @@
 
 [mergetool "vimdiff"]
   cmd = $EDITOR -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[mergetool "fugitivediff"]
+  cmd = $EDITOR -f -c "Gdiff" "$MERGED"
 
 # URL shorthands
 [url "git@github.com:"]
