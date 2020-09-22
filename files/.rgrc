@@ -1,11 +1,7 @@
+# vim:ft=conf
+# global ignores are in ~/.ignore so it can be picked up by fd & other tools too
 # Grep hidden files
 --hidden
-
-# Follow symbolic links
---follow
-
-# Don't respect ignore files (.gitignore, .ignore, etc.).
---no-ignore
 
 # Exclude directories (Ignore patterns)
 --glob=!{.git,.svn,.tldr,node_modules,Trash,vendor,dist,.next,log,vscode,idea,.cache}
