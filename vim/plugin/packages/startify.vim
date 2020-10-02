@@ -55,12 +55,12 @@ endfunction
 
 let g:startify_lists = [
 	\ { 'type': 'commands' },
-	\ { 'header': [ '   Sessions' ], 'type': 'sessions' },
-	\ { 'header': [ '   Files [' . getcwd() . ']' ], 'type': 'dir' },
+	\ { 'header': [ '   Sessions 📆' ], 'type': 'sessions' },
+	\ { 'header': [ '   Recent files in current directory 📂 [' . getcwd() . ']' ], 'type': 'dir' },
 	\ { 'header': [ '   Bookmarks' ], 'type': 'bookmarks' },
 	\ { 'type': function('s:gitModified'),  'header': ['   git modified']},
 	\ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
-	\ { 'header': [ '   MRU' ], 'type': 'files' },
+	\ { 'header': [ '   Recent files 📁' ], 'type': 'files' },
 	\ ]
 
 let g:startify_skiplist = [
