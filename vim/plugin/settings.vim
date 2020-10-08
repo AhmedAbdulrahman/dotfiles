@@ -29,8 +29,11 @@ set clipboard=unnamedplus " Sync unnamed register with system clipboard. "
 set comments= " Clear default 'comments' value, let the filetype handle it."
 set confirm " Seek for confirmation for certain commands instead of giving errors. "
 set display=lastline " As much as possible of the last line in a window will be displayed. "
+" Don’t add empty newlines at the end of files"
+set binary
+set noeol
 set keywordprg= " Disable definition search by default. "
-set modelines=1 " Maximum number of lines that is checked for set commands. "
+set modelines=4 " Maximum number of lines that is checked for set commands. "
 set mouse=nv " Enable mouse support only for normal and visual modes. "
 set nolangremap " Setting 'langmap' does not apply to characters resulting from a mapping. "
 set noruler " Disable showing line numbers in command line. "
