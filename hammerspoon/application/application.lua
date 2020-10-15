@@ -4,6 +4,8 @@ local apps = {
   g='Google Chrome',
   -- [b]rowser
   b='Firefox Developer Edition',
+  -- [d]iscord
+  d='Discord',
   -- S[a]fari
   a='Safari',
   -- [s]lack
