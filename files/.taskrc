@@ -2,17 +2,31 @@
 # Files
 data.location=~/.task
 
+# These are just User Defined Attributes (UDAs) used by BugWarrior and Kusarigama.
+
 # Show the tracking of time
 journal.time=on
 # Do not use color
 color=on
 
-# Priority
+# More sensible priorities
 uda.priority.values = H,M,,L
-
-# Urgency
 urgency.uda.priority.L.coefficient=0
 urgency.uda.priority..coefficient=1.8
+
+# Child tasks inherit their parent's urgency if that's higher.
+urgency.inherit=on
+
+# How urgent something is depends upon what's waiting on it.
+urgency.blocking.coefficient=0
+urgency.blocked.coefficient=0
+
+# Costly tasks are most important.
+urgency.user.tag.costly.coefficient=3.0
+
+# Fun things are less important
+urgency.user.project.fun.coefficient=-1.0
+urgency.user.tag.fun.coefficient=-1.0
 
 # Shortcuts
 alias.dailystatus=status:completed end.after:today all
@@ -22,8 +36,15 @@ alias.someday=mod +someday wait:someday
 # default start on Sunday - I temporarily had mine start on Monday and went back to Sunday
 weekstart=monday
 
+# Contexts
+alias.@=context
+context.personal=project:Personal
+
 # Make searches case insensitive, personal preference
 search.case.sensitive=no
+
+# List all projects with `task projects`, including those completed.
+list.all.projects=yes
 
 # Set daily burndown as default
 alias.burndown=burndown.daily
@@ -32,15 +53,15 @@ alias.burndown=burndown.daily
 active.indicator=>
 
 # task ready report default with custom columns
-default.command=ready
-report.ready.columns=id,start.active,depends.indicator,project,due.relative,description.desc
-report.ready.labels= ,,Depends, Project, Due, Description
+default.command=ready limit:page
+tasksh.autoclear=true
+
 #if none of the tasks in a report have a particular column, it will not show in the report
 
 # Color theme (uncomment one to use)
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/light-16.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/light-256.theme
-#include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-16.theme
+include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-16.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-red-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-green-256.theme
@@ -48,7 +69,29 @@ report.ready.labels= ,,Depends, Project, Due, Description
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-violets-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-yellow-green.theme
 # include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-gray-256.theme
-include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-gray-blue-256.theme
+# include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/dark-gray-blue-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/solarized-dark-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/solarized-light-256.theme
 #include /usr/local/Cellar/task/2.5.1/share/doc/task/rc/no-color.theme
+
+# Let's make our own scheduled report.
+report.scheduled.description=Scheduled tasks
+report.scheduled.columns=id,start.age,entry.age,priority,project,tags,recur.indicator,scheduled.relative,due.relative,until.remaining,description.count,urgency
+report.scheduled.labels=ID,Active,Age,P,Project,Tags,R,S,Due,Until,Description,Urg
+report.scheduled.sort=scheduled
+report.scheduled.filter=+SCHEDULED -COMPLETED -DELETED
+
+# next report: don't show annotations
+report.next.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description.count,urgency
+# Ready report: don't show annotations. Don't show depends.indicator
+report.ready.columns=id,start.age,entry.age,priority,project,tags,recur.indicator,scheduled.countdown,due.relative,until.remaining,description.count,urgency
+report.ready.labels=ID,Active,Age,P,Project,Tags,R,S,Due,Until,Description,Urg
+
+# Completed report, don't show me annotations.
+report.completed.columns=id,uuid.short,entry,end,entry.age,depends,priority,project,tags,recur.indicator,due,description.count
+report.completed.labels=ID,UUID,Created,Completed,Age,Deps,P,Project,Tags,R,Due,Description
+
+# No. Nothing should show annotations. No. Also relative dates please.
+report.waiting.labels=ID,A,Age,D,P,Project,Tags,R,Waiting,Sched,Due,Until,Description
+report.waiting.columns=id,start.active,entry.age,depends.indicator,priority,project,tags,recur.indicator,wait.remaining,scheduled,due.relative,until,description.count
+report.waiting.sort=wait+,due+,entry+
