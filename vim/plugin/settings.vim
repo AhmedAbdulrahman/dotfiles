@@ -178,9 +178,9 @@ set shiftround " Round indent to multiple of 'shiftwidth'. Applies to > and < co
 set smartindent " Automatically inserts one extra level of indentation in some cases. "
 
 " Search "
-set ignorecase " Make default search is not case sensitive. "
-set incsearch " Instantly show results when you start searching. "
-set nohlsearch " Disable highlight the matched search results by default. "
+set ignorecase " Ignore case when searching except when using a capital letter"
+set incsearch " Highlight found first search term as you type the search. "
+set nohlsearch " Highlight searched terms. "
 set smartcase " If a uppercase character is entered, the search will be case sensitive. "
 if executable('rg')
   set grepprg=rg\ --vimgrep\ --no-messages\ --no-ignore\ --hidden\ --follow\ --smart-case\ --glob "!.git/"\ --glob "!node_modules/"\ --regexp\ " Program to use for the :grep command. "
@@ -198,7 +198,8 @@ set tabpagemax=50 " Maximum number of tab pages to be opened by the `tab all` co
 
 " Command Mode "
 set cmdwinheight=5 " Height of the command window size for commands like `q:` and `q/`. "
-set history=10000 " Define maximum command history size. "
+set history=1000 " Define maximum command history size. "
+set undolevels=1000
 set noshowcmd " Disable displaying key presses at the right bottom. "
 set noshowmode " Disable native mode indicator. showmode"
 
