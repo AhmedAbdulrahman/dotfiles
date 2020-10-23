@@ -1,0 +1,35 @@
+# General stuff.
+[general]
+targets = github
+
+# Setting this to true will shorten links with http://da.gd/
+#shorten = False
+
+# Setting this to True will include a link to the ticket in the description
+inline_links = False
+
+# Setting this to True will include a link to the ticket as an annotation
+annotation_links = False
+
+# Setting this to True will include issue comments and author name in task
+# annotations
+annotation_comments = False
+
+legacy_matching = False
+
+log.level = DEBUG
+
+[github]
+service = github
+github.login = AhmedAbdulrahman
+github.username = AhmedAbdulrahman
+github.token = @oracle:eval:echo $GITHUB_TOKEN
+github.query = is:open is:issue assignee:AhmedAbdulrahman org:oakwood archived:false
+github.description_template = GH/{{githubtype|capitalize}}#{{githubnumber}}: {{githubtitle}}
+github.label_template = github_{{label}}
+github.include_user_issues = False
+github.involved_issues = True
+github.include_user_repos = False
+github.import_labels_as_tags = True
+github.project_template     = {{githubrepo}}
+github.filter_pull_requests = True
