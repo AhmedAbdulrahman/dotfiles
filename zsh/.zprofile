@@ -70,6 +70,7 @@ path=(
 # NVM
 # This is here because it needs to be set before NVM is loaded
 NVM_LAZY_LOAD=true
+NVM_COMPLETION=true
 
 # Configurations
 # The array is used to load the settings in the desired order
