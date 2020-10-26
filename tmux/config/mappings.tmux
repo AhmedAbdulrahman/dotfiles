@@ -70,16 +70,12 @@ bind C-f command-prompt -p find-session 'switch-client -t %%'
 # Select
 bind-key -T copy-mode-vi v send-keys -X begin-selection
 bind-key -T copy-mode-vi V send-keys -X select-line
-bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
-
-# https://github.com/zanshin/dotfiles/blob/master/tmux/tmux.conf
-# ---------------------
-# Copy & Paste
-# ---------------------
-bind-key -T copy-mode-vi v send-keys -X begin-selection
-bind-key -T copy-mode-vi V send-keys -X select-line
 bind-key -T copy-mode-vi r send-keys -X rectangle-toggle
 bind-key -T copy-mode-vi Escape send-keys -X cancel
+
+# Copy & Paste
+# copy-pipe command stores selected text in tmux buffer and pipes selected text to the given command pbcopy,
+# So we get text stored in two places: the tmux copy buffer and the system clipboard.
 bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
 bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
 
