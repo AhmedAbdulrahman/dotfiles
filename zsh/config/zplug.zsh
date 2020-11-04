@@ -80,7 +80,11 @@ forgit_ignore=ignore
 forgit_restore=cof
 # forgit_stash_show=stash, Create custom stash function
 FORGIT_FZF_DEFAULT_OPTS="
---height '90%'
+--exact
+--border
+--cycle
+--reverse
+--height '100%'
 --preview-window 'down:20:wrap'
 "
 
