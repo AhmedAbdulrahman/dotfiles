@@ -8,10 +8,7 @@ alias dl="cd ~/Downloads"
 alias dk="cd ~/Desktop"
 alias p="cd ~/Projects"
 alias docs='cd ~/Documents/'
-alias ds='cd ~/.ssh'
-alias dp='cd ~/Dropbox'
-alias cdbin='cd /usr/local/bin/'
-alias :e="${aliases[:e]:-e}"
+alias e="${(z)VISUAL:-${(z)EDITOR}}"
 
 # ---------------------------------------------
 # Moving around
@@ -25,11 +22,11 @@ alias oo='open .'
 # Copy & Move
 # ---------------------------------------------
 # `rm` and `mv` are so dangerous, they must always ask for confirmation.
-alias mv='mv --interactive --verbose'
-alias cp='cp --interactive --verbose'
-alias ln='ln --interactive --verbose'
-alias mkdir='mkdir --parents' # Make missing parent directories when creating folders.
-alias ln='ln --interactive --verbose'
+alias mv="${aliases[mv]:-mv} -iv"
+alias ln="${aliases[ln]:-ln} -iv"
+alias cp="${aliases[cp]:-cp} -iv"
+alias rm="${aliases[rm]:-rm} -i"
+alias mkdir="${aliases[mkdir]:-mkdir} -p" # Make missing parent directories when creating folders.
 alias which='which -a'
 alias type='type -a'
 alias trimcopy="tr -d '\n' | pbcopy"	# Trim new lines and copy to clipboard
@@ -38,9 +35,6 @@ alias trimcopy="tr -d '\n' | pbcopy"	# Trim new lines and copy to clipboard
 # Npm & Yarn
 # ---------------------------------------------
 alias npm-update="npx npm-check -u"
-alias nr="npm run"
-alias ni="npm install"
-alias nis="npm install --save"
 alias flush-npm="rm -rf node_modules && npm i && echo NPM is done"
 alias nicache="npm install --prefer-offline"
 alias yoff="yarn add --offline";
@@ -50,21 +44,8 @@ alias KABOOM="yarn global upgrade --latest;brew update; brew upgrade; brew clean
 # ---------------------------------------------
 # Git
 # ---------------------------------------------
-alias ga='git add --all'
-alias gc='git commit'
-alias commit='git commit -S -s -m'
-alias amend="git commit --amend"
 alias master="git checkout master"
 alias develop="git checkout develop"
-alias push="git push"
-alias pull='git pull'
-alias save='git stash save -u'
-alias status='git status'
-alias undo='git reset HEAD~'			# Undo commit and unstage all files
-alias undosoft='git reset --soft HEAD~'	# Undo commit and keep all files staged
-alias undohard='git reset --hard HEAD~'	# Undo the commit and completely remove all changes
-alias undopush='git push -f origin HEAD^:master'
-alias unstage='git reset --'
 alias gfs='git flow feature start'
 alias gff='git flow feature finish'
 alias gfrs='git flow release start'
@@ -110,7 +91,7 @@ alias hosts='sudo $EDITOR /etc/hosts'
 # ---------------------------------------------
 # Tmux
 # ---------------------------------------------
-alias tmux='tmux -f "$HOME/.tmux.conf"'
+alias tmux='tmux -f "$XDG_CONFIG_HOME/tmux/.tmux.conf"'
 alias mks='tmux kill-session -t'
 alias mkS='tmux kill-server'
 alias tn='tmux new-session -s'
@@ -130,14 +111,9 @@ alias tl='tmux list-sessions'
 alias "?"="pwd"
 alias sz='exec zsh'
 alias refresh='source ~/.zsh/.zshrc; echo "Reloaded .zshrc."'
-alias less='less -r'
-alias tf='tail -f'
-alias cl='clear'
 alias note='nvim ~/Documents/Notes/note'
 alias reload="exec ${SHELL} -l"	# Reload the shell (i.e. invoke as a login shell)
 alias path='echo -e ${PATH//:/\\n}'	# Print each PATH entry on a separate line
-alias apache="sudo apachectl"
-alias chmox='chmod -x'
 alias bye='sudo shutdown -h now'
 alias ios='open -a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
 alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"	# Kill all the tabs in Chrome to free up memory
