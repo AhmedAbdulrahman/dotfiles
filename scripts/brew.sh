@@ -117,6 +117,7 @@ main() {
   brew_install "Tasksh" "tasksh"
   brew_install "Timewarrior" "timewarrior"
   brew_install "The fuck" "thefuck"
+  brew_install "Command line interface to the Xquartz11 clipboard" "xclip"
   brew_install "Ncdu" "ncdu"
   brew_install "Mycli" "mycli"
   brew_install "Pgcli" "pgcli"
@@ -159,6 +160,7 @@ main() {
   brew_install "Jetbrains Mono" "font-jetbrains-mono" "homebrew/cask" "cask"
   brew_install "Jetbrains Mono Nerd Font" "font-jetbrainsmono-nerd-font" "homebrew/cask" "cask"
   brew_install "Jetbrains Mono Nerd Font Mono" "font-jetbrainsmono-nerd-font-mono" "homebrew/cask" "cask"
+  brew_install "Xquartz Open-source version of the X.Org X Window System" "xquartz" "homebrew/cask" "cask"
 
   print_in_purple "\n   Installing Apps from the App Store...\n"
   # Spark
