@@ -178,7 +178,7 @@ if ! (tmux has-session -t "${SESSION}" >/dev/null 2>&1); then
     # Expand possible ~ in variable if user pass --pwd option
     WORKINGDIR="${WORKINGDIR/#\~/$HOME}"
 
-    tmux new-session -s "$SESSION" -n editor -d -c $WORKINGDIR -x $twidth -y $theight
+    tmux -f "$XDG_CONFIG_HOME/tmux/.tmux.conf" new-session -s "$SESSION" -n editor -d -c $WORKINGDIR -x $twidth -y $theight
     if [[ -x "${WORKINGDIR}/.mx-start" ]]; then
         tmux send-keys -t "$SESSION" "./.mx-start" C-m
     else
