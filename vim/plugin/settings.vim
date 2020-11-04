@@ -293,7 +293,7 @@ if exists('$SUDO_USER')
   set nowritebackup                   " Don't create root-owned files "
 else
   if !has('nvim')
-    let &backupdir=$XDG_DATA_HOME.'/nvim/backup' " keep backup files out of the way"
+    let &backupdir=g:VIMDATA.'/backup' " keep backup files out of the way"
   endif
   set backupdir+=.
 endif
