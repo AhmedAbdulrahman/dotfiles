@@ -1,11 +1,11 @@
 # Edit tmux.conf in default $EDITOR
-bind-key e new-window -n '~/.tmux.conf' "zsh -c '\${EDITOR:-nvim} ~/.tmux.conf && tmux source ~/.tmux.conf && tmux display \"~/.tmux.conf sourced\"'"
+bind-key e new-window -n '$HOME/.config/tmux/.tmux.conf' "zsh -c '\${EDITOR:-nvim} $HOME/.config/tmux/.tmux.conf && tmux source $HOME/.config/tmux/.tmux.conf && tmux display \"$HOME/.config/tmux/.tmux.conf sourced\"'"
 
 # Reload configuration.
 unbind r
 bind-key r \
-	source-file ~/.tmux.conf \; \
-	display-message ' (!) ~/.tmux.conf reloaded.'
+	source-file ~/.config/tmux/.tmux.conf \; \
+	display-message ' (!) ~/.config/tmux/.tmux.conf reloaded.'
 
 # Launch command prompt.
 bind-key -T prefix : command-prompt
@@ -109,4 +109,4 @@ bind-key -T copy-mode-vi J \
 	send-keys -X cursor-down \; \
 	send-keys -X cursor-down \;
 
-if-shell 'test -f "~/.tmux.config.local"' 'source -q ~/.tmux.config.local'
+if-shell 'test -f "~/.config/tmux/.tmux.config.local"' 'source -q ~/.config/tmux/.tmux.config.local'
