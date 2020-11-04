@@ -43,6 +43,8 @@ zplug "igoradamenko/npm.plugin.zsh", from:github
 zplug "lukechilds/zsh-better-npm-completion", defer:2, from:github
 # Add autocompletions for yarn add, yarn remove and yarn run.
 zplug "g-plane/zsh-yarn-autocompletions", hook-build:"./zplug.zsh", defer:2, from:github
+# Timewarrior aliases and completion
+zplug "svenXY/timewarrior", from:github
 # Generates a GitHub short URL using git.io
 zplug "denysdovhan/gitio-zsh", as:command, use:"gitio.zsh", rename-to:"gitio", from:github
 # People ask you for the Wi-Fi password. Answer quickly. macOS only
