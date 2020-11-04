@@ -67,10 +67,10 @@
 
 " Faster Movement {{{ "
     "Jump 5 lines/character UP|DOWN|RIGHT|LEFT"
-    nnoremap <C-j> 5j
-    nnoremap <C-k> 5k
-    "nnoremap <C-h> 5h"
-    "nnoremap <C-l> 5l"
+    "nnoremap <S-j> 5j"
+    "nnoremap <S-k> 5k"
+    "nnoremap <S-h> 5h"
+    "nnoremap <S-l> 5l"
 
     " Alternative beginning and end of line mappings."
     nnoremap H ^
@@ -151,6 +151,13 @@
 	" Cursor Movement in Windows"
 	nnoremap <C-l> <C-w>l
 	nnoremap <C-h> <C-w>h
+	nnoremap <C-j> <C-w>j
+	nnoremap <C-k> <C-w>k
+
+	noremap <silent> <S-Left> :vertical resize +1<CR>
+	noremap <silent> <S-Right> :vertical resize -1<CR>
+	noremap <silent> <S-Up> :resize +1<CR>
+	noremap <silent> <S-Down> :resize -1<CR>
 
 	" Go to Next/Previous Buffer"
 	nnoremap <silent> <Tab> :bn<CR>
