@@ -24,25 +24,48 @@
 	commentChar = %
 
 [alias]
-	publish="!git push -u origin $(git branch-name)"
-	unpublish="!git push origin :$(git branch-name)"
-	# branch
-	doctor = remote -v show origin
-	hide = update-index --assume-unchanged
-	unhide = update-index --no-assume-unchanged
-	hidden = !git ls-files -v | grep \"^[a-z]\"
-	# list
-	la = l --all --simplify-by-decoration
 	addall = !sh -c 'git add . && git add -u'
+	amend = commit --amend --no-edit
+	blm = blame -wMC
+	br = branch -vv --sort=-committerdate --format='%(HEAD) %(color:red)%(objectname:short)%(color:reset) %(if:equals=*)%(HEAD)%(then)%(color:cyan)%(end)%(align:15,left)%(refname:short)%(end)%(color:reset)%(align:21,left)%(color:green)%(committerdate:auto:human)%(color:reset)%(end)%(contents:subject)'
+	brs = br -a
+	cb = checkout -b
+	cm = commit
+	co = checkout
+	d = diff --patch-with-stat
+	dc = d --staged
+	dm = d --word-diff-regex=.
+	doctor = remote -v show origin
+	track = push origin -u HEAD
+	force = push --force-with-lease
+	hidden = !git ls-files -v | grep \"^[a-z]\"
+	hide = update-index --assume-unchanged
+	l = log --color=always --graph --pretty=format:\"%C(blue)%h %Creset- %C(green)(%cr) %Creset%s - %C(cyan)%aN %C(magenta)%d\" --date=auto:human
+	la = l --all --simplify-by-decoration
+	lastchange = log -p --follow -n 1
+	publish="!git push -u origin $(git branch-name)"
+	stashes = stash list
+	save = stash save -u
+	unhide = update-index --no-assume-unchanged
+	unpublish="!git push origin :$(git branch-name)"
 	who = shortlog -sne
+	# Undo
+	undo= reset HEAD~			 # Undo commit and unstage all files
+	undosoft= reset --soft HEAD~ # Undo commit and keep all files staged
+	undohard= reset --hard HEAD~ # Undo the commit and completely remove all changes
+	undopush= push -f origin HEAD^:master
+	unstage = reset HEAD --
 	# Rename branch name local & remote. Usage: $ git rename old_branch new_branch, and it's done.
 	rename = "!change() { git branch -m $1 $2; git push origin :$1; git push --set-upstream origin $2; }; change"
 	# list commited files name, Usage: $ git cf <COMMIT_ID>
 	cf = "!show_commited_files() { git diff-tree --no-commit-id --name-only -r $1; }; show_commited_files"
-
-	# ------------------------------------------------------------
-	# Emoji-Log
-	# ------------------------------------------------------------
+	review-base = !git merge-base HEAD \"${review_base:-master}\"
+	stat = !git --no-pager diff --stat $(git review-base)
+	files = !git --no-pager diff --name-only $(git review-base)
+	# Review by commit
+	by-commit = !tig log --reverse $(git review-base)..HEAD
+	# Show a markdown-formatted summary of commits from {review_base:-master} until HEAD
+	pr-summary = !git log --reverse --format=\"- **%s** (%h)%n%n%w(74,2,2)%b\" \"${review_base:-master}\"..HEAD
 
 	# Git Commit, Add all and Push — in one step.
 	cap = "!f() { git add .; git commit -m \"$@\"; git push; }; f"
