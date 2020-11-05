@@ -20,12 +20,14 @@ Thumbs.db
 .tern-project
 .ignore
 *.zwc
+*.zwc.old
 *.un~
 tags.*
-*.zwc.old
-*.vim-rplugin~
 .local.vim
 Session.vim
 *.swp
 *.add.spl
+*.vim-rplugin~
+.netrwhist
+.git-fuzzy-snapshots
 undodir/
