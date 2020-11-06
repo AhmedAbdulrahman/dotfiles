@@ -91,10 +91,9 @@ if has("mac")
   " Folding "
   if has('folding')
 	set foldtext=ahmed#settings#foldtext()
-	"set foldmethod=indent"               " not as cool as syntax, but faster"
-	set foldlevelstart=99               " start unfolded"
-	set foldlevel=0
-	set foldmethod=manual
+	set foldmethod=indent               " Use indent model for folding mechanism. Not as cool as syntax, but faster"
+	set foldlevelstart=99               " Start editing with all folds open"
+	set foldopen=hor,mark,percent,quickfix,tag,undo " Specifies for which type of commands folds will be opened."
   endif
 
 endif
