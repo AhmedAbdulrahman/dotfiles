@@ -45,6 +45,9 @@ homebrew-work: homebrew
 python:
 	sh $(SCRIPTS)/python-packages.sh
 
+composer:
+	sh $(SCRIPTS)/composer-packages.sh
+
 node:
 	sh $(SCRIPTS)/nodejs.sh
 
