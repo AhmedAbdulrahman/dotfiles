@@ -1,14 +1,14 @@
 # ----------------------
 # Colorize Messages
 # ----------------------
-set -g message-style bg=default,fg=brightred #base02
+set -g message-style bg=terminal,fg=brightred #base02
 set -g message-command-style bg=black,fg=blue
 
 # ----------------------
 # Panes
 # ----------------------
-set -g pane-border-style bg=default,fg=#8d929b
-set -g pane-active-border-style bg=default,fg=#8d929b
+set -g pane-border-style bg=terminal,fg=#8d929b
+set -g pane-active-border-style bg=terminal,fg=#8d929b
 setw -g pane-border-status top
 setw -g pane-border-format '─'
 
@@ -22,16 +22,17 @@ set -g status-justify left
 set -g status-position top
 
 # set color for status bar
-set -g status-style bg=default,fg=default
+set -g status-style bg=terminal,fg=default
 
-# setw -g window-status-format "#[bg=default]#{?window_activity_flag,#{?window_bell_flag,#[fg=brightred]▲,#[fg=#8383af]⦁},#[fg=#8383af]⦁}#[bg=default]"
-setw -g window-status-format " #I: #W "
+# setw -g window-status-format "#[bg=terminal]#{?window_activity_flag,#{?window_bell_flag,#[fg=brightred]▲,#[fg=#8383af]⦁},#[fg=#8383af]⦁}#[bg=terminal]"
+setw -g window-status-format "#[bg=terminal]#{?window_activity_flag,#{?window_bell_flag,#[fg=brightred]▲,#[fg=colour243]⦁},#[fg=colour235]⦁}#[bg=terminal]"
+# setw -g window-status-format " #I: #W "
 
-setw -g window-status-current-format "#{?window_zoomed_flag,#[fg=yellow][ #W ],#W}#[bg=default]"
-# setw -g window-status-style bg=default,fg=colour237
-setw -g window-status-activity-style bg=default,fg=colour243
-setw -g window-status-bell-style bg=default,fg=brightred
-setw -g window-status-current-style bg=default,fg=colour004
+setw -g window-status-current-format "#{?window_zoomed_flag,#[fg=yellow][ #W ],#W}#[bg=terminal]"
+# setw -g window-status-style bg=terminal,fg=colour237
+setw -g window-status-activity-style bg=terminal,fg=colour243
+setw -g window-status-bell-style bg=terminal,fg=brightred
+setw -g window-status-current-style bg=terminal,fg=colour004
 
 # show session name, window & pane number, date and time on left side of
 # status bar
