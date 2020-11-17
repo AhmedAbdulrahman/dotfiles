@@ -10,11 +10,11 @@ SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SCRIPT_DIR" || 
 
 echo "\\n → Creating VIM folder in root directory..."
 mkdir -p $HOME/.vim
-echo "✓ ZSH folder created successfully!\\n"
+echo "✓ VIM folder created successfully!\\n"
 
 echo "→ Creating VIM cache folder..."
 mkdir -p $HOME/.vim/cache
-echo "✓ ZSH folder created successfully!\\n"
+echo "✓ VIM cache folder created successfully!\\n"
 
 echo "→ Copying VIM cache folders..."
 cp -a "$SCRIPT_DIR/cache/." $HOME/.vim/cache/
