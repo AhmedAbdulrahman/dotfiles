@@ -16,7 +16,6 @@
 typeset -gU cdpath fpath manpath path
 
 fpath=(
-  ${ZDOTDIR:-$HOME}/completions/completions.zwc(N-)
   ${ZDOTDIR:-$HOME}/functions(N-/)
   ${ZDOTDIR:-$HOME}/completions(N-/)
   /usr/local/share/zsh/site-functions(N-/)
@@ -46,14 +45,15 @@ cdpath=(
 
 # Set the list of directories that Zsh searches for programs.
 path=(
-  ./node_modules/.bin
+  $HOME/.config/yarn/global/node_modules/.bin
+  $HOME/.composer/vendor/bin
   ${DOTFILES}/extras/bin(N-/)
   ${HOME}/.local/bin(N-/)
   ${HOMEBREW_PREFIX}/opt/curl/bin(N-/)
   ${HOMEBREW_PREFIX}/opt/openssl@*/bin(Nn[-1]-/)
   ${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin(N-/)
   ${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin(N-/)
-  ${HOMEBREW_PREFIX}/opt/python/libexec/bin(N-/)
+  ${HOMEBREW_PREFIX}/opt/python@3.*/libexec/bin(Nn[-1]-/)
   ${CARGO_HOME}/bin(N-/)
   ${GOBIN}(N-/)
   ${HOME}/Library/Python/3.*/bin(Nn[-1]-/)
@@ -86,4 +86,4 @@ zconfig=(
 	prompt
 )
 
-for config (${ZDOTDIR:-${HOME}/dotfiles/zsh}/config/${^zconfig}.zsh) source $config && unset config
+for config (${ZDOTDIR:-${DOTFILES}/zsh}/config/${^zconfig}.zsh) source $config && unset config
