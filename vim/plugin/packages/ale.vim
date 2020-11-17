@@ -15,6 +15,15 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_fix_on_save = v:true
 let g:ale_list_window_size = 5
 
+let g:ale_open_list = 0
+let g:ale_lint_on_filetype_changed = 0
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 0
+let g:ale_lint_on_insert_leave = 0
+
+let g:ale_javascript_eslint_executable = "npx eslint"
+let g:ale_javascript_prettier_executable = "npx prettier"
+
 " Completely disable warnings using echo."
 let g:ale_echo_cursor = v:false
 
@@ -76,15 +85,21 @@ let g:ale_linter_aliases = {
       \}
 
 let g:rust_cargo_use_clippy = executable('cargo-clippy')
+let g:ale_rust_cargo_check_all_targets = 1
+let g:ale_rust_cargo_use_clippy = 1
+let g:ale_rust_rustfmt_options = "--edition 2018"
+
 let g:ale_linters = {
 	\   'cpp': ['cppcheck','clang','gcc'],
 	\   'c': ['cppcheck','clang', 'gcc'],
 	\   'python': ['flake8'],
 	\   'rust': [ 'cargo', 'rls', 'rustc' ],
 	\   'bash': ['shellcheck'],
-	\   'go': ['golint'],
+	\   'sh': ['shellcheck'],
+	\   'scss': ['stylelint'],
+	\   'css': ['stylelint'],
 	\ 	'javascript': ['eslint'],
-	\ 	'typescript': ['eslint'],
+	\ 	'typescript': ['tsserver'],
 	\}
 
 let g:ale_linters_ignore = {'python': ['pylint']}
@@ -94,12 +109,12 @@ let g:ale_fixers = {
       \   '*':          ['remove_trailing_lines', 'trim_whitespace'],
 	  \   'python':     ['autopep8', 'black', 'isort'],
       \   'markdown'  : ['prettier'],
-      \   'javascript': ['prettier'],
-      \   'typescript': ['prettier'],
-      \   'css':        ['prettier'],
-      \   'json':       ['prettier'],
-      \   'scss':       ['prettier'],
+      \   'javascript': ['prettier', 'eslint'],
+      \   'typescript': ['prettier', 'eslint'],
+      \   'css':        ['stylelint'],
+      \   'scss':       ['stylelint'],
       \   'less':       ['prettier'],
+      \   'json':       ['prettier'],
       \   'yaml':       ['prettier'],
       \   'graphql':    ['prettier'],
       \   'html':       ['prettier'],
@@ -108,26 +123,4 @@ let g:ale_fixers = {
       \   'bash':       ['shfmt'],
       \   'rust':       ['rustfmt'],
       \   'go':         ['gofmt'],
-      \}
-
-" Don't auto auto-format files inside `node_modules`, `forks` directory, minified files and jquery (for legacy codebases)"
-let g:ale_pattern_options = {
-      \   '\.min\.(js\|css)$': {
-      \       'ale_linters': [],
-      \       'ale_fixers': []
-      \   },
-      \   'jquery.*': {
-      \       'ale_linters': [],
-      \       'ale_fixers': []
-      \   },
-      \   'node_modules/.*': {
-      \       'ale_linters': [],
-      \       'ale_fixers': []
-      \   },
-      \   'package.json': {
-      \       'ale_fixers': g:ale_fixers['*']
-      \   },
-      \   'Sites/personal/forks/.*': {
-      \       'ale_fixers': g:ale_fixers['*']
-      \   },
       \}
