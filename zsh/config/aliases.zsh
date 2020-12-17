@@ -112,6 +112,7 @@ alias "?"="pwd"
 alias sz='exec zsh'
 alias refresh='source ~/.zsh/.zshrc; echo "Reloaded .zshrc."'
 alias note='nvim ~/Documents/Notes/note'
+alias composer="php /usr/local/bin/composer"
 alias reload="exec ${SHELL} -l"	# Reload the shell (i.e. invoke as a login shell)
 alias path='echo -e ${PATH//:/\\n}'	# Print each PATH entry on a separate line
 alias bye='sudo shutdown -h now'
