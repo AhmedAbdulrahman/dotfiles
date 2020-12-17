@@ -21,6 +21,9 @@ let g:fzf_command_prefix = 'F'
 " Jump to the existing window if possible."
 let g:fzf_buffers_jump = v:true
 
+" Set preview window direction without border"
+let g:fzf_preview_window = 'right:noborder'
+
 " Directly execute the command without appending anything."
 let g:fzf_commands_expect = 'alt-enter'
 
