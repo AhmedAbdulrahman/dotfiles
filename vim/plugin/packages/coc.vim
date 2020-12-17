@@ -6,6 +6,7 @@ scriptencoding UTF-8
 
 " Disable automatically opening quickfix list upon errors."
 let g:coc_auto_copen = v:false
+let g:nvim_buf_set_virtual_text = v:true
 
 " Environment node"
 let g:coc_node_path=exepath('node')
