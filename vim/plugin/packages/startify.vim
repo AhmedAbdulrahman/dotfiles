@@ -39,7 +39,9 @@ let g:startify_custom_header_quotes = startify#fortune#predefined_quotes() + [
       \ ['Bad programmers worry about the code. Good programmers worry about data structures and their relationships', '' , '― Linus Torvalds'],
       \ ['Work expands to fill the time available for its completion.', '', "― C. Northcote Parkinson (Parkinson's Law)"],
       \ ['Future regret minimization is a powerful force for good judgement.', '', '― Tobi Lutke'],
-      \ ['The works must be conceived with fire in the soul but executed with clinical coolness', '', '― Joan Miró']
+      \ ['The works must be conceived with fire in the soul but executed with clinical coolness', '', '― Joan Miró'],
+      \ ['I call it my billion-dollar mistake. It was the invention of the null reference in 1965. At that time, I was designing the first comprehensive type system for references in an object oriented language. My goal was to ensure that all use of references should be absolutely safe, with checking performed automatically by the compiler. But I couldn’t resist the temptation to put in a null reference, simply because it was so easy to implement. This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years.', '', '― Tony Hoare, the inventor of Null References'],
+      \ ['I think that large objected-oriented programs struggle with increasing complexity as you build this large object graph of mutable objects. You know, trying to understand and keep in your mind what will happen when you call a method and what will the side effects be.', '', '― Rich Hickey']
       \ ]
 
 function! s:gitModified()
@@ -53,6 +55,21 @@ function! s:gitUntracked()
 	return map(files, "{'line': v:val, 'path': v:val}")
 endfunction
 
+function! s:gitListCommits()
+  let git = 'git -C '. getcwd()
+  let commits = systemlist(git .' log --no-decorate --oneline -n 10')
+
+  " if we are not inside a git repo don't show anything"
+  if commits[0] =~? '^fatal:'
+    return []
+  endif
+
+  " let git = 'G'. git[1:] fugitive doesnt support -C flag https://github.com/tpope/vim-fugitive/blob/511d3035d4da2453a9cb0188b6020ed7bc8fc18f/autoload/fugitive.vim#L2477-L2478"
+  let git = 'Git'
+
+  return map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "'. git .' show ". matchstr(v:val, "^\\x\\+") }')
+endfunction
+
 let g:startify_lists = [
 	\ { 'type': 'commands' },
 	\ { 'header': [ '   Sessions 📆' ], 'type': 'sessions' },
@@ -60,6 +77,7 @@ let g:startify_lists = [
 	\ { 'header': [ '   Bookmarks' ], 'type': 'bookmarks' },
 	\ { 'type': function('s:gitModified'),  'header': ['   git modified']},
 	\ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
+	\ { 'header': [ '   Commits'], 'type': function('s:gitListCommits') },
 	\ { 'header': [ '   Recent files 📁' ], 'type': 'files' },
 	\ ]
 
