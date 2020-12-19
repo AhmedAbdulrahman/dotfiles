@@ -132,3 +132,6 @@
 [submodule "vim/pack/bundle/start/vim-polyglot"]
 	path = vim/pack/bundle/start/vim-polyglot
 	url = https://github.com/sheerun/vim-polyglot.git
+[submodule "vim/pack/bundle/start/taskwarrior.vim"]
+	path = vim/pack/bundle/start/taskwarrior.vim
+	url = https://github.com/xarthurx/taskwarrior.vim.git
