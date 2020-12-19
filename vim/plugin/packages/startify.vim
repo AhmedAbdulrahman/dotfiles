@@ -70,14 +70,27 @@ function! s:gitListCommits()
   return map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "'. git .' show ". matchstr(v:val, "^\\x\\+") }')
 endfunction
 
+function! s:tasks()
+python3 << EOF
+import subprocess
+import json
+import vim
+tasks = json.loads(subprocess.check_output(['task', 'export']))
+tasks = [{'line': task['description'],'cmd': ':TW ' + str(task['id'])} for task in tasks][:10]
+vim.command("let tasklist = %s"% tasks)
+EOF
+    return tasklist
+endfunction
+
 let g:startify_lists = [
 	\ { 'type': 'commands' },
 	\ { 'header': [ '   Sessions 📆' ], 'type': 'sessions' },
 	\ { 'header': [ '   Recent files in current directory 📂 [' . getcwd() . ']' ], 'type': 'dir' },
-	\ { 'header': [ '   Bookmarks' ], 'type': 'bookmarks' },
-	\ { 'type': function('s:gitModified'),  'header': ['   git modified']},
-	\ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
-	\ { 'header': [ '   Commits'], 'type': function('s:gitListCommits') },
+	\ { 'header': [ '   Bookmarks 🔖' ], 'type': 'bookmarks' },
+	\ { 'header': [ '   Tasks 📒'], 'type': function('s:tasks') },
+	\ { 'header': [ '   Modified 🔴'], 'type': function('s:gitModified') },
+	\ { 'header': [ '   Untracked 🟢'], 'type': function('s:gitUntracked') },
+	\ { 'header': [ '   Commits 🔀'], 'type': function('s:gitListCommits') },
 	\ { 'header': [ '   Recent files 📁' ], 'type': 'files' },
 	\ ]
 
