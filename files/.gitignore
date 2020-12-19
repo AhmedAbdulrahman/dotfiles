@@ -1,4 +1,12 @@
+# vim:ft=gitconfig
 .config/coc
 .config/configstore
 .config/gatsby
 .config/karabiner/automatic_backups*
+.git/
+.DS_Store
+node_modules/
+.next/
+.cache/
+.netlify/
+.yarn/
