@@ -73,7 +73,7 @@ if executable('rg')
 	" Search in all files"
 	command! -bang -nargs=* Rg
 		\ call fzf#vim#grep(
-		\ 'rg --column --line-number --no-heading --color=always -g "!*.lock" -g "!*lock.json" --smart-case %s || true'.shellescape(<q-args>), 1,
+		\ 'rg --column --line-number --no-heading --color=always --smart-case --fixed-strings --ignore-case --hidden --follow -g "!*.lock" -g "!*lock.json" '.shellescape(<q-args>), 1,
 		\ fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'down:60%:hidden', '?'),
 		\ <bang>0)
 
