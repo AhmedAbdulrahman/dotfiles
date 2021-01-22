@@ -28,7 +28,7 @@ let g:coc_global_extensions = [
 	\ 'coc-tsserver',
 	\ 'coc-conjure',
 	\ 'coc-phpls',
-	\ 'coc-python',
+	\ 'coc-pyright',
 	\ 'coc-svg',
 	\ 'coc-tsserver',
 	\ 'coc-tailwindcss',
