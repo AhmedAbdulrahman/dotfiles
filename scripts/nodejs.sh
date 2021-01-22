@@ -63,6 +63,7 @@ install_global_packages() {
 	"expo-cli"
 	"nodemon"
 	"gatsby-cli"
+	"@sanity/cli"
 	"spaceship-prompt"
 	"typescript-language-server"
 	"ocaml-language-server"
