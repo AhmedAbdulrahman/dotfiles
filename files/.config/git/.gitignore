@@ -22,7 +22,6 @@ Thumbs.db
 *.zwc
 *.zwc.old
 *.un~
-tags.*
 .local.vim
 Session.vim
 *.swp
