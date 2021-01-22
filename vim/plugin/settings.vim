@@ -69,8 +69,12 @@ if has('windows')
   set fillchars=diff:⣿                " BOX DRAWINGS "
   set fillchars+=vert:┃               " HEAVY VERTICAL "
   set fillchars+=fold:─
-  if has('nvim')
+  if has('nvim-0.3.1')
+    set fillchars+=msgsep:‾
     set fillchars=eob:\                 " Hide end of buffer ~ "
+  endif
+  if has('nvim-0.5')
+    set fillchars+=foldopen:▾,foldsep:│,foldclose:▸
   endif
 endif
 
