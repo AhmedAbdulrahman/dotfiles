@@ -9,8 +9,7 @@ set -g prefix C-Space
 bind C-Space send-prefix
 
 # Default term.
-# set-option -g default-terminal "screen-256color"
-set-option -g default-terminal "xterm-256color"
+set-option -g default-terminal "screen-256color"
 # Enable vi style key bindings in command mode.
 set-option -g mode-keys vi
 set-option -g status-keys vi
@@ -42,10 +41,7 @@ set-option -g allow-rename on
 set-option -g visual-activity off
 
 # Enable supported focus events.
-# set-option -g focus-events on
+set-option -g focus-events on
 
 # Turn on automatic window renaming.
 set-option -g automatic-rename on
-
-# Terminal overrides.
-set-option -g -a terminal-overrides ',xterm-256color:Tc' # True color support.

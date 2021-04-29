@@ -26,6 +26,7 @@ set -g status-style bg=terminal,fg=default
 
 # setw -g window-status-format "#[bg=terminal]#{?window_activity_flag,#{?window_bell_flag,#[fg=brightred]▲,#[fg=#8383af]⦁},#[fg=#8383af]⦁}#[bg=terminal]"
 setw -g window-status-format "#[bg=terminal]#{?window_activity_flag,#{?window_bell_flag,#[fg=brightred]▲,#[fg=colour243]⦁},#[fg=colour235]⦁}#[bg=terminal]"
+set-option -g window-status-format '#[fg=colour243]⦁ #[fg=#ffa7c4]#W'
 # setw -g window-status-format " #I: #W "
 
 setw -g window-status-current-format "#{?window_zoomed_flag,#[fg=yellow][ #W ],#W}#[bg=terminal]"
@@ -51,4 +52,4 @@ status_date_time="#[fg=colour237]#[fg=#8d929b]%A, %d %b#[fg=colour237] "
 status_prayer_times="#[fg=#8d929b]#(~/.config/tmux/scripts/tmux-next-prayer) #[fg=#8383af]⦁ "
 
 set -g status-right-length 300
-set -g status-right "${status_npm}${status_github}${status_node_version}${status_wifi}${status_weather}${status_prayer_times}${status_date_time}"
+set -g status-right "${status_prefix}${status_npm}${status_github}${status_node_version}${status_wifi}${status_weather}${status_prayer_times}${status_date_time}"
