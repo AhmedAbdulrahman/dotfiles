@@ -135,3 +135,6 @@
 [submodule "vim/pack/bundle/start/taskwarrior.vim"]
 	path = vim/pack/bundle/start/taskwarrior.vim
 	url = https://github.com/xarthurx/taskwarrior.vim.git
+[submodule "vim/pack/bundle/start/dart"]
+	path = vim/pack/bundle/start/dart
+	url = https://github.com/dart-lang/dart-vim-plugin.git
