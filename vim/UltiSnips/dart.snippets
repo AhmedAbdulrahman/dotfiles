@@ -1,0 +1,165 @@
+snippet built "built value class generator"
+abstract class ${1:CLASS_NAME} implements Built<$1, $1Builder> {
+	factory $1([updates($1Builder b)]) = _$$1;
+	$1._();
+
+	$0
+
+	static Serializer<$1> get serializer => _$${1/.*/\l$0/}Serializer;
+}
+endsnippet
+
+snippet ipbuilt "import built value deps"
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+
+part '${1:`!v expand('%:t:r')`.g.dart}';
+endsnippet
+
+snippet jsbuilt "create JsonSerializable class"
+import 'package:json_annotation/json_annotation.dart';
+
+part '${1:`!v expand('%:t:r')`.g.dart}';
+
+@JsonSerializable()
+class ${1:CLASS_NAME} {
+
+factory $1.fromJson(Map<String, dynamic> json) =>
+	_$$1FromJson(json);
+
+Map<String, dynamic> toJson() => _$$1ToJson(this);
+}
+endsnippet
+
+snippet frz "create freezed class"
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part '${1:`!v expand('%:t:r')`.freezed.dart}';
+part '${1:`!v expand('%:t:r')`.g.dart}';
+
+@freezed
+abstract class ${1:CLASS_NAME} with _$$1 {
+	factory $1() = _$1;
+
+	factory $1.fromJson(Map<String, dynamic> json) => _$$1FromJson(json);
+}
+endsnippet
+
+snippet jsc "create JsonSerializable class"
+import 'package:json_annotation/json_annotation.dart';
+
+part '${1:`!v expand('%:t:r')`.g.dart}';
+
+@JsonSerializable()
+class ${1:CLASS_NAME} {
+	$1();
+
+	factory $1.fromJson(Map<String, dynamic> json) =>
+		_$$1FromJson(json);
+
+	Map<String, dynamic> toJson() => _$$1ToJson(this);
+}
+endsnippet
+
+snippet mtest "unit test file"
+import 'package:flutter_test/flutter_test.dart';
+
+void main() {
+	test('$1', () {
+		$0
+	});
+}
+endsnippet
+
+snippet trl "translation string"
+String get $1 {
+	return Intl.message(
+		'$2',
+		name: '$1',
+		desc: '$0',
+	);
+}
+endsnippet
+
+snippet wtest "widget test file"
+import 'package:flutter_test/flutter_test.dart';
+
+void main() {
+	testWidgets('$1', (WidgetTester tester) async {
+		$0
+	});
+}
+endsnippet
+
+snippet tw "test widget"
+testWidgets('$1', (WidgetTester tester) async {
+	$0
+});
+endsnippet
+
+snippet grp "unit test group"
+group('$1', () {
+	$0
+});
+endsnippet
+
+snippet tst "unit test"
+test('$1', () {
+	$0
+});
+endsnippet
+
+snippet tsta "async unit test"
+test('$1', () async {
+	$0
+});
+endsnippet
+
+snippet mock "create mockito class"
+class Mock$1 extends Mock implements $1 {}
+endsnippet
+
+snippet asn "assert not null"
+assert($1 != null)
+endsnippet
+
+snippet asn, "assert not null"
+assert($1 != null),
+endsnippet
+
+snippet mgold "match golden"
+await expectLater(
+	find.byWidget(widgetSetup.widget),
+	matchesGoldenFile('goldens/$1'),
+);
+endsnippet
+
+snippet cb "cubit"
+import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part '${1/.*/\l$0/}_state.dart';
+part '${1:`!v expand('%:t:r')`.freezed.dart}';
+
+class ${1:CLASS_NAME}Cubit extends Cubit<$1State> {
+	$1Cubit() : super(_Initial());
+}
+endsnippet
+
+snippet bs "bloc/cubit state"
+part of '${1/.*/\l$0/}_cubit.dart';
+
+@freezed
+abstract class ${1:CLASS_NAME}State with _$$1State {
+	const factory $1State.inital() = _Initial;
+}
+endsnippet
+
+snippet stless "stateless widget class"
+class $1 extends StatelessWidget {
+	@override
+		Widget build(BuildContext context) {
+			return Container($0);
+		}
+}
+endsnippet
