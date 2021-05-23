@@ -22,6 +22,7 @@ let g:coc_global_extensions = [
 	\ 'coc-css',
 	\ 'coc-html',
 	\ 'coc-json',
+	\ 'coc-flutter',
 	\ 'coc-tag',
 	\ 'coc-snippets',
 	\ 'coc-stylelintplus',
