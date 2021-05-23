@@ -29,6 +29,8 @@ main() {
   brew_install "Zoom Conference" "zoomus" "homebrew/cask" "cask"
   brew_install "Notion" "notion" "homebrew/cask" "cask"
   brew_install "DB Browser for SQLite" "db-browser-for-sqlite" "homebrew/cask" "cask"
+  brew_install "Android Studio" "android-studio" "homebrew/cask" "cask"
+  brew_install "Flutter" "flutter" "homebrew/cask" "cask"
 
   print_in_purple "\n   Installing Apps from the App Store...\n"
   # Byword'
