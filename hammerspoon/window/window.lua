@@ -15,12 +15,12 @@ hs.grid.GRIDWIDTH = 12
 hs.grid.GRIDHEIGHT = 12
 
 -- Grid Helper Function
-local gridset = function(x, y, w, h)
+local gridset = function(cell)
   return function()
     cur_window = hs.window.focusedWindow()
     hs.grid.set(
       cur_window,
-      {x=x, y=y, w=w, h=h},
+      cell,
       cur_window:screen()
     )
   end
@@ -37,27 +37,34 @@ function winmovescreen(how)
 end
 
 -- Full Bindings
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F", gridset(0,0,12,12))
-hs.hotkey.bind({"ctrl", "alt", "cmd"}, "UP", gridset(1,1,10,10))
+hs.hotkey.bind({"ctrl", "alt", "cmd"}, "F", gridset('0,0 12x12'))
 
 -- Half Bindings
-hs.hotkey.bind({"ctrl","cmd"}, 'h', gridset(0,0,6,12))
-hs.hotkey.bind({"ctrl","cmd"}, 'k', gridset(0,0,12,6))
-hs.hotkey.bind({"ctrl","cmd"}, 'j', gridset(0,6,12,6))
-hs.hotkey.bind({"ctrl","cmd"}, 'l', gridset(6,0,6,12))
+-- Vertical halves
+hs.hotkey.bind({"ctrl","cmd"}, 'h', gridset('0,0 6x12'))
+hs.hotkey.bind({"ctrl","cmd"}, 'l', gridset('6,0 6x12'))
+-- Horizontal halves
+hs.hotkey.bind({"ctrl","cmd"}, 'k', gridset('0,0 12x6'))
+hs.hotkey.bind({"ctrl","cmd"}, 'j', gridset('0,6 12x6'))
 
 -- Third Bindings
-hs.hotkey.bind({"ctrl", "alt"}, "h", gridset(0,0,4,12))
-hs.hotkey.bind({"ctrl", "alt"}, "l", gridset(8,0,4,12))
-hs.hotkey.bind({"ctrl", "alt"}, "k", gridset(4,0,4,12))
-hs.hotkey.bind({"ctrl", "alt"}, "j", gridset(4,0,4,12))
+-- Vertical thirds
+hs.hotkey.bind({"ctrl", "alt"}, "h", gridset('0,0 4x12'))
+hs.hotkey.bind({"ctrl", "alt"}, "k", gridset('4,0 4x12'))
+hs.hotkey.bind({"ctrl", "alt"}, "l", gridset('8,0 4x12'))
+-- Horizontal thirds
+hs.hotkey.bind({"ctrl", "alt"}, "j", gridset('0,0 8x12'))
+hs.hotkey.bind({"ctrl", "alt"}, ";", gridset('4,0 8x12'))
 
 -- Quarter Bindings
-hs.hotkey.bind(optcmd, '1', gridset(0,0,6,6))
-hs.hotkey.bind(optcmd, '2', gridset(6,0,6,6))
-hs.hotkey.bind(optcmd, '3', gridset(6,6,6,6))
-hs.hotkey.bind(optcmd, '4', gridset(0,6,6,6))
+hs.hotkey.bind(optcmd, '-', gridset('0,0 6x6'))
+hs.hotkey.bind(optcmd, '=', gridset('6,0 6x6'))
+hs.hotkey.bind(optcmd, '[', gridset('0,6 6x6'))
+hs.hotkey.bind(optcmd, ']', gridset('6,6 6x6'))
 
 -- -- Move between screens
 hs.hotkey.bind({"ctrl", "alt", "cmd"}, "Left",  hs.fnutils.partial(winmovescreen, "left"))
 hs.hotkey.bind({"ctrl", "alt", "cmd"}, "Right", hs.fnutils.partial(winmovescreen, "right"))
+
+-- grid gui
+hs.hotkey.bind({'shift', 'cmd'}, 'g', hs.grid.show)
