@@ -1,0 +1,3 @@
+--single-instance --listen-on unix:/tmp/kitty
+--start-as="fullscreen"
+--directory="~/Projects"
