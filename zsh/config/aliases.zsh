@@ -46,6 +46,7 @@ alias KABOOM="yarn global upgrade --latest;brew update; brew upgrade; brew clean
 # ---------------------------------------------
 alias master="git checkout master"
 alias develop="git checkout develop"
+alias stage="git checkout stage"
 alias gfs='git flow feature start'
 alias gff='git flow feature finish'
 alias gfrs='git flow release start'

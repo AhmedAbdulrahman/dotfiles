@@ -34,7 +34,7 @@
     export FZF_PATH_LOC
 
     if (( $+commands[fd] )); then
-		__FZF[CMD]='fd --hidden --follow --no-ignore-vcs --exclude ".git/*" --exclude ".git" --exclude "node_modules/*" --exclude "tags"'
+		__FZF[CMD]="fd --hidden --follow --no-ignore-vcs -E '*.git' -E '*node_modules' -E '*.next' -E '*tags' -E '*dist' -E '.DS_Store'"
         __FZF[DEFAULT]="${__FZF[CMD]} --type f"
         __FZF[ALT_C]="${__FZF[CMD]} --type d ."
         __FZF[ALT_E]="${__FZF[CMD]} --type f"
@@ -46,7 +46,7 @@
     fi
 
     export FZF_DEFAULT_COMMAND="${__FZF[DEFAULT]}"  # FZF DEFAULT CMD
-	export FZF_DEFAULT_OPTS="--prompt='» ' --min-height 30 --bind esc:cancel --height 50% --reverse --tabstop 2 --multi --color=bg+:-1 --preview-window wrap --cycle --bind '?:toggle-preview'"
+	export FZF_DEFAULT_OPTS="--prompt='» '--pointer='▶' --marker='✓ ' --min-height 30 --bind esc:cancel --height 50% --reverse --tabstop 2 --multi --color=bg+:-1 --preview-window wrap --cycle --bind '?:toggle-preview'"
     export FZF_PREVIEW_COMMAND="bat --style=numbers,changes --wrap never --color always {} || cat {} || tree -C {}"
 
 	export FZF_CTRL_T_COMMAND="${__FZF[CMD]} | iconful -f "    # FZF: Ctrl + T
