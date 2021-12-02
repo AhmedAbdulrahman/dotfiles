@@ -1,5 +1,4 @@
 # vim:ft=gitconfig
-.config/coc
 .config/configstore
 .config/gatsby
 .config/karabiner/automatic_backups*
@@ -10,3 +9,4 @@ node_modules/
 .cache/
 .netlify/
 .yarn/
+nvim
