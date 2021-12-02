@@ -10,3 +10,6 @@ node_modules/
 .netlify/
 .yarn/
 nvim
+fontforge
+*.corsair
+sanity
