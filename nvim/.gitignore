@@ -1,0 +1,8 @@
+packer_compiled.vim
+packer_compiled.lua
+pack/*
+nvim/tmp/
+nvim/cache/
+vim-persisted-undo
+*.spl
+*.sug
