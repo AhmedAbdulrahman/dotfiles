@@ -124,28 +124,21 @@ main() {
   brew_install "Usql" "usql"
   brew_install "Reattach Namespace" "reattach-to-user-namespace"
   brew_install "Tldr" "tldr"
+  #   LSPs
+  brew_install "General purpose Language Server" "efm-langserver"
+  brew_install "A Language Server for Clojure(script)" "clojure-lsp/brew/clojure-lsp-native"
+  brew_install "Tldr" "tldr"
+
     # A simple command line interface for the Mac App Store
   brew_install "MAS -> Mac App Store command line interface" "mas"
 
   print_in_purple "\n   Desktop applications\n"
+#   GUI
   brew_install "Chrome" "google-chrome" "homebrew/cask" "cask"
-  brew_install "Chrome Canary" "google-chrome-canary" "homebrew/cask-versions" "cask"
-  brew_install "Chromium" "chromium" "homebrew/cask" "cask"
   brew_install "Firefox" "firefox" "homebrew/cask" "cask"
-  brew_install "Firefox Developer" "firefox-developer-edition" "homebrew/cask-versions" "cask"
-  brew_install "Firefox Nightly" "firefox-nightly" "homebrew/cask-versions" "cask"
   brew_install "iTerm2" "iterm2" "homebrew/cask" "cask"
   brew_install "VSCode" "visual-studio-code" "homebrew/cask" "cask"
-  brew_install "Karabiner Elements" "karabiner-elements" "homebrew/cask" "cask"
-  brew_install "Spectacle" "spectacle" "homebrew/cask" "cask"
-  brew_install "Hammerspoon" "hammerspoon" "homebrew/cask" "cask"
-  brew_install "Insomnia" "insomnia" "homebrew/cask" "cask"
-  brew_install "Discord" "discord" "homebrew/cask" "cask"
-  brew_install "Sequel Pro" "sequel-pro" "homebrew/cask" "cask"
-  brew_install "Kap" "kap" "homebrew/cask" "cask"
-  brew_install "Figma" "figma" "homebrew/cask" "cask"
-  brew_install "ImageOptim" "imageoptim" "homebrew/cask" "cask"
-  brew_install "MPV" "mpv" "homebrew/cask" "cask"
+#   Quicklook plugins
   brew_install "Qlcolorcode" "qlcolorcode" "homebrew/cask" "cask"
   brew_install "Qlmarkdown" "qlmarkdown" "homebrew/cask" "cask"
   brew_install "Quicklook JSON" "quicklook-json" "homebrew/cask" "cask"
@@ -155,26 +148,10 @@ main() {
   brew_install "Qlprettypatch" "qlprettypatch" "homebrew/cask" "cask"
   brew_install "Qlvideo" "qlvideo" "homebrew/cask" "cask"
   brew_install "Webp Quicklook" "webpquicklook" "homebrew/cask" "cask"
-  brew_install "Fira Code Font" "font-fira-code" "homebrew/cask" "cask"
-  brew_install "Hack Nerd Font" "font-hack-nerd-font" "homebrew/cask" "cask"
-  brew_install "Jetbrains Mono" "font-jetbrains-mono" "homebrew/cask" "cask"
-  brew_install "Jetbrains Mono Nerd Font" "font-jetbrainsmono-nerd-font" "homebrew/cask" "cask"
-  brew_install "Jetbrains Mono Nerd Font Mono" "font-jetbrainsmono-nerd-font-mono" "homebrew/cask" "cask"
-  brew_install "Xquartz Open-source version of the X.Org X Window System" "xquartz" "homebrew/cask" "cask"
-  brew_install "Obsidian - Knowledge base" "obsidian" "homebrew/cask" "cask"
-  brew_install "Ngrok - Reverse proxy, secure introspectable tunnels to localhost" "ngrok" "homebrew/cask" "cask"
 
   print_in_purple "\n   Installing Apps from the App Store...\n"
-  # Spark
-  mas install 1176895641
   # The Unarchiver
   mas install 425424353
-  # Slack
-  mas install 803453959
-  # Dashlane
-  mas install 552383089
-  # Alfred
-  mas install 405843582
 
   finish
 }

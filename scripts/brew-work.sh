@@ -11,6 +11,7 @@ main() {
   brew_install "Vagrant" "vagrant" "homebrew/cask" "cask"
   # Vagrant-Manager helps you manage all your virtual machines in one place directly from the menubar
   brew_install "Vagrant Manager" "vagrant-manager" "homebrew/cask" "cask"
+  brew_install "Ngrok - Reverse proxy, secure introspectable tunnels to localhost" "ngrok" "homebrew/cask" "cask"
 
   # Remove outdated versions from the cellar
   brew cleanup
