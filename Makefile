@@ -23,6 +23,10 @@ symlink:
     else ifeq "$(dir)" "files"
 		@echo "→ Symlinking files dir"
 		stow --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)" --dir="$(DOTFILES)" files
+    else ifeq "$(dir)" "nvim"
+		@echo "→ Symlinking nvim dir"
+		sh $(DOTFILES)/nvim/setup.sh
+		stow --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)/.config/nvim" --dir="$(DOTFILES)" nvim
     else
 		@echo "→ Symlinking $(dir) dir"
 		sh $(DOTFILES)/$(dir)/setup.sh
