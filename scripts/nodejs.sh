@@ -66,12 +66,14 @@ install_global_packages() {
 	"@sanity/cli"
 	"spaceship-prompt"
 	"typescript-language-server"
-	"ocaml-language-server"
-	'flow-bin'
-	'flow-typed'
 	"source-map-explorer"
 	"typescript"
 	"vim-language-server"
+	"neovim"
+	"vscode-langservers-extracted"
+	"pyright"
+	"yaml-language-server"
+	"@tailwindcss/language-server"
 	)
 
 	yarn global add "${NPM_PACKAGES[@]}"
