@@ -11,3 +11,4 @@
 !.ignore
 *.old
 log.*.txt
+node_modules

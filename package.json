@@ -1,0 +1,26 @@
+{
+	"name": "@ahmed/dotfiles",
+	"version": "0.0.0",
+	"private": true,
+	"description": "My dotfiles",
+	"keywords": [
+		"dotfiles",
+		"zsh",
+		"tmux",
+		"unix",
+		"neovim"
+	],
+	"repository": "https://github.com/github:AhmedAbdulrahman/dotfiles",
+	"author": "Ahmed Abdulrahman",
+	"scripts": {
+		"prepare": "husky install"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^15.0.0",
+		"@commitlint/config-conventional": "^15.0.0",
+		"husky": "^7.0.4",
+		"lint-staged": "^12.1.2",
+		"prettier": "^2.5.0"
+	},
+	"license": "MIT"
+}
