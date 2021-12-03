@@ -142,7 +142,9 @@ packer.startup {
 				open_mapping = [[<M-`>]],
 				shade_filetypes = {},
 				shade_terminals = false,
-				shading_factor = 0.3, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+				-- the degree by which to darken to terminal colour,
+				-- default: 1 for dark backgrounds, 3 for light
+				shading_factor = 0.3,
 				start_in_insert = true,
 				persist_size = true,
 				direction = "horizontal",
@@ -192,7 +194,8 @@ packer.startup {
 	  config = function()
 		vim.cmd [[augroup __oscyank__]]
 		vim.cmd [[autocmd!]]
-		vim.cmd [[autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | OSCYankReg " | endif]]
+		vim.cmd [[
+			autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | OSCYankReg " | endif]]
 		vim.cmd [[augroup END]]
 	  end,
 	}
@@ -489,7 +492,10 @@ packer.startup {
 				mode = "background", -- Set the display mode.
 			})
 
-			vim.cmd([[autocmd ColorScheme * lua package.loaded['colorizer'] = nil; require('colorizer').setup(); require('colorizer').attach_to_buffer(0)]])
+			vim.cmd([[
+				autocmd ColorScheme * lua package.loaded['colorizer'] = nil;
+				require('colorizer').setup(); require('colorizer').attach_to_buffer(0)
+			]])
 		end,
 	}
 	-- fancy statusline
@@ -581,14 +587,14 @@ packer.startup {
 	-- }}}
 
 	-- Themes, UI & eye candy {{{
-	-- use { 'AhmedAbdulrahman/aylin.vim', opt = true }
-	use {
-		'~/Projects/_Repo/aylin.vim',
-		opt = true
-		-- config = function()
-		-- 	require("aylin").colorscheme()
-		-- end,
-	}
+	use { 'AhmedAbdulrahman/aylin.vim', opt = true }
+	-- use {
+	-- 	'~/Projects/_Repo/aylin.vim',
+	-- 	opt = true
+	-- 	-- config = function()
+	-- 	-- 	require("aylin").colorscheme()
+	-- 	-- end,
+	-- }
 	use {
 		'folke/tokyonight.nvim',
 		-- config = function()
