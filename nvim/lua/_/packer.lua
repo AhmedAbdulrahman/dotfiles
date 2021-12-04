@@ -223,7 +223,6 @@ packer.startup {
 	}
 	use { 'tpope/vim-eunuch' }
 	use { 'tpope/vim-repeat' }
-	use { 'machakann/vim-sandwich' }
 	use { 'wincent/loupe' }
 	use {
 	  'ojroques/nvim-bufdel',
@@ -326,7 +325,7 @@ packer.startup {
 		requires = {
 		  { 'onsails/lspkind-nvim' },
 		  { 'hrsh7th/cmp-nvim-lsp' },
-		  { 'andersevenrud/compe-tmux', branch = 'cmp' },
+		  { 'andersevenrud/cmp-tmux', branch = 'compe' },
 		  { 'saadparwaiz1/cmp_luasnip' },
 		  { 'hrsh7th/cmp-path' },
 		  { 'PaterJason/cmp-conjure', ft = lisps },
@@ -492,10 +491,7 @@ packer.startup {
 				mode = "background", -- Set the display mode.
 			})
 
-			vim.cmd([[
-				autocmd ColorScheme * lua package.loaded['colorizer'] = nil;
-				require('colorizer').setup(); require('colorizer').attach_to_buffer(0)
-			]])
+			vim.cmd([[ autocmd ColorScheme * lua package.loaded['colorizer'] = nil; require('colorizer').setup(); require('colorizer').attach_to_buffer(0)]])
 		end,
 	}
 	-- fancy statusline
