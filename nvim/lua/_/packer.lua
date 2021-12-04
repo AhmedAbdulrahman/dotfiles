@@ -325,7 +325,7 @@ packer.startup {
 		requires = {
 		  { 'onsails/lspkind-nvim' },
 		  { 'hrsh7th/cmp-nvim-lsp' },
-		  { 'andersevenrud/cmp-tmux', branch = 'compe' },
+		  { 'andersevenrud/cmp-tmux' },
 		  { 'saadparwaiz1/cmp_luasnip' },
 		  { 'hrsh7th/cmp-path' },
 		  { 'PaterJason/cmp-conjure', ft = lisps },
@@ -338,13 +338,11 @@ packer.startup {
 	}
 	use {
 		'nvim-treesitter/nvim-treesitter',
-		branch = '0.5-compat',
 		run = ':TSUpdate',
 		requires = {
 		  {
 			'nvim-treesitter/nvim-treesitter-textobjects',
 			after = 'nvim-treesitter',
-			branch = '0.5-compat',
 		  },
 		  -- {
 		  --   'p00f/nvim-ts-rainbow',

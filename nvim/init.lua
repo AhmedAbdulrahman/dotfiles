@@ -135,7 +135,9 @@ opt.fillchars = { -- Characters to be used in various user-interface elements.
   foldclose = '▸',
 }
 opt.ruler = true -- Disable showing line and column numbers in command line.
-opt.hidden = true
+if not vim.fn.has 'nvim-0.6' then
+	vim.opt.hidden = true
+end
 opt.tildeop = true -- Make tilde command behave like an operator.
 opt.list = true -- Show characters in 'listchars' in place of certain special characters.
 opt.listchars = { -- Strings to use when 'list' option set.
@@ -145,7 +147,11 @@ opt.listchars = { -- Strings to use when 'list' option set.
   precedes = '«', -- Character to show in the first visible column.
   trail = '␣',
 }
-opt.joinspaces = false
+
+if not vim.fn.has 'nvim-0.6' then
+	vim.opt.joinspaces = false
+end
+
 opt.concealcursor = 'n'
 -- cursor behavior:
 --   - no blinking in normal/visual mode
@@ -153,7 +159,10 @@ opt.concealcursor = 'n'
 opt.guicursor:append 'n-v-c:blinkon0,i-ci:ver25-Cursor/lCursor-blinkwait30-blinkoff100-blinkon100'
 opt.pumheight = 10 -- Maximum number of items to show in the popup menu.
 opt.pumblend = 10
-opt.inccommand = 'split' -- Show live substitution results as you type.
+-- opt.inccommand = 'split' -- Show live substitution results as you type.
+if not vim.fn.has 'nvim-0.6' then
+	vim.opt.inccommand = 'nosplit'
+end
 opt.shiftround = true -- Round indent to multiple of 'shiftwidth'.
 opt.foldlevelstart = 99 -- Start editing with all folds open.
 opt.foldopen = { -- Specifies for which type of commands folds will be opened.
@@ -238,8 +247,17 @@ opt.complete:append 'kspell'
 opt.backupcopy = 'yes' -- overwrite files to update, instead of renaming + rewriting
 opt.backup = false
 opt.writebackup = false
-opt.backupdir = string.format('%s%s', fn.stdpath 'data', '/backup//') -- keep backup files out of the way
-opt.backupdir:append '.'
+
+-- keep backup files out of the way
+if not vim.fn.has 'nvim-0.6' then
+	vim.opt.backupdir = string.format(
+	  '%s,%s%s',
+	  '.',
+	  vim.fn.stdpath 'data',
+	  '/backup//'
+	)
+end
+
 opt.swapfile = false
 opt.directory = string.format('%s%s', fn.stdpath 'data', '/swap//') -- keep swap files out of the way
 opt.directory:append '.'

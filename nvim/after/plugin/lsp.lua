@@ -15,16 +15,15 @@ if not has_lsp then
   return
 end
 
-local signs = { 'Error', 'Warning', 'Hint', 'Information' }
+local signs = { 'Error', 'Warn', 'Hint', 'Info' }
 
 for _, type in pairs(signs) do
-	local hl = "LspDiagnosticsSign" .. type
-	vim.fn.sign_define(hl, {
+	vim.fn.sign_define('DiagnosticSign' .. type, {
 	  text = utils.get_icon(string.lower(type)),
-	  texthl = 'LspDiagnosticsDefault' .. type,
+	  texthl = 'DiagnosticSign' .. type,
 	  linehl = '',
 	  numhl = '',
-	})
+})
 end
 
 vim.api.nvim_buf_set_option(buffer, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -35,10 +34,10 @@ local mappings = {
   ['<leader>r'] = { '<cmd>lua vim.lsp.buf.rename()<CR>' },
   ['K'] = { '<cmd>lua vim.lsp.buf.hover()<CR>' },
   ['<leader>ld'] = {
-    '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false,  border = "single" })<CR>',
+    '<cmd>lua vim.diagnostic.open_float(0, { focusable = false,  border = "single", close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" }, source = "always" })<CR>',
   },
   ['[d'] = {
-    '<cmd>lua vim.lsp.diagnostic.goto_next({ popup_opts = { border = "single", focusable = false, source = "always" }})<cr>',
+    '<cmd>lua vim.diagnostic.goto_next()<cr>',
   },
   [']d'] = {
     '<cmd>lua vim.lsp.diagnostic.goto_prev({ popup_opts = { border = "single", focusable = false, source = "always" }})<CR>',
@@ -58,16 +57,13 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
   { border = 'single', focusable = false, silent = true }
 )
 
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics,
-  {
-	underline = true,
-	update_in_insert = false,
+vim.diagnostic.config {
 	virtual_text = { spacing = 4, prefix = "●" },
-	severity_sort = true,
+	underline = true,
 	signs = true,
-  }
-)
+	severity_sort = true,
+	update_in_insert = false,
+}
 
 local on_attach = function(client)
   -- ---------------

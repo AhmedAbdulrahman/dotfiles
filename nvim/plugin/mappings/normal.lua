@@ -153,7 +153,9 @@ map.xnoremap(
 )
 
 -- Make `Y` behave like `C` and `D` (to the end of line)
-map.nnoremap('Y', 'y$')
+if not vim.fn.has 'nvim-0.6' then
+	map.nnoremap('Y', 'y$')
+end
 
 -- Make arrowkey do something usefull, resize the viewports accordingly
 map.nnoremap('<Right>', ':vertical resize -2<CR>')
