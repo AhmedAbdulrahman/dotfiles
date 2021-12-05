@@ -1,0 +1,54 @@
+{
+	"name": "vsnip",
+	"author": "Ahmed Abdulrahman",
+	"engines": {
+		"vscode": "^1.11.0"
+	},
+	"contributes": {
+		"snippets": [
+			{
+				"language": "css",
+				"path": "./css.json"
+			},
+			{
+				"language": "global",
+				"path": "./global.json"
+			},
+			{
+				"language": "html",
+				"path": "./html.json"
+			},
+			{
+				"language": "python",
+				"path": "./python.json"
+			},
+			{
+				"language": [
+					"javascript",
+					"javascriptreact",
+					"vue"
+				],
+				"path": "./javascript.json"
+			},
+			{
+				"language": [
+					"typescript",
+					"typescriptreact"
+				],
+				"path": "./tsc.json"
+			},
+			{
+				"language": "vim",
+				"path": "./vim.json"
+			},
+			{
+				"language": "lua",
+				"path": "./lua.json"
+			},
+			{
+				"language": "markdown",
+				"path": "./markdown.json"
+			}
+		]
+	}
+}
