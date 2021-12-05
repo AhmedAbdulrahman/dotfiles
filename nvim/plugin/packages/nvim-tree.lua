@@ -4,10 +4,6 @@ local map = require('_.utils.map')
 local au = require('_.utils.au')
 local g = vim.g
 
-require('nvim-tree.events').on_nvim_tree_ready(function()
-  vim.cmd('NvimTreeRefresh')
-end)
-
 -- 0 is supposed to be the default (ie. don't close tree when opening a file),
 -- but it closes anyway; see: https://github.com/kyazdani42/nvim-tree.lua/issues/502
 g.nvim_tree_quit_on_open = 0
