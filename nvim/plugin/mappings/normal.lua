@@ -33,10 +33,6 @@ map.nnoremap('x', '"_x')
 map.nnoremap('c*', '/\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgn')
 map.nnoremap('c#', '?\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgN')
 
--- Scroll viewport faster.
-map.nnoremap('<C-e>', '3<C-e>')
-map.nnoremap('<C-y>', '3<C-y>')
-
 -- Construct grep search.
 map.nnoremap('g/', ':Grep<Space>')
 map.nnoremap('gS', ':Grep!<Space>')
@@ -158,10 +154,10 @@ if not vim.fn.has 'nvim-0.6' then
 end
 
 -- Make arrowkey do something usefull, resize the viewports accordingly
-map.nnoremap('<Right>', ':vertical resize -2<CR>')
-map.nnoremap('<Left>', ':vertical resize +2<CR>')
-map.nnoremap('<Down>', ':resize -2<CR>')
-map.nnoremap('<Up>', ':resize +2<CR>')
+map.nnoremap('<Right>', ':vertical resize -2<CR>', { silent = true })
+map.nnoremap('<Left>', ':vertical resize +2<CR>', { silent = true })
+map.nnoremap('<Down>', ':resize -2<CR>', { silent = true })
+map.nnoremap('<Up>', ':resize +2<CR>', { silent = true })
 
 -- map.nnoremap('<Leader><TAB>', '<C-w><C-w>')
 map.nnoremap('<leader>sh', '<C-w>t<C-w>K<CR>')
