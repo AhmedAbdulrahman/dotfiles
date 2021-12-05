@@ -578,6 +578,10 @@ packer.startup {
 	  'rhysd/git-messenger.vim',
 	  cmd = 'GitMessenger',
 	  keys = '<Plug>(git-messenger)',
+	  setup = function()
+		local map = require '_.utils.map'
+		map.nnoremap('<leader>gm', ':GitMessenger<CR>')
+	  end,
 	}
 	-- }}}
 
