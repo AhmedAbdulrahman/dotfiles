@@ -1,4 +1,4 @@
-# Ahmed’s dotfiles
+# `Ahmed’s dotfiles` [![luacheck](https://github.com/AhmedAbdulrahman/dotfiles/actions/workflows/luacheck.yml/badge.svg)](https://github.com/AhmedAbdulrahman/dotfiles/actions/workflows/luacheck.yml)
 
 > ⚠️ Disclaimer! ⚠️
 >
@@ -18,19 +18,22 @@ The font is [**JetBrains Mono**](https://www.jetbrains.com/lp/mono/)
 
 ![Screenshot](assets/intro.png)
 
+| ![Screenshot](assets/lsp.png) | ![Screenshot](assets/zsh.png) | ![Screenshot](assets/diagnostics.png) |
+| ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+
 ## Table of Contents
 
--   [Ahmed’s dotfiles](#ahmeds-dotfiles)
-    -   [Table of Contents](#table-of-contents)
-    -   [What's it](#whats-it)
-    -   [What's inside](#whats-inside)
-    -   [Setup](#setup)
-    -   [Customize](#customize)
-        -   [Local Settings](#local-settings)
-            -   [`~/.zshrc.local`](#zshrclocal)
-            -   [`~/.gitconfig.local` and `~/.vimrc.local`](#gitconfiglocal-and-vimrclocal)
-    -   [Resources](#resources)
-    -   [License](#license)
+- [`Ahmed’s dotfiles` ![luacheck](https://github.com/AhmedAbdulrahman/dotfiles/actions/workflows/luacheck.yml)](#ahmeds-dotfiles-)
+	- [Table of Contents](#table-of-contents)
+	- [What's it](#whats-it)
+	- [What's inside](#whats-inside)
+	- [Setup](#setup)
+	- [Customize](#customize)
+		- [Local Settings](#local-settings)
+			- [`~/.zshrc.local`](#zshrclocal)
+			- [`~/.gitconfig.local` and `~/.vimrc.local`](#gitconfiglocal-and-vimrclocal)
+	- [Resources](#resources)
+	- [License](#license)
 
 ## What's it
 
