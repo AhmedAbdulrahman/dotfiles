@@ -67,6 +67,7 @@ packer.startup({
       end,
     })
     use({ 'windwp/nvim-autopairs' })
+    use({ 'mg979/vim-visual-multi' })
     use({
       'lukas-reineke/indent-blankline.nvim',
       config = function()
