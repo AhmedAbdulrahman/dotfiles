@@ -10,11 +10,11 @@ if vim.fn.exists('g:fugitive_browse_handlers') == 0 then
 end
 
 -- Define mappings.
-map.nnoremap('gB', '<Cmd>Git blame<CR>', { silent = true })
+map.nnoremap('gl', '<Cmd>Git blame<CR>', { silent = true })
 map.nnoremap('gd', '<Cmd>Gdiffsplit<CR>', { silent = true })
 -- Open current file on github.com
-map.nnoremap('gb', ':GBrowse<cr>', { silent = true })
-map.vnoremap('gb', ':GBrowse<cr>', { silent = true })
+map.nnoremap('go', ':GBrowse<cr>', { silent = true })
+map.vnoremap('go', ':GBrowse<cr>', { silent = true })
 -- Git status
 map.nnoremap('gs', ':Git<cr>', { silent = true })
 map.vnoremap('gs', ':Git<cr>', { silent = true })
