@@ -233,6 +233,14 @@ packer.startup({
     use({ 'tpope/vim-repeat' })
     use({ 'wincent/loupe' })
     use({
+      'https://github.com/numToStr/Comment.nvim',
+      requires = {
+        'https://github.com/JoosepAlviste/nvim-ts-context-commentstring',
+      },
+      keys = { 'gc', 'gb' },
+      config = require('_.config.comment'),
+    })
+    use({
       'ojroques/nvim-bufdel',
       cmd = 'BufDel',
       setup = function()
