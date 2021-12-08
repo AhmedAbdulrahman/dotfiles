@@ -4,47 +4,61 @@
 -- :lua print(vim.lsp.get_log_path())
 -- :lua print(vim.inspect(vim.tbl_keys(vim.lsp.callbacks)))
 local has_lsp, nvim_lsp = pcall(require, 'lspconfig')
-local protocol = require 'vim.lsp.protocol'
-local utils = require '_.utils'
-local au = require '_.utils.au'
-local map = require '_.utils.map'
+local protocol = require('vim.lsp.protocol')
+local utils = require('_.utils')
+local au = require('_.utils.au')
+local map = require('_.utils.map')
 local map_opts = { buffer = true, silent = true }
 
 if not has_lsp then
-  utils.notify 'LSP config failed to setup'
+  utils.notify('LSP config failed to setup')
   return
 end
 
 local signs = { 'Error', 'Warn', 'Hint', 'Info' }
 
 for _, type in pairs(signs) do
-	vim.fn.sign_define('DiagnosticSign' .. type, {
-	  text = utils.get_icon(string.lower(type)),
-	  texthl = 'DiagnosticSign' .. type,
-	  linehl = '',
-	  numhl = '',
-})
+  vim.fn.sign_define('DiagnosticSign' .. type, {
+    text = utils.get_icon(string.lower(type)),
+    texthl = 'DiagnosticSign' .. type,
+    linehl = '',
+    numhl = '',
+  })
 end
 
-vim.api.nvim_buf_set_option(buffer, "omnifunc", "v:lua.vim.lsp.omnifunc")
+vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
 local mappings = {
-  ['<leader>a'] = { '<cmd>lua vim.lsp.buf.code_action()<CR>' },
---   ['<leader>f'] = { '<cmd>lua vim.lsp.buf.references()<CR>' },
+  ['<leader>af'] = { '<cmd>lua vim.lsp.buf.code_action()<CR>' },
+  ['gr'] = { '<cmd>lua vim.lsp.buf.references()<CR>' },
   ['<leader>r'] = { '<cmd>lua vim.lsp.buf.rename()<CR>' },
-  ['K'] = { '<cmd>lua vim.lsp.buf.hover()<CR>' },
-  ['<leader>ld'] = {
+  ['K'] = { '<cmd>lua vim.lsp.buf.hover()<cr>' },
+  ['<C-K>'] = { '<cmd>lua require("lsp_signature").signature()<cr>' },
+  ['ge'] = {
     '<cmd>lua vim.diagnostic.open_float(0, { focusable = false,  border = "single", close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" }, source = "always" })<CR>',
   },
-  ['[d'] = {
+--   ['ge'] = { '<cmd>lua vim.diagnostic.open_float(nil, { scope = "line", })<cr>' },
+  [']g'] = {
     '<cmd>lua vim.diagnostic.goto_next()<cr>',
   },
-  [']d'] = {
+  ['[g'] = {
     '<cmd>lua vim.lsp.diagnostic.goto_prev({ popup_opts = { border = "single", focusable = false, source = "always" }})<CR>',
   },
-  ['<C-]>'] = { '<cmd>lua vim.lsp.buf.definition()<CR>' },
-  ['<leader>D'] = { '<cmd>lua vim.lsp.buf.declaration()<CR>' },
-  ['<leader>I'] = { '<cmd>lua vim.lsp.buf.implementation()<CR>' },
+  ['<leader>gd'] = { '<cmd>lua vim.lsp.buf.definition()<CR>' },
+  ['gD'] = { '<cmd>lua vim.lsp.buf.declaration()<CR>' },
+  ['gi'] = { '<cmd>lua vim.lsp.buf.implementation()<CR>' },
+  ['gt'] = { '<cmd>lua vim.lsp.buf.type_definition()<CR>' },
+  ['<leader>ai'] = { '<cmd>lua vim.lsp.buf.incoming_calls()<CR>' },
+  ['<leader>ao'] = { '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>' },
+  -- lsp workspace
+  ['<leader>wa'] = { '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>' },
+  ['<leader>wr'] = { '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>' },
+  ['<leader>gW'] = { '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>' },
+  ['<leader>gw'] = { '<cmd>lua vim.lsp.buf.document_symbol()<CR>' },
+  -- typescript helpers
+  ['<leader>gr'] = { ':TSLspRenameFile<CR>' },
+  ['<leader>go'] = { ':TSLspOrganize<CR>' },
+  ['<leader>gi'] = { ':TSLspImportAll<CR>' },
 }
 
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
@@ -57,13 +71,13 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
   { border = 'single', focusable = false, silent = true }
 )
 
-vim.diagnostic.config {
-	virtual_text = { spacing = 4, prefix = "●" },
-	underline = true,
-	signs = true,
-	severity_sort = true,
-	update_in_insert = false,
-}
+vim.diagnostic.config({
+  virtual_text = { spacing = 4, prefix = '●' },
+  underline = true,
+  signs = true,
+  severity_sort = true,
+  update_in_insert = false,
+})
 
 local on_attach = function(client)
   -- ---------------
@@ -91,18 +105,14 @@ local on_attach = function(client)
   -- AUTOCMDS
   -- ---------------
   au.augroup('__LSP__', function()
-	-- Show diagnostics on cursor over
+    -- Show diagnostics on cursor over
     -- au.autocmd(
     --   'CursorHold',
     --   '<buffer>',
     --   'lua vim.lsp.diagnostic.show_line_diagnostics()'
     -- )
 
-	au.autocmd(
-      'CursorHoldI',
-      '<buffer>',
-      'lua vim.lsp.buf.signature_help()'
-    )
+    au.autocmd('CursorHoldI', '<buffer>', 'lua vim.lsp.buf.signature_help()')
   end)
 
   if client.resolved_capabilities.document_highlight then
@@ -135,10 +145,12 @@ local on_attach = function(client)
   end
 
   if client.resolved_capabilities.document_formatting then
-    vim.api.nvim_command [[augroup Format]]
-    vim.api.nvim_command [[autocmd! * <buffer>]]
-    vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
-    vim.api.nvim_command [[augroup END]]
+    vim.api.nvim_command([[augroup Format]])
+    vim.api.nvim_command([[autocmd! * <buffer>]])
+    vim.api.nvim_command(
+      [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
+    )
+    vim.api.nvim_command([[augroup END]])
   end
 
   if client.resolved_capabilities.code_lens then
@@ -151,35 +163,34 @@ local on_attach = function(client)
     end)
   end
 
--- Custom completion icons
-	protocol.CompletionItemKind = {
-		'', -- Text
-		'', -- Method
-		'', -- Function
-		'', -- Constructor
-		'', -- Field
-		'', -- Variable
-		'', -- Class
-		'ﰮ', -- Interface
-		'', -- Module
-		'', -- Property
-		'', -- Unit
-		'', -- Value
-		'', -- Enum
-		'', -- Keyword
-		'﬌', -- Snippet
-		'', -- Color
-		'', -- File
-		'', -- Reference
-		'', -- Folder
-		'', -- EnumMember
-		'', -- Constant
-		'', -- Struct
-		'', -- Event
-		'ﬦ', -- Operator
-		'', -- TypeParameter
+  -- Custom completion icons
+  protocol.CompletionItemKind = {
+    '', -- Text
+    '', -- Method
+    '', -- Function
+    '', -- Constructor
+    '', -- Field
+    '', -- Variable
+    '', -- Class
+    'ﰮ', -- Interface
+    '', -- Module
+    '', -- Property
+    '', -- Unit
+    '', -- Value
+    '', -- Enum
+    '', -- Keyword
+    '﬌', -- Snippet
+    '', -- Color
+    '', -- File
+    '', -- Reference
+    '', -- Folder
+    '', -- EnumMember
+    '', -- Constant
+    '', -- Struct
+    '', -- Event
+    'ﬦ', -- Operator
+    '', -- TypeParameter
   }
-
 end
 
 local servers = {
@@ -210,7 +221,7 @@ local servers = {
       end,
     },
   },
-  efm = require '_.config.lsp.efm',
+  efm = require('_.config.lsp.efm'),
   rust_analyzer = {},
   gopls = {
     cmd = { 'gopls', 'serve' },
@@ -221,9 +232,9 @@ local servers = {
   },
   tsserver = {
     root_dir = function(fname)
-      return not nvim_lsp.util.root_pattern '.flowconfig'(fname)
+      return not nvim_lsp.util.root_pattern('.flowconfig')(fname)
         and (
-          nvim_lsp.util.root_pattern 'tsconfig.json'(fname)
+          nvim_lsp.util.root_pattern('tsconfig.json')(fname)
           or nvim_lsp.util.root_pattern('package.json', 'jsconfig.json', '.git')(
             fname
           )
@@ -324,19 +335,20 @@ end
 for server, config in pairs(servers) do
   local server_disabled = (config.disabled ~= nil and config.disabled) or false
 
-	if not server_disabled then
-		nvim_lsp[server].setup(
-			vim.tbl_deep_extend(
-			'force',
-			{ on_attach = on_attach, capabilities = capabilities },
-			config
-			)
-		)
-		require "lsp_signature".setup({
-			bind = true, -- This is mandatory, otherwise border config won't get registered.
-			handler_opts = {
-			border = "rounded"
-			}
-		})
-	end
+  if not server_disabled then
+    nvim_lsp[server].setup(vim.tbl_deep_extend('force', {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      -- true/false or table of filetypes {'.ts', '.js',}
+      format_on_save = true,
+      -- set to false to disable rename notification
+      rename_notification = true,
+    }, config))
+    require('lsp_signature').setup({
+      bind = true, -- This is mandatory, otherwise border config won't get registered.
+      handler_opts = {
+        border = 'rounded',
+      },
+    })
+  end
 end
