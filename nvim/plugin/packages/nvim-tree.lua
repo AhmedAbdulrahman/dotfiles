@@ -20,13 +20,21 @@ g.nvim_tree_root_folder_modifier = ':t'
 g.nvim_tree_indent_markers = 1
 
 -- Disable special files.
-g.nvim_tree_special_files = {}
+g.nvim_tree_special_files = {
+  'README.md',
+  'LICENSE',
+  'Makefile',
+  'package.json',
+  'package-lock.json',
+}
 
 -- Set whether or not to show certain icons.
 g.nvim_tree_show_icons = {
-  git = 0,
+  git = 1,
   folders = 1,
   files = 1,
+  folder_arrows = 1,
+  lsp = 1,
 }
 
 -- Customize icons.
@@ -102,6 +110,7 @@ nvim_tree.setup({
     '.git',
     'node_modules',
     '.cache',
+    '__pycache__',
   },
   -- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
   update_focused_file = {
@@ -149,15 +158,20 @@ nvim_tree.setup({
         { key = 'c', cb = tree_cb('create') },
         { key = 'D', cb = tree_cb('remove') },
         { key = 'r', cb = tree_cb('rename') },
+        { key = '<C-r>', cb = tree_cb('full_rename') },
         { key = 'd', cb = tree_cb('cut') },
         { key = 'y', cb = tree_cb('copy') },
         { key = 'p', cb = tree_cb('paste') },
         { key = 'gyn', cb = tree_cb('copy_name') },
         { key = 'gyp', cb = tree_cb('copy_path') },
         { key = 'gya', cb = tree_cb('copy_absolute_path') },
+        { key = '[c', cb = tree_cb('prev_git_item') },
+        { key = ']c', cb = tree_cb('next_git_item') },
         { key = 'H', cb = tree_cb('dir_up') },
         { key = 's', cb = tree_cb('system_open') },
         { key = 'q', cb = tree_cb('close') },
+        { key = 'g?', cb = tree_cb('toggle_help') },
+        { key = 'I', cb = tree_cb('toggle_ignored') },
       },
     },
   },
