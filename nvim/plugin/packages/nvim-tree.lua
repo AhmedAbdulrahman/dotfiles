@@ -42,11 +42,11 @@ g.nvim_tree_icons = {
   default = '',
   symlink = '',
   git = {
-    unstaged = '✗',
-    staged = '✓',
+    unstaged = '',
+    staged = '',
     unmerged = '',
-    renamed = '➜',
-    untracked = '★',
+    renamed = '',
+    untracked = '',
     deleted = '',
     ignored = '◌',
   },
@@ -98,7 +98,7 @@ nvim_tree.setup({
   update_cwd = false,
   -- show lsp diagnostics in the signcolumn
   diagnostics = {
-    enable = false,
+    enable = true,
     icons = {
       hint = '',
       info = '',
@@ -106,11 +106,27 @@ nvim_tree.setup({
       error = '',
     },
   },
-  nvim_tree_ignore = {
-    '.git',
-    'node_modules',
-    '.cache',
-    '__pycache__',
+  filters = {
+    custom = {
+      '.DS_Store',
+      'fugitive:',
+      '.git',
+      'node_modules',
+      '.cache',
+      '__pycache__',
+      'DS_Store',
+      'bash',
+      'bin',
+      'tui',
+      'vscode',
+      'system',
+      'spell',
+      '4_archive',
+      'android',
+      'ios',
+      '.dart_tool',
+      '.idea',
+    },
   },
   -- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
   update_focused_file = {
@@ -134,13 +150,13 @@ nvim_tree.setup({
   },
   view = {
     -- width of the window, can be either a number (columns) or a string in `%`, for left or right side placement
-    width = 30,
+    width = '20%',
     -- height of the window, can be either a number (columns) or a string in `%`, for top or bottom side placement
     height = 30,
     -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
     side = 'left',
     -- if true the tree will resize itself after opening a file
-    auto_resize = false,
+    auto_resize = true,
     mappings = {
       -- custom only false will merge the list with the default mappings
       -- if true, it will only use your list to set the mappings
