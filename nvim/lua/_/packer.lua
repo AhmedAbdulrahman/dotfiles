@@ -203,7 +203,7 @@ packer.startup({
         vim.cmd([[autocmd!]])
         vim.cmd(
           [[
-			autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | OSCYankReg " | endif]]
+            autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | OSCYankReg " | endif]]
         )
         vim.cmd([[augroup END]])
       end,
@@ -622,6 +622,33 @@ packer.startup({
       end,
     })
     -- }}}
+
+    -- Debug Application Protocol
+    use {
+        'mfussenegger/nvim-dap',
+        module = 'dap',
+        keys = { '<localleader>dc', '<localleader>db', '<localleader>dut' },
+        -- setup = require '_.config.dap'.setup,
+        config = require '_.config.dap',
+        requires = {
+          {
+            -- DAP visualizer
+            'rcarriga/nvim-dap-ui',
+            after = 'nvim-dap',
+            config = require '_.config.dapui',
+          },
+        },
+    }
+    -- Flutter LSP
+    use({
+        'akinsho/flutter-tools.nvim',
+        ft = {'dart'},
+        config = require('_.config.flutter-tools'),
+        requires = {
+            'mfussenegger/nvim-dap',
+            'nvim-lua/plenary.nvim'
+        },
+    })
 
     -- Themes, UI & eye candy {{{
     use({ 'AhmedAbdulrahman/aylin.vim', opt = true })

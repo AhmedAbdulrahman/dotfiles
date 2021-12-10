@@ -33,6 +33,13 @@ return function()
 	}
   end
 
+  local function dartfmt()
+	return {
+		exe = 'dartfmt',
+		stdin = true,
+	}
+  end
+
   local filetype = {
 	javascript = { prettier },
 	typescript = { prettier },
@@ -52,6 +59,7 @@ return function()
 	html = { prettier },
 	sh = { shfmt },
 	bash = { shfmt },
+	dart = { dartfmt },
 	reason = {
 		function()
 			return {

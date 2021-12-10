@@ -15,6 +15,10 @@
 				"path": "./global.json"
 			},
 			{
+				"language": "dart",
+				"path": "./dart.json"
+			},
+			{
 				"language": "html",
 				"path": "./html.json"
 			},

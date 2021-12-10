@@ -65,6 +65,9 @@ path=(
   ${HOMEBREW_PREFIX}/lib/ruby/gems/*/bin(Nn[-1]-/)
   /usr/local/{bin,sbin}
   ${HOMEBREW_CELLAR}/git/*/share/git-core/contrib/git-jump(Nn[-1]-/)
+    # Dart ============================================================
+  $HOME/flutter/.pub-cache/bin
+  $HOME/.pub-cache/bin
   $path
 )
 
