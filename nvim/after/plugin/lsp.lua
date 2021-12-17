@@ -194,6 +194,7 @@ local on_attach = function(client)
 end
 
 local servers = {
+  html = {},
   cssls = {},
   bashls = {},
   vimls = {},
