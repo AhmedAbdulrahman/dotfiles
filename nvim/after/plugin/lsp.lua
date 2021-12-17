@@ -26,7 +26,7 @@ for _, type in pairs(signs) do
   })
 end
 
-vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+-- vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
 local mappings = {
   ['<leader>af'] = { '<cmd>lua vim.lsp.buf.code_action()<CR>' },
@@ -222,7 +222,8 @@ local servers = {
     },
   },
   efm = require('_.config.lsp.efm'),
-  rust_analyzer = {},
+   -- wait until rust-tools.nvim adapt to new handler signature
+  -- rust_analyzer = {},
   gopls = {
     cmd = { 'gopls', 'serve' },
     root_dir = function(fname)
