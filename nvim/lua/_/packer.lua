@@ -600,6 +600,10 @@ packer.startup({
         require('gitsigns').setup()
       end,
     })
+    use({
+      'pwntester/octo.nvim',
+      config = require('_.config.octo'),
+    })
     -- }}}
 
     -- Debug Application Protocol
