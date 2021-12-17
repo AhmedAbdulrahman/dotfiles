@@ -48,23 +48,7 @@ packer.startup({
     use({ 'wbthomason/packer.nvim' })
     use({
       'nathom/filetype.nvim',
-      config = function()
-        require('filetype').setup({
-          overrides = {
-            extensions = {
-              res = 'rescript',
-            },
-            literal = {
-              ['.stylelintrc'] = 'json',
-              ['.envrc'] = 'bash',
-              ['package.json'] = 'jsonc',
-            },
-            complex = {
-              ['tsconfig*'] = 'jsonc',
-            },
-          },
-        })
-      end,
+	  config = require('_.config.filetype'),
     })
     use({ 'windwp/nvim-autopairs' })
     use({ 'mg979/vim-visual-multi' })
@@ -288,12 +272,7 @@ packer.startup({
         },
         {
           'ray-x/lsp_signature.nvim',
-          config = function()
-            require('lsp_signature').setup({
-              hint_prefix = '⏵', -- default is a panda emoji...
-              zindex = 50,
-            })
-          end,
+          config = require('_.config.lsp_signature'),
         },
         { 'folke/lua-dev.nvim' },
       },
