@@ -633,6 +633,12 @@ packer.startup({
         },
     })
 
+	use({
+		"simrat39/rust-tools.nvim",
+		wants = { "nvim-lspconfig" },
+		config =  require('_.config.rust-tools')
+	  })
+
     -- Themes, UI & eye candy {{{
     use({ 'AhmedAbdulrahman/aylin.vim', opt = true })
     -- use {
