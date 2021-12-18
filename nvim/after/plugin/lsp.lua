@@ -75,11 +75,12 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
 )
 
 vim.diagnostic.config({
-  virtual_text = {
-	  source = 'always',
-	  spacing = 4,
-	  prefix = '●'
-  },
+  virtual_text = false,
+--   virtual_text = {
+-- 	  source = 'always',
+-- 	  spacing = 4,
+-- 	  prefix = '●'
+--   },
   float = {
     source = 'always',
   },
@@ -116,11 +117,11 @@ local on_attach = function(client)
   -- ---------------
   au.augroup('__LSP__', function()
     -- Show diagnostics on cursor over
-    -- au.autocmd(
-    --   'CursorHold',
-    --   '<buffer>',
-    --   'lua vim.lsp.diagnostic.show_line_diagnostics()'
-    -- )
+    au.autocmd(
+      'CursorHold',
+      '<buffer>',
+      'lua vim.lsp.diagnostic.show_line_diagnostics()'
+    )
 
     au.autocmd('CursorHoldI', '<buffer>', 'lua vim.lsp.buf.signature_help()')
   end)
@@ -169,10 +170,10 @@ local on_attach = function(client)
   end
 
     -- Formatting is handled by null
-	if vim.tbl_contains({ 'tsserver', 'gopls' }, client.name) then
-		client.resolved_capabilities.document_formatting = false
-		client.resolved_capabilities.document_range_formatting = false
-	end
+    if vim.tbl_contains({ 'tsserver', 'gopls' }, client.name) then
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+    end
 
   -- Custom completion icons
   protocol.CompletionItemKind = {
@@ -351,7 +352,7 @@ for server, config in pairs(servers) do
     nvim_lsp[server].setup(vim.tbl_deep_extend('force', {
       on_attach = on_attach,
       capabilities = capabilities,
-	  flags = {
+      flags = {
         debounce_text_changes = 150,
       },
       -- true/false or table of filetypes {'.ts', '.js',}
