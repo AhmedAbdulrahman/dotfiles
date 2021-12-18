@@ -1,8 +1,11 @@
 -- for debugging
--- :lua require('vim.lsp.log').set_level("debug")
 -- :lua print(vim.inspect(vim.lsp.buf_get_clients()))
 -- :lua print(vim.lsp.get_log_path())
 -- :lua print(vim.inspect(vim.tbl_keys(vim.lsp.callbacks)))
+
+require('vim.lsp.log').set_level 'debug'
+require('vim.lsp.log').set_format_func(vim.inspect)
+
 local has_lsp, nvim_lsp = pcall(require, 'lspconfig')
 local protocol = require('vim.lsp.protocol')
 local utils = require('_.utils')
@@ -72,7 +75,14 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
 )
 
 vim.diagnostic.config({
-  virtual_text = { spacing = 4, prefix = '●' },
+  virtual_text = {
+	  source = 'always',
+	  spacing = 4,
+	  prefix = '●'
+  },
+  float = {
+    source = 'always',
+  },
   underline = true,
   signs = true,
   severity_sort = true,
@@ -132,11 +142,6 @@ local on_attach = function(client)
         'lua vim.lsp.buf.document_highlight()'
       )
       au.autocmd(
-        'CursorHoldI',
-        '<buffer>',
-        'lua vim.lsp.buf.document_highlight()'
-      )
-      au.autocmd(
         'CursorMoved',
         '<buffer>',
         'lua vim.lsp.buf.clear_references()'
@@ -162,6 +167,12 @@ local on_attach = function(client)
       )
     end)
   end
+
+    -- Formatting is handled by null
+	if vim.tbl_contains({ 'tsserver', 'gopls' }, client.name) then
+		client.resolved_capabilities.document_formatting = false
+		client.resolved_capabilities.document_range_formatting = false
+	end
 
   -- Custom completion icons
   protocol.CompletionItemKind = {
@@ -222,7 +233,6 @@ local servers = {
       end,
     },
   },
-  efm = require('_.config.lsp.efm'),
    -- wait until rust-tools.nvim adapt to new handler signature
   -- rust_analyzer = {},
   gopls = {
@@ -319,7 +329,7 @@ local servers = {
   },
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = protocol.make_client_capabilities()
 
 if pcall(require, 'cmp_nvim_lsp') then
   capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
@@ -341,16 +351,22 @@ for server, config in pairs(servers) do
     nvim_lsp[server].setup(vim.tbl_deep_extend('force', {
       on_attach = on_attach,
       capabilities = capabilities,
+	  flags = {
+        debounce_text_changes = 150,
+      },
       -- true/false or table of filetypes {'.ts', '.js',}
       format_on_save = true,
       -- set to false to disable rename notification
       rename_notification = true,
     }, config))
     require('lsp_signature').setup({
-      bind = true, -- This is mandatory, otherwise border config won't get registered.
+      bind = true, -- This is  , otherwise border config won't get registered.
       handler_opts = {
         border = 'rounded',
       },
     })
   end
 end
+
+require '_.config.lsp.null-ls'(on_attach)
+require('_.config.rust-tools')(on_attach)
