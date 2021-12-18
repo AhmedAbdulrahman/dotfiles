@@ -1,5 +1,4 @@
-local map = require '_.utils.map'
-local au = require '_.utils.au'
+local map = require('_.utils.map')
 
 -- Quickly close current window.
 -- map.nnoremap('<leader>q', ':quit<CR>', {
@@ -7,7 +6,7 @@ local au = require '_.utils.au'
 -- })
 
 map.nnoremap('<leader>Q', ':quitall<CR>', {
-	silent = true,
+  silent = true,
 })
 -- Override Ex mode with run @@ to record, Q to replay
 map.nnoremap('Q', '@@')
@@ -44,12 +43,20 @@ map.nnoremap('gS', ':Grep!<Space>')
 -- map.nnoremap('<S-Left>', '2<C-w><')
 
 -- Toggle floating terminal or create new one if there is none.
-map.tnoremap('<C-z>', '<C-\\><C-n>:lua require("_/config/mappings/normal/terminal").toggle()<CR>', {
-	silent = true,
-})
-map.nnoremap('<C-z>', '<C-z> :lua require("_/config/mappings/normal/terminal").toggle()<CR>', {
-	silent = true,
-})
+map.tnoremap(
+  '<C-z>',
+  '<C-\\><C-n>:lua require("_/config/mappings/normal/terminal").toggle()<CR>',
+  {
+    silent = true,
+  }
+)
+map.nnoremap(
+  '<C-z>',
+  '<C-z> :lua require("_/config/mappings/normal/terminal").toggle()<CR>',
+  {
+    silent = true,
+  }
+)
 
 -- Open URL under cursor in browser or open path in GUI explorer.
 -- map.nnoremap('gb', ':execute printf('silent !xdg-open "%s" 2>/dev/null', expand('<cfile>'))<CR>', {
@@ -95,9 +102,17 @@ map.nnoremap('<leader>bv', ':vnew<CR>', { silent = true })
 -- Vertical Split with New Buffer
 -- map.nnoremap('<leader>b', ':set nomore <Bar> :ls <Bar> :set more <CR>:b<Space>', { silent = true })
 -- Vertical split
-map.nnoremap('<leader>vl', ':ls<cr>:vsp<space>\\|<space>b<space>', { silent = true })
+map.nnoremap(
+  '<leader>vl',
+  ':ls<cr>:vsp<space>\\|<space>b<space>',
+  { silent = true }
+)
 -- Horizontal split
-map.nnoremap('<leader>hl', ':ls<cr>:sp<space>\\|<space>b<space>', { silent = true })
+map.nnoremap(
+  '<leader>hl',
+  ':ls<cr>:sp<space>\\|<space>b<space>',
+  { silent = true }
+)
 -- Go to the alternate buffer.
 map.nnoremap('<C-n>', '<C-^>')
 -- Open a new buffer in current session
@@ -149,8 +164,8 @@ map.xnoremap(
 )
 
 -- Make `Y` behave like `C` and `D` (to the end of line)
-if not vim.fn.has 'nvim-0.6' then
-	map.nnoremap('Y', 'y$')
+if not vim.fn.has('nvim-0.6') then
+  map.nnoremap('Y', 'y$')
 end
 
 -- Make arrowkey do something usefull, resize the viewports accordingly
@@ -167,21 +182,21 @@ map.nnoremap('<Leader>p', [[:t.<left><left>]])
 map.nnoremap('<leader>e', [[:exe getline(line('.'))<cr>]])
 
 map.nnoremap('<leader>z', ':call ahmed#utils#ZoomToggle()<cr>', {
-	silent = true,
-  })
+  silent = true,
+})
 
 map.nnoremap('<C-g>', ':call ahmed#utils#SynStack()<cr>')
 
 -- maintain the same shortcut as vim-gtfo becasue it's in my muscle memory.
 map.nnoremap('gof', ':call ahmed#utils#OpenFileFolder()<cr>', {
-	silent = true,
+  silent = true,
 })
 
-map.nnoremap(
-  'K',
-  [[:<C-U>exe 'help '. ahmed#utils#helptopic()<CR>]],
-  { silent = true, buffer = true }
-)
+-- map.nnoremap(
+--   'K',
+--   [[:<C-U>exe 'help '. ahmed#utils#helptopic()<CR>]],
+--   { silent = true, buffer = true }
+-- )
 
 -- Quick note taking per project
 map.nmap('<Localleader>t', ':tab drop .git/todo.md<CR>')
@@ -196,7 +211,7 @@ map.nnoremap('C', '"_C')
 
 -- Create a directory if it doesn't exist
 map.nnoremap('<leader>mkd', ':!mkdir -p %:p:h<', {
-	silent = true
+  silent = true,
 })
 
 -- new file in current directory
