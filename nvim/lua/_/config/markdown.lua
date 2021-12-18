@@ -1,6 +1,4 @@
 return function()
-  local au = require '_.utils.au'
-
   vim.g.vim_markdown_fenced_languages = {
     'css',
     'erb=eruby',
