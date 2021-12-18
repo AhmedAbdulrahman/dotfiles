@@ -1,0 +1,16 @@
+.git/*
+.cache
+node_modules
+.next
+DS_Store
+bash/*
+bin/*
+tui/*
+vscode/*
+system/*
+spell/*
+4_archive/*
+android/*
+ios/*
+.dart_tool
+.idea
