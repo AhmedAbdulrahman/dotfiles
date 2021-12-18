@@ -1,0 +1,11 @@
+%.gitignore
+%.git\\.*
+bash/*
+bin/*
+tui/*
+vscode/*
+system/*
+spell/*
+4_archive/*
+android/*
+ios/

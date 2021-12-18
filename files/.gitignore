@@ -1,15 +1,31 @@
 # vim:ft=gitconfig
-.config/configstore
-.config/gatsby
-.config/karabiner/automatic_backups*
-.git/
-.DS_Store
-node_modules/
-.next/
-.cache/
-.netlify/
-.yarn/
-nvim
-fontforge
-*.corsair
-sanity
+
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!bugwarrior
+!fzf
+!git
+!neofetch
+!karabiner/karabiner.json
+!kitty
+!ranger
+!skhd
+!tmux
+!vifm
+!yabai
+!zathura
+!.npmrc
+!.gnupg
+!.agignore
+!.batrc
+!.curlrc
+!.gitconfig
+!.psqlrc
+!.pyrc.py
+!.rgignore
+!.rgrc
+!.taskrc
+!timewarrior.cfg
