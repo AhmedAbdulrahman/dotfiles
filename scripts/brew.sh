@@ -43,6 +43,7 @@ main() {
   brew_install "Openssl" "openssl"
   brew_install "Git" "git"
   brew_install "Git" "hub"
+  brew_install "GitHub CLI" "gh"
   brew_install "Python" "python"
   brew_install "Gawk" "gawk"
   # Install GNU `sed`, overwriting the built-in `sed`.
@@ -124,6 +125,7 @@ main() {
   brew_install "Usql" "usql"
   brew_install "Reattach Namespace" "reattach-to-user-namespace"
   brew_install "Tldr" "tldr"
+  brew_install "Experimental Rust compiler front-end for IDEs" "rust-analyzer"
   #   LSPs
   brew_install "General purpose Language Server" "efm-langserver"
   brew_install "A Language Server for Clojure(script)" "clojure-lsp/brew/clojure-lsp-native"
