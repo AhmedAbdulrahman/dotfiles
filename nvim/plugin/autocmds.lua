@@ -2,37 +2,33 @@
 --	┣━┫┃ ┃ ┃ ┃ ┃┃  ┃┃┃ ┃┃
 --	╹ ╹┗━┛ ╹ ┗━┛┗━╸╹ ╹╺┻┛
 
-local au = require '_.utils.au'
+local au = require('_.utils.au')
 
 au.augroup('__myautocmds__', function()
+  -- Briefly highlight yanked region.
+  au.autocmd(
+    'TextYankPost',
+    '*',
+    [[silent! lua vim.highlight.on_yank {higroup = "Visual", timeout = 100, on_visual = false}]]
+  )
 
--- Briefly highlight yanked region.
-	au.autocmd(
-		'TextYankPost',
-		'*',
-		[[silent! lua vim.highlight.on_yank {higroup = "Visual", timeout = 100, on_visual = false}]]
-	)
-
-	-- Save the current buffer after any changes.
-	au.autocmd(
-		'InsertLeave,TextChanged',
-		'*',
-		[[nnoremap <buffer><leader>p :call ahmed#autocmds#savebuffer#()]]
-	)
-	--  Set current working directory.
-	au.autocmd(
-		'VimEnter',
-		'*',
-		[[nnoremap <buffer><leader>p :call ahmed#autocmds#setroot#()]]
-	)
+  -- Save the current buffer after any changes.
+  au.autocmd(
+    'InsertLeave,TextChanged',
+    '*',
+    [[nnoremap <buffer><leader>p :call ahmed#autocmds#savebuffer#()]]
+  )
+  --  Set current working directory.
+  au.autocmd(
+    'VimEnter',
+    '*',
+    [[nnoremap <buffer><leader>p :call ahmed#autocmds#setroot#()]]
+  )
   -- Automatically make splits equal in size
   au.autocmd('VimResized', '*', 'wincmd =')
 
   -- Disable paste mode on leaving insert mode.
   au.autocmd('InsertLeave', '*', 'set nopaste')
-
-  -- au.autocmd('InsertLeave,VimEnter,WinEnter', '*', 'setlocal cursorline')
-  -- au.autocmd('InsertEnter,WinLeave', '*', 'setlocal nocursorline')
 
   -- taken from https://github.com/jeffkreeftmeijer/vim-numbertoggle/blob/cfaecb9e22b45373bb4940010ce63a89073f6d8b/plugin/number_toggle.vim
   au.autocmd(
@@ -93,7 +89,6 @@ au.augroup('__myautocmds__', function()
   au.autocmd('BufLeave', '*.min.*', ':LspStart')
 
   au.autocmd('BufWritePost', '*/spell/*.add', 'silent! :mkspell! %')
-  au.autocmd('BufWritePost', '*', 'FormatWrite')
---   au.autocmd('CursorMoved', '*', 'IndentBlanklineRefresh')
+--   au.autocmd('BufWritePost', '*', 'FormatWrite')
   au.autocmd('BufWritePost', 'packer.lua', 'PackerCompile')
 end)
