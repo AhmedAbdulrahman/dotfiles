@@ -1,7 +1,7 @@
 -- vim: foldmethod=marker
-require '_'
+require('_')
 
-local au = require '_.utils.au'
+local au = require('_.utils.au')
 
 local fn = vim.fn
 local env = vim.env
@@ -43,21 +43,21 @@ g.loaded_python_provider = 0
 
 g.python3_host_skip_check = 1
 
-if fn.executable 'python3' == 1 then
--- set the default python PATH, to supposedly boost 🏎  performance
-  g.python3_host_prog = fn.exepath 'python3'
+if fn.executable('python3') == 1 then
+  -- set the default python PATH, to supposedly boost 🏎  performance
+  g.python3_host_prog = fn.exepath('python3')
 else
   g.loaded_python3_provider = 0
 end
 
-if fn.executable 'neovim-node-host' == 1 then
-  g.node_host_prog = fn.exepath 'neovim-node-host'
+if fn.executable('neovim-node-host') == 1 then
+  g.node_host_prog = fn.exepath('neovim-node-host')
 else
   g.loaded_node_provider = 0
 end
 
-if fn.executable 'neovim-ruby-host' == 1 then
-  g.ruby_host_prog = fn.exepath 'neovim-ruby-host'
+if fn.executable('neovim-ruby-host') == 1 then
+  g.ruby_host_prog = fn.exepath('neovim-ruby-host')
 else
   g.loaded_ruby_provider = 0
 end
@@ -74,7 +74,7 @@ opt.termguicolors = true -- Enables 24-bit RGB color support.
 opt.mouse = table.concat({ -- Enable mouse support for normal and visual modes.
   'n', -- Normal mode
   'v', -- Visual mode
---   'a'
+  --   'a'
 })
 opt.startofline = true -- Move cursor to the start of each line when jumping with certain commands.
 opt.report = 1000 -- Threshold for reporting number of lines changed.
@@ -135,9 +135,6 @@ opt.fillchars = { -- Characters to be used in various user-interface elements.
   foldclose = '▸',
 }
 opt.ruler = true -- Disable showing line and column numbers in command line.
-if not vim.fn.has 'nvim-0.6' then
-	vim.opt.hidden = true
-end
 opt.tildeop = true -- Make tilde command behave like an operator.
 opt.list = true -- Show characters in 'listchars' in place of certain special characters.
 opt.listchars = { -- Strings to use when 'list' option set.
@@ -148,20 +145,20 @@ opt.listchars = { -- Strings to use when 'list' option set.
   trail = '␣',
 }
 
-if not vim.fn.has 'nvim-0.6' then
-	vim.opt.joinspaces = false
+if not vim.fn.has('nvim-0.6') then
+  vim.opt.joinspaces = false
 end
 
 opt.concealcursor = 'n'
 -- cursor behavior:
 --   - no blinking in normal/visual mode
 --   - blinking in insert-mode
-opt.guicursor:append 'n-v-c:blinkon0,i-ci:ver25-Cursor/lCursor-blinkwait30-blinkoff100-blinkon100'
+opt.guicursor:append('n-v-c:blinkon0,i-ci:ver25-Cursor/lCursor-blinkwait30-blinkoff100-blinkon100')
 opt.pumheight = 10 -- Maximum number of items to show in the popup menu.
 opt.pumblend = 10
 -- opt.inccommand = 'split' -- Show live substitution results as you type.
-if not vim.fn.has 'nvim-0.6' then
-	vim.opt.inccommand = 'nosplit'
+if not vim.fn.has('nvim-0.6') then
+  vim.opt.inccommand = 'nosplit'
 end
 opt.shiftround = true -- Round indent to multiple of 'shiftwidth'.
 opt.foldlevelstart = 99 -- Start editing with all folds open.
@@ -204,12 +201,11 @@ opt.cursorline = true -- Highlight the screen line of the cursor with CursorLine
 opt.signcolumn = 'yes' -- Always draw the sign column even there is no sign in it.
 opt.foldmethod = 'indent' -- Use indent folding method to fold lines.
 opt.emoji = false
-opt.formatoptions:append 'n'
-opt.formatoptions:append 'r1'
+opt.formatoptions:append('n')
+opt.formatoptions:append('r1')
 opt.visualbell = false -- No beeping.
 opt.errorbells = false -- No flashing.
 opt.clipboard = 'unnamed' -- yank and paste with the system clipboard
-
 
 -- Buffer Options
 opt.modeline = false -- Disable modeline feature altogether.
@@ -220,76 +216,76 @@ opt.expandtab = true -- Use spaces instead of tab characters.
 opt.undofile = true -- Persist undo history to an undo file.
 -- Use cmd until https://github.com/neovim/neovim/issues/14670 is fixed.
 -- cmd('set keymap=diacritic') -- Enable diacritic key mappings in keymap folder.
-cmd 'syntax sync minlines=256' -- Start highlighting from 256 lines backwards
+cmd('syntax sync minlines=256') -- Start highlighting from 256 lines backwards
 opt.synmaxcol = 300 -- Do not highlight very long lines
 opt.lazyredraw = true -- Don't bother updating screen during macro playback
 
--- show a navigable menu for tab completion
+-- File find: navigable menu for tab completion
 opt.wildmode = 'longest:full,list,full'
-opt.wildignore:append '*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem,*.pyc'
-opt.wildignore:append '*.swp,*~,*/.DS_Store'
+opt.wildignore:append('*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem,*.pyc')
+opt.wildignore:append('*.swp,*~,*/.DS_Store')
+opt.wildignore:append('**/node_modules/**')
+if not vim.fn.has('nvim-0.6') then
+  vim.opt.hidden = true
+end
 opt.tagcase = 'followscs'
-opt.tags:prepend './.git/tags;'
+opt.tags:prepend('./.git/tags;')
 
 -- https://robots.thoughtbot.com/opt-in-project-specific-vim-spell-checking-and-word-completion
 opt.spelllang = 'en'
 opt.spellsuggest = '30'
-opt.spellfile = string.format(
-  '%s%s',
-  fn.stdpath 'config',
-  '/spell/spell.add'
-)
+opt.spellfile = string.format('%s%s', fn.stdpath('config'), '/spell/spell.add')
 
 -- Disable unsafe commands. Only run autocommands owned by me http://andrew.stwrt.ca/posts/project-specific-vimrc/
 opt.secure = true
-opt.complete:append 'kspell'
+opt.complete:append('kspell')
 
 opt.backupcopy = 'yes' -- overwrite files to update, instead of renaming + rewriting
 opt.backup = false
 opt.writebackup = false
 
 -- keep backup files out of the way
-if not vim.fn.has 'nvim-0.6' then
-	vim.opt.backupdir = string.format(
-	  '%s,%s%s',
-	  '.',
-	  vim.fn.stdpath 'data',
-	  '/backup//'
-	)
+if not vim.fn.has('nvim-0.6') then
+  vim.opt.backupdir = string.format(
+    '%s,%s%s',
+    '.',
+    vim.fn.stdpath('data'),
+    '/backup//'
+  )
 end
 
 opt.swapfile = false
-opt.directory = string.format('%s%s', fn.stdpath 'data', '/swap//') -- keep swap files out of the way
-opt.directory:append '.'
+opt.directory = string.format('%s%s', fn.stdpath('data'), '/swap//') -- keep swap files out of the way
+opt.directory:append('.')
 
 if root then
-	opt.undofile = false -- don't create root-owned files
+  opt.undofile = false -- don't create root-owned files
 else
-	opt.undofile = true -- actually use undo files
-	opt.undodir:append '.'
+  opt.undofile = true -- actually use undo files
+  opt.undodir:append('.')
 end
 
 if root then -- don't create root-owned files then
-	opt.shada = ''
-	opt.shadafile = 'NONE'
+  opt.shada = ''
+  opt.shadafile = 'NONE'
 else
-	-- Defaults:
-	--   Neovim: !,'100,<50,s10,h
-	-- - ! save/restore global variables (only all-uppercase variables)
-	-- - '100 save/restore marks from last 100 files
-	-- - <50 save/restore 50 lines from each register
-	-- - s10 max item size 10KB
-	-- - h do not save/restore 'hlsearch' setting
-	au.augroup('MyNeovimShada', function()
-	  au.autocmd(
-		'CursorHold,FocusGained,FocusLost',
-		'*',
-		[[if &bt == '' | rshada|wshada | endif]]
-	  )
-	end)
+  -- Defaults:
+  --   Neovim: !,'100,<50,s10,h
+  -- - ! save/restore global variables (only all-uppercase variables)
+  -- - '100 save/restore marks from last 100 files
+  -- - <50 save/restore 50 lines from each register
+  -- - s10 max item size 10KB
+  -- - h do not save/restore 'hlsearch' setting
+  au.augroup('MyNeovimShada', function()
+    au.autocmd(
+      'CursorHold,FocusGained,FocusLost',
+      '*',
+      [[if &bt == '' | rshada|wshada | endif]]
+    )
+  end)
 end
 
-require '_.packer'
+require('_.packer')
 
 local vimrc_local = string.format('%s%s', env.HOME, '/.nvimrc.lua')
 
