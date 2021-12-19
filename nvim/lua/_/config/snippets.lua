@@ -1,4 +1,4 @@
--- luacheck: max line length 140
+-- luacheck: max line length 150
 
 return function()
   local has_ls, ls = pcall(require, 'luasnip')
