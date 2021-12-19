@@ -471,6 +471,12 @@ packer.startup({
       },
     })
     use({
+      'windwp/nvim-ts-autotag',
+      config = function()
+        require('nvim-ts-autotag').setup()
+      end,
+    })
+    use({
       'vuki656/package-info.nvim',
       requires = { 'MunifTanjim/nui.nvim' },
       ft = { 'json' },
