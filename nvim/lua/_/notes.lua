@@ -1,6 +1,8 @@
+-- luacheck: globals _
+
 _.notes = {}
 
-local utils = require '_.utils'
+local utils = require('_.utils')
 
 function _.notes.get_dir()
   return vim.env.NOTES_DIR
@@ -23,14 +25,14 @@ function _.notes.note_info(fpath, ...)
   end
 
   path = path
-    .. vim.fn.strftime '%Y%m%d%H%M'
+    .. vim.fn.strftime('%Y%m%d%H%M')
     .. (fname and ' ' .. fname or '')
     .. '.md'
 
   return {
     path,
     fname,
-    vim.fn.strftime '%Y-%m-%dT%H:%M',
+    vim.fn.strftime('%Y-%m-%dT%H:%M'),
   }
 end
 
@@ -66,14 +68,13 @@ end
 function _.notes.open_in_obsidian()
   local str = string.format(
     'obsidian://open?path=%s',
-    utils.urlencode(vim.fn.expand '%:p')
+    utils.urlencode(vim.fn.expand('%:p'))
   )
 
   print(str)
   vim.fn.system(
     string.format(
-      vim.fn.executable 'osascript'
-          and [[osascript -e 'open location "%s"']]
+      vim.fn.executable('osascript') and [[osascript -e 'open location "%s"']]
         or [[xdg-open "%s"]],
       str
     )
@@ -106,8 +107,7 @@ tags:
   -- print(str)
   vim.fn.system(
     string.format(
-      vim.fn.executable 'osascript'
-          and [[osascript -e 'open location "%s"']]
+      vim.fn.executable('osascript') and [[osascript -e 'open location "%s"']]
         or [[xdg-open "%s"]],
       str
     )

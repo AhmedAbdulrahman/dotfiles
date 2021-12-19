@@ -1,3 +1,5 @@
+-- luacheck: globals _
+
 local M = {}
 
 _.g = {}
@@ -21,9 +23,9 @@ end
 
 function M.augroup(group, fn)
   vim.api.nvim_command('augroup ' .. group)
-  vim.api.nvim_command 'autocmd!'
+  vim.api.nvim_command('autocmd!')
   fn()
-  vim.api.nvim_command 'augroup END'
+  vim.api.nvim_command('augroup END')
 end
 
 return M

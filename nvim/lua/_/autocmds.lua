@@ -1,5 +1,7 @@
-local utils = require '_.utils'
-local map = require '_.utils.map'
+-- luacheck: max line length 150
+
+local utils = require('_.utils')
+local map = require('_.utils.map')
 
 local M = {}
 
@@ -65,7 +67,7 @@ local function should_mkview()
   return vim.bo.buftype == ''
     and vim.fn.getcmdwintype() == ''
     and M.mkview_filetype_blocklist[vim.bo.filetype] == nil
-    and vim.fn.exists '$SUDO_USER' == 0 -- Don't create root-owned files.
+    and vim.fn.exists('$SUDO_USER') == 0 -- Don't create root-owned files.
 end
 
 local function should_quit_on_q()
@@ -90,21 +92,20 @@ end
 function M.mkview()
   if should_mkview() then
     local success, err = pcall(function()
-      if vim.fn.exists '*haslocaldir' and vim.fn.haslocaldir() then
+      if vim.fn.exists('*haslocaldir') and vim.fn.haslocaldir() then
         -- We never want to save an :lcd command, so hack around it...
-        vim.api.nvim_command 'cd -'
-        vim.api.nvim_command 'mkview'
-        vim.api.nvim_command 'lcd -'
+        vim.api.nvim_command('cd -')
+        vim.api.nvim_command('mkview')
+        vim.api.nvim_command('lcd -')
       else
-        vim.api.nvim_command 'mkview'
+        vim.api.nvim_command('mkview')
       end
     end)
     if not success then
       if
-        err:find '%f[%w]E186%f[%W]'
-          == nil -- No previous directory: probably a `git` operation.
-        and err:find '%f[%w]E190%f[%W]' == nil -- Could be name or path length exceeding NAME_MAX or PATH_MAX.
-        and err:find '%f[%w]E5108%f[%W]' == nil
+        err:find('%f[%w]E186%f[%W]') == nil -- No previous directory: probably a `git` operation.
+        and err:find('%f[%w]E190%f[%W]') == nil -- Could be name or path length exceeding NAME_MAX or PATH_MAX.
+        and err:find('%f[%w]E5108%f[%W]') == nil
       then
         error(err)
       end
@@ -114,8 +115,8 @@ end
 
 function M.loadview()
   if should_mkview() then
-    vim.api.nvim_command 'silent! loadview'
-    vim.api.nvim_command('silent! ' .. vim.fn.line '.' .. 'foldopen!')
+    vim.api.nvim_command('silent! loadview')
+    vim.api.nvim_command('silent! ' .. vim.fn.line('.') .. 'foldopen!')
   end
 end
 
@@ -124,8 +125,7 @@ function M.quit_on_q()
     map.nnoremap(
       'q',
       (
-          (vim.wo.diff == true or vim.bo.filetype == 'man')
-            and ':qa!'
+          (vim.wo.diff == true or vim.bo.filetype == 'man') and ':qa!'
           or (vim.bo.filetype == 'qf') and ':cclose'
           or ':q'
         ) .. '<cr>',
@@ -143,7 +143,7 @@ function M.source_project_config()
   }
 
   for _, file in pairs(files) do
-    local current_file = vim.fn.findfile(file, vim.fn.expand '%:p' .. ';')
+    local current_file = vim.fn.findfile(file, vim.fn.expand('%:p') .. ';')
 
     if vim.fn.filereadable(current_file) == 1 then
       vim.api.nvim_command(string.format('silent source %s', current_file))
@@ -152,10 +152,10 @@ function M.source_project_config()
 end
 
 function M.highlight_overlength()
-  cleanup_marker 'w:last_overlength'
+  cleanup_marker('w:last_overlength')
 
   if should_turn_off_colorcolumn() then
-    vim.api.nvim_command 'match NONE'
+    vim.api.nvim_command('match NONE')
   else
     -- Use tw + 1 so invisble characters are not marked
     -- I have to escape the escape backslash to be able to pass it to vim
@@ -171,16 +171,16 @@ function M.highlight_overlength()
 end
 
 function M.highlight_git_markers()
-  if utils.plugin_loaded 'conflict-marker.vim' then
-    vim.cmd [[
+  if utils.plugin_loaded('conflict-marker.vim') then
+    vim.cmd([[
 highlight! ConflictMarkerBegin guibg=#2f7366
 highlight! ConflictMarkerOurs guibg=#2e5049
 highlight! ConflictMarkerTheirs guibg=#344f69
 highlight! ConflictMarkerEnd guibg=#2f628e
 highlight! ConflictMarkerCommonAncestorsHunk guibg=#754a81
-]]
+]])
   else
-    cleanup_marker 'w:last_git_markers'
+    cleanup_marker('w:last_git_markers')
     -- I have to escape the escape backslash to be able to pass it to vim
     -- Ex: I want "\(" I have to do it in Lua as "\\("
     local overlength_pattern = '^\\(<\\|=\\|>\\)\\{7\\}\\([^=].\\+\\)\\?$'
@@ -196,11 +196,11 @@ end
 function M.disable_heavy_plugins()
   if
     M.heavy_plugins_blocklist[vim.bo.filetype] ~= nil
-    or vim.regex('\\.min\\..*$'):match_str(vim.fn.expand '%:t') ~= nil
-    or vim.fn.getfsize(vim.fn.expand '%') > 200000
+    or vim.regex('\\.min\\..*$'):match_str(vim.fn.expand('%:t')) ~= nil
+    or vim.fn.getfsize(vim.fn.expand('%')) > 200000
   then
-    if vim.fn.exists ':ALEDisableBuffer' == 2 then
-      vim.api.nvim_command ':ALEDisableBuffer'
+    if vim.fn.exists(':ALEDisableBuffer') == 2 then
+      vim.api.nvim_command(':ALEDisableBuffer')
     end
   end
 end

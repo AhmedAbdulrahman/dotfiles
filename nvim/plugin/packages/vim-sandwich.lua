@@ -1,5 +1,5 @@
-local ok = pcall(function()
-  vim.api.nvim_command 'runtime macros/sandwich/keymap/surround.vim'
+local ok = pcall(function() -- luacheck: no unused
+  vim.api.nvim_command('runtime macros/sandwich/keymap/surround.vim')
   vim.g['sandwich#recipes'] = vim.tbl_extend(
     'force',
     vim.deepcopy(vim.g['sandwich#default_recipes']),

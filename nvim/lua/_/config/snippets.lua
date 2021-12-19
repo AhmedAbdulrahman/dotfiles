@@ -1,97 +1,100 @@
+-- luacheck: max line length 140
+
 return function()
-	local has_ls, ls = pcall(require, 'luasnip')
+  local has_ls, ls = pcall(require, 'luasnip')
 
-	if not has_ls then
-		return
-	end
+  if not has_ls then
+    return
+  end
 
-	local s = ls.snippet
-	local sn = ls.snippet_node
-	local t = ls.text_node
-	local i = ls.insert_node
-	local f = ls.function_node
-	local c = ls.choice_node
-	local d = ls.dynamic_node
-	local types = require("luasnip.util.types")
+  local s = ls.snippet
+  local sn = ls.snippet_node
+  local t = ls.text_node
+  local i = ls.insert_node
+  local f = ls.function_node
+  local c = ls.choice_node
+  local d = ls.dynamic_node
+  local types = require('luasnip.util.types')
 
-	local function replace_each(replacer)
-		return function(args)
-			local len = #args[1][1]
-			return { replacer:rep(len) }
-		end
-	end
+  local function replace_each(replacer)
+    return function(args)
+      local len = #args[1][1]
+      return { replacer:rep(len) }
+    end
+  end
 
-	ls.filetype_extend('jinja', { 'html', 'htmldjango' })
-	ls.filetype_extend('jinja2', { 'html', 'htmldjango' })
-	ls.filetype_extend('html.twig', { 'html', 'htmldjango' })
+  ls.filetype_extend('jinja', { 'html', 'htmldjango' })
+  ls.filetype_extend('jinja2', { 'html', 'htmldjango' })
+  ls.filetype_extend('html.twig', { 'html', 'htmldjango' })
 
-	ls.filetype_extend('typescript', { 'javascript' })
-	ls.filetype_extend('javascriptreact', { 'javascript' })
-	ls.filetype_extend('javascript.jsx', { 'javascriptreact', 'javascript' })
-	ls.filetype_extend(
-	'typescriptreact',
-	{ 'javascriptreact', 'typescript', 'javascript' }
-	)
-	ls.filetype_extend(
-	'typescript.tsx',
-	{ 'javascriptreact', 'typescript', 'javascript' }
-	)
+  ls.filetype_extend('typescript', { 'javascript' })
+  ls.filetype_extend('javascriptreact', { 'javascript' })
+  ls.filetype_extend('javascript.jsx', { 'javascriptreact', 'javascript' })
+  ls.filetype_extend(
+    'typescriptreact',
+    { 'javascriptreact', 'typescript', 'javascript' }
+  )
+  ls.filetype_extend(
+    'typescript.tsx',
+    { 'javascriptreact', 'typescript', 'javascript' }
+  )
 
-	ls.snippets = {
-		all = {
-			s({ trig = 'bbox', wordTrig = true }, {
-				t { '╔' },
-				f(replace_each '═', { 1 }),
-				t { '╗', '║' },
-				i(1, { 'content' }),
-				t { '║', '╚' },
-				f(replace_each '═', { 1 }),
-				t { '╝' },
-				i(0),
-			}),
-			s({ trig = 'sbox', wordTrig = true }, {
-				t { '*' },
-				f(replace_each '-', { 1 }),
-				t { '*', '|' },
-				i(1, { 'content' }),
-				t { '|', '*' },
-				f(replace_each '-', { 1 }),
-				t { '*' },
-				i(0),
-			}),
-			s("eslintNext", {
-				t({"// eslint-disable-next-line "}), i(1),
-			}),
-			s('modeline', {
-				d(1, function()
-					local str = vim.split(vim.bo.commentstring, '%s', true)
+  ls.snippets = {
+    all = {
+      s({ trig = 'bbox', wordTrig = true }, {
+        t({ '╔' }),
+        f(replace_each('═'), { 1 }),
+        t({ '╗', '║' }),
+        i(1, { 'content' }),
+        t({ '║', '╚' }),
+        f(replace_each('═'), { 1 }),
+        t({ '╝' }),
+        i(0),
+      }),
+      s({ trig = 'sbox', wordTrig = true }, {
+        t({ '*' }),
+        f(replace_each('-'), { 1 }),
+        t({ '*', '|' }),
+        i(1, { 'content' }),
+        t({ '|', '*' }),
+        f(replace_each('-'), { 1 }),
+        t({ '*' }),
+        i(0),
+      }),
+      s('eslintNext', {
+        t({ '// eslint-disable-next-line ' }),
+        i(1),
+      }),
+      s('modeline', {
+        d(1, function()
+          local str = vim.split(vim.bo.commentstring, '%s', true)
 
-					return sn(nil, {
-					t(str[1]),
-					t ' vim:ft=',
-					i(1),
-					t ' ',
-					t(str[2] or ''),
-					})
-				end, {}),
-			}),
-			ls.parser.parse_snippet(
-				{ trig = 'vimfold' },
-				'${1:Fold title} {{{\n\t${0:${TM_SELECTED_TEXT}}\n}}}'
-			),
-			s('bang', {
-				t '#!/usr/bin/env ',
-				c(1, {
-					t 'sh',
-					t 'zsh',
-					t 'bash',
-					t 'python',
-					t 'node',
-				}),
-			}, i(0)),
-			ls.parser.parse_snippet(
-				{ trig = 'tmux-start' },
-				[[#!/usr/bin/env sh
+          return sn(nil, {
+            t(str[1]),
+            t(' vim:ft='),
+            i(1),
+            t(' '),
+            t(str[2] or ''),
+          })
+        end, {}),
+      }),
+      ls.parser.parse_snippet(
+        { trig = 'vimfold' },
+        '${1:Fold title} {{{\n\t${0:${TM_SELECTED_TEXT}}\n}}}'
+      ),
+      s('bang', {
+        t('#!/usr/bin/env '),
+        c(1, {
+          t('sh'),
+          t('zsh'),
+          t('bash'),
+          t('python'),
+          t('node'),
+        }),
+      }, i(0)),
+      ls.parser.parse_snippet(
+        { trig = 'tmux-start' },
+        [[#!/usr/bin/env sh
 			local SESSION_NAME="${1}"
 			# session:n.n
 			#     |   | |
@@ -112,47 +115,47 @@ return function()
 			tmux send-keys -t"\$SESSION_NAME":2.1 "direnv reload && \$EDITOR" C-m
 			tmux select-window -t"\$SESSION_NAME":2.1
 			${0}]]
-			),
-			ls.parser.parse_snippet(
-			{ trig = 'todo' },
-			string.format(
-				'TODO: ${1:Do something} (${$CURRENT_MONTH_NAME} ${$CURRENT_DATE}, ${$CURRENT_YEAR} ${$CURRENT_HOUR}:${$CURRENT_MINUTE}, ${2:%s})\n$0',
-				vim.env.GITHUB_USER
-			)
-			),
-			s({ trig = 'fn' }, {
-			c(1, {
-				t 'public ',
-				t 'private ',
-			}),
-			c(2, {
-				t 'void',
-				i(nil, { '' }),
-				t 'String',
-				t 'char',
-				t 'int',
-				t 'double',
-				t 'boolean',
-			}),
-			t ' ',
-			i(3, { 'myFunc' }),
-			t '(',
-			i(4),
-			t ')',
-			c(5, {
-				t '',
-				sn(nil, {
-				t { '', ' throws ' },
-				i(1),
-				}),
-			}),
-			t { ' {', '\t' },
-			i(0),
-			t { '', '}' },
-			}),
-			ls.parser.parse_snippet(
-			{ trig = 'foo' },
-			[[
+      ),
+      ls.parser.parse_snippet(
+        { trig = 'todo' },
+        string.format(
+          'TODO: ${1:Do something} (${$CURRENT_MONTH_NAME} ${$CURRENT_DATE}, ${$CURRENT_YEAR} ${$CURRENT_HOUR}:${$CURRENT_MINUTE}, ${2:%s})\n$0',
+          vim.env.GITHUB_USER
+        )
+      ),
+      s({ trig = 'fn' }, {
+        c(1, {
+          t('public '),
+          t('private '),
+        }),
+        c(2, {
+          t('void'),
+          i(nil, { '' }),
+          t('String'),
+          t('char'),
+          t('int'),
+          t('double'),
+          t('boolean'),
+        }),
+        t(' '),
+        i(3, { 'myFunc' }),
+        t('('),
+        i(4),
+        t(')'),
+        c(5, {
+          t(''),
+          sn(nil, {
+            t({ '', ' throws ' }),
+            i(1),
+          }),
+        }),
+        t({ ' {', '\t' }),
+        i(0),
+        t({ '', '}' }),
+      }),
+      ls.parser.parse_snippet(
+        { trig = 'foo' },
+        [[
 		${$TM_SELECTED_TEXT} --  TM_SELECTED_TEXT The currently selected text or the empty string
 		${$TM_CURRENT_LINE} --  TM_CURRENT_LINE The contents of the current line
 		${$TM_CURRENT_WORD} --  TM_CURRENT_WORD The contents of the word under cursor or the empty string
@@ -185,87 +188,85 @@ return function()
 		${$BLOCK_COMMENT_END} --  BLOCK_COMMENT_END Example output: in PHP */ or in HTML -->
 		${$LINE_COMMENT} --  LINE_COMMENT Example output: in PHP //
 			]]
-			),
-		},
-		javascript = {
-			s({ trig = '**', dscr = 'docblock' }, {
-				t { '/**', '' },
-				f(function(args)
-					local lines = vim.tbl_map(function(line)
-						print(vim.inspect(line))
-						return ' * ' .. vim.trim(line)
-					end, args[1].env.TM_SELECTED_TEXT)
-					if #lines == 0 then
-						return ' * '
-					else
-						return lines
-					end
-				end, {}),
-				i(1),
-				t { '', ' */' },
-			}),
-		},
-		markdown = {
-			s({ trig = 'frontmatter', dscr = 'Document frontmatter' }, {
-				t { '---', 'tags: ' },
-				i(1, 'value'),
-				t { '', '---', '' },
-			}),
-			s({ trig = 'table', dscr = 'Table template' }, {
-				t '| ',
-				i(1, 'First Header'),
-				t {
-					'  | Second Header |',
-					'| ------------- | ------------- |',
-					'| Content Cell  | Content Cell  |',
-					'| Content Cell  | Content Cell  |',
-				},
-			}),
-		},
-		html = {
-			s('script', {
-			t '<script',
-			c(1, {
-				sn(nil, {
-				t ' src="',
-				i(1, 'path/to/file.js'),
-				t '">',
-				}),
-				sn(nil, {
-				t { '>', '\t' },
-				i(1, '// code'),
-				t { '', '' },
-				}),
-			}),
-			i(0),
-			t '</script>',
-			}),
-		},
-	}
+      ),
+    },
+    javascript = {
+      s({ trig = '**', dscr = 'docblock' }, {
+        t({ '/**', '' }),
+        f(function(args)
+          local lines = vim.tbl_map(function(line)
+            print(vim.inspect(line))
+            return ' * ' .. vim.trim(line)
+          end, args[1].env.TM_SELECTED_TEXT)
+          if #lines == 0 then
+            return ' * '
+          else
+            return lines
+          end
+        end, {}),
+        i(1),
+        t({ '', ' */' }),
+      }),
+    },
+    markdown = {
+      s({ trig = 'frontmatter', dscr = 'Document frontmatter' }, {
+        t({ '---', 'tags: ' }),
+        i(1, 'value'),
+        t({ '', '---', '' }),
+      }),
+      s({ trig = 'table', dscr = 'Table template' }, {
+        t('| '),
+        i(1, 'First Header'),
+        t({
+          '  | Second Header |',
+          '| ------------- | ------------- |',
+          '| Content Cell  | Content Cell  |',
+          '| Content Cell  | Content Cell  |',
+        }),
+      }),
+    },
+    html = {
+      s('script', {
+        t('<script'),
+        c(1, {
+          sn(nil, {
+            t(' src="'),
+            i(1, 'path/to/file.js'),
+            t('">'),
+          }),
+          sn(nil, {
+            t({ '>', '\t' }),
+            i(1, '// code'),
+            t({ '', '' }),
+          }),
+        }),
+        i(0),
+        t('</script>'),
+      }),
+    },
+  }
 
-	ls.config.set_config {
-		updateevents = 'TextChanged,TextChangedI', -- default is InsertLeave
-			ext_opts = {
-				[types.choiceNode] = {
-					active = {
-						virt_text = { { "choiceNode", "Comment" } },
-					},
-				},
-			},
-		-- treesitter-hl has 100, use something higher (default is 200).
-		ext_base_prio = 300,
-		-- minimal increase in priority.
-		ext_prio_increase = 1,
-		enable_autosnippets = true,
-	}
+  ls.config.set_config({
+    updateevents = 'InsertLeave', -- default is InsertLeave
+    region_check_events = 'CursorHold',
+    delete_check_events = 'TextChanged,InsertEnter',
+    store_selection_keys = '<Tab>',
+    ext_opts = {
+      [types.choiceNode] = {
+        active = {
+          virt_text = { { 'choiceNode', 'Comment' } },
+        },
+      },
+    },
+    -- treesitter-hl has 100, use something higher (default is 200).
+    ext_base_prio = 300,
+    -- minimal increase in priority.
+    ext_prio_increase = 1,
+    enable_autosnippets = true,
+  })
 
- 	require('luasnip.loaders.from_vscode').lazy_load {
-		paths = {
-			-- '~/.config/nvim/pack/packer/start/friendly-snippets/snippets',
-			-- './vsnip',
-			vim.fn.stdpath 'config' .. '/pack/packer/start/friendly-snippets/snippets',
-			vim.fn.stdpath 'config' .. '/vsnip/'
-		},
-	}
-
+  require('luasnip.loaders.from_snipmate').load({ include = { 'html' } })
+  require('luasnip.loaders.from_snipmate').lazy_load({
+    path = { '~/.config/nvim/vsnip' },
+  })
 end

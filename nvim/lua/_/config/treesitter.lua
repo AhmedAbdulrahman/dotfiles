@@ -1,3 +1,5 @@
+-- luacheck: max line length 130
+
 return function()
   local has_treesitter = pcall(require, 'nvim-treesitter')
 

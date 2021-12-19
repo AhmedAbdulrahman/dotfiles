@@ -2,6 +2,8 @@
 --	┣━┫┃ ┃ ┃ ┃ ┃┃  ┃┃┃ ┃┃
 --	╹ ╹┗━┛ ╹ ┗━┛┗━╸╹ ╹╺┻┛
 
+-- luacheck: max line length 150
+
 local au = require('_.utils.au')
 
 au.augroup('__myautocmds__', function()
@@ -51,7 +53,7 @@ au.augroup('__myautocmds__', function()
     'hi! link mkdLink Normal | set concealcursor-=n'
   )
 
-  if vim.fn.executable 'direnv' then
+  if vim.fn.executable('direnv') then
     au.autocmd('BufWritePost', '.envrc ', 'silent !direnv allow %')
   end
 
@@ -89,6 +91,6 @@ au.augroup('__myautocmds__', function()
   au.autocmd('BufLeave', '*.min.*', ':LspStart')
 
   au.autocmd('BufWritePost', '*/spell/*.add', 'silent! :mkspell! %')
---   au.autocmd('BufWritePost', '*', 'FormatWrite')
+  --   au.autocmd('BufWritePost', '*', 'FormatWrite')
   au.autocmd('BufWritePost', 'packer.lua', 'PackerCompile')
 end)

@@ -3,7 +3,9 @@
 -- :lua print(vim.lsp.get_log_path())
 -- :lua print(vim.inspect(vim.tbl_keys(vim.lsp.callbacks)))
 
-require('vim.lsp.log').set_level 'debug'
+-- luacheck: max line length 200
+
+require('vim.lsp.log').set_level('debug')
 require('vim.lsp.log').set_format_func(vim.inspect)
 
 local has_lsp, nvim_lsp = pcall(require, 'lspconfig')
@@ -40,7 +42,7 @@ local mappings = {
   ['ge'] = {
     '<cmd>lua vim.diagnostic.open_float(0, { focusable = false,  border = "single", close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" }, source = "always" })<CR>',
   },
---   ['ge'] = { '<cmd>lua vim.diagnostic.open_float(nil, { scope = "line", })<cr>' },
+  --   ['ge'] = { '<cmd>lua vim.diagnostic.open_float(nil, { scope = "line", })<cr>' },
   [']g'] = {
     '<cmd>lua vim.diagnostic.goto_next()<cr>',
   },
@@ -76,11 +78,11 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
 
 vim.diagnostic.config({
   virtual_text = false,
---   virtual_text = {
--- 	  source = 'always',
--- 	  spacing = 4,
--- 	  prefix = '●'
---   },
+  --   virtual_text = {
+  -- 	  source = 'always',
+  -- 	  spacing = 4,
+  -- 	  prefix = '●'
+  --   },
   float = {
     source = 'always',
   },
@@ -169,11 +171,11 @@ local on_attach = function(client)
     end)
   end
 
-    -- Formatting is handled by null
-    if vim.tbl_contains({ 'tsserver', 'gopls' }, client.name) then
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
-    end
+  -- Formatting is handled by null
+  if vim.tbl_contains({ 'tsserver', 'gopls' }, client.name) then
+    client.resolved_capabilities.document_formatting = false
+    client.resolved_capabilities.document_range_formatting = false
+  end
 
   -- Custom completion icons
   protocol.CompletionItemKind = {
@@ -234,7 +236,7 @@ local servers = {
       end,
     },
   },
-   -- wait until rust-tools.nvim adapt to new handler signature
+  -- wait until rust-tools.nvim adapt to new handler signature
   -- rust_analyzer = {},
   gopls = {
     cmd = { 'gopls', 'serve' },
@@ -369,5 +371,5 @@ for server, config in pairs(servers) do
   end
 end
 
-require '_.config.lsp.null-ls'(on_attach)
+require('_.config.lsp.null-ls')(on_attach)
 require('_.config.rust-tools')(on_attach)

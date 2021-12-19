@@ -1,3 +1,5 @@
+-- luacheck: globals packer_plugins
+
 local M = {}
 
 function M.get_icon(icon_name)

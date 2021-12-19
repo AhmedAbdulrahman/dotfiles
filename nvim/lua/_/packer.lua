@@ -1,3 +1,5 @@
+-- luacheck: max line length 150
+
 -- Only required if you have packer in your `opt` pack
 local packer_exists, packer = pcall(require, 'packer')
 if not packer_exists then
@@ -48,7 +50,7 @@ packer.startup({
     use({ 'wbthomason/packer.nvim' })
     use({
       'nathom/filetype.nvim',
-	  config = require('_.config.filetype'),
+      config = require('_.config.filetype'),
     })
     use({ 'windwp/nvim-autopairs' })
     use({ 'mg979/vim-visual-multi' })
@@ -260,12 +262,12 @@ packer.startup({
     use({
       'neovim/nvim-lspconfig',
       requires = {
-		{
-			'https://github.com/jose-elias-alvarez/null-ls.nvim',
-			requires = {
-			  'https://github.com/nvim-lua/plenary.nvim',
-			},
-		  },
+        {
+          'https://github.com/jose-elias-alvarez/null-ls.nvim',
+          requires = {
+            'https://github.com/nvim-lua/plenary.nvim',
+          },
+        },
         {
           'folke/todo-comments.nvim',
           config = function()
@@ -609,36 +611,36 @@ packer.startup({
     -- }}}
 
     -- Debug Application Protocol
-    use {
-        'mfussenegger/nvim-dap',
-        module = 'dap',
-        keys = { '<localleader>dc', '<localleader>db', '<localleader>dut' },
-        -- setup = require '_.config.dap'.setup,
-        config = require '_.config.dap',
-        requires = {
-          {
-            -- DAP visualizer
-            'rcarriga/nvim-dap-ui',
-            after = 'nvim-dap',
-            config = require '_.config.dapui',
-          },
+    use({
+      'mfussenegger/nvim-dap',
+      module = 'dap',
+      keys = { '<localleader>dc', '<localleader>db', '<localleader>dut' },
+      -- setup = require '_.config.dap'.setup,
+      config = require('_.config.dap'),
+      requires = {
+        {
+          -- DAP visualizer
+          'rcarriga/nvim-dap-ui',
+          after = 'nvim-dap',
+          config = require('_.config.dapui'),
         },
-    }
+      },
+    })
     -- Flutter LSP
     use({
-        'akinsho/flutter-tools.nvim',
-        ft = {'dart'},
-        config = require('_.config.flutter-tools'),
-        requires = {
-            'mfussenegger/nvim-dap',
-            'nvim-lua/plenary.nvim'
-        },
+      'akinsho/flutter-tools.nvim',
+      ft = { 'dart' },
+      config = require('_.config.flutter-tools'),
+      requires = {
+        'mfussenegger/nvim-dap',
+        'nvim-lua/plenary.nvim',
+      },
     })
 
-	use({
-		"simrat39/rust-tools.nvim",
-		wants = { "nvim-lspconfig" },
-	  })
+    use({
+      'simrat39/rust-tools.nvim',
+      wants = { 'nvim-lspconfig' },
+    })
 
     -- Themes, UI & eye candy {{{
     use({ 'AhmedAbdulrahman/aylin.vim', opt = true })

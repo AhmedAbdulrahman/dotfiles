@@ -1,5 +1,5 @@
 return function()
-  local au = require '_.utils.au'
+  local au = require('_.utils.au')
 
   vim.g.startify_padding_left = 5
   vim.g.startify_relative_path = 1
@@ -14,7 +14,7 @@ return function()
   vim.g.startify_session_delete_buffers = 1
   vim.g.startify_ascii = {
     ' ',
-    ' ϟ ' .. (vim.fn.has 'nvim' and 'nvim' or 'vim') .. '.',
+    ' ϟ ' .. (vim.fn.has('nvim') and 'nvim' or 'vim') .. '.',
     ' ',
   }
   vim.g.startify_custom_header =
@@ -25,25 +25,34 @@ return function()
     {
       {
         'Simplicity is a great virtue but it requires hard work to achieve it',
-        'and education to appreciate it. And to make matters worse: complexity sells better.',
+        'and education to appreciate it. And to make matters worse: complexity',
+        'sells better.',
         '',
         '— Edsger W. Dijkstra',
       },
       {
-        'A common fallacy is to assume authors of incomprehensible code will be able to express themselves clearly in comments.',
+        'A common fallacy is to assume authors of incomprehensible code will',
+        'be able to express themselves clearly in comments.',
       },
       {
-        'Your time is limited, so don’t waste it living someone else’s life. Don’t be trapped by dogma — which is living with the results of other people’s thinking. Don’t let the noise of others’ opinions drown out your own inner voice. And most important, have the courage to follow your heart and intuition. They somehow already know what you truly want to become. Everything else is secondary.',
+        'Your time is limited, so don’t waste it living someone else’s life.',
+        'Don’t be trapped by dogma — which is living with the results of other',
+        'people’s thinking. Don’t let the noise of others’ opinions drown out',
+        'your own inner voice. And most important, have the courage to follow',
+        'your heart and intuition. They somehow already know what you truly ',
+        'want to become. Everything else is secondary.',
         '',
         '— Steve Jobs, June 12, 2005',
       },
       {
-        'My take: Animations are something you earn the right to include when the rest of the experience is fast and intuitive.',
+        'My take: Animations are something you earn the right to include',
+        'when the rest of the experience is fast and intuitive.',
         '',
         '— @jordwalke',
       },
       {
-        'If a feature is sometimes dangerous, and there is a better option, then always use the better option.',
+        'If a feature is sometimes dangerous, and there is a better option',
+        'then always use the better option.',
         '',
         '- Douglas Crockford',
       },
@@ -58,11 +67,13 @@ return function()
         '– Japanese proverb',
       },
       {
-        'A language that doesn’t affect the way you think about programming is not worth knowing.',
+        'A language that doesn’t affect the way you think about programming',
+        'is not worth knowing.',
         '- Alan Perlis',
       },
       {
-        'Bad programmers worry about the code. Good programmers worry about data structures and their relationships',
+        'Bad programmers worry about the code. Good programmers worry about',
+        'data structures and their relationships',
         '',
         '— Linus Torvalds',
       },
@@ -82,7 +93,8 @@ return function()
         '— Tobi Lutke',
       },
       {
-        'The works must be conceived with fire in the soul but executed with clinical coolness',
+        'The works must be conceived with fire in the soul but executed with',
+        'clinical coolness',
         '',
         '— Joan Miró',
       },
@@ -102,27 +114,45 @@ return function()
         '— Seneca',
       },
       {
-        'A complex system that works is invariably found to have evolved from a simple system that worked. The inverse proposition also appears to be true: A complex system designed from scratch never works and cannot be made to work. You have to start over, beginning with a working simple system.',
+        'A complex system that works is invariably found to have evolved from',
+        'a simple system that worked. The inverse proposition also appears to',
+        'be true: A complex system designed from scratch never works and',
+        'cannot be made to work. You have to start over, beginning with a',
+        'working simple system.',
         '',
         '— John Gall',
       },
       {
-        'I call it my billion-dollar mistake. It was the invention of the null reference in 1965. At that time, I was designing the first comprehensive type system for references in an object oriented language. My goal was to ensure that all use of references should be absolutely safe, with checking performed automatically by the compiler. But I couldn’t resist the temptation to put in a null reference, simply because it was so easy to implement. This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years.',
+        'I call it my billion-dollar mistake. It was the invention of the',
+        'null reference in 1965. At that time, I was designing the first ',
+        'comprehensive type system for references in an object oriented ',
+        'language. My goal was to ensure that all use of references should be',
+        'absolutely safe, with checking performed automatically by the',
+        'compiler. But I couldn’t resist the temptation to put in a null',
+        'reference, simply because it was so easy to implement. This has',
+        'led to innumerable errors, vulnerabilities, and system crashes,',
+        'which have probably caused a billion dollars of pain and damage ',
+        'in the last forty years.',
         '',
         '— Tony Hoare, the inventor of Null References',
       },
       {
-        'I think that large objected-oriented programs struggle with increasing complexity as you build this large object graph of mutable objects. You know, trying to understand and keep in your mind what will happen when you call a method and what will the side effects be.',
+        'I think that large objected-oriented programs struggle with',
+        'increasing complexity as you build this large object graph of mutable',
+        'objects. You know, trying to understand and keep in your mind what',
+        'will happen when you call a method and what will the side effects be.',
         '',
         '— Rich Hickey',
       },
       {
-        'Most people overestimate what they can do in one year and underestimate what they can do in ten years',
+        'Most people overestimate what they can do in one year and',
+        'underestimate what they can do in ten years',
         '',
         '— Bill Gates',
       },
       {
-        'Compound interest is the eighth wonder of the world. He who understands it, earns it. He who doesn’t, pays it.',
+        'Compound interest is the eighth wonder of the world. He who',
+        'understands it, earns it. He who doesn’t, pays it.',
         '',
         '— Albert Einstein',
       },
@@ -132,20 +162,26 @@ return function()
         '— John A. Shedd',
       },
       {
-        'You can’t call yourself a leader by coming into a situation that is by nature uncertain, ambiguous — and create confusion.',
+        'You can’t call yourself a leader by coming into a situation that',
+        'is by nature uncertain, ambiguous — and create confusion.',
         'You have to create clarity where none exists',
         '— Satya Nadella',
       },
       {
-        'The competent programmer is fully aware of the strictly limited size of his own skull; therefore he approaches the programming task in full humility',
+        'The competent programmer is fully aware of the strictly limited',
+        'size of his own skull; therefore he approaches the programming',
+        'task in full humility',
         '— Edsger W. Dijkstra',
       },
       {
-        "Yeah I know how to make packages, build system and other stuff. But I don't want. It's easy unthankful work with unpredictable audience reaction",
+        'Yeah I know how to make packages, build system and other stuff.',
+        'But I don’t want. It’s easy unthankful work with unpredictable',
+        'audience reaction',
         '— Max G',
       },
       {
-        'A well-designed system makes it easy to do the right things and annoying (but not impossible) to do the wrong things',
+        'A well-designed system makes it easy to do the right things and',
+        'annoying (but not impossible) to do the wrong things',
         '',
         '— Jeff Atwood',
       },
@@ -161,14 +197,14 @@ return function()
   }
 
   vim.g.startify_lists = {
-    { header = { '   Sessions' }, type = 'sessions' },
+    { header = { ' Sessions' }, type = 'sessions' },
     {
-      header = { '   MRU [' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':~') .. ']' },
+      header = { ' MRU [' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':~') .. ']' },
       type = 'dir',
     },
-    { header = { '   Files' }, type = 'files' },
-    { header = { '   Commands' }, type = 'commands' },
-    { header = { '   Bookmarks' }, type = 'bookmarks' },
+    { header = { ' Files' }, type = 'files' },
+    { header = { ' Commands' }, type = 'commands' },
+    { header = { ' Bookmarks' }, type = 'bookmarks' },
   }
 
   vim.g.startify_skiplist = {
