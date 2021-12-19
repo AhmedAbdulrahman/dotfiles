@@ -244,6 +244,12 @@ packer.startup({
     use({
       'simrat39/symbols-outline.nvim',
       cmd = 'SymbolsOutline',
+      config = function()
+        vim.g.symbols_outline = {
+          auto_preview = true,
+          position = 'left',
+        }
+      end,
     })
     use({
       'christoomey/vim-tmux-navigator',
