@@ -123,20 +123,6 @@ return function()
         '— John Gall',
       },
       {
-        'I call it my billion-dollar mistake. It was the invention of the',
-        'null reference in 1965. At that time, I was designing the first ',
-        'comprehensive type system for references in an object oriented ',
-        'language. My goal was to ensure that all use of references should be',
-        'absolutely safe, with checking performed automatically by the',
-        'compiler. But I couldn’t resist the temptation to put in a null',
-        'reference, simply because it was so easy to implement. This has',
-        'led to innumerable errors, vulnerabilities, and system crashes,',
-        'which have probably caused a billion dollars of pain and damage ',
-        'in the last forty years.',
-        '',
-        '— Tony Hoare, the inventor of Null References',
-      },
-      {
         'I think that large objected-oriented programs struggle with',
         'increasing complexity as you build this large object graph of mutable',
         'objects. You know, trying to understand and keep in your mind what',
@@ -188,7 +174,13 @@ return function()
     }
   )
 
-  vim.g.startify_bookmarks = { { t = '.git/todo.md' } }
+  vim.g.startify_bookmarks = {
+    { t = '.git/todo.md' },
+    { v = '~/dotfiles/nvim/init.vim' },
+    { g = '~/.gitconfig' },
+    { i = '~/.gitignore' },
+    { r = '~/.taskrc' },
+  }
 
   vim.g.startify_commands = {
     { s = { 'Packer Sync', ':PackerSync' } },
@@ -199,7 +191,9 @@ return function()
   vim.g.startify_lists = {
     { header = { ' Sessions' }, type = 'sessions' },
     {
-      header = { ' MRU [' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':~') .. ']' },
+      header = {
+        ' MRU [' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':~') .. ']',
+      },
       type = 'dir',
     },
     { header = { ' Files' }, type = 'files' },
