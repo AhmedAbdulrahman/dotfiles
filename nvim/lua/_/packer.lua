@@ -622,6 +622,15 @@ packer.startup({
     })
     -- }}}
 
+    -- Searchbox popup
+    use({
+      'VonHeikemen/searchbox.nvim',
+      requires = {
+        { 'MunifTanjim/nui.nvim' },
+      },
+      config = require('_.config.searchbox'),
+    })
+
     -- Debug Application Protocol
     use({
       'mfussenegger/nvim-dap',
