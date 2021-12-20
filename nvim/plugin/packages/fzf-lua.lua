@@ -29,7 +29,7 @@ fzf_lua.setup({
   keymap = {
     builtin = {
       ['?'] = 'toggle-preview',
-      ['<F11>'] = 'toggle-fullscreen',
+      ['<F2>'] = 'toggle-fullscreen',
       ['<S-Down>'] = 'preview-page-down',
       ['<S-Up>'] = 'preview-page-up',
     },
