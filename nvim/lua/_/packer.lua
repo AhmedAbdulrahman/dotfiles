@@ -631,6 +631,12 @@ packer.startup({
       config = require('_.config.searchbox'),
     })
 
+    -- Floating Terminal
+    use({
+      'numToStr/FTerm.nvim',
+      config = require('_.config.fterm'),
+    })
+
     -- Debug Application Protocol
     use({
       'mfussenegger/nvim-dap',
