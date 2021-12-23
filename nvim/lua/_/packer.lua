@@ -521,7 +521,6 @@ packer.startup({
     use({ 'sheerun/vim-polyglot' })
     use({
       'plasticboy/vim-markdown',
-      config = require('_.config.markdown'),
       ft = { 'markdown' },
       requires = {
         { 'godlygeek/tabular', after = 'vim-markdown' },

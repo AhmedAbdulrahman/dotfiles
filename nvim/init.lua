@@ -153,7 +153,9 @@ opt.concealcursor = 'n'
 -- cursor behavior:
 --   - no blinking in normal/visual mode
 --   - blinking in insert-mode
-opt.guicursor:append('n-v-c:blinkon0,i-ci:ver25-Cursor/lCursor-blinkwait30-blinkoff100-blinkon100')
+opt.guicursor:append(
+  'n-v-c:blinkon0,i-ci:ver25-Cursor/lCursor-blinkwait30-blinkoff100-blinkon100'
+)
 opt.pumheight = 10 -- Maximum number of items to show in the popup menu.
 opt.pumblend = 10
 -- opt.inccommand = 'split' -- Show live substitution results as you type.
@@ -222,7 +224,9 @@ opt.lazyredraw = true -- Don't bother updating screen during macro playback
 
 -- File find: navigable menu for tab completion
 opt.wildmode = 'longest:full,list,full'
-opt.wildignore:append('*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem,*.pyc')
+opt.wildignore:append(
+  '*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem,*.pyc'
+)
 opt.wildignore:append('*.swp,*~,*/.DS_Store')
 opt.wildignore:append('**/node_modules/**')
 if not vim.fn.has('nvim-0.6') then
@@ -284,6 +288,34 @@ else
     )
   end)
 end
+
+-- PLUGINS
+
+vim.g.markdown_fenced_languages = {
+  'css',
+  'erb=eruby',
+  'javascript',
+  'js=javascript',
+  'jsx=javascriptreact',
+  'ts=typescript',
+  'tsx=typescriptreact',
+  'json=jsonc',
+  'ruby',
+  'sass',
+  'scss=sass',
+  'xml',
+  'html',
+  'py=python',
+  'python',
+  'clojure',
+  'clj=clojure',
+  'clojurescript',
+  'cljs=clojurescript',
+  'stylus=css',
+  'less=css',
+  'viml=vim',
+  'mdx=markdown',
+}
 
 require('_.packer')
 
