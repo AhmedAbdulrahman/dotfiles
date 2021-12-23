@@ -29,12 +29,13 @@ return function(on_attach)
     debug = true,
     debounce = 150,
     on_attach = function(client)
+      -- format on save
       if client.resolved_capabilities.document_formatting then
         au.augroup('__LSP_FORMATTING__', function()
           au.autocmd(
             'BufWritePre',
             '<buffer>',
-            'lua vim.lsp.buf.formatting_sync()'
+            'lua vim.lsp.buf.formatting_sync(nil, 2000)'
           )
         end)
       end
