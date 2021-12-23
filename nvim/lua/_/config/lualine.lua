@@ -86,7 +86,7 @@ return function()
   })
 
   ins_left({
-	  'mode',
+    'mode',
     -- mode component
     fmt = function(str)
       -- auto change color according to neovims mode
@@ -118,7 +118,7 @@ return function()
           .. ' guibg='
           .. colors.bg
       )
-	  return str:sub(1,1)
+      return str:sub(1, 1)
     end,
     color = 'LualineMode',
     left_padding = 0,
@@ -132,10 +132,10 @@ return function()
 
   ins_left({
     'filename',
-    file_status = true,  -- displays file status (readonly status, modified status)
-    path = 0,            -- 0 = just filename, 1 = relative path, 2 = absolute path
+    file_status = true, -- displays file status (readonly status, modified status)
+    path = 0, -- 0 = just filename, 1 = relative path, 2 = absolute path
     shorting_target = 40, -- Shortens path to leave 40 space in the window
-                           -- for other components. Terrible name any suggestions?
+    -- for other components. Terrible name any suggestions?
     condition = conditions.buffer_not_empty,
     color = { fg = colors.violet, gui = 'bold' },
   })
@@ -153,8 +153,8 @@ return function()
     color_info = colors.cyan,
   })
 
---   Insert mid section. You can make any number of sections in neovim :)
---   for lualine it's any number greater then 2
+  --   Insert mid section. You can make any number of sections in neovim :)
+  --   for lualine it's any number greater then 2
   ins_left({
     function()
       return '%='
@@ -192,11 +192,11 @@ return function()
 
   ins_right({
     'fileformat',
-	symbols = {
-        unix = '', -- e712
-        dos = '', -- e70f
-        mac = '', -- e711
-      },
+    symbols = {
+      unix = '', -- e712
+      dos = '', -- e70f
+      mac = '', -- e711
+    },
     upper = true,
     icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
     color = { fg = colors.green, gui = 'bold' },
