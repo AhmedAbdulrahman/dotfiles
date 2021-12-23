@@ -82,7 +82,7 @@ return function(on_attach)
         },
       }),
       nls.builtins.formatting.stylua,
-      nls.builtins.formatting.gofmt,
+      -- gofmt run by goimports
       nls.builtins.formatting.goimports,
       -- nls.builtins.diagnostics.golint,
       nls.builtins.diagnostics.shellcheck.with({
