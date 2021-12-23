@@ -15,12 +15,12 @@ return function()
     opts
   )
   map.nmap(
-    '/',
+    '<leader>sc',
     "<cmd>lua require('searchbox').match_all({clear_matches = true})<CR>",
     opts
   )
   map.vnoremap(
-    '/',
+    '<leader>se',
     "<Esc><cmd>lua require('searchbox').replace({exact = true, visual_mode = true, confirm = 'menu'})<CR>",
     opts
   )
