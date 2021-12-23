@@ -30,22 +30,16 @@ if not packer_exists then
 end
 
 local lisps = { 'lisp', 'scheme', 'clojure', 'fennel' }
-local PACKER_COMPILED_PATH = vim.fn.stdpath('cache')
-  .. '/packer/packer_compiled.lua'
-
-packer.init({
-  max_jobs = 70, -- wbthomason/packer.nvim/issues/202
-  compile_path = PACKER_COMPILED_PATH,
-  package_root = string.format('%s/pack', vim.fn.stdpath('config')),
-  display = {
-    non_interactive = vim.env.PACKER_NON_INTERACTIVE or false,
-    open_cmd = function()
-      return require('packer.util').float({ border = 'single' })
-    end,
-  },
-})
-
 packer.startup({
+  config = {
+    max_jobs = 70, -- https://github.com/wbthomason/packer.nvim/issues/202
+    display = {
+      non_interactive = vim.env.PACKER_NON_INTERACTIVE or false,
+      open_cmd = function()
+        return require('packer.util').float({ border = 'single' })
+      end,
+    },
+  },
   function(use)
     use({ 'wbthomason/packer.nvim' })
     use({
@@ -688,10 +682,3 @@ packer.startup({
     -- }}}
   end,
 })
-
-if
-  not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH)
-then
-  vim.cmd(string.format('source %s', PACKER_COMPILED_PATH))
-  vim.g.packer_compiled_loaded = true
-end
