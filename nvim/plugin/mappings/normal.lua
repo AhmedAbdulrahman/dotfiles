@@ -174,10 +174,6 @@ map.nnoremap('<Left>', ':vertical resize +2<CR>', { silent = true })
 map.nnoremap('<Down>', ':resize -2<CR>', { silent = true })
 map.nnoremap('<Up>', ':resize +2<CR>', { silent = true })
 
--- map.nnoremap('<Leader><TAB>', '<C-w><C-w>')
-map.nnoremap('<leader>sh', '<C-w>t<C-w>K<CR>')
-map.nnoremap('<leader>sv', '<C-w>t<C-w>H<CR>')
-
 map.nnoremap('<Leader>p', [[:t.<left><left>]])
 map.nnoremap('<leader>e', [[:exe getline(line('.'))<cr>]])
 
