@@ -31,8 +31,6 @@ for _, type in pairs(signs) do
   })
 end
 
--- vim.api.nvim_buf_set_option(buffer, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
 local mappings = {
   ['<leader>af'] = { '<cmd>lua vim.lsp.buf.code_action()<CR>' },
   ['gr'] = { '<cmd>lua vim.lsp.buf.references()<CR>' },
@@ -72,7 +70,7 @@ vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
 )
 
 vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-  vim.lsp.handlers.hover,
+  vim.lsp.handlers.signatureHelp,
   { border = 'single', focusable = false, silent = true }
 )
 
@@ -92,7 +90,7 @@ vim.diagnostic.config({
   update_in_insert = false,
 })
 
-local on_attach = function(client)
+local on_attach = function(client, bufnr)
   -- ---------------
   -- GENERAL
   -- ---------------
@@ -152,15 +150,6 @@ local on_attach = function(client)
     end)
   end
 
-  if client.resolved_capabilities.document_formatting then
-    vim.api.nvim_command([[augroup Format]])
-    vim.api.nvim_command([[autocmd! * <buffer>]])
-    vim.api.nvim_command(
-      [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
-    )
-    vim.api.nvim_command([[augroup END]])
-  end
-
   if client.resolved_capabilities.code_lens then
     au.augroup('__LSP_CODELENS__', function()
       au.autocmd(
@@ -177,38 +166,56 @@ local on_attach = function(client)
     client.resolved_capabilities.document_range_formatting = false
   end
 
+  local function buf_set_option(...)
+    vim.api.nvim_buf_set_option(bufnr, ...)
+  end
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
   -- Custom completion icons
   protocol.CompletionItemKind = {
-    '', -- Text
-    '', -- Method
+    '', -- Text
+    'm', -- Method
     '', -- Function
-    '', -- Constructor
-    '', -- Field
-    '', -- Variable
-    '', -- Class
-    'ﰮ', -- Interface
-    '', -- Module
-    '', -- Property
-    '', -- Unit
+    '', -- Constructor
+    '', -- Field
+    '', -- Variable
+    '', -- Class
+    '', -- Interface
+    '', -- Module
+    '', -- Property
+    '', -- Unit
     '', -- Value
-    '', -- Enum
+    '', -- Enum
     '', -- Keyword
-    '﬌', -- Snippet
-    '', -- Color
-    '', -- File
-    '', -- Reference
-    '', -- Folder
+    '', -- Snippet
+    '', -- Color
+    '', -- File
+    '', -- Reference
+    '', -- Folder
     '', -- EnumMember
-    '', -- Constant
-    '', -- Struct
+    '', -- Constant
+    '', -- Struct
     '', -- Event
-    'ﬦ', -- Operator
-    '', -- TypeParameter
+    '', -- Operator
+    '', -- TypeParameter
   }
 end
 
 local servers = {
   html = {},
+  --   html = {
+  -- 	--   NOTE: Install via npm `npm i -g vscode-langservers-extracted`
+  -- 	cmd = { 'vscode-html-language-server', '--stdio' },
+  -- 	root_dir = vim.loop.cwd,
+  -- 	filetypes = { 'html' },
+  -- 	init_options = {
+  -- 		configurationSection = { 'html', 'css', 'javascript' },
+  -- 		embeddedLanguages = {
+  -- 			css = true,
+  -- 			javascript = true,
+  -- 		},
+  -- 	},
+  --   },
   cssls = {},
   bashls = {},
   vimls = {},
@@ -245,6 +252,7 @@ local servers = {
         or nvim_lsp.util.path.dirname(fname)
     end,
   },
+  -- npm install -g typescript typescript-language-server
   tsserver = {
     root_dir = function(fname)
       return not nvim_lsp.util.root_pattern('.flowconfig')(fname)
@@ -338,6 +346,16 @@ if pcall(require, 'cmp_nvim_lsp') then
   capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 else
   capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.textDocument.completion.completionItem.preselectSupport = true
+  capabilities.textDocument.completion.completionItem.insertReplaceSupport =
+    true
+  capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+  capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+  capabilities.textDocument.completion.completionItem.commitCharactersSupport =
+    true
+  capabilities.textDocument.completion.completionItem.tagSupport = {
+    valueSet = { 1 },
+  }
   capabilities.textDocument.completion.completionItem.resolveSupport = {
     properties = {
       'documentation',
