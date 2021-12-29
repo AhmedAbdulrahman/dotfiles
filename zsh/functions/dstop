@@ -1,0 +1,4 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et
+# Stop all containers
+
+docker stop $(docker ps -a -q)

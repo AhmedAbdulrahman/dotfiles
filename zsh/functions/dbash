@@ -1,0 +1,4 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et
+# Bash into running container
+
+docker exec -it $(docker ps -aqf "name=$1") bash
