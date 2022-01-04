@@ -24,6 +24,7 @@ local source_mapping = {
   buffer = NvimConfig.icons.buffer .. '[BUF]',
   calc = NvimConfig.icons.calculator,
   cmp_tabnine = NvimConfig.icons.light,
+  luasnip = NvimConfig.icons.snippet,
   npm = NvimConfig.icons.terminal .. '[NPM]',
   nvim_lsp = NvimConfig.icons.paragraph .. '[LSP]',
   nvim_lua = NvimConfig.icons.bomb,
