@@ -114,6 +114,7 @@ local function init()
     requires = 'nvim-lua/plenary.nvim',
     config = "require('plugins.cmp-npm')",
   })
+  use {'saadparwaiz1/cmp_luasnip', after = 'cmp-npm'}
 
   -- LSP Addons
   use({
@@ -212,6 +213,7 @@ local function init()
     'norcalli/nvim-colorizer.lua',
     config = "require('plugins.colorizer')",
   })
+  use {'L3MON4D3/LuaSnip', requires = {'rafamadriz/friendly-snippets'}, after = 'cmp_luasnip'}
 
   use({ 'lpinilla/vim-codepainter' })
 
