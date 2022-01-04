@@ -114,7 +114,6 @@ local function init()
     requires = 'nvim-lua/plenary.nvim',
     config = "require('plugins.cmp-npm')",
   })
-  use({ 'quangnguyen30192/cmp-nvim-ultisnips', after = 'cmp-npm' })
 
   -- LSP Addons
   use({
@@ -213,12 +212,7 @@ local function init()
     'norcalli/nvim-colorizer.lua',
     config = "require('plugins.colorizer')",
   })
-  use({
-    'SirVer/ultisnips',
-    requires = { 'honza/vim-snippets' },
-    config = "require('plugins.ultisnips')",
-    after = 'cmp-nvim-ultisnips',
-  })
+
   use({ 'lpinilla/vim-codepainter' })
 
   -- Nvim Tree
