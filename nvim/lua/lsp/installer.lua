@@ -1,0 +1,109 @@
+-- luacheck: max line length 130
+
+local lsp_installer = require('nvim-lsp-installer')
+local au = require('utils.au')
+
+local on_attach = function(client, bufnr)
+  local function buf_set_option(...)
+    vim.api.nvim_buf_set_option(bufnr, ...)
+  end
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Formatting on save is handled by null
+  if
+    client.name == 'null-ls'
+    and client.resolved_capabilities.document_formatting
+  then
+    au.group('LspFormat', function(g)
+      g.BufWritePre = {
+        '<buffer>',
+        function()
+          -- https://github.com/akinsho/dotfiles/blob/1f8fe569e2/.config/nvim/lua/as/plugins/lspconfig.lua
+          -- BUG: folds are are removed when formatting is done, so we save the current state of the
+          -- view and re-apply it manually after formatting the buffer
+          -- @see: https://github.com/nvim-treesitter/nvim-treesitter/issues/1424#issuecomment-909181939
+          vim.cmd('mkview!')
+          vim.lsp.buf.formatting_sync()
+          vim.cmd('loadview')
+        end,
+      }
+    end)
+  else
+    client.resolved_capabilities.document_formatting = false
+    client.resolved_capabilities.document_range_formatting = false
+  end
+end
+
+local handlers = {
+  ['textDocument/hover'] = vim.lsp.with(
+    vim.lsp.handlers.hover,
+    { border = NvimConfig.ui.float.border }
+  ),
+  ['textDocument/signatureHelp'] = vim.lsp.with(
+    vim.lsp.handlers.signature_help,
+    { border = NvimConfig.ui.float.border }
+  ),
+}
+
+require('lsp.null-ls')(on_attach)
+
+lsp_installer.on_server_ready(function(server)
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+  if status_ok then
+    capabilities = cmp_nvim_lsp.update_capabilities(
+      vim.lsp.protocol.make_client_capabilities()
+    )
+  end
+
+  local opts = {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    handlers = handlers,
+  }
+
+  if server.name == 'bash' then
+    opts.settings = require('lsp.servers.bash').settings
+  end
+
+  if server.name == 'cssls' then
+    opts.settings = require('lsp.servers.css').settings
+  end
+
+  if server.name == 'eslint' then
+    opts.on_attach = function(client, bufnr)
+      -- neovim's LSP client does not currently support dynamic capabilities registration, so we need to set
+      -- the resolved capabilities of the eslint server ourselves!
+      client.resolved_capabilities.document_formatting = true
+      on_attach(client, bufnr)
+    end
+    opts.settings = require('lsp.servers.eslint').settings
+  end
+
+  if server.name == 'html' then
+    opts.capabilities = require('lsp.servers.html').capabilities
+    opts.settings = require('lsp.servers.html').settings
+  end
+
+  if server.name == 'jsonls' then
+    opts.settings = require('lsp.servers.json').settings
+  end
+
+  if server.name == 'sumneko_lua' then
+    opts.settings = require('lsp.servers.lua').settings
+  end
+
+  if server.name == 'vuels' then
+    opts.init_options = require('lsp.servers.vue').init_options
+  end
+
+  -- (How to) Customize the options passed to the server
+  -- if server.name == "tsserver" then
+  --     opts.root_dir = function() ... end
+  --     opts.on_attach = function(client, bufnr) ... end
+  -- end
+
+  -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
+  server:setup(opts)
+  vim.cmd([[ do User LspAttachBuffers ]])
+end)
