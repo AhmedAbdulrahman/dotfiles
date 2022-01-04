@@ -53,6 +53,12 @@ local lazygit = Terminal:new({
     border = 'curved',
     winblend = 3,
   },
+  on_open = function(term)
+    vim.cmd("startinsert!")
+    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+    -- this is the trick to make <esc> work properly since it's mapped below
+    vim.api.nvim_buf_set_keymap(term.bufnr, 't', '<esc>', "<esc>", {noremap = true})
+  end,
 })
 
 local htop = Terminal:new({
