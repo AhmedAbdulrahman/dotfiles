@@ -208,4 +208,5 @@ vim.g.startify_skiplist = {
   'plugged/.*/doc',
   'pack/.*/doc',
   '.*/vimwiki/.*',
+  'node_modules'
 }
