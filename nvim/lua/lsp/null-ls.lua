@@ -7,30 +7,16 @@ return function(on_attach)
 
   local h = require('null-ls.helpers')
 
+-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/lua/null-ls/builtins/formatting
+local formatting = nls.builtins.formatting
+-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/lua/null-ls/builtins/diagnostics
+local diagnostics = nls.builtins.diagnostics
+
   local refmt = {
     method = nls.methods.FORMATTING,
     filetypes = { 'rescript', 'reason' },
     generator = nls.formatter({
       command = 'refmt',
-      to_stdin = true,
-    }),
-  }
-
-  local nixfmt = {
-    method = nls.methods.FORMATTING,
-    filetypes = { 'nix' },
-    generator = nls.formatter({
-      command = 'nixpkgs-fmt',
-      to_stdin = true,
-    }),
-  }
-
-  local statixfmt = {
-    method = nls.methods.FORMATTING,
-    filetypes = { 'nix' },
-    generator = nls.formatter({
-      command = 'statix',
-      args = { 'fix', '--stdin' },
       to_stdin = true,
     }),
   }
@@ -44,53 +30,14 @@ return function(on_attach)
     }),
   }
 
-  -- local nixlinter = {
-  --   method = nls.methods.DIAGNOSTICS,
-  --   filetypes = { 'nix' },
-  --   generator = nls.generator {
-  --     command = 'nix-linter',
-  --     args = { '--json', '-' },
-  --     to_stdin = true,
-  --     from_stderr = true,
-  --     -- choose an output format (raw, json, or line)
-  --     format = 'json',
-  --     check_exit_code = function(code)
-  --       return code <= 1
-  --     end,
-  --     on_output = function(params)
-  --       local diags = {}
-  --       for _, d in ipairs(params.output) do
-  --         table.insert(diags, {
-  --           row = d.pos.spanBegin.sourceLine,
-  --           col = d.pos.spanBegin.sourceColumn,
-  --           end_col = d.pos.spanEnd.sourceColumn,
-  --           code = d.offending,
-  --           message = d.description,
-  --           severity = 1,
-  --         })
-  --       end
-  --       return diags
-  --     end,
-  --     -- on_output = h.diagnostics.from_pattern {
-  --     --   {
-  --     --     pattern = [[ (.*) at (\.\/.*):(\d+):(\d+)]],
-  --     --     groups = { 'message', 'file', 'row', 'col' },
-  --     --   },
-  --     -- },
-  --   },
-  -- }
-
   nls.setup({
     debug = true,
     debounce = 150,
     on_attach = on_attach,
     sources = {
       refmt,
-      nixfmt,
-      statixfmt,
       jsonfmt,
-      -- nixlinter,
-      nls.builtins.formatting.prettier.with({
+      formatting.prettier.with({
         filetypes = {
           'typescript',
           'javascript',
@@ -125,26 +72,25 @@ return function(on_attach)
           vim.bo.textwidth <= 80 and 80 or vim.bo.textwidth,
         },
       }),
-      nls.builtins.formatting.stylua,
+      formatting.stylua,
       -- goimports runs gofmt too
       -- https://pkg.go.dev/golang.org/x/tools/cmd/goimports
-      nls.builtins.formatting.goimports,
-      -- nls.builtins.diagnostics.golint,
-      nls.builtins.diagnostics.shellcheck.with({
+      formatting.goimports,
+      -- diagnostics.golint,
+      diagnostics.shellcheck.with({
         filetypes = { 'sh', 'bash' },
       }),
-      nls.builtins.formatting.shfmt.with({
+      formatting.shfmt.with({
         filetypes = { 'sh', 'bash' },
       }),
-      nls.builtins.formatting.rustfmt,
-      nls.builtins.formatting.black.with({
+      formatting.rustfmt,
+      formatting.black.with({
         extra_args = { '--fast' },
       }),
-      nls.builtins.diagnostics.pylint,
-      nls.builtins.diagnostics.hadolint,
-      nls.builtins.diagnostics.vint,
-      nls.builtins.diagnostics.vale,
-      nls.builtins.diagnostics.statix,
+      diagnostics.pylint,
+      diagnostics.hadolint,
+      diagnostics.vint,
+      diagnostics.vale,
     },
   })
 end
