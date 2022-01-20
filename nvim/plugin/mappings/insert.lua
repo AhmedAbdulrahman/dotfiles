@@ -1,10 +1,9 @@
 local map = require('utils.map')
--- local au = require('_.utils.au')
+local au = require('utils.au')
 local opts = { noremap = true, silent = true }
 
--- Move lines
--- map.inoremap('<S-Down>', '<Esc>:m .+1<CR>==gi')
--- map.inoremap('<S-Up>', '<Esc>:m .-2<CR>==gi')
+-- Make word uppercase
+map.inoremap('<C-u>', '<ESC>viwUi', { noremap = true })
 
 -- Disable arrow keys
 map.imap('<up>', '<nop>')
@@ -41,17 +40,33 @@ map.inoremap('<C-a>', '<C-o>0')
 
 -- https://twitter.com/vimgifs/status/913390282242232320
 -- :h i_CTRL-G_u
--- au.augroup('__prose_mappings__', function()
---   au.autocmd('FileType', 'markdown,text', function()
---     map.inoremap('.', '.<c-g>u', { buffer = true })
---   end)
---   au.autocmd('FileType', 'markdown,text', function()
---     map.inoremap('?', '?<c-g>u', { buffer = true })
---   end)
---   au.autocmd('FileType', 'markdown,text', function()
---     map.inoremap('!', '!<c-g>u', { buffer = true })
---   end)
---   au.autocmd('FileType', 'markdown,text', function()
---     map.inoremap(',', ',<c-g>u', { buffer = true })
---   end)
--- end)
+au.group('__prose_mappings__', {
+    {
+        'FileType',
+        'markdown,text',
+        function()
+            map.inoremap('.', '.<c-g>u', { buffer = true })
+        end,
+    },
+    {
+        'FileType',
+        'markdown,text',
+        function()
+            map.inoremap('?', '?<c-g>u', { buffer = true })
+        end,
+    },
+	{
+        'FileType',
+        'markdown,text',
+        function()
+            map.inoremap('!', '!<c-g>u', { buffer = true })
+        end,
+    },
+	{
+        'FileType',
+        'markdown,text',
+        function()
+            map.inoremap(',', ',<c-g>u', { buffer = true })
+        end,
+    },
+})
