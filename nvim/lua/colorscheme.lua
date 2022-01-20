@@ -1,16 +1,7 @@
--- Tokyonight config
-vim.g.tokyonight_style = 'night'
-vim.g.tokyonight_italic_functions = true
-
--- Nighyfly config
-vim.g.nightflyCursorColor = 1
-vim.g.nightflyUnderlineMatchParen = 0
-vim.g.nightflyNormalFloat = 1
-
 vim.opt.background = 'dark'
 vim.cmd('colorscheme ' .. NvimConfig.colorscheme)
 
-if NvimConfig.colorscheme == 'nightfly' then
+if NvimConfig.colorscheme == 'aylin' then
   -- Errors
   vim.highlight.create(
     'LspDiagnosticsVirtualTextError',
