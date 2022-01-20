@@ -13,5 +13,8 @@ vim.cmd(
 vim.cmd(
   [[command! PackerCompile packadd packer.nvim | lua require('plugins').compile()]]
 )
+vim.cmd(
+  [[command! PackerStatus packadd packer.nvim | lua require('plugins').status()]]
+)
 vim.cmd([[command! PC PackerCompile]])
 vim.cmd([[command! PU PackerSync]])
