@@ -2,12 +2,59 @@
 
 local lsp_installer = require('nvim-lsp-installer')
 local au = require('utils.au')
+local map = require('utils.map')
+
+vim.diagnostic.config {
+	virtual_text = false,
+	-- float = {
+	--   source = 'always',
+	-- },
+	-- underline = true,
+	-- signs = true,
+	-- update_in_insert = false,
+	-- severity_sort = true,
+  }
 
 local on_attach = function(client, bufnr)
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
+
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+    -- Mappings.
+	local opts = { noremap=true, silent=true }
+
+	-- Enable completion triggered by <c-x><c-o>
+	buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+	-- See `:help vim.lsp.*` for documentation on any of the below functions
+	map.nnoremap( 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+	map.nnoremap( 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+	map.nnoremap( 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+	map.nnoremap( 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+	map.nnoremap( '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+	map.nnoremap( '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+	map.nnoremap( '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+	map.nnoremap( '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+	map.nnoremap( '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+	map.nnoremap( '<leader>cr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+	map.nnoremap( '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+	map.vnoremap( '<leader>ca', "<cmd>'<,'>lua vim.lsp.buf.range_code_action()<CR>", opts )
+	map.nnoremap( 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+	map.nnoremap( '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+	map.nnoremap( '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev({ float = { border = "rounded" }})<CR>', opts)
+	map.nnoremap( ']d', '<cmd>lua vim.lsp.diagnostic.goto_next({ float = { border = "rounded" }})<CR>', opts)
+	map.nnoremap( '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+	map.nnoremap( '<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+	map.vnoremap( '<leader>cf', "<cmd>'<.'>lua vim.lsp.buf.range_formatting()<CR>", opts)
+
+  if client.resolved_capabilities.code_lens then
+	au.group('__LSP_CODELENS__', function(g)
+		au(
+			{'CursorHold', 'BufEnter', 'InsertLeave'},
+			{ '<buffer>', function() vim.lsp.codelens.refresh() end }
+		)
+	end)
   end
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Formatting on save is handled by null
   if
@@ -71,12 +118,6 @@ lsp_installer.on_server_ready(function(server)
   end
 
   if server.name == 'eslint' then
-    opts.on_attach = function(client, bufnr)
-      -- neovim's LSP client does not currently support dynamic capabilities registration, so we need to set
-      -- the resolved capabilities of the eslint server ourselves!
-      client.resolved_capabilities.document_formatting = true
-      on_attach(client, bufnr)
-    end
     opts.settings = require('lsp.servers.eslint').settings
   end
 
