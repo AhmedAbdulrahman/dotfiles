@@ -1,4 +1,11 @@
 local map = require('utils.map')
+local opts = { noremap = true, silent = true }
+
+-- Avoid issues because of remapping <c-a> and <c-x> below
+vim.cmd([[
+  nnoremap <Plug>SpeedDatingFallbackUp <c-a>
+  nnoremap <Plug>SpeedDatingFallbackDown <c-x>
+]])
 
 map.nnoremap('<leader>Q', ':quitall<CR>', {
   silent = true,
@@ -6,11 +13,17 @@ map.nnoremap('<leader>Q', ':quitall<CR>', {
 -- Override Ex mode with run @@ to record, Q to replay
 map.nnoremap('Q', '@@')
 
--- Jump 5 lines/character UP|DOWN|RIGHT|LEFT
--- map.nnoremap('<C-j>', '5j')
--- map.nnoremap('<C-k>', '5k')
--- map.nnoremap('<C-h>', '5h')
--- map.nnoremap('<C-l>', '5l')
+-- Make word uppercase
+map.nnoremap('<C-u>', 'viwU<ESC>', { noremap = true })
+
+-- Easyalign
+map.nnoremap('ga', '<Plug>(EasyAlign)', { silent = true })
+
+-- Better window movement
+map.nnoremap('<C-h>', '<C-w>h', { silent = true })
+map.nnoremap('<C-j>', '<C-w>j', { silent = true })
+map.nnoremap('<C-k>', '<C-w>k', { silent = true })
+map.nnoremap('<C-l>', '<C-w>l', { silent = true })
 
 -- Insert an empty new line 							without entering insert mode
 map.nnoremap('<leader>o', ':put =repeat(nr2char(10), v:count1)<CR>')
@@ -21,7 +34,9 @@ map.nnoremap('<leader>O', ':put! =repeat(nr2char(10), v:count1)<CR>')
 -- map.nnoremap('?', '?\v')
 
 -- Always send contents of a `x` command to the black hole register.
-map.nnoremap('x', '"_x')
+-- Don't yank on delete char
+map.nnoremap('x', '"_x', opts)
+map.nnoremap('X', '"_X', opts)
 
 -- Refactor word under cursor.
 map.nnoremap('c*', '/\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgn')
@@ -43,7 +58,7 @@ map.nnoremap('coh', ':nohlsearch<CR>', { silent = true })
 map.nnoremap('coH', ':set hlsearch!<CR>', { silent = true })
 
 -- save file using CTRL-S
-map.nnoremap('<C-s>', ':write<Cr>', { silent = true })
+-- map.nnoremap('<C-s>', ':write<Cr>', { silent = true })
 
 -- Jump to a tag directly when there is only one match.
 map.nnoremap('<C-]>', 'g<C-]>zt')
@@ -86,6 +101,31 @@ map.nnoremap(
   { silent = true }
 )
 
+-- Space to NOP to prevent Leader issues
+map.nnoremap('<Space>', '<NOP>', opts)
+
+-- Open links under cursor in browser with gx
+if vim.fn.has('macunix') == 1 then
+  map.nnoremap(
+    'gx',
+    "<cmd>silent execute '!open ' . shellescape('<cWORD>')<CR>",
+    { silent = true }
+  )
+else
+  map.nnoremap(
+    'gx',
+    "<cmd>silent execute '!xdg-open ' . shellescape('<cWORD>')<CR>",
+    { silent = true }
+  )
+end
+
+-- Erase painter line
+map.nnoremap(
+  '<F4>',
+  "<cmd>lua require('functions').erase_painter_line()<CR>",
+  opts
+)
+
 -- Make arrowkey do something usefull, resize the viewports accordingly
 map.nnoremap('<Right>', ':vertical resize -2<CR>', { silent = true })
 map.nnoremap('<Left>', ':vertical resize +2<CR>', { silent = true })
@@ -95,7 +135,7 @@ map.nnoremap('<Up>', ':resize +2<CR>', { silent = true })
 -- Go to the alternate buffer.
 map.nnoremap('<C-n>', '<C-^>')
 -- Open a new buffer in current session
-map.nnoremap('<leader>e', ':e <C-R>=expand("%:p:h") . "/" <CR>')
+-- map.nnoremap('<leader>e', ':e <C-R>=expand("%:p:h") . "/" <CR>')
 -- Indent the entire file 😯, do you believe in magic
 map.nnoremap('<leader>i', 'mmgg=G`m<CR>')
 
@@ -104,6 +144,10 @@ map.nnoremap('<Up>', ':cprevious<CR>', { silent = true })
 map.nnoremap('<Down>', ':cnext<CR>', { silent = true })
 map.nnoremap('<Left>', ':cpfile<CR>', { silent = true })
 map.nnoremap('<Right>', ':cnfile<CR>', { silent = true })
+
+map.nnoremap('<Space>,', ':cp<CR>', { silent = true })
+map.nnoremap('<Space>.', ':cn<CR>', { silent = true })
+map.nnoremap('<Space>cc', ':cclose<CR>', { silent = true })
 
 -- highlight last inserted text
 map.nnoremap('gV', [[`[v`]']])
@@ -180,3 +224,18 @@ map.nnoremap('<leader>mkd', ':!mkdir -p %:p:h<', {
 
 -- new file in current directory
 map.nnoremap('<Leader>n', [[:e <C-R>=expand("%:p:h") . "/" <CR>]])
+
+-- Remove highlights
+map.nnoremap('<CR>', ':noh<CR><CR>', opts)
+
+-- Manually invoke speeddating in case switch.vim didn't work
+map.nnoremap(
+  '<C-a>',
+  ':if !switch#Switch() <bar> call speeddating#increment(v:count1) <bar> endif<CR>',
+  opts
+)
+map.nnoremap(
+  '<C-x>',
+  ":if !switch#Switch({'reverse': 1}) <bar> call speeddating#increment(-v:count1) <bar> endif<CR>",
+  opts
+)
