@@ -43,7 +43,7 @@ local on_attach = function(client, bufnr)
 	map.nnoremap( '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 	map.nnoremap( '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev({ float = { border = "rounded" }})<CR>', opts)
 	map.nnoremap( ']d', '<cmd>lua vim.lsp.diagnostic.goto_next({ float = { border = "rounded" }})<CR>', opts)
-	map.nnoremap( '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+	-- map.nnoremap( '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 	map.nnoremap( '<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 	map.vnoremap( '<leader>cf', "<cmd>'<.'>lua vim.lsp.buf.range_formatting()<CR>", opts)
 

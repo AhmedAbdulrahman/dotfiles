@@ -147,7 +147,9 @@ map.nnoremap('<Right>', ':cnfile<CR>', { silent = true })
 
 map.nnoremap('<Space>,', ':cp<CR>', { silent = true })
 map.nnoremap('<Space>.', ':cn<CR>', { silent = true })
-map.nnoremap('<Space>cc', ':cclose<CR>', { silent = true })
+
+-- Toggle quicklist
+map.nnoremap('<leader>q', '<cmd>lua require("utils").toggle_quicklist()<CR>', { noremap = true, silent = true})
 
 -- highlight last inserted text
 map.nnoremap('gV', [[`[v`]']])

@@ -88,6 +88,7 @@ local mappings = {
   ['='] = { '<C-W>=', 'balance windows' },
   ['v'] = { '<C-W>v', 'split right' },
   ['V'] = { '<C-W>s', 'split below' },
+  ['q'] = { 'quicklist' },
 
   ['/'] = {
     name = 'Dashboard',
@@ -126,7 +127,6 @@ local mappings = {
       '<cmd>Telescope lsp_code_action',
       'telescope code action',
     },
-    c = 'which_key_ignore',
     d = { '<cmd>LspTroubleToggle<CR>', 'local diagnostics' },
     D = { '<cmd>Telescope lsp_document_diagnostics<CR>', 'diagnostics' },
     f = { 'format' },

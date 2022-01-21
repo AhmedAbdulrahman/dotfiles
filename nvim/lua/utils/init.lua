@@ -51,6 +51,14 @@ function M.file_exists(path)
   end
 end
 
+function M.toggle_quicklist(path)
+	if vim.fn.empty(vim.fn.filter(vim.fn.getwininfo(), 'v:val.quickfix')) == 1 then
+	  vim.cmd('copen')
+	else
+	  vim.cmd('cclose')
+	end
+end
+
 function M.get_relative_fname()
   local fname = vim.fn.expand('%:p')
   return fname:gsub(vim.fn.getcwd() .. '/', '')
