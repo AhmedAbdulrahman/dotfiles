@@ -42,6 +42,13 @@ map.nnoremap('X', '"_X', opts)
 map.nnoremap('c*', '/\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgn')
 map.nnoremap('c#', '?\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgN')
 
+-- Reveal syntax group under cursor.
+map.nnoremap(
+  '<F10>',
+  "<Cmd>lua require('mappings/normal/syntax').reveal_syntax_group()<CR>",
+  { silent = true }
+)
+
 -- Construct grep search.
 map.nnoremap('g/', ':Grep<Space>')
 map.nnoremap('gS', ':Grep!<Space>')
@@ -149,7 +156,11 @@ map.nnoremap('<Space>,', ':cp<CR>', { silent = true })
 map.nnoremap('<Space>.', ':cn<CR>', { silent = true })
 
 -- Toggle quicklist
-map.nnoremap('<leader>q', '<cmd>lua require("utils").toggle_quicklist()<CR>', { noremap = true, silent = true})
+map.nnoremap(
+  '<leader>q',
+  '<cmd>lua require("utils").toggle_quicklist()<CR>',
+  { noremap = true, silent = true }
+)
 
 -- highlight last inserted text
 map.nnoremap('gV', [[`[v`]']])
