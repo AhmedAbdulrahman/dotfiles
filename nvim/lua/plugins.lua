@@ -114,7 +114,7 @@ local function init()
     requires = 'nvim-lua/plenary.nvim',
     config = "require('plugins.cmp-npm')",
   })
-  use {'saadparwaiz1/cmp_luasnip', after = 'cmp-npm'}
+  use({ 'saadparwaiz1/cmp_luasnip', after = 'cmp-npm' })
 
   -- LSP Addons
   use({
@@ -147,7 +147,15 @@ local function init()
   })
   use({ 'AndrewRadev/switch.vim' })
   use({ 'AndrewRadev/splitjoin.vim' })
-  use({ 'numToStr/Comment.nvim', config = "require('plugins.comment')" })
+  use({
+    'numToStr/Comment.nvim',
+    requires = {
+      'JoosepAlviste/nvim-ts-context-commentstring',
+    },
+    keys = { 'gc', 'gx' },
+    config = "require('plugins.comment')",
+    after = 'nvim-treesitter',
+  })
   use({
     'akinsho/nvim-toggleterm.lua',
     config = "require('plugins.toggleterm')",
@@ -158,10 +166,6 @@ local function init()
   use({ 'dhruvasagar/vim-table-mode' })
   use({ 'mg979/vim-visual-multi' })
   use({ 'junegunn/vim-easy-align' })
-  use({
-    'JoosepAlviste/nvim-ts-context-commentstring',
-    after = 'nvim-treesitter',
-  })
   use({ 'nacro90/numb.nvim', config = "require('plugins.numb')" })
   use({ 'folke/todo-comments.nvim' })
   use({
@@ -176,7 +180,10 @@ local function init()
     end,
     disable = not NvimConfig.plugins.zen.enabled,
   })
-  use({ 'ggandor/lightspeed.nvim' })
+  use({
+    'ggandor/lightspeed.nvim',
+    config = "require('plugins.lightspeed')",
+  })
   use({
     'folke/which-key.nvim',
     config = "require('plugins.which-key')",
@@ -213,7 +220,11 @@ local function init()
     'norcalli/nvim-colorizer.lua',
     config = "require('plugins.colorizer')",
   })
-  use {'L3MON4D3/LuaSnip', requires = {'rafamadriz/friendly-snippets'}, after = 'cmp_luasnip'}
+  use({
+    'L3MON4D3/LuaSnip',
+    requires = { 'rafamadriz/friendly-snippets' },
+    after = 'cmp_luasnip',
+  })
 
   use({ 'lpinilla/vim-codepainter' })
 
