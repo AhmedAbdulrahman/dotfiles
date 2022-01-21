@@ -73,6 +73,9 @@ These are the main plugins used with NVIM config:
 
 These are the most useful custom key bindings I use in custom config. Space `(SPC)` set as Leader key.
 
+<details>
+<summary>Searching</summary>
+
 ### Searching
 
 | Key Bindings | Description                     |
@@ -87,6 +90,11 @@ These are the most useful custom key bindings I use in custom config. Space `(SP
 | `<C - x>`    | Open selected file as a split   |
 | `<C - v>`    | Open selected file as a vsplit  |
 | `<C-t>`      | Open selected file in a new tab |
+
+</details>
+
+<details>
+<summary>Working with LSP</summary>
 
 ### Working with LSP:
 
@@ -104,6 +112,11 @@ These are the most useful custom key bindings I use in custom config. Space `(SP
 | `SPC c d`                  | Local diagnostics list                            |
 | `SPC c o`                  | Organize imports                                  |
 
+</details>
+
+<details>
+<summary>Working with Git</summary>
+
 ### Working with Git:
 
 | Key Bindings | Description                                                                                                                              |
@@ -118,6 +131,11 @@ These are the most useful custom key bindings I use in custom config. Space `(SP
 | `SPC g h s`  | Stage hunk under cursor - Sometimes it's faster than selecting lines in Lazygit, so I can stage specific lines and then just do a commit |
 | `SPC g l c`  | Quick check of previous commit in current buffer, <C-s> inside to switch preview                                                         |
 
+</details>
+
+<details>
+<summary>Working with Project</summary>
+
 ### Working with Project:
 
 | Key Bindings | Description                                                                                                                                                                                                                                                                             |
@@ -128,6 +146,10 @@ These are the most useful custom key bindings I use in custom config. Space `(SP
 | `SPC p t`    | Finds TODOs/NOTES in project                                                                                                                                                                                                                                                            |
 | `SPC p l`    | Switch between projects                                                                                                                                                                                                                                                                 |
 | `SPC p s`    | Save session to load it later from Dashboard                                                                                                                                                                                                                                            |
+</details>
+
+<details>
+<summary>Commenting</summary>
 
 ### Commenting
 
@@ -137,6 +159,11 @@ These are the most useful custom key bindings I use in custom config. Space `(SP
 | `gc` (visual) | Create/remove comment      |
 | `gcO`         | Create comment line before |
 | `gco`         | Create comment line after  |
+
+</details>
+
+<details>
+<summary>Table Mode / Alignment</summary>
 
 ### Table Mode / Alignment
 
@@ -149,6 +176,11 @@ These are the most useful custom key bindings I use in custom config. Space `(SP
 | `SPC t d c `  | (Only when Table Mode Enabled) Delete column                                      |
 | `SPC t d r `  | (Only when Table Mode Enabled) Delete row                                         |
 | `SPC t s `    | (Only when Table Mode Enabled) Sort table alphabetically                          |
+
+</details>
+
+<details>
+<summary>Other VERY useful bindings</summary>
 
 ### Other VERY useful bindings
 
@@ -170,3 +202,5 @@ These are the most useful custom key bindings I use in custom config. Space `(SP
 | `<F3> `           | Jumps between highlights                                                                                                                             |
 | `<F4> `           | Erase highlighted line                                                                                                                               |
 | `<F1 > `          | Opens/closes split terminal                                                                                                                          |
+
+</details>
