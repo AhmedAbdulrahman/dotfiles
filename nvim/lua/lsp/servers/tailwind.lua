@@ -3,11 +3,11 @@
 local handlers = {
   ['textDocument/hover'] = vim.lsp.with(
     vim.lsp.handlers.hover,
-    { border = NvimConfig.ui.float.border }
+    { focusable = false, silent = true }
   ),
   ['textDocument/signatureHelp'] = vim.lsp.with(
-    vim.lsp.handlers.signature_help,
-    { border = NvimConfig.ui.float.border }
+    vim.lsp.handlers.hover,
+    { focusable = false, silent = true }
   ),
 }
 
