@@ -13,6 +13,8 @@ map.vnoremap('>', '>gv', opts)
 map.vnoremap('x', '"_x', opts)
 map.vnoremap('X', '"_X', opts)
 
+map.vnoremap('p', '"_dP', opts)
+
 -- Make dot work in visual mode
 map.vnoremap('.', ':norm.<CR>')
 
