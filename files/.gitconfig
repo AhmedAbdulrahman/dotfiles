@@ -25,7 +25,7 @@
 
 [alias]
 	addall = !sh -c 'git add . && git add -u'
-	amend = commit --amend --no-edit
+	amend = commit --amend --no-edit --date now
 	blm = blame -wMC
 	br = branch -vv --sort=-committerdate --format='%(HEAD) %(color:red)%(objectname:short)%(color:reset) %(if:equals=*)%(HEAD)%(then)%(color:cyan)%(end)%(align:15,left)%(refname:short)%(end)%(color:reset)%(align:21,left)%(color:green)%(committerdate:auto:human)%(color:reset)%(end)%(contents:subject)'
 	brs = br -a
