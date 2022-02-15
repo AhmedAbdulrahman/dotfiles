@@ -115,6 +115,7 @@ local function init()
     config = "require('plugins.cmp-npm')",
   })
   use({ 'saadparwaiz1/cmp_luasnip', after = 'cmp-npm' })
+  use({ 'hrsh7th/cmp-nvim-lsp-signature-help', after = 'cmp_luasnip' })
 
   -- LSP Addons
   use({
