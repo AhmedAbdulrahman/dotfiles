@@ -57,7 +57,6 @@ local function init()
   use({
     'nvim-treesitter/nvim-treesitter',
     config = "require('plugins.treesitter')",
-    run = ':TSUpdate',
   })
   use({
     'nvim-treesitter/nvim-treesitter-textobjects',
