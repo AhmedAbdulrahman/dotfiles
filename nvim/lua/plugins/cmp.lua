@@ -1,3 +1,4 @@
+-- Requires
 local lspkind = require('lspkind')
 local tabnine = require('cmp_tabnine.config')
 
@@ -19,6 +20,7 @@ local check_backspace = function()
   return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
 end
 
+-- Setup
 local source_mapping = {
   buffer = NvimConfig.icons.buffer .. '[BUF]',
   calc = NvimConfig.icons.calculator,
@@ -86,7 +88,7 @@ cmp.setup({
     format = function(entry, vim_item)
       vim_item.kind = lspkind.symbolic(vim_item.kind, { with_text = true })
       local menu = source_mapping[entry.source.name]
-      local maxwidth = 100
+      local maxwidth = 50
 
       if entry.source.name == 'cmp_tabnine' then
         if
@@ -106,13 +108,12 @@ cmp.setup({
 
   -- You should specify your *installed* sources.
   sources = {
-    { name = 'luasnip' },
     { name = 'nvim_lsp' },
     { name = 'npm' },
     { name = 'cmp_tabnine', max_item_count = 3 },
     { name = 'buffer', keyword_length = 5 },
     { name = 'path' },
-    { name = 'nvim_lsp_signature_help' },
+    { name = 'luasnip' },
     { name = 'calc' },
     { name = 'nvim_lua' },
   },
