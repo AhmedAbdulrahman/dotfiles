@@ -226,8 +226,9 @@ local function init()
     after = 'cmp_luasnip',
   })
 
-  -- Nvim Tree
+  -- Nvim Tree / Rooter
   use({ 'kyazdani42/nvim-tree.lua', config = "require('plugins.tree')" })
+  use({ 'airblade/vim-rooter' })
 
   -- Debug
   -- TODO: Configure dap
