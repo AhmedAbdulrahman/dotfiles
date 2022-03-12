@@ -1,16 +1,10 @@
+local map = require('utils.map')
+
 require('gitsigns').setup({
   signs = {
     add = { hl = 'GitGutterAdd', text = '│', numhl = 'GitSignsAddNr' },
-    change = {
-      hl = 'GitGutterChange',
-      text = '│',
-      numhl = 'GitSignsChangeNr',
-    },
-    delete = {
-      hl = 'GitGutterDelete',
-      text = '_',
-      numhl = 'GitSignsDeleteNr',
-    },
+    change = { hl = 'GitGutterChange', text = '│', numhl = 'GitSignsChangeNr' },
+    delete = { hl = 'GitGutterDelete', text = '_', numhl = 'GitSignsDeleteNr' },
     topdelete = {
       hl = 'GitGutterDelete',
       text = '‾',
@@ -26,27 +20,7 @@ require('gitsigns').setup({
   numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
   linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
   word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
-  keymaps = {
-    -- Default keymap options
-    noremap = true,
-    buffer = true,
-
-    ['n ]c'] = {
-      expr = true,
-      "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'",
-    },
-    ['n [c'] = {
-      expr = true,
-      "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'",
-    },
-
-    ['n <leader>ghs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-    ['n <leader>ghu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-    ['n <leader>ghr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-    ['n <leader>ghp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-    ['n <leader>gm'] = '<cmd>lua require"gitsigns".blame_line{full=true}<CR>',
-  },
-  watch_index = {
+  watch_gitdir = {
     interval = 700,
     follow_files = true,
   },
@@ -56,6 +30,7 @@ require('gitsigns').setup({
     virt_text = true,
     virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
     delay = 700,
+    ignore_whitespace = false,
   },
   current_line_blame_formatter_opts = {
     relative_time = false,
@@ -76,4 +51,30 @@ require('gitsigns').setup({
   yadm = {
     enable = false,
   },
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
+
+    -- Navigation
+    map.nnoremap(']c', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'")
+    map.nnoremap('[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'")
+
+    -- Actions
+    map.nnoremap('<leader>ghs', gs.stage_hunk)
+    map.vnoremap('<leader>ghs', gs.stage_hunk)
+    map.nnoremap('<leader>ghr', gs.reset_hunk)
+    map.vnoremap('<leader>ghr', gs.reset_hunk)
+    map.nnoremap('<leader>ghS', gs.stage_buffer)
+    map.nnoremap('<leader>ghu', gs.undo_stage_hunk)
+    map.nnoremap('<leader>ghR', gs.reset_buffer)
+    map.nnoremap('<leader>ghp', gs.preview_hunk)
+    map.nnoremap('<leader>gm', function()
+      gs.blame_line({ full = true })
+    end)
+    map.nnoremap('<leader>ghd', gs.diffthis)
+    map.nnoremap('<leader>ght', gs.toggle_deleted)
+
+    -- Text object
+    map.onoremap('ih', ':<C-U>Gitsigns select_hunk<CR>')
+    map.xnoremap('ih', ':<C-U>Gitsigns select_hunk<CR>')
+  end,
 })
