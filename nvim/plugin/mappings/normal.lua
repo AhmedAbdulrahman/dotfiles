@@ -126,13 +126,6 @@ else
   )
 end
 
--- Erase painter line
-map.nnoremap(
-  '<F4>',
-  "<cmd>lua require('functions').erase_painter_line()<CR>",
-  opts
-)
-
 -- Make arrowkey do something usefull, resize the viewports accordingly
 map.nnoremap('<Right>', ':vertical resize -2<CR>', { silent = true })
 map.nnoremap('<Left>', ':vertical resize +2<CR>', { silent = true })

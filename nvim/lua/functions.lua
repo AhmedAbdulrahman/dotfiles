@@ -27,6 +27,7 @@ vim.cmd(
     .. ' setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()'
 )
 
+-- Exported functions
 local M = {}
 
 M.mkview_filetype_blocklist = {
@@ -158,24 +159,6 @@ M.quit_on_q = function()
       { buffer = true, silent = true }
     )
   end
-end
-
-M.erase_painter_line = function()
-  vim.api.nvim_command('PainterEraseLine')
-  require('notify')(
-    'Erased line',
-    'info',
-    { title = 'Painter', timeout = 1000 }
-  )
-end
-
-M.erase_painter_line = function()
-  vim.api.nvim_command('PainterEraseLine')
-  require('notify')(
-    'Erased line',
-    'info',
-    { title = 'Painter', timeout = 1000 }
-  )
 end
 
 M.disable_heavy_plugins = function()
