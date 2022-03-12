@@ -37,13 +37,13 @@ require('which-key').setup({
   window = {
     border = 'none', -- none, single, double, shadow
     position = 'bottom', -- bottom, top
-    margin = { 0, 0, 0, 0 }, -- extra window margin [top, right, bottom, left]
-    padding = { 4, 2, 4, 2 }, -- extra window padding [top, right, bottom, left]
+    margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
+    padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
   },
   layout = {
     height = { min = 4, max = 25 }, -- min and max height of the columns
     width = { min = 20, max = 50 }, -- min and max width of the columns
-    spacing = 8, -- spacing between columns
+    spacing = 4, -- spacing between columns
     align = 'left', -- align columns left, center or right
   },
   ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
@@ -55,8 +55,8 @@ require('which-key').setup({
     -- list of mode / prefixes that should never be hooked by WhichKey
     -- this is mostly relevant for key maps that start with a native binding
     -- most people should not need to change this
-    i = { 'j', 'k', ',' },
-    v = { 'j', 'k', "'" },
+    i = { 'j', 'k' },
+    v = { 'j', 'k' },
   },
 })
 
@@ -92,7 +92,6 @@ local mappings = {
 
   ['/'] = {
     name = 'Dashboard',
-    ['/'] = { '<cmd>Dashboard<CR>', 'open dashboard' },
     ['c'] = { ':e $MYVIMRC<CR>', 'open init' },
     ['s'] = { '<cmd>PackerSync<CR>', 'packer sync' },
     ['u'] = { '<cmd>PackerUpdate<CR>', 'packer update' },
@@ -127,7 +126,7 @@ local mappings = {
       '<cmd>Telescope lsp_code_action',
       'telescope code action',
     },
-    d = { '<cmd>LspTroubleToggle<CR>', 'local diagnostics' },
+    d = { '<cmd>TroubleToggle<CR>', 'local diagnostics' },
     D = { '<cmd>Telescope lsp_document_diagnostics<CR>', 'diagnostics' },
     f = { 'format' },
     i = { '<cmd>TSLspImportAll<CR>', 'import all' },
@@ -161,6 +160,7 @@ local mappings = {
       '<cmd>!git add .<CR>',
       'add all',
     },
+    b = { '<cmd>lua require("blame").open()<CR>', 'blame' },
     d = {
       '<cmd>lua require("plugins.diffview").toggle()<CR>',
       'diff file',
@@ -169,9 +169,13 @@ local mappings = {
     h = {
       name = 'Hunk',
       b = 'blame line',
+      d = 'diff hunk',
       p = 'preview',
-      r = 'reset',
-      s = 'stage',
+      R = 'reset buffer',
+      r = 'reset hunk',
+      s = 'stage hunk',
+      S = 'stage buffer',
+      t = 'toggle deleted',
       u = 'undo stage',
     },
     l = {
