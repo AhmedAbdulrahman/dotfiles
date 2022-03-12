@@ -137,10 +137,12 @@ local function init()
 
   -- General
   use({
-    'ellisonleao/glow.nvim',
-    config = function()
-      vim.g.glow_border = 'rounded'
+    'iamcco/markdown-preview.nvim',
+    run = 'cd app && npm install',
+    setup = function()
+      vim.g.mkdp_filetypes = { 'markdown' }
     end,
+    ft = { 'markdown' },
   })
   use({ 'AndrewRadev/switch.vim' })
   use({ 'AndrewRadev/splitjoin.vim' })
