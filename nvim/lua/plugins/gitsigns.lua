@@ -3,8 +3,16 @@ local map = require('utils.map')
 require('gitsigns').setup({
   signs = {
     add = { hl = 'GitGutterAdd', text = '│', numhl = 'GitSignsAddNr' },
-    change = { hl = 'GitGutterChange', text = '│', numhl = 'GitSignsChangeNr' },
-    delete = { hl = 'GitGutterDelete', text = '_', numhl = 'GitSignsDeleteNr' },
+    change = {
+      hl = 'GitGutterChange',
+      text = '│',
+      numhl = 'GitSignsChangeNr',
+    },
+    delete = {
+      hl = 'GitGutterDelete',
+      text = '_',
+      numhl = 'GitSignsDeleteNr',
+    },
     topdelete = {
       hl = 'GitGutterDelete',
       text = '‾',
@@ -47,7 +55,6 @@ require('gitsigns').setup({
     row = 0,
     col = 1,
   },
-  use_internal_diff = true, -- If vim.diff or luajit is present
   yadm = {
     enable = false,
   },
