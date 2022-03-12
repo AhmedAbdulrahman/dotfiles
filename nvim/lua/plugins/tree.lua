@@ -92,6 +92,8 @@ nvim_tree.setup({
   hijack_cursor = false,
   -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
   update_cwd = true,
+  -- opens in place of the unnamed buffer if it's empty
+  hijack_unnamed_buffer_when_opening = false,
   -- show lsp diagnostics in the signcolumn
   diagnostics = {
     enable = false,
