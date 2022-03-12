@@ -14,6 +14,8 @@ au.group('__myautocmds__', {
   },
   { 'BufWritePost', 'plugins.lua', [[source <afile> | PackerCompile]] },
   { 'BufWritePost', 'plugins.lua', [[source <afile> | PackerSync]] },
+  { 'BufRead', '*/node_modules/*', [[lua vim.diagnostic.disable(0)]] },
+  { 'BufNewFile', '*/node_modules/*', [[lua vim.diagnostic.disable(0)]] },
   -- { 'BufWritePost', '*', 'silent! FormatWrite' },
   { 'BufWritePost', '*/spell/*.add', 'silent! :mkspell! %' },
   { 'BufWinEnter', 'NvimTree', 'let &l:statusline = " Explorer"' },
