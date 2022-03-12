@@ -64,11 +64,7 @@ local function init()
     after = { 'nvim-treesitter' },
   })
   use({ 'RRethy/nvim-treesitter-textsubjects', after = { 'nvim-treesitter' } })
-  use({
-    'nvim-treesitter/playground',
-    cmd = 'TSPlaygroundToggle',
-    after = { 'nvim-treesitter' },
-  })
+
   -- Telescope
   use({
     'nvim-telescope/telescope.nvim',
@@ -203,6 +199,7 @@ local function init()
     'vuki656/package-info.nvim',
     disable = not NvimConfig.plugins.package_info.enabled,
   })
+  use({ 'RRethy/vim-illuminate' })
 
   -- Snippets & Language & Syntax
   use({

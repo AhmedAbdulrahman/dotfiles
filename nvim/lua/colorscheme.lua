@@ -50,4 +50,9 @@ if NvimConfig.colorscheme == 'aylin' then
 
   -- Change color of floating popup border
   vim.highlight.link('FloatBorder', NvimConfig.ui.float.highlight, true)
+
+  -- Illuminate
+  vim.highlight.link('LspReferenceText', 'CursorLine', true)
+  vim.highlight.link('LspReferenceWrite', 'CursorLine', true)
+  vim.highlight.link('LspReferenceRead', 'CursorLine', true)
 end

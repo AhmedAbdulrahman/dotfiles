@@ -1,12 +1,12 @@
 local handlers = {
-    ['textDocument/hover'] = vim.lsp.with(
-        vim.lsp.handlers.hover,
-        { focusable = false, silent = true }
-      ),
-      ['textDocument/signatureHelp'] = vim.lsp.with(
-        vim.lsp.handlers.hover,
-        { focusable = false, silent = true }
-      ),
+  ['textDocument/hover'] = vim.lsp.with(
+    vim.lsp.handlers.hover,
+    { border = NvimConfig.ui.float.border }
+  ),
+  ['textDocument/signatureHelp'] = vim.lsp.with(
+    vim.lsp.handlers.signature_help,
+    { border = NvimConfig.ui.float.border }
+  ),
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -39,11 +39,12 @@ require('lspconfig').tsserver.setup({
   handlers = handlers,
   capabilities = capabilities,
   on_attach = function(client, bufnr)
-
     local function buf_set_option(...)
       vim.api.nvim_buf_set_option(bufnr, ...)
     end
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    require('illuminate').on_attach(client)
 
     require('nvim-lsp-ts-utils').setup({
       debug = false,

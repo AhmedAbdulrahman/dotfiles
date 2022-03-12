@@ -24,6 +24,7 @@ require('lspconfig').tailwindcss.setup({
     if client.server_capabilities.colorProvider then
       require('lsp/documentcolors').buf_attach(bufnr)
     end
+    require('illuminate').on_attach(client)
   end,
   cmd = { 'tailwindcss-language-server', '--stdio' },
   filetypes = {
