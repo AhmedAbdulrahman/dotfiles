@@ -1,7 +1,5 @@
 -- luacheck: max line length 150
 
-local nvim_tree = require('nvim-tree')
-local tree_cb = require('nvim-tree/config').nvim_tree_callback
 local map = require('utils.map')
 local opts = { noremap = true, silent = true }
 
@@ -68,7 +66,46 @@ vim.g.nvim_tree_icons = {
   },
 }
 
-nvim_tree.setup({
+local keymappings = {
+  { key = { '<CR>', 'o', '<2-LeftMouse>' }, action = 'edit' },
+  { key = '<C-e>', action = 'edit_in_place' },
+  { key = { 'O' }, action = 'edit_no_picker' },
+  { key = { '<2-RightMouse>', '<C-]>' }, action = 'cd' },
+  { key = '<C-v>', action = 'vsplit' },
+  { key = '<C-x>', action = 'split' },
+  { key = '<C-t>', action = 'tabnew' },
+  { key = '<', action = 'prev_sibling' },
+  { key = '>', action = 'next_sibling' },
+  { key = 'P', action = 'parent_node' },
+  { key = '<BS>', action = 'close_node' },
+  { key = '<Tab>', action = 'preview' },
+  { key = 'K', action = 'first_sibling' },
+  { key = 'J', action = 'last_sibling' },
+  { key = 'I', action = 'toggle_ignored' },
+  { key = 'H', action = 'toggle_dotfiles' },
+  { key = 'R', action = 'refresh' },
+  { key = 'a', action = 'create' },
+  { key = 'd', action = 'remove' },
+  { key = 'D', action = 'trash' },
+  { key = 'r', action = 'rename' },
+  { key = '<C-r>', action = 'full_rename' },
+  { key = 'x', action = 'cut' },
+  { key = 'c', action = 'copy' },
+  { key = 'p', action = 'paste' },
+  { key = 'y', action = 'copy_name' },
+  { key = 'Y', action = 'copy_path' },
+  { key = 'gy', action = 'copy_absolute_path' },
+  { key = '[c', action = 'prev_git_item' },
+  { key = ']c', action = 'next_git_item' },
+  { key = '-', action = 'dir_up' },
+  { key = 's', action = 'system_open' },
+  { key = 'q', action = 'close' },
+  { key = 'g?', action = 'toggle_help' },
+  { key = 'W', action = 'collapse_all' },
+  { key = 'S', action = 'search_node' },
+}
+
+require('nvim-tree').setup({
   -- disables netrw completely
   disable_netrw = false,
   -- hijack netrw window on startup
@@ -160,35 +197,9 @@ nvim_tree.setup({
     mappings = {
       -- custom only false will merge the list with the default mappings
       -- if true, it will only use your list to set the mappings
-      custom_only = false,
+      custom_only = true,
       -- list of mappings to set on the tree manually
-      list = {
-        { key = { 'l', '<CR>', '<2-LeftMouse>' }, cb = tree_cb('edit') },
-        { key = 'L', cb = tree_cb('cd') },
-        { key = '<C-s>', cb = tree_cb('split') },
-        { key = '<C-v>', cb = tree_cb('vsplit') },
-        { key = '<C-t>', cb = tree_cb('tabnew') },
-        { key = 'h', cb = tree_cb('close_node') },
-        { key = 'i', cb = tree_cb('preview') },
-        { key = 'R', cb = tree_cb('refresh') },
-        { key = 'c', cb = tree_cb('create') },
-        { key = 'D', cb = tree_cb('remove') },
-        { key = 'r', cb = tree_cb('rename') },
-        { key = '<C-r>', cb = tree_cb('full_rename') },
-        { key = 'd', cb = tree_cb('cut') },
-        { key = 'y', cb = tree_cb('copy') },
-        { key = 'p', cb = tree_cb('paste') },
-        { key = 'gyn', cb = tree_cb('copy_name') },
-        { key = 'gyp', cb = tree_cb('copy_path') },
-        { key = 'gya', cb = tree_cb('copy_absolute_path') },
-        { key = '[c', cb = tree_cb('prev_git_item') },
-        { key = ']c', cb = tree_cb('next_git_item') },
-        { key = 'H', cb = tree_cb('dir_up') },
-        { key = 's', cb = tree_cb('system_open') },
-        { key = 'q', cb = tree_cb('close') },
-        { key = 'g?', cb = tree_cb('toggle_help') },
-        { key = 'I', cb = tree_cb('toggle_ignored') },
-      },
+      list = keymappings,
     },
     number = true,
     relativenumber = true,
