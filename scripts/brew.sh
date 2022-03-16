@@ -103,6 +103,7 @@ main() {
   brew_install "Universal Ctags" "universal-ctags/universal-ctags/universal-ctags --HEAD"
   brew_install "YAML processor" "yq"
   brew_install "JSON processor" "jq"
+  brew_install "LS_COLORS generator with a rich filetype datebase" "vivid"
   brew_install "W3M" "w3m"
   brew_install "Htop" "htop"
   brew_install "Ffmpeg" "homebrew-ffmpeg/ffmpeg/ffmpeg --HEAD"

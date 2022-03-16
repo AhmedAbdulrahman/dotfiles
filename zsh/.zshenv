@@ -9,7 +9,7 @@
 
 # True color
 export COLORTERM='truecolor'
-
+export LS_COLORS=$(vivid generate ayu)
 # ---------------------------------------------
 # Environment
 # ---------------------------------------------
