@@ -126,6 +126,7 @@ main() {
   brew_install "Reattach Namespace" "reattach-to-user-namespace"
   brew_install "Tldr" "tldr"
   brew_install "Experimental Rust compiler front-end for IDEs" "rust-analyzer"
+  brew_install "ZK - a plain text note-taking assistant" "zk"
   #   LSPs
   brew_install "General purpose Language Server" "efm-langserver"
   brew_install "A Language Server for Clojure(script)" "clojure-lsp/brew/clojure-lsp-native"
