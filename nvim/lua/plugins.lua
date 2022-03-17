@@ -56,6 +56,12 @@ local function init()
   -- Treesitter
   use({
     'nvim-treesitter/nvim-treesitter',
+    requires = {
+      'romgrk/nvim-treesitter-context',
+      'JoosepAlviste/nvim-ts-context-commentstring',
+      'nvim-treesitter/playground',
+    },
+    run = ':TSUpdate',
     config = "require('plugins.treesitter')",
   })
   use({
