@@ -43,17 +43,30 @@ cmp.setup({
 
   -- You must set mapping if you want.
   mapping = {
-    ['<C-k>'] = cmp.mapping.select_prev_item(),
-    ['<C-j>'] = cmp.mapping.select_next_item(),
+    ['<C-j>'] = cmp.mapping.select_next_item({
+      behavior = cmp.SelectBehavior.Insert,
+    }),
+    ['<C-k>'] = cmp.mapping.select_prev_item({
+      behavior = cmp.SelectBehavior.Insert,
+    }),
+    ['<Down>'] = cmp.mapping.select_next_item({
+      behavior = cmp.SelectBehavior.Select,
+    }),
+    ['<Up>'] = cmp.mapping.select_prev_item({
+      behavior = cmp.SelectBehavior.Select,
+    }),
     ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-2), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(2), { 'i', 'c' }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    }),
     ['<C-e>'] = cmp.mapping({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -86,7 +99,10 @@ cmp.setup({
 
   formatting = {
     format = function(entry, vim_item)
+      local lspkind = require('lspkind')
       vim_item.kind = lspkind.symbolic(vim_item.kind, { with_text = true })
+
+      -- set a name for each source
       local menu = source_mapping[entry.source.name]
       local maxwidth = 50
 
@@ -100,7 +116,9 @@ cmp.setup({
       end
 
       vim_item.menu = menu
-      vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
+      if #vim_item.abbr > maxwidth then
+        vim_item.abbr = vim_item.abbr:sub(1, maxwidth) .. '...'
+      end
 
       return vim_item
     end,
@@ -109,6 +127,7 @@ cmp.setup({
   -- You should specify your *installed* sources.
   sources = {
     { name = 'nvim_lsp' },
+    { name = 'nvim_lsp_signature_help' },
     { name = 'npm' },
     { name = 'cmp_tabnine', max_item_count = 3 },
     { name = 'buffer', keyword_length = 5 },
