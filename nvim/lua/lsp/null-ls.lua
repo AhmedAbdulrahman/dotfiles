@@ -1,96 +1,58 @@
-return function(on_attach)
-  local ok, nls = pcall(require, 'null-ls')
-
-  if not ok then
-    return
-  end
-
-  local h = require('null-ls.helpers')
+local null_ls = require('null-ls')
 
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/lua/null-ls/builtins/formatting
-local formatting = nls.builtins.formatting
+local formatting = null_ls.builtins.formatting
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/lua/null-ls/builtins/diagnostics
-local diagnostics = nls.builtins.diagnostics
+local diagnostics = null_ls.builtins.diagnostics
 
-  local refmt = {
-    method = nls.methods.FORMATTING,
-    filetypes = { 'rescript', 'reason' },
-    generator = nls.formatter({
-      command = 'refmt',
-      to_stdin = true,
+null_ls.setup({
+  debug = true,
+  debounce = 150,
+  sources = {
+    diagnostics.shellcheck.with({
+      extra_args = {
+        '--shell',
+        'bash',
+        '--exclude',
+        table.concat({
+          '1003', -- Want to escape a single quote? echo 'This is how it'\''s done'.
+        }, ','),
+      },
     }),
-  }
-
-  local jsonfmt = {
-    method = nls.methods.FORMATTING,
-    filetypes = { 'json' },
-    generator = nls.formatter({
-      command = 'jq',
-      to_stdin = true,
+    diagnostics.flake8.with({
+      extra_args = function(params)
+        -- params.root is set to the first parent dir with with either .git or
+        -- Makefile
+        if vim.loop.fs_stat(params.root .. '/setup.cfg') then
+          return {}
+        end
+        -- These ignores will override setup.cfg
+        return {
+          '--ignore',
+          table.concat({
+            'E501', -- line too long
+            'E221', -- multiple space before operators
+            'E201', -- whitespace before/after '['/']'
+            'E202', -- whitespace before ']'
+            'E272', -- multiple spaces before keyword
+            'E241', -- multiple spaces after ':'
+            'E231', -- missing whitespace after ':'
+            'E203', -- whitespace before ':'
+            'E741', -- ambiguous variable name
+            'E226', -- missing whitespace around arithmetic operator
+            'E305',
+            'E302', -- expected 2 blank lines after class
+            'E251', -- unexpected spaces around keyword / parameter equals (E251)
+          }, ','),
+        }
+      end,
     }),
-  }
-
-  nls.setup({
-    debug = true,
-    debounce = 150,
-    on_attach = on_attach,
-    sources = {
-      refmt,
-      jsonfmt,
-      formatting.prettier.with({
-        filetypes = {
-          'typescript',
-          'javascript',
-          'typescript.tsx',
-          'javascript.jsx',
-          'typescriptreact',
-          'javascriptreact',
-          'vue',
-          'yaml',
-          'html',
-          'scss',
-          'css',
-          'markdown',
-          'mdx',
-          'json',
-        },
-        extra_args = {
-          '--config-precedence',
-          'prefer-file',
-          '--single-quote',
-          '--no-bracket-spacing',
-          '--prose-wrap',
-          'always',
-          '--arrow-parens',
-          'always',
-          '--trailing-comma',
-          'all',
-          '--no-semi',
-          '--end-of-line',
-          'lf',
-          '--print-width',
-          vim.bo.textwidth <= 80 and 80 or vim.bo.textwidth,
-        },
-      }),
-      formatting.stylua,
-      -- goimports runs gofmt too
-      -- https://pkg.go.dev/golang.org/x/tools/cmd/goimports
-      formatting.goimports,
-      -- diagnostics.golint,
-      diagnostics.shellcheck.with({
-        filetypes = { 'sh', 'bash' },
-      }),
-      formatting.shfmt.with({
-        filetypes = { 'sh', 'bash' },
-      }),
-      formatting.rustfmt,
-      formatting.black.with({
-        extra_args = { '--fast' },
-      }),
-      diagnostics.pylint,
-      diagnostics.hadolint,
-      diagnostics.vint,
-      diagnostics.vale,
-    },
-  })
-end
+    diagnostics.pylint,
+    diagnostics.hadolint,
+    diagnostics.vint,
+    diagnostics.vale,
+    diagnostics.statix,
+  },
+  diagnostics_format = '#{s}: #{m} (#{c})',
+  on_attach = on_attach,
+})

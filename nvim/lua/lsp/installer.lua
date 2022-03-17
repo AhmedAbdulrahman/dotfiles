@@ -1,70 +1,59 @@
 -- luacheck: max line length 130
 
 local lsp_installer = require('nvim-lsp-installer')
-local au = require('utils.au')
-local map = require('utils.map')
-local opts = { noremap = true, silent = true }
 
 local on_attach = function(client, bufnr)
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
+  local function map(mode, key, result, opts)
+    opts = opts or {}
+    opts.buffer = bufnr
+    opts.silent = true
+    vim.keymap.set(mode, key, result, opts)
   end
 
-  -- Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  map('n', 'gd', vim.lsp.buf.definition)
+  map('n', 'gD', vim.lsp.buf.declaration)
+  map('n', 'gi', vim.lsp.buf.implementation)
+  map('n', '<leader>cl', vim.lsp.codelens.run)
+  map('n', 'K', vim.lsp.buf.hover)
+  map('n', 'gK', vim.lsp.buf.signature_help)
+  map('v', '<C-s>', vim.lsp.buf.signature_help)
+  --   map('gr'        , 'vim.lsp.buf.references()')
+  map('n', 'gr', '<cmd>Trouble lsp_references<cr>')
+  map('n', '<leader>rn', vim.lsp.buf.rename)
+  map('n', '<leader>ca', vim.lsp.buf.code_action)
+  map('v', '<leader>ca', vim.lsp.buf.range_code_action)
+  map('n', '<leader>cf', vim.lsp.buf.formatting)
+  map('v', '<leader>cf', vim.lsp.buf.range_formatting)
+  map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder)
+  map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder)
 
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  map.nnoremap('gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  map.nnoremap('gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  map.nnoremap('K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  map.nnoremap('gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  map.nnoremap('<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  map.nnoremap(
-    '<leader>wa',
-    '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>',
-    opts
-  )
-  map.nnoremap(
-    '<leader>wr',
-    '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>',
-    opts
-  )
-  map.nnoremap(
-    '<leader>wl',
-    '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
-    opts
-  )
-  map.nnoremap('<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  map.nnoremap('<leader>cr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  map.nnoremap('<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  map.vnoremap(
-    '<leader>ca',
-    "<cmd>'<,'>lua vim.lsp.buf.range_code_action()<CR>",
-    opts
-  )
-  map.nnoremap('gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  map.nnoremap(
+  map(
+    'n',
     '<leader>e',
-    '<cmd>lua vim.diagnostic.open_float(nil, { focusable = false,  close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" }, source = "always" })<CR>',
-    opts
+    '<cmd>lua vim.diagnostic.open_float(nil, { focusable = false,  close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" }, source = "always" })<CR>'
   )
-  map.nnoremap(
+  map(
+    'n',
     '[d',
-    '<cmd>lua vim.lsp.diagnostic.goto_prev({ float = { border = "rounded" }})<CR>',
-    opts
+    '<cmd>lua vim.lsp.diagnostic.goto_prev({ float = { border = "rounded" }})<CR>'
   )
-  map.nnoremap(
+  map(
+    'n',
     ']d',
-    '<cmd>lua vim.lsp.diagnostic.goto_next({ float = { border = "rounded" }})<CR>',
-    opts
+    '<cmd>lua vim.lsp.diagnostic.goto_next({ float = { border = "rounded" }})<CR>'
   )
-  -- map.nnoremap( '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  map.nnoremap('<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  map.vnoremap(
-    '<leader>cf',
-    "<cmd>'<.'>lua vim.lsp.buf.range_formatting()<CR>",
-    opts
-  )
+
+  -- Use LSP as the handler for formatexpr.
+  --    See `:help formatexpr` for more information.
+  vim.bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
+
+  -- Use LSP as the handler for omnifunc.
+  --    See `:help omnifunc` and `:help ins-completion` for more information.
+  --    Enable completion triggered by <c-x><c-o>
+  vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+  require('aerial').on_attach(client, bufnr)
+  map('n', '<leader>a', '<cmd>AerialToggle!<CR>')
 end
 
 local handlers = {
@@ -80,9 +69,11 @@ local handlers = {
 
 lsp_installer.on_server_ready(function(server)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-  if status_ok then
-    capabilities = cmp_nvim_lsp.update_capabilities(
+  local has_cmp_lsp, cmp_lsp = pcall(require, 'cmp_nvm_lsp')
+
+  if has_cmp_lsp then
+    -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers.
+    capabilitiescapabilities = cmp_lsp.update_capabilities(
       vim.lsp.protocol.make_client_capabilities()
     )
   end

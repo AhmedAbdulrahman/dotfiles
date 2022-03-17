@@ -88,9 +88,34 @@ local function init()
   use({
     'neovim/nvim-lspconfig',
     requires = {
-      'jose-elias-alvarez/null-ls.nvim',
-      requires = 'nvim-lua/plenary.nvim',
+      { 'stevearc/aerial.nvim' },
+      {
+        'j-hui/fidget.nvim',
+        config = function()
+          require('fidget').setup({
+            window = {
+              relative = 'editor', -- where to anchor the window, either `"win"` or `"editor"`
+              blend = 0, -- `&winblend` for the window
+            },
+            text = {
+              spinner = 'dots',
+            },
+          })
+        end,
+      },
+      {
+        'folke/todo-comments.nvim',
+        config = function()
+          require('todo-comments').setup({})
+        end,
+      },
+      { 'folke/lua-dev.nvim' },
     },
+  })
+
+  use({
+    'jose-elias-alvarez/null-ls.nvim',
+    config = "require('lsp.null-ls')",
   })
 
   -- LSP Cmp
