@@ -71,17 +71,18 @@ local function init()
   use({ 'RRethy/nvim-treesitter-textsubjects', after = { 'nvim-treesitter' } })
 
   -- Telescope
-  use({
-    'nvim-telescope/telescope.nvim',
-    config = "require('plugins.telescope')",
-    requires = {
-      { 'nvim-lua/popup.nvim' },
-      { 'nvim-lua/plenary.nvim' },
-      { 'nvim-telescope/telescope-fzf-native.nvim' },
-    },
-  })
   use({ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' })
   use({ 'cljoly/telescope-repo.nvim' })
+  use({
+    'nvim-lua/telescope.nvim',
+    requires = {
+      'nvim-telescope/telescope-ui-select.nvim',
+      'nvim-telescope/telescope-fzf-native.nvim',
+      'nvim-lua/plenary.nvim',
+      'nvim-lua/popup.nvim',
+    },
+    config = "require('plugins.telescope')",
+  })
 
   -- LSP Base
   use({
