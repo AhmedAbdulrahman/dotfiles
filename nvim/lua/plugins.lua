@@ -166,6 +166,8 @@ local function init()
   })
   use({ 'jose-elias-alvarez/nvim-lsp-ts-utils', after = { 'nvim-treesitter' } })
 
+  -- Formatter
+  use({ 'mhartington/formatter.nvim', config = "require('plugins.formatter')" })
   -- General
   use({
     'iamcco/markdown-preview.nvim',
