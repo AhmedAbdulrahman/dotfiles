@@ -14,25 +14,6 @@ g.mapleader = ' ' --- Map leader key to SPC
 g.maplocalleader = ','
 g.speeddating_no_mappings = 1 --- Disable default mappings for speeddating
 
--- Disable unused built-in plugins. saves a lot
-g.loaded_gzip = 1
-g.loaded_rrhelper = 1
-g.did_load_filetypes = 1
-g.did_install_default_menus = 1
-g.loaded_tarPlugin = 1
-g.loaded_zipPlugin = 1
-g.loaded_netrwPlugin = 1
-g.loaded_getscript = 1
-g.loaded_netrwFileHandlers = 1
-g.loaded_netrwSettings = 1
-g.loaded_2html_plugin = 1
-g.loaded_vimball = 1
-g.loaded_vimballPlugin = 1
-g.loaded_getscriptPlugin = 1
-g.loaded_logipat = 1
-g.loaded_tutor_mode_plugin = 1
-g.loaded_matchit = 1
-
 -- opt. them directly if they are installed, otherwise disable them. To avoid the then
 -- runtime check cost, which can be slow.
 -- Python This must be here becasue it makes loading vim VERY SLOW otherwise
@@ -123,6 +104,7 @@ opt.completeopt = { -- Options for insert mode completion.
 }
 
 opt.virtualedit = 'block' -- Allow cursor to move where there is no text in visual block mode
+opt.winblend = 10
 opt.whichwrap = 'b,h,l,s,<,>,[,],~' -- Allow <BS>/h/l/<Left>/<Right>/<Space>, ~ to cross line boundaries
 
 opt.fillchars = { -- Characters to be used in various user-interface elements.
@@ -209,7 +191,7 @@ opt.textwidth = 80
 opt.linebreak = true -- Wrap long lines at a character in 'breakat'.
 opt.number = true -- Print the line number in front of each line.
 opt.cursorline = true -- Highlight the screen line of the cursor with CursorLine.
-opt.signcolumn = 'yes' -- Always draw the sign column even there is no sign in it.
+opt.signcolumn = 'auto:3' -- Always draw the sign column even there is no sign in it.
 opt.foldmethod = 'indent' -- Use indent folding method to fold lines.
 opt.emoji = false
 opt.formatoptions:remove('c')
