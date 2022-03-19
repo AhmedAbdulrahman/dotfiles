@@ -82,6 +82,9 @@ lsp_installer.on_server_ready(function(server)
     on_attach = on_attach,
     capabilities = capabilities,
     handlers = handlers,
+    flags = {
+      debounce_text_changes = 150,
+    },
   }
 
   if server.name == 'bash' then
@@ -115,9 +118,9 @@ lsp_installer.on_server_ready(function(server)
     opts.settings = require('lsp.servers.json').settings
   end
 
-  if server.name == 'sumneko_lua' then
-    opts.settings = require('lsp.servers.lua').settings
-  end
+  --   if server.name == 'sumneko_lua' then
+  --     opts.settings = require('lsp.servers.lua').settings
+  --   end
 
   if server.name == 'vuels' then
     opts.filetypes = require('lsp.servers.vue2').filetypes
