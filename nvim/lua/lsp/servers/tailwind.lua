@@ -76,6 +76,8 @@ require('lspconfig').tailwindcss.setup({
     userLanguages = {
       eelixir = 'html-eex',
       eruby = 'erb',
+      ['javascript.jsx'] = 'javascriptreact',
+      ['typescript.tsx'] = 'typescriptreact',
     },
   },
   on_new_config = function(new_config)
