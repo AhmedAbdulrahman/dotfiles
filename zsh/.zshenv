@@ -9,7 +9,9 @@
 
 # True color
 export COLORTERM='truecolor'
-export LS_COLORS=$(vivid generate ayu)
+if [ $(command -v vivid) ]; then
+   export LS_COLORS=$(vivid generate ayu)
+fi
 # ---------------------------------------------
 # Environment
 # ---------------------------------------------
@@ -79,6 +81,9 @@ export GOPATH="${HOME}/.go"
 export GOBIN="${GOPATH}/bin"
 export PROJECTS="${HOME}/Projects"
 export NOTES_DIR="${HOME}/Documents/notes"
+export ZK_NOTEBOOK_DIR="$NOTES_DIR"
+# I use a single zk notes dir, so set it and forget
+export ZK_NOTEBOOK_DIR=$NOTES_DIR
 export GPG_TTY=`tty`
 
 # Ensure that a non-login, non-interactive shell has a defined environment.
