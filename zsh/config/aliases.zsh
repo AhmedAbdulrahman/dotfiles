@@ -51,6 +51,7 @@ alias gfs='git flow feature start'
 alias gff='git flow feature finish'
 alias gfrs='git flow release start'
 alias gfrf='git flow release finish'
+alias lg="lazygit"
 
 # ---------------------------------------------
 # Timewarrior & Taskwarrior

@@ -1,7 +1,7 @@
 # vim:ft=gitconfig
 
-# Ignore everything
-*
+# Ignore all directories, and all sub-directories, and it's contents:
+*/*
 
 # But not these files...
 !.gitignore
@@ -10,7 +10,8 @@
 !git
 !neofetch
 !karabiner/karabiner.json
-!kitty
+!kitty/
+!kitty/*/
 !ranger
 !skhd
 !tmux
@@ -18,6 +19,7 @@
 !yabai
 !zathura
 !.npmrc
+!.zk
 !.gnupg
 !.agignore
 !.batrc

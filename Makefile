@@ -27,6 +27,7 @@ symlink:
 		@echo "→ Symlinking nvim dir"
 		sh $(DOTFILES)/nvim/setup.sh
 		stow --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)/.config/nvim" --dir="$(DOTFILES)" nvim
+		sh $(DOTFILES)/nvim/install.sh
     else
 		@echo "→ Symlinking $(dir) dir"
 		sh $(DOTFILES)/$(dir)/setup.sh
