@@ -19,9 +19,33 @@
 	excludesfile = ~/.config/git/.gitignore
   	attributesfile = ~/.config/git/.gitattributes
 	untrackedCache = true
-	pager = diff-so-fancy | less --tabs=4 -RFX
+	pager = delta_
 	; hash (#) conflicts with Markdown when I use hb to open PRs etc...
 	commentChar = %
+
+[delta]
+	syntax-theme = none
+	file-modified-label = MODIFIED:
+	file-removed-label  = REMOVED:
+	file-added-label    = ADDED:
+	file-renamed-label  = RENAMED:
+	features = labels customization
+
+[delta "customization"]
+	whitespace-error-style = 22 reverse
+	zero-style = 8
+	commit-decoration-style = bold yellow box
+	hunk-header-style = 8
+	hunk-header-decoration-style = black box
+	file-style = yellow italic
+	file-decoration-style = none
+	minus-style = strike 088
+	minus-emph-style = 001 052
+	plus-style = italic 034
+	plus-emph-style = italic black 034
+	line-numbers-zero-style = 235
+	line-numbers-minus-style = 088
+	line-numbers-plus-style = 034
 
 [alias]
 	addall = !sh -c 'git add . && git add -u'
@@ -59,6 +83,8 @@
 	rename = "!change() { git branch -m $1 $2; git push origin :$1; git push --set-upstream origin $2; }; change"
 	# list commited files name, Usage: $ git cf <COMMIT_ID>
 	cf = "!show_commited_files() { git diff-tree --no-commit-id --name-only -r $1; }; show_commited_files"
+	# Review helpers: https://blog.jez.io/cli-code-review/
+	# https://github.com/jez/dotfiles/blob/d7b720fe13b6bc83829d248e23127b918d65de6e/util/gitconfig#L23-L53
 	review-base = !git merge-base HEAD \"${review_base:-master}\"
 	stat = !git --no-pager diff --stat $(git review-base)
 	files = !git --no-pager diff --name-only $(git review-base)
@@ -66,7 +92,14 @@
 	by-commit = !tig log --reverse $(git review-base)..HEAD
 	# Show a markdown-formatted summary of commits from {review_base:-master} until HEAD
 	pr-summary = !git log --reverse --format=\"- **%s** (%h)%n%n%w(74,2,2)%b\" \"${review_base:-master}\"..HEAD
-
+	# split-diff style review using vim-fugitive Gdiff
+	review = !$EDITOR -p $(git files) +\"tabdo Gdiff ${review_base:-master}\"
+	reviewone = !$EDITOR -p +\"tabdo Gdiff ${review_base:-master}\"
+	reviewf = !$EDITOR -p $(git files | fzf) +\"tabdo Gdiff ${review_base:-master}\"
+	# Show just the subject and body of a particular commit (default: HEAD)
+	message = log -n1 --format=\"%s%n%n%b\"
+	# Get last commit authored by me
+	my-last = log -n1 --format=\"%H\" --author=\"\\([aA]hmet\\)\\|\\([jJ]acob\\) [aA]bdulrahman\"
 	# Git Commit, Add all and Push — in one step.
 	cap = "!f() { git add .; git commit -m \"$@\"; git push; }; f"
 
@@ -87,6 +120,9 @@
   autosetupmerge = always
   autosetuprebase = always
 
+[branch "main"]
+	rebase = true
+
 [branch "master"]
   rebase = true
 
@@ -95,19 +131,15 @@
   fsckObjects = true
 
 [pager]
-  # insanely beautiful diffs ==> npm install -g diff-so-fancy
   show-branch = true
   status = true
-  show = diff-so-fancy | less --tabs=4 -RFXS --pattern '^(Date|added|deleted|modified): '
-  diff = diff-so-fancy | less --tabs=4 -RFXS --pattern '^(Date|added|deleted|modified): '
 
-# [interactive]
-  # disabled until github.com/so-fancy/diff-so-fancy/pull/172 is resolved :(
-	# diffFilter = "diff-so-fancy"
+[interactive]
+	diffFilter = delta_ --color-only
 
 # so much color
 [color]
-	ui = auto
+	ui = true
 
 [color "diff"]
 	meta = 238 italic
@@ -190,7 +222,7 @@
 
 # push easily. http://stackoverflow.com/a/23918418/89484
 [push]
-	default = current
+	default = simple
 	followTags = true
 
 [pull]
@@ -225,12 +257,6 @@
 [difftool]
   prompt = false
   trustExitCode = true
-
-[diff "exif"]
-  textconv = exiftool
-
-[diff "plist"]
-  textconv = plutil -convert xml1 -o -
 
 [difftool "vimdiff"]
   cmd = $EDITOR -d $LOCAL $REMOTE

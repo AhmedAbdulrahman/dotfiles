@@ -97,6 +97,7 @@ main() {
   brew_install "Tokei" "tokei"
   brew_install "Diff-So-Fancy" "diff-so-fancy"
   brew_install "Git Delta" "git-delta"
+  brew_install "Tig - text-mode interface for Git" "tig"
   brew_install "Z - jump around" "z"
   brew_install "Image Magick" "imagemagick"
   brew_install "Rename" "rename"
