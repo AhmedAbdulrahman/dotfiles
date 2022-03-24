@@ -4,11 +4,6 @@ local map = require('utils.map')
 local opts = { noremap = true, silent = true }
 
 vim.g.nvim_tree_respect_buf_cwd = 1
--- 0 is supposed to be the default (ie. don't close tree when opening a file),
--- but it closes anyway; see: https://github.com/kyazdani42/nvim-tree.lua/issues/502
-vim.g.nvim_tree_quit_on_open = 1
-
-vim.g.nvim_tree_disable_window_picker = 1
 
 -- Only show the current folder as the root instead of full path.
 vim.g.nvim_tree_root_folder_modifier = ':t'
@@ -207,6 +202,14 @@ require('nvim-tree').setup({
   trash = {
     cmd = 'trash',
     require_confirm = true,
+  },
+  actions = {
+    open_file = {
+      quit_on_open = true,
+      window_picker = {
+        enable = true,
+      },
+    },
   },
 })
 
