@@ -99,12 +99,11 @@ cmp.setup({
 
   formatting = {
     format = function(entry, vim_item)
-      local lspkind = require('lspkind')
       vim_item.kind = lspkind.symbolic(vim_item.kind, { with_text = true })
 
       -- set a name for each source
       local menu = source_mapping[entry.source.name]
-      local maxwidth = 50
+      local maxwidth = 60
 
       if entry.source.name == 'cmp_tabnine' then
         if
@@ -130,7 +129,14 @@ cmp.setup({
     { name = 'nvim_lsp_signature_help' },
     { name = 'npm' },
     { name = 'cmp_tabnine', max_item_count = 3 },
-    { name = 'buffer', keyword_length = 5 },
+    {
+      name = 'buffer',
+      option = {
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end,
+      },
+    },
     { name = 'path' },
     { name = 'luasnip' },
     { name = 'calc' },
