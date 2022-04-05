@@ -60,7 +60,7 @@ cmp.setup({
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
     ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
+      select = NvimConfig.plugins.completion.select_first_on_enter,
     }),
     ['<C-e>'] = cmp.mapping({
       i = cmp.mapping.abort(),
