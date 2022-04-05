@@ -7,6 +7,7 @@ require('autocmds')
 require('functions')
 require('lsp.config')
 require('globals')
+require('floating_man')
 
 local g = vim.g
 
