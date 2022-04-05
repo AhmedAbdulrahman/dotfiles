@@ -167,6 +167,7 @@ opt.grepprg = 'grep ' -- Program to use for the :grep command.
   .. '--perl-regexp'
 opt.grepformat = '%f:%l:%c:%m,%f:%l:%m' -- Format to recognize for the :grep command output.
 opt.ignorecase = true -- Ignore case in search patterns.
+opt.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
 opt.smartcase = true -- Set 'noignorecase' if search pattern contains an uppercase letter.
 opt.undolevels = 100000 -- Maximum number of changes that can be undone.
 opt.splitbelow = true -- Splitting a window will put the new window below of the current one.
