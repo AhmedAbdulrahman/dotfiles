@@ -281,6 +281,16 @@ local function init()
     event = 'BufRead',
   })
   use({ 'sindrets/diffview.nvim' })
+
+  use({
+    'Pocco81/TrueZen.nvim',
+    cmd = {
+      'TZAtaraxis',
+      'TZMinimalist',
+      'TZFocus',
+    },
+    config = "require('plugins.truezen')",
+  })
 end
 
 local plugins = setmetatable({}, {
