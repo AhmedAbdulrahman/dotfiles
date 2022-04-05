@@ -20,6 +20,30 @@ local check_backspace = function()
   return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
 end
 
+lspkind.init({
+  symbol_map = {
+    Text = '',
+    Method = 'ƒ',
+    Function = 'ﬦ',
+    Constructor = '',
+    Variable = '',
+    Class = '',
+    Interface = 'ﰮ',
+    Module = '',
+    Property = '',
+    Unit = '',
+    Value = '',
+    Enum = '了',
+    Keyword = '',
+    Snippet = '﬌',
+    Color = '',
+    File = '',
+    Folder = '',
+    EnumMember = '',
+    Constant = '',
+    Struct = '',
+  },
+})
 -- Setup
 local source_mapping = {
   buffer = NvimConfig.icons.buffer .. '[BUF]',
