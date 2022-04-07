@@ -215,6 +215,14 @@ key_map(
   { noremap = true, silent = true }
 )
 
+-- Multi grep
+key_map(
+  'n',
+  '<leader>/',
+  "<CMD>lua require('plugins.telescope.pickers.multi-rg')()<CR>",
+  { noremap = true, silent = true }
+)
+
 -- Grep open files
 key_map(
   'n',
