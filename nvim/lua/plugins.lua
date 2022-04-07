@@ -70,19 +70,27 @@ local function init()
   })
   use({ 'RRethy/nvim-treesitter-textsubjects', after = { 'nvim-treesitter' } })
 
-  -- Telescope
-  use({ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' })
-  use({ 'cljoly/telescope-repo.nvim' })
+  -- 🔭 Telescope
   use({
-    'nvim-lua/telescope.nvim',
-    requires = {
-      'nvim-telescope/telescope-ui-select.nvim',
-      'nvim-telescope/telescope-fzf-native.nvim',
-      'nvim-lua/plenary.nvim',
-      'nvim-lua/popup.nvim',
-    },
+    'nvim-telescope/telescope.nvim',
     config = "require('plugins.telescope')",
   })
+  -- Telescope Extensions
+  use('cljoly/telescope-repo.nvim')
+  use({ 'nvim-telescope/telescope-file-browser.nvim' })
+  use({ 'nvim-telescope/telescope-ui-select.nvim' })
+  use('dhruvmanila/telescope-bookmarks.nvim')
+  use('nvim-telescope/telescope-github.nvim')
+  -- Trying command palette
+  use({ 'LinArcX/telescope-command-palette.nvim' })
+  use({
+    'AckslD/nvim-neoclip.lua',
+    config = function()
+      require('neoclip').setup()
+    end,
+  })
+  use({ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' })
+  use('jvgrootveld/telescope-zoxide')
 
   -- LSP Base
   use({
