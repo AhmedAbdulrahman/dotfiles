@@ -1,0 +1,9 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Count number of lines for a file/regex, recursively. Pass in a concerete file name, or a regex
+# (surrounded by quotes). E.g.:
+# - "*.xml"
+# - MyClass.java
+
+unalias countlines 2> /dev/null
+
+find . -type f -name "$1" -exec cat {} + | wc -l
