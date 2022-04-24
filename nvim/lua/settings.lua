@@ -192,7 +192,7 @@ opt.textwidth = 80
 opt.linebreak = true -- Wrap long lines at a character in 'breakat'.
 opt.number = true -- Print the line number in front of each line.
 opt.cursorline = true -- Highlight the screen line of the cursor with CursorLine.
-opt.signcolumn = 'auto:3' -- Always draw the sign column even there is no sign in it.
+opt.signcolumn = 'yes:2' -- Always draw the sign column even there is no sign in it.
 opt.foldmethod = 'indent' -- Use indent folding method to fold lines.
 opt.emoji = false
 opt.formatoptions:remove('c')
