@@ -207,7 +207,7 @@ local mappings = {
       'color schemes',
     },
     d = {
-      '<cmd>lua require("plugins.telescope").edit_neovim()<CR>',
+      '<cmd>lua require("plugins.telescope").edit_dotfiles()<CR>',
       'dotfiles',
     },
     h = {
