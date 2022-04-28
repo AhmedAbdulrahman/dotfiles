@@ -17,7 +17,7 @@ local function createCenteredFloatingWindow()
   return buf
 end
 
-vim.api.nvim_add_user_command('FloatingMan', function(opts)
+vim.api.nvim_create_user_command('FloatingMan', function(opts)
   local id = opts.args
   local buf = createCenteredFloatingWindow()
   vim.bo[buf].filetype = 'man'
