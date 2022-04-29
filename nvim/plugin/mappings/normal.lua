@@ -1,6 +1,11 @@
 local map = require('utils.map')
 local opts = { noremap = true, silent = true }
 
+
+-- Plugins
+-- Refactor with spectre
+map.nnoremap('<leader>pr', "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", { silent = true })
+
 -- Avoid issues because of remapping <c-a> and <c-x> below
 vim.cmd([[
   nnoremap <Plug>SpeedDatingFallbackUp <c-a>

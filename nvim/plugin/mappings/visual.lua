@@ -1,6 +1,10 @@
 local map = require('utils.map')
 local opts = { noremap = true, silent = true }
 
+-- Plugins
+-- Refactor with spectre
+map.vnoremap('<leader>pr', "<cmd>lua require('spectre').open_visual()<CR>")
+
 -- https://github.com/mhinz/vim-galore#dont-lose-selection-when-shifting-sidewards
 map.xnoremap('<', '<gv')
 map.xnoremap('>', '>gv')

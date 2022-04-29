@@ -185,6 +185,7 @@ local function init()
     end,
     ft = { 'markdown' },
   })
+  use({ 'nvim-pack/nvim-spectre' })
   use({ 'AndrewRadev/switch.vim' })
   use({ 'AndrewRadev/splitjoin.vim' })
   use({
