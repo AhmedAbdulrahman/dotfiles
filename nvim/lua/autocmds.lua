@@ -74,9 +74,10 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 vim.api.nvim_create_augroup('Formatter', { clear = true })
--- Format on save
+-- Format on save, can be disabled using format_on_save function.
+-- Check lsp/functions
 vim.api.nvim_create_autocmd(
-  'BufWritePost',
+  'BufWritePre',
   { pattern = '*', command = 'silent! FormatWrite', group = 'Formatter' }
 )
 
