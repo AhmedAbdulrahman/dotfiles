@@ -98,7 +98,7 @@ function M.starts_with(str, start)
 end
 
 function M.end_with(str, ending)
-  return ending == '' or str:sub(-#ending) == ending
+  return ending == "" or str:sub(- #ending) == ending
 end
 
 function M.split(s, delimiter)
@@ -113,46 +113,50 @@ function M.sleep(n)
   os.execute('sleep ' .. tonumber(n))
 end
 
-function M.jobstart(cmd, on_finish)
-  local has_error = false
-  local lines = {}
+M.jobstart = function(cmd, on_finish)
+	local has_error = false
+	local lines = {}
 
-  local function on_event(_, data, event)
-    if event == 'stdout' then
-      data = handle_job_data(data)
-      if not data then
-        return
-      end
+	local function on_event(_, data, event)
+	  if event == "stdout" then
+		data = M.handle_job_data(data)
+		if not data then
+		  return
+		end
 
-      for i = 1, #data do
-        table.insert(lines, data[i])
-      end
-    elseif event == 'stderr' then
-      data = handle_job_data(data)
-      if not data then
-        return
-      end
+		for i = 1, #data do
+		  table.insert(lines, data[i])
+		end
+	  elseif event == "stderr" then
+		data = M.handle_job_data(data)
+		if not data then
+		  return
+		end
 
-      has_error = true
-      local error_message = ''
-      for _, line in ipairs(data) do
-        error_message = error_message .. line
-      end
-      M.log('Error during running a job: ' .. error_message)
-    elseif event == 'exit' then
-      if not has_error then
-        on_finish(lines)
-      end
-    end
-  end
+		has_error = true
+		local error_message = ""
+		for _, line in ipairs(data) do
+		  error_message = error_message .. line
+		end
+		M.log("Error during running a job: " .. error_message)
+	  elseif event == "exit" then
+		if not has_error then
+		  on_finish(lines)
+		end
+	  end
+	end
 
-  vim.fn.jobstart(cmd, {
-    on_stderr = on_event,
-    on_stdout = on_event,
-    on_exit = on_event,
-    stdout_buffered = true,
-    stderr_buffered = true,
-  })
+	vim.fn.jobstart(cmd, {
+	  on_stderr = on_event,
+	  on_stdout = on_event,
+	  on_exit = on_event,
+	  stdout_buffered = true,
+	  stderr_buffered = true,
+	})
+end
+
+M.remove_whitespaces = function (string)
+  return string:gsub("%s+", "")
 end
 
 return M
