@@ -239,7 +239,7 @@ M.first_nvim_run = function()
         { title = 'Nvim', timeout = 5000 }
       )
       require('notify')(
-        'Please install treesitter servers manually by :TSInstall (maintained) command.',
+        'Please install treesitter servers manually by :TSInstall (all) command.',
         'info',
         { title = 'Installation', timeout = 10000 }
       )
