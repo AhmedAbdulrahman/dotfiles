@@ -3,7 +3,7 @@ local command_palette = {
 	  'File',
 	  {
 		'Yank Current File Name',
-		-- ":lua require('functions').yank_current_file_name()",
+		":lua require('functions').yank_current_file_name()",
 	  },
 	  { 'Write Current Buffer', ':w' },
 	  { 'Write All Buffers', ':wa' },

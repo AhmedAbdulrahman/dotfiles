@@ -3,6 +3,7 @@
 local utils = require('utils')
 local map = require('utils.map')
 local async = require('plenary.async')
+local Job = require "plenary.job"
 
 -- Custom Folds, make them look better
 vim.cmd([[
@@ -190,6 +191,24 @@ M.highlight_overlength = function()
         .. "')"
     )
   end
+end
+
+M.yank_current_file_name = function()
+	local file_name = vim.api.nvim_buf_get_name(0)
+	local input_pipe = vim.loop.new_pipe(false)
+
+	local yanker = Job:new {
+	  writer = input_pipe,
+	  command = "pbcopy",
+	}
+
+	-- @TODOUA: This works perfectly but double-check if it could be better(less)
+	yanker:start()
+	input_pipe:write(file_name)
+	input_pipe:close()
+	yanker:shutdown()
+
+	require "notify"("Yanked: " .. file_name, "info", { title = "File Name Yanker", timeout = 1000 })
 end
 
 -- Project specific override
