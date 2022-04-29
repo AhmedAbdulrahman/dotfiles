@@ -77,7 +77,7 @@ key_map(
 -- Pull Requests - PRs
 key_map(
   'n',
-  '<leader>pr',
+  '<leader>pl',
   [[<Cmd>lua require'plugins.telescope'.gh_prs()<CR>]],
   { noremap = true, silent = true }
 )
