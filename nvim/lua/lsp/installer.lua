@@ -67,8 +67,12 @@ local on_attach = function(client, bufnr)
   --    Enable completion triggered by <c-x><c-o>
   vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-  require('aerial').on_attach(client, bufnr)
-  map('n', '<leader>a', '<cmd>AerialToggle!<CR>')
+  local has_aerial, aerial = pcall(require, 'aerial')
+  if has_aerial then
+    aerial.setup{}
+    aerial.on_attach(client, bufnr)
+    keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>')
+  end
 end
 
 local handlers = {
