@@ -1,4 +1,5 @@
-local map = require('utils.map')
+local keymap = vim.keymap
+local silent = { silent = true }
 
 require('toggleterm').setup({
   -- size can be a number or function which is passed the current terminal
@@ -83,10 +84,11 @@ end
 
 vim.cmd([[command! Htop lua _HTOP_TOGGLE()]])
 
-map.nnoremap(
+keymap.set(
+  'n',
   '<Space>gg',
   '<cmd>lua _LAZYGIT_TOGGLE()<CR>',
-  { noremap = true, silent = true }
+  silent
 )
 
 function _G.set_terminal_keymaps()

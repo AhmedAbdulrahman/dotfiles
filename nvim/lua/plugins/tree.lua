@@ -1,7 +1,7 @@
 -- luacheck: max line length 150
 
-local map = require('utils.map')
-local opts = { noremap = true, silent = true }
+local keymap = vim.keymap
+local silent = { silent = true }
 
 vim.g.nvim_tree_respect_buf_cwd = 1
 
@@ -213,5 +213,5 @@ require('nvim-tree').setup({
    }
 })
 
-map.nnoremap('<leader>f', '<Cmd>NvimTreeToggle<CR>', opts)
-map.nnoremap('<leader>F', '<Cmd>NvimTreeFindFile<CR>z.', opts)
+keymap.set('n', '<leader>f', '<Cmd>NvimTreeToggle<CR>', slient)
+keymap.set('n', '<leader>F', '<Cmd>NvimTreeFindFile<CR>z.', slient)

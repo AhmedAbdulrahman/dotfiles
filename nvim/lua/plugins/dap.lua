@@ -1,5 +1,5 @@
-local map = require('utils.map')
-local opts = { noremap = true, silent = true }
+local keymap = vim.keymap
+local slient = { silent = true }
 
 -- DAP UI
 require('dapui').setup({
@@ -73,25 +73,28 @@ vim.fn.sign_define(
 )
 
 -- Keybindings
-map.nnoremap(
+keymap.set(
+  'n',
   '<Leader>db',
   "<CMD>lua require('dap').toggle_breakpoint()<CR>",
-  opts
+  slient
 )
-map.nnoremap('<Leader>dc', "<CMD>lua require('dap').continue()<CR>", opts)
-map.nnoremap('<Leader>dd', "<CMD>lua require('dap').continue()<CR>", opts)
-map.nnoremap(
+keymap.set('n', '<Leader>dc', "<CMD>lua require('dap').continue()<CR>", slient)
+keymap.set('n', '<Leader>dd', "<CMD>lua require('dap').continue()<CR>", slient)
+keymap.set(
+  'n',
   '<Leader>dh',
   "<CMD>lua require('dap.ui.variables').hover()<CR>",
-  opts
+  slient
 )
-map.nnoremap('<Leader>di', "<CMD>lua require('dap').step_into()<CR>", opts)
-map.nnoremap('<Leader>do', "<CMD>lua require('dap').step_out()<CR>", opts)
-map.nnoremap('<Leader>dO', "<CMD>lua require('dap').step_over()<CR>", opts)
-map.nnoremap(
+keymap.set('n', '<Leader>di', "<CMD>lua require('dap').step_into()<CR>", slient)
+keymap.set('n', '<Leader>do', "<CMD>lua require('dap').step_out()<CR>", slient)
+keymap.set('n', '<Leader>dO', "<CMD>lua require('dap').step_over()<CR>", slient)
+keymap.set(
+  'n',
   '<Leader>ds',
   "<CMD>lua require('dap.ui.variables').scopes()<CR>",
-  opts
+  slient
 )
 
 -- NODE / TYPESCRIPT

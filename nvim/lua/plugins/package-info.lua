@@ -1,5 +1,5 @@
-local map = require('utils.map')
-local opts = { noremap = true, silent = true }
+local keymap = vim.keymap
+local silent = { silent = true }
 local icons = NvimConfig.icons
 
 require('package-info').setup({
@@ -26,25 +26,26 @@ require('package-info').setup({
 })
 
 -- Show package versions
-map.nnoremap('<leader>ns', ":lua require('package-info').show()<CR>", opts)
+keymap.set('n', '<leader>ns', ":lua require('package-info').show()<CR>", silent)
 
 -- Hide package versions
-map.nnoremap('<leader>nc', ":lua require('package-info').hide()<CR>", opts)
+keymap.set('n', '<leader>nc', ":lua require('package-info').hide()<CR>", silent)
 
 -- Update package on line
-map.nnoremap('<leader>nu', ":lua require('package-info').update()<CR>", opts)
+keymap.set('n', '<leader>nu', ":lua require('package-info').update()<CR>", silent)
 
 -- Delete package on line
-map.nnoremap('<leader>nd', ":lua require('package-info').delete()<CR>", opts)
+keymap.set('n', '<leader>nd', ":lua require('package-info').delete()<CR>", silent)
 
 -- Install a new package
-map.nnoremap('<leader>ni', ":lua require('package-info').install()<CR>", opts)
+keymap.set('n', '<leader>ni', ":lua require('package-info').install()<CR>", silent)
 
 -- Reinstall dependencies
-map.nnoremap('<leader>nr', ":lua require('package-info').reinstall()<CR>", opts)
+keymap.set('n', '<leader>nr', ":lua require('package-info').reinstall()<CR>", silent)
 
 -- Install a different package version
-map.nnoremap(
+keymap.set(
+  'n',
   '<leader>np',
   ":lua require('package-info').change_version()<CR>",
   opts

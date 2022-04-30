@@ -1,9 +1,9 @@
 -- luacheck: max line length 160
 
 local utils = require('utils')
-local map = require('utils.map')
 local async = require('plenary.async')
 local Job = require "plenary.job"
+local keymap = vim.keymap
 
 -- Custom Folds, make them look better
 vim.cmd([[
@@ -150,7 +150,8 @@ end
 
 M.quit_on_q = function()
   if should_quit_on_q() then
-    map.nnoremap(
+    keymap.set(
+      'n',
       'q',
       (
           (vim.wo.diff == true or vim.bo.filetype == 'man') and ':qa!'

@@ -1,96 +1,98 @@
-local key_map = vim.api.nvim_set_keymap
+local keymap = vim.keymap
+local silent = silent
+
 -- TELESCOPE keymaps 🔭 --
 -- command palette
-key_map(
+keymap.set(
   'n',
   '<leader>cp',
   [[<Cmd>lua require('telescope').extensions.command_palette.command_palette()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- open available commands & run it
-key_map(
+keymap.set(
   'n',
   ',c',
   [[<Cmd>lua require'telescope.builtin'.commands({results_title='Commands Results'})<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- telescope notify history
-key_map(
+keymap.set(
   'n',
   '<leader>nh',
   [[<Cmd>lua require('telescope').extensions.notify.notify({results_title='Notification History', prompt_title='Search Messages'})<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- show Workspace Diagnostics
-key_map(
+keymap.set(
   'n',
   ',d',
   [[<Cmd>lua require'telescope.builtin'.diagnostics()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- Telescope oldfiles
-key_map(
+keymap.set(
   'n',
   ',o',
   [[<Cmd>lua require'telescope.builtin'.oldfiles({results_title='Recent-ish Files'})<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- Telescope resume (last picker)
-key_map(
+keymap.set(
   'n',
   '<leader>tr',
   [[<Cmd>lua require'telescope.builtin'.resume()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 
 -- LSP!
 -- show LSP implementations
-key_map(
+keymap.set(
   'n',
   '<leader>ti',
   [[<Cmd>lua require'telescope.builtin'.lsp_implementations()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- show LSP definitions
-key_map(
+keymap.set(
   'n',
   '<leader>td',
   [[<Cmd>lua require'telescope.builtin'.lsp_definitions({layout_config = { preview_width = 0.50, width = 0.92 }, path_display = { "shorten" }, results_title='Definitions'})<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- show DOCUMENT Symbols
-key_map(
+keymap.set(
   'n',
   ',ws',
   [[<Cmd>lua require'telescope.builtin'.lsp_document_symbols()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 
 -- Github
 -- issues
-key_map(
+keymap.set(
   'n',
   '<leader>is',
   [[<Cmd>lua require'plugins.telescope'.gh_issues()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- Pull Requests - PRs
-key_map(
+keymap.set(
   'n',
   '<leader>pl',
   [[<Cmd>lua require'plugins.telescope'.gh_prs()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- telescope-repo
-key_map(
+keymap.set(
   'n',
   '<leader>rl',
   [[<Cmd>lua require('plugins.telescope').repo_list()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- git telescope goodness
 -- git_branches
-key_map(
+keymap.set(
   'n',
   '<leader>gb',
   [[<Cmd>lua require'telescope.builtin'.git_branches({prompt_title = ' ', results_title='Git Branches'})<CR>]],
@@ -100,156 +102,156 @@ key_map(
   }
 )
 -- git_bcommits - file scoped commits with diff preview. <C-V> for vsp diff to parent
-key_map(
+keymap.set(
   'n',
   '<leader>gc',
   [[<Cmd>lua require'telescope.builtin'.git_bcommits({prompt_title = '  ', results_title='Git File Commits'})<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- git_commits (log) git log
-key_map(
+keymap.set(
   'n',
   '<leader>gl',
   [[<Cmd>lua require'telescope.builtin'.git_commits()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- git_status - <tab> to toggle staging
-key_map(
+keymap.set(
   'n',
   '<leader>gs',
   [[<Cmd>lua require'telescope.builtin'.git_status()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 
 -- Find registers
-key_map(
+keymap.set(
   'n',
   '<leader>r',
   [[<Cmd>lua require'telescope.builtin'.registers()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- Find current buffer
-key_map(
+keymap.set(
   'n',
   ',bf',
   [[<Cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- Find keymaps
-key_map(
+keymap.set(
   'n',
   ',k',
   [[<Cmd>lua require'telescope.builtin'.keymaps({results_title='Key Maps Results'})<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- Find buffers
-key_map(
+keymap.set(
   'n',
   ',b',
   [[<Cmd>lua require'telescope.builtin'.buffers({prompt_title = '', results_title='﬘', winblend = 3, layout_strategy = 'vertical', layout_config = { width = 0.60, height = 0.55 }})<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- Find help tags
-key_map(
+keymap.set(
   'n',
   '<leader>h',
   [[<Cmd>lua require'telescope.builtin'.help_tags({results_title='Help Results'})<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- Find marks
-key_map(
+keymap.set(
   'n',
   '<leader>m',
   [[<Cmd>lua require'telescope.builtin'.marks({results_title='Marks Results'})<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 
 -- Find files with gitfiles & fallback on find_files
-key_map(
+keymap.set(
   'n',
   '<leader><TAB>',
   [[<Cmd>lua require'plugins.telescope'.project_files()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- Find files including gitignored
-key_map(
+keymap.set(
   'n',
   ',<leader>',
   [[<Cmd>lua require'telescope.builtin'.find_files({find_command={'fd','--no-ignore-vcs'}})<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 
 -- Explore files starting at $HOME
-key_map(
+keymap.set(
   'n',
   '<leader>e',
   [[<Cmd>lua require'plugins.telescope'.file_explorer()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- Browse files from cwd - File Browser
-key_map(
+keymap.set(
   'n',
   '<leader>fb',
   [[<Cmd>lua require'telescope'.extensions.file_browser.file_browser()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- Grep word under cursor
-key_map(
+keymap.set(
   'n',
   '<leader>g',
   [[<Cmd>lua require'telescope.builtin'.grep_string()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- Grep word under cursor - case-sensitive (exact word) - made for use with Replace All - see <leader>ra
-key_map(
+keymap.set(
   'n',
   '<leader>gw',
   [[<Cmd>lua require'telescope.builtin'.grep_string({word_match='-w'})<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- Grep for a string
-key_map(
+keymap.set(
   'n',
   '<leader>gp',
   [[<Cmd>lua require'plugins.telescope'.grep_prompt()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 
 -- Multi grep
-key_map(
+keymap.set(
   'n',
   '<leader>/',
   "<CMD>lua require('plugins.telescope.pickers.multi-rg')()<CR>",
-  { noremap = true, silent = true }
+  silent
 )
 
 -- Grep open files
-key_map(
+keymap.set(
   'n',
   '<leader>lg',
   [[<Cmd>lua require('telescope.builtin').live_grep({grep_open_files=true, preview=true})<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 
 -- Find files in config dirs
-key_map(
+keymap.set(
   'n',
   '<leader>fc',
   [[<Cmd>lua require'plugins.telescope'.find_configs()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 -- find or create neovim configs
-key_map(
+keymap.set(
   'n',
   '<leader>nc',
   [[<Cmd>lua require'plugins.telescope'.nvim_config()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )
 
 -- neoclip
-key_map(
+keymap.set(
   'n',
   '<leader>ce',
   [[<Cmd>lua require('telescope').extensions.neoclip.default()<CR>]],
-  { noremap = true, silent = true }
+  silent
 )

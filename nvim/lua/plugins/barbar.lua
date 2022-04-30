@@ -1,5 +1,5 @@
-local map = require('utils.map')
-local opts = { noremap = true, silent = true }
+local keymap = vim.keymap
+local silent = { silent = true }
 
 -- Set barbar's options
 vim.g.bufferline = {
@@ -70,28 +70,28 @@ vim.g.bufferline = {
 
 -- Buffers (Barbar)
 -- Go to Next/Previous Buffer
-map.nnoremap('<Tab>', ':BufferNext<CR>', opts)
-map.nnoremap('gn', ':bn<CR>', opts)
-map.nnoremap('<S-Tab>', ':BufferPrevious<CR>', opts)
-map.nnoremap('gp', ':bp<CR>', opts)
-map.nnoremap('<S-q>', ':BufferClose<CR>', opts)
+keymap.set('n', '<Tab>', ':BufferNext<CR>', silent)
+keymap.set('n', 'gn', ':bn<CR>', silent)
+keymap.set('n', '<S-Tab>', ':BufferPrevious<CR>', silent)
+keymap.set('n', 'gp', ':bp<CR>', silent)
+keymap.set('n', '<S-q>', ':BufferClose<CR>', silent)
 
 -- Move between barbar buffers
-map.nnoremap('<Space>1', ':BufferGoto 1<CR>', { silent = true })
-map.nnoremap('<Space>2', ':BufferGoto 2<CR>', { silent = true })
-map.nnoremap('<Space>3', ':BufferGoto 3<CR>', { silent = true })
-map.nnoremap('<Space>4', ':BufferGoto 4<CR>', { silent = true })
-map.nnoremap('<Space>5', ':BufferGoto 5<CR>', { silent = true })
-map.nnoremap('<Space>6', ':BufferGoto 6<CR>', { silent = true })
-map.nnoremap('<Space>7', ':BufferGoto 7<CR>', { silent = true })
-map.nnoremap('<Space>8', ':BufferGoto 8<CR>', { silent = true })
-map.nnoremap('<Space>9', ':BufferGoto 9<CR>', { silent = true })
-map.nnoremap('<A-1>', ':BufferGoto 1<CR>', { silent = true })
-map.nnoremap('<A-2>', ':BufferGoto 2<CR>', { silent = true })
-map.nnoremap('<A-3>', ':BufferGoto 3<CR>', { silent = true })
-map.nnoremap('<A-4>', ':BufferGoto 4<CR>', { silent = true })
-map.nnoremap('<A-5>', ':BufferGoto 5<CR>', { silent = true })
-map.nnoremap('<A-6>', ':BufferGoto 6<CR>', { silent = true })
-map.nnoremap('<A-7>', ':BufferGoto 7<CR>', { silent = true })
-map.nnoremap('<A-8>', ':BufferGoto 8<CR>', { silent = true })
-map.nnoremap('<A-9>', ':BufferGoto 9<CR>', { silent = true })
+keymap.set('n', '<Space>1', ':BufferGoto 1<CR>', silent)
+keymap.set('n', '<Space>2', ':BufferGoto 2<CR>', silent)
+keymap.set('n', '<Space>3', ':BufferGoto 3<CR>', silent)
+keymap.set('n', '<Space>4', ':BufferGoto 4<CR>', silent)
+keymap.set('n', '<Space>5', ':BufferGoto 5<CR>', silent)
+keymap.set('n', '<Space>6', ':BufferGoto 6<CR>', silent)
+keymap.set('n', '<Space>7', ':BufferGoto 7<CR>', silent)
+keymap.set('n', '<Space>8', ':BufferGoto 8<CR>', silent)
+keymap.set('n', '<Space>9', ':BufferGoto 9<CR>', silent)
+keymap.set('n', '<A-1>', ':BufferGoto 1<CR>', silent)
+keymap.set('n', '<A-2>', ':BufferGoto 2<CR>', silent)
+keymap.set('n', '<A-3>', ':BufferGoto 3<CR>', silent)
+keymap.set('n', '<A-4>', ':BufferGoto 4<CR>', silent)
+keymap.set('n', '<A-5>', ':BufferGoto 5<CR>', silent)
+keymap.set('n', '<A-6>', ':BufferGoto 6<CR>', silent)
+keymap.set('n', '<A-7>', ':BufferGoto 7<CR>', silent)
+keymap.set('n', '<A-8>', ':BufferGoto 8<CR>', silent)
+keymap.set('n', '<A-9>', ':BufferGoto 9<CR>', silent)
