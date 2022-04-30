@@ -85,10 +85,17 @@ require('telescope').setup({
       n = {
         ['<Del>'] = actions.close,
         ['<C-A>'] = telescope_custom_actions.multi_selection_open,
+        ['<C-s>'] = actions.cycle_previewers_next,
+        ['<C-a>'] = actions.cycle_previewers_prev,
       },
       i = {
         ['<esc>'] = actions.close,
         ['<C-A>'] = telescope_custom_actions.multi_selection_open,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-q>"] = actions.send_selected_to_qflist,
+        ["<C-s>"] = actions.cycle_previewers_next,
+        ["<C-a>"] = actions.cycle_previewers_prev,
       },
     },
     dynamic_preview_title = true,
