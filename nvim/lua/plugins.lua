@@ -199,6 +199,7 @@ local function init()
   })
   use({
     'akinsho/nvim-toggleterm.lua',
+    branch = 'main',
     config = "require('plugins.toggleterm')",
   })
   use({ 'tpope/vim-repeat' })
