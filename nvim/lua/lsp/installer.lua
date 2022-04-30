@@ -1,30 +1,62 @@
 -- luacheck: max line length 130
 
 local lsp_installer = require('nvim-lsp-installer')
+local lsp = vim.lsp
+local diagnostic = vim.diagnostic
 local keymap = vim.keymap
-local silent = silent
 
 local on_attach = function(client, bufnr)
-  keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", silent)
-  keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", silent)
-  keymap.set("n", "<C-Space>", "<cmd>lua vim.lsp.buf.code_action()<CR>", silent)
-  keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", silent)
-  keymap.set("v", "<leader>ca", "<cmd>'<,'>lua vim.lsp.buf.range_code_action()<CR>", silent)
-  keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", silent)
-  keymap.set("n", "<leader>cf", "<cmd>lua vim.lsp.buf.formatting()<CR>", silent)
-  keymap.set("v", "<leader>cf", "<cmd>'<.'>lua vim.lsp.buf.range_formatting()<CR>", silent)
-  keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", silent)
-  keymap.set("n", "L", "<cmd>lua vim.lsp.buf.signature_help()<CR>", silent)
-  keymap.set("v", "gL", "<cmd>lua vim.lsp.buf.signature_help()<CR>", silent)
-  keymap.set("n", "]g", "<cmd>lua vim.diagnostic.goto_next({ float = { border = 'rounded' }})<CR>", silent)
-  keymap.set("n", "[g", "<cmd>lua vim.diagnostic.goto_prev({ float = { border = 'rounded' }})<CR>", silent)
-  keymap.set("n", '<leader>e', '<cmd>lua vim.diagnostic.open_float(nil, { focusable = false,  close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" }, source = "always" })<CR>', silent)
+  local map_opts = {
+    buffer = true,
+    silent = true,
+  }
 
--- map('n', 'gD', vim.lsp.buf.declaration, silent)
--- map('n', 'gi', vim.lsp.buf.implementation, silent)
--- map('n', '<leader>cl', vim.lsp.codelens.run, silent)
--- map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, silent)
--- map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, silent)
+  keymap.set("n", "gd", function() lsp.buf.definition() end, map_opts)
+  keymap.set('n', 'gD', function() lsp.buf.declaration() end, map_opts)
+  keymap.set('n', 'gt', function() lsp.buf.type_definition() end, map_opts)
+  keymap.set("n", "gr", function() lsp.buf.references() end, map_opts)
+  keymap.set('n', 'gi', function() lsp.buf.implementation() end, map_opts)
+  keymap.set('n', 'gx', function() lsp.buf.code_action() end, map_opts)
+  keymap.set("v", "gx",  function() lsp.buf.range_code_action() end, map_opts)
+  keymap.set("n", "<leader>rn", function() lsp.buf.rename() end, map_opts)
+  keymap.set("n", "\\f", function() lsp.buf.formatting() end, map_opts)
+  keymap.set("v", "<leader>cf",  function() lsp.buf.range_formatting() end, map_opts)
+  keymap.set("n", "K", function() lsp.buf.hover() end, map_opts)
+  keymap.set({ 'n', 'i' }, 'L', function() lsp.buf.signature_help() end, map_opts)
+  keymap.set( "n", '<leader>e', function()
+    diagnostic.open_float(nil, {
+        focusable = false,
+        source = "always",
+        scope = "line",
+        header = false,
+        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" }
+    })
+    end,
+    map_opts
+  )
+  keymap.set('n', '[g', function()
+    diagnostic.goto_prev({
+        float = {
+            source = "always",
+            border = 'rounded',
+        }
+    })
+    end,
+    map_opts
+  )
+  keymap.set('n', ']g', function()
+    diagnostic.goto_next({
+        float = {
+            source = "always",
+            border = 'rounded',
+        }
+    })
+    end,
+    map_opts
+  )
+-- map('n', '<leader>cl', vim.lsp.codelens.run, map_opts)
+-- map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, map_opts)
+-- map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, map_opts)
 
   -- Use LSP as the handler for formatexpr.
   --    See `:help formatexpr` for more information.
