@@ -8,43 +8,36 @@ BLUE=$(tput setaf 4)
 NC=$(tput sgr0)
 BOLD=$(tput bold)
 
-# VARIABLES
 declare -r NVIM_DIR="${NVIM_DIR:-"$(which nvim)"}"
-declare -r INSTALL_PREFIX="${INSTALL_PREFIX:-"$HOME/.local"}"
 declare -r RUNTIME_DIR="${RUNTIME_DIR:-"$XDG_DATA_HOME/nvim"}"
 declare -r CONFIG_DIR="${CONFIG_DIR:-"$XDG_CONFIG_HOME/nvim"}"
+declare -r DOTFILES_DIR="$HOME/dotfiles"
 declare -r PACK_DIR="$RUNTIME_DIR/site/pack"
 
 # MAIN
 function main() {
-  check_tput_install
+	check_tput_install
 
-  detect_platform
-  check_system_deps
-  echo -e "${BOLD}${YELLOW}Installation will override your $CONFIG_DIR directory!${NC}\n"
+	detect_platform
+	check_system_deps
 
-  while [ true ]; do
-    read -p $'Do you wish to backup your current config? \e[33m[y/n]\e[0m: ' yn
-    case $yn in
-        [Yy]* ) backup_old_config;break;;
-        [Nn]* ) break;;
-        * ) echo "${BOLD}Please answer ${YELLOW}y${NC}${BOLD} or ${YELLOW}n${NC}${BOLD}.${NC}";;
-    esac
-  done
+	 echo -e "${BOLD}${YELLOW}Installation will override your $CONFIG_DIR directory!${NC}\n"
 
-  while [ true ]; do
-    msg
-    read -p $'Do you wish to install Nvim config now? \e[33m[y/n]\e[0m: ' yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "${BOLD}Please answer ${YELLOW}y${NC}${BOLD} or ${YELLOW}n${NC}${BOLD}.${NC}";;
-    esac
-  done
+	while [ true ]; do
+		msg
+		read -p $'Do you wish to install Nvim config now? \e[33m[y/n]\e[0m: ' yn
+		case $yn in
+			[Yy]* ) break;;
+			[Nn]* ) exit;;
+			* ) echo "${BOLD}Please answer ${YELLOW}y${NC}${BOLD} or ${YELLOW}n${NC}${BOLD}.${NC}";;
+		esac
+	done
 
-  install_packer
-  setup
-  finish
+	remove_current_config
+	create_nvim_config_dir
+	install_packer
+	setup
+	finish
 }
 
 function msg() {
@@ -63,6 +56,13 @@ function msg() {
     echo -e "$text"
   else
     echo -n "$text"
+  fi
+}
+
+function check_tput_install() {
+  if ! command -v tput &>/dev/null; then
+    print_missing_dep_msg "tput"
+    exit 1
   fi
 }
 
@@ -143,28 +143,22 @@ function check_system_deps() {
   fi
 }
 
-function backup_old_config() {
-  msg "${BOLD}Backing up your current Neovim configuration...${NC}" "1"
+function remove_current_config() {
+  cd $HOME
+  msg "${BOLD}Removing current Neovim configuration... ${NC}"
+  rm -rf "$CONFIG_DIR"
+  echo -e "${GREEN}${BOLD}Done${NC}"
+}
 
-  mkdir -p "$CONFIG_DIR" "$CONFIG_DIR.bak"
-  if command -v rsync &>/dev/null; then
-    rsync --archive -hh --partial --progress --cvs-exclude \
-      --modify-window=1 "$CONFIG_DIR"/ "$CONFIG_DIR.bak"
-  else
-    OS="$(uname -s)"
-    case "$OS" in
-      Linux | *BSD)
-        cp -r "$CONFIG_DIR/"* "$CONFIG_DIR.bak/."
-        ;;
-      Darwin)
-        cp -R "$CONFIG_DIR/"* "$CONFIG_DIR.bak/."
-        ;;
-      *)
-        echo "OS $OS is not currently supported."
-        ;;
-    esac
-  fi
-  echo "${BOLD}${GREEN}Backup operation complete! ${GREEN}You can find it under ${CONFIG_DIR}.bak${NC}"
+function create_nvim_config_dir() {
+  cd $HOME
+  msg "${BOLD}Creating Nvim folder in root directory... ${NC}"
+  mkdir -p "$CONFIG_DIR"
+  echo -e "${GREEN}${BOLD}✓ Done${NC}"
+
+  msg "${BOLD}Symlinking all Nvim config... ${NC}"
+  stow --restow -vv --ignore ".DS_Store" --ignore ".+.local" --ignore='^README.*' --target="$CONFIG_DIR" --dir="$DOTFILES_DIR" nvim
+  echo -e "${GREEN}${BOLD}✓ Done${NC}"
 }
 
 function install_packer() {
@@ -200,10 +194,10 @@ function setup() {
   make
   [ ! -f "$PACK_DIR/packer/start/packer.nvim/telescope-fzf-native.nvim/build/libfzf.so" ] && msg "${BOLD}${RED}Error while building telescope-fzf-native... Aborting" 1 && exit
   [ -f "$PACK_DIR/packer/start/packer.nvim/telescope-fzf-native.nvim/build/libfzf.so" ] && msg "${BOLD}${GREEN}Done${NC}" 1 0
-  cd $CONFIG_DIR/.install
+  cd $DOTFILES_DIR
 
   msg "${BOLD}Installing plugins...${NC}" 1
-  "$NVIM_DIR" --headless -u installation_config.lua \
+  "$NVIM_DIR" --headless -u nvim/.install/installation_config.lua \
     -c 'autocmd User PackerComplete quitall' \
     -c 'PackerSync'
   msg "${BOLD}${GREEN}Done${NC}" 1 0
