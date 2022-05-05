@@ -156,8 +156,7 @@ local function init()
   use({
     'williamboman/nvim-lsp-installer',
     event = 'BufEnter',
-    after = 'cmp-nvim-lsp',
-    config = "require('lsp.installer')",
+    after = 'cmp-nvim-lsp'
   })
   use({
     'stevearc/dressing.nvim',
