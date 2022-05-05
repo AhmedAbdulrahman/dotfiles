@@ -7,6 +7,7 @@ require('colorscheme')
 require('autocmds')
 require('functions')
 require('lsp.config')
+require('lsp.run')
 require('lsp.functions')
 require('floating_man')
 

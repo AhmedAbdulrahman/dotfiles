@@ -14,7 +14,6 @@ end
 
 M.filetypes = {
   'vue',
-  'javascript',
 }
 
 M.init_options = {
