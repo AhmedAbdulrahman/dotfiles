@@ -1,58 +1,52 @@
 local M = {}
 
--- Auto-install
-local lsp_installer_servers = require('nvim-lsp-installer.servers')
-
-local ok, vue = lsp_installer_servers.get_server('vuels')
-if ok then
-  if not vue:is_installed() then
-    vue:install()
-  end
-end
-
--- Settings
-
 M.filetypes = {
-  'vue',
+    'vue',
 }
 
 M.init_options = {
-  config = {
-    css = {},
-    emmet = {},
-    html = {
-      suggest = {},
-    },
-    javascript = {
-      format = {},
-    },
-    stylusSupremacy = {},
-    typescript = {
-      format = {},
-    },
-    vetur = {
-      completion = {
-        autoImport = true,
-        tagCasing = 'kebab',
-        useScaffoldSnippets = false,
-      },
-      format = {
-        defaultFormatter = {
-          js = 'none',
-          ts = 'none',
+    config = {
+        css = {},
+        emmet = {},
+        html = {
+        suggest = {},
         },
-        defaultFormatterOptions = {},
-        scriptInitialIndent = false,
-        styleInitialIndent = false,
-      },
-      useWorkspaceDependencies = false,
-      validation = {
-        script = true,
-        style = true,
-        template = true,
-      },
+        javascript = {
+        format = {},
+        },
+        stylusSupremacy = {},
+        typescript = {
+        format = {},
+        },
+        vetur = {
+        completion = {
+            autoImport = true,
+            tagCasing = 'kebab',
+            useScaffoldSnippets = false,
+        },
+        format = {
+            defaultFormatter = {
+            html = "none",
+            js = 'none',
+            ts = 'none',
+            },
+            defaultFormatterOptions = {},
+            scriptInitialIndent = false,
+            styleInitialIndent = false,
+        },
+        useWorkspaceDependencies = false,
+        validation = {
+            script = true,
+            style = true,
+            template = true,
+            templateProps = true,
+            interpolation = true
+        },
+        experimental = {
+            templateInterpolationService = true
+        }
+        },
     },
-  },
 }
 
 return M
