@@ -50,11 +50,20 @@ lspconfig.tailwindcss.setup {
   settings = require('lsp.servers.tailwindcss').settings,
 }
 
-lspconfig.tsserver.setup {
-  capabilities = require('lsp.servers.tsserver').capabilities,
-  handlers = handlers,
-  on_attach = require('lsp.servers.tsserver').on_attach,
-}
+-- It enables tsserver automatically so no need to call lspconfig.tsserver.setup
+require("typescript").setup({
+	disable_commands = false, -- prevent the plugin from creating Vim commands
+	disable_formatting = false, -- disable tsserver's formatting capabilities
+	debug = false, -- enable debug logging for commands
+	enable_import_on_completion = true,
+	import_all_timeout = 5000, -- ms
+	-- LSP Config options
+	server = {
+	  capabilities = require('lsp.servers.tsserver').capabilities,
+	  handlers = handlers,
+	  on_attach = require('lsp.servers.tsserver').on_attach,
+	}
+  })
 
 lspconfig.vuels.setup {
   filetypes = require('lsp.servers.vuels').filetypes,
