@@ -257,6 +257,14 @@ M.first_nvim_run = function()
   end
 end
 
-M.first_nvim_run()
+-- M.first_nvim_run()
+
+local win = require('lspconfig.ui.windows')
+local _default_opts = win.default_opts
+win.default_opts = function(options)
+  local opts = _default_opts(options)
+  opts.border = NvimConfig.ui.float.border
+  return opts
+end
 
 return M
