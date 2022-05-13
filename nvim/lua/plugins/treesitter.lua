@@ -122,6 +122,12 @@ require('nvim-treesitter.configs').setup({
         ['iC'] = '@conditional.inner',
       },
     },
+	swap = {
+		enable = true,
+		swap_next = {
+		  ["~"] = "@parameter.inner",
+		},
+	},
   },
 
   textsubjects = {
