@@ -147,7 +147,7 @@ return require('packer').startup({
 			config = "require('plugins.gps')",
 			after = 'nvim-treesitter',
 		})
-		use({ 'jose-elias-alvarez/typescript.nvim', after = 'nvim-treesitter' })
+		use({ 'jose-elias-alvarez/typescript.nvim' })
 		-- Formatter
 		use({ 'mhartington/formatter.nvim', config = "require('plugins.formatter')" })
 		-- General
