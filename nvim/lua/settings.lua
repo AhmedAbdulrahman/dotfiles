@@ -84,7 +84,7 @@ opt.viewoptions = 'cursor,folds' -- save/restore just these (with `:{mk,load}vie
 opt.sidescroll = 3 -- Columns to scroll horizontally when cursor is moved off the screen.
 opt.sidescrolloff = 5 -- Minimum number of screen columns to keep to cursor right.
 -- Fix slight delay after pressing ESC then O http://ksjoberg.com/vim-esckeys.html
-opt.timeoutlen = 300 --- Faster completion
+opt.timeoutlen = 200 -- Faster completion (cannot be lower than 200 because then commenting doesn't work)
 opt.ttimeoutlen = 0 -- Time in milliseconds to wait for a key code sequence to complete.
 opt.updatetime = 100 -- Trigger CursorHold event faster.
 opt.updatecount = 0 -- Update swapfiles every 80 typed chars (I don't use swap files anymore)
