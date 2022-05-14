@@ -14,10 +14,12 @@ return require('packer').startup({
 
 		-- Needed to load first
 		use({ 'lewis6991/impatient.nvim' })
-		use({ 'nathom/filetype.nvim' })
+		use({
+			'nathom/filetype.nvim',
+			config = "require('plugins.filetype')",
+		})
 		use({ 'nvim-lua/plenary.nvim' })
 		use({ 'kyazdani42/nvim-web-devicons' })
-		--   use {'glepnir/dashboard-nvim', config = "require('plugins.dashboard')"}
 		use({
 			'mhinz/vim-startify',
 			event = 'BufEnter',
@@ -25,8 +27,6 @@ return require('packer').startup({
 		})
 
 		-- Themes
-		use({ 'bluz71/vim-nightfly-guicolors' })
-		use({ 'folke/tokyonight.nvim' })
 		use({ 'AhmedAbdulrahman/aylin.vim', branch = '0.5-nvim' })
 
 		-- Treesitter
@@ -155,7 +155,7 @@ return require('packer').startup({
 			'iamcco/markdown-preview.nvim',
 			run = 'cd app && npm install',
 			setup = function()
-			vim.g.mkdp_filetypes = { 'markdown' }
+				vim.g.mkdp_filetypes = { 'markdown' }
 			end,
 			ft = { 'markdown' },
 		})
@@ -248,7 +248,7 @@ return require('packer').startup({
 		use({
 			'airblade/vim-rooter',
 			setup = function()
-			vim.g.rooter_patterns = NvimConfig.plugins.rooter.patterns
+				vim.g.rooter_patterns = NvimConfig.plugins.rooter.patterns
 			end,
 		})
 
@@ -265,6 +265,11 @@ return require('packer').startup({
 			event = 'BufRead',
 		})
 		use({ 'sindrets/diffview.nvim' })
+		use({ 'akinsho/git-conflict.nvim',
+			config = function()
+				require('git-conflict').setup()
+			end
+		})
 
 		use({
 			'Pocco81/TrueZen.nvim',
