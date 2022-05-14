@@ -1,7 +1,3 @@
--- @deprecated Use vim.treesitter.query.get_node_text
-local ts_utils = require('nvim-treesitter.ts_utils')
-ts_utils.get_node_text = vim.treesitter.query.get_node_text
-
 require('nvim-treesitter').define_modules({
   fold = {
     attach = function()
@@ -36,7 +32,7 @@ require('nvim-treesitter.configs').setup({
   },
 
   incremental_selection = {
-    enable = true,
+    enable = false,
     keymaps = {
       init_selection = 'gnn',
       node_incremental = 'grn',
