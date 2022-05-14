@@ -10,510 +10,571 @@
                 "parameters": {
                     "basic.simultaneous_threshold_milliseconds": 50,
                     "basic.to_delayed_action_delay_milliseconds": 500,
-                    "basic.to_if_alone_timeout_milliseconds": 1000,
-                    "basic.to_if_held_down_threshold_milliseconds": 500,
+                    "basic.to_if_alone_timeout_milliseconds": 200,
+                    "basic.to_if_held_down_threshold_milliseconds": 200,
                     "mouse_motion_to_scroll.speed": 100
                 },
                 "rules": [
                     {
-                      "description": "CapsLock to Fn/Escape",
-                      "manipulators": [
-                        {
-                          "type": "basic",
-                          "from": {
-                            "key_code": "caps_lock",
-                            "modifiers": {
-                              "optional": ["any"]
-                            }
-                          },
-                          "to": [
+                        "description": "CAPS_LOCK to HYPER (SHIFT+COMMAND+OPTION+CONTROL) or ESCAPE (If Alone)",
+                        "manipulators": [
                             {
-                              "key_code": "fn",
-                              "modifiers": ["any"]
-                            }
-                          ],
-                          "to_if_alone": [
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": {}
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_shift",
+                                        "modifiers": [
+                                            "left_command",
+                                            "left_control",
+                                            "left_option"
+                                        ]
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "escape"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
                             {
-                              "key_code": "escape"
+                                "description": "Avoid starting sysdiagnose with the built-in macOS shortcut cmd+shift+option+ctrl+,",
+                                "from": {
+                                    "key_code": "comma",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command",
+                                            "shift",
+                                            "option",
+                                            "control"
+                                        ]
+                                    }
+                                },
+                                "to": [],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Avoid starting sysdiagnose with the built-in macOS shortcut cmd+shift+option+ctrl+.",
+                                "from": {
+                                    "key_code": "period",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command",
+                                            "shift",
+                                            "option",
+                                            "control"
+                                        ]
+                                    }
+                                },
+                                "to": [],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "description": "Avoid starting sysdiagnose with the built-in macOS shortcut cmd+shift+option+ctrl+/",
+                                    "key_code": "slash",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command",
+                                            "shift",
+                                            "option",
+                                            "control"
+                                        ]
+                                    }
+                                },
+                                "to": [],
+                                "type": "basic"
                             }
-                          ]
-                        }
-                      ]
+                        ]
                     },
                     {
-                      "description": "Change Fn + i/j/k/l to Arrows",
-                      "manipulators": [
-                        {
-                          "type": "basic",
-                          "from": {
-                            "key_code": "j",
-                            "modifiers": {
-                              "mandatory": ["fn"],
-                              "optional": ["any"]
-                            }
-                          },
-                          "to": [
+                        "description": "Shifts Move Forward and Backward by 1 word",
+                        "manipulators": [
                             {
-                              "key_code": "left_arrow"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "basic",
-                          "from": {
-                            "key_code": "k",
-                            "modifiers": {
-                              "mandatory": ["fn"],
-                              "optional": ["any"]
-                            }
-                          },
-                          "to": [
+                                "from": {
+                                    "key_code": "right_shift"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_shift"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "right_arrow",
+                                        "modifiers": [
+                                            "option"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
                             {
-                              "key_code": "down_arrow"
+                                "from": {
+                                    "key_code": "left_shift"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_shift"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "left_arrow",
+                                        "modifiers": [
+                                            "option"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
                             }
-                          ]
-                        },
-                        {
-                          "type": "basic",
-                          "from": {
-                            "key_code": "i",
-                            "modifiers": {
-                              "mandatory": ["fn"],
-                              "optional": ["any"]
-                            }
-                          },
-                          "to": [
-                            {
-                              "key_code": "up_arrow"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "basic",
-                          "from": {
-                            "key_code": "l",
-                            "modifiers": {
-                              "mandatory": ["fn"],
-                              "optional": ["any"]
-                            }
-                          },
-                          "to": [
-                            {
-                              "key_code": "right_arrow"
-                            }
-                          ]
-                        }
-                      ]
+                        ]
                     },
                     {
-                      "description": "Change Fn + h/x to Backspace and Del",
-                      "manipulators": [
-                        {
-                          "type": "basic",
-                          "from": {
-                            "key_code": "x",
-                            "modifiers": {
-                              "mandatory": ["fn"],
-                              "optional": ["any"]
-                            }
-                          },
-                          "to": [
+                        "description": "CMD + W to NOTHING",
+                        "manipulators": [
                             {
-                              "key_code": "delete_forward"
+                                "from": {
+                                    "key_code": "w",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_command"
+                                        ]
+                                    }
+                                },
+                                "to": [],
+                                "type": "basic"
                             }
-                          ]
-                        },
-                        {
-                          "type": "basic",
-                          "from": {
-                            "key_code": "h",
-                            "modifiers": {
-                              "mandatory": ["fn"],
-                              "optional": ["any"]
-                            }
-                          },
-                          "to": [
-                            {
-                              "key_code": "delete_or_backspace"
-                            }
-                          ]
-                        }
-                      ]
+                        ]
                     },
                     {
-                      "description": "Fn + Command + t to open Telegram",
-                      "manipulators": [
-                        {
-                          "type": "basic",
-                          "from": {
-                            "key_code": "t",
-                            "modifiers": {
-                              "mandatory": ["fn", "command"]
-                            }
-                          },
-                          "to": [
+                        "description": "CMD + Escape to activate Chrome and opens a new tab",
+                        "manipulators": [
                             {
-                              "shell_command": "open '/Applications/Telegram.app'"
+                                "from": {
+                                    "key_code": "escape",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_command"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'run script \"/Users/ahmed/.config/karabiner/openNewChromeTab.applescript\"'"
+                                    }
+                                ],
+                                "type": "basic"
                             }
-                          ]
-                        }
-                      ]
+                        ]
                     },
                     {
-                      "description": "Fn + Command + f to open Firefox",
-                      "manipulators": [
-                        {
-                          "type": "basic",
-                          "from": {
-                            "key_code": "f",
-                            "modifiers": {
-                              "mandatory": ["fn", "command"]
-                            }
-                          },
-                          "to": [
+                        "description": "Insert joke here",
+                        "manipulators": [
                             {
-                              "shell_command": "open '/Applications/Firefox.app'"
+                                "from": {
+                                    "key_code": "insert",
+                                    "modifiers": {
+                                        "mandatory": []
+                                    }
+                                },
+                                "to_if_alone": [
+                                    {
+                                        "shell_command": "afplay /Users/ahmed/.config/karabiner/rimshot-sound.mp3"
+                                    }
+                                ],
+                                "to_if_held_down": [
+                                    {
+                                        "shell_command": "afplay --rate 0.3 /Users/ahmed/.config/karabiner/rimshot-sound.mp3"
+                                    }
+                                ],
+                                "type": "basic"
                             }
-                          ]
-                        }
-                      ]
+                        ]
                     },
                     {
-                      "description": "Fn + Command + S to open Spotify",
-                      "manipulators": [
-                        {
-                          "type": "basic",
-                          "from": {
-                            "key_code": "s",
-                            "modifiers": {
-                              "mandatory": ["fn", "command"]
-                            }
-                          },
-                          "to": [
+                        "description": "Double tap cmd closes apps",
+                        "manipulators": [
                             {
-                              "shell_command": "open '/Applications/Spotify.app'"
+                                "conditions": [
+                                    {
+                                        "name": "command-q",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "q",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "q",
+                                        "modifiers": "left_command"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "q",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "command-q",
+                                            "value": 1
+                                        }
+                                    }
+                                ],
+                                "to_delayed_action": {
+                                    "to_if_canceled": [
+                                        {
+                                            "set_variable": {
+                                                "name": "command-q",
+                                                "value": 0
+                                            }
+                                        }
+                                    ],
+                                    "to_if_invoked": [
+                                        {
+                                            "set_variable": {
+                                                "name": "command-q",
+                                                "value": 0
+                                            }
+                                        }
+                                    ]
+                                },
+                                "type": "basic"
                             }
-                          ]
-                        }
-                      ]
+                        ]
                     },
                     {
-                      "description": "Fn + Command + C to open Chromium",
-                      "manipulators": [
-                        {
-                          "type": "basic",
-                          "from": {
-                            "key_code": "c",
-                            "modifiers": {
-                              "mandatory": ["fn", "command"]
-                            }
-                          },
-                          "to": [
+                        "description": "Hyper + SPACE : Toggle Alfred",
+                        "manipulators": [
                             {
-                              "shell_command": "open '/Applications/Chromium.app'"
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_shift",
+                                            "left_command",
+                                            "left_control",
+                                            "left_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "spacebar",
+                                        "modifiers": [
+                                            "left_command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
                             }
-                          ]
-                        }
-                      ]
+                        ]
                     },
                     {
-                      "description": "Fn + O to open Kitty",
-                      "manipulators": [
-                        {
-                          "type": "basic",
-                          "from": {
-                            "key_code": "o",
-                            "modifiers": {
-                              "mandatory": ["fn"]
-                            }
-                          },
-                          "to": [
+                        "description": "Open Screenshot.app with Print_Screen key",
+                        "manipulators": [
                             {
-                              "shell_command": "open '/Applications/kitty.app'"
+                                "from": {
+                                    "key_code": "print_screen"
+                                },
+                                "parameters": {
+                                    "basic.to_if_held_down_threshold_milliseconds": 50
+                                },
+                                "to_if_alone": [
+                                    {
+                                        "shell_command": "open -a screenshot.app"
+                                    }
+                                ],
+                                "to_if_held_down": {
+                                    "key_code": "2",
+                                    "modifiers": [
+                                        "left_shift",
+                                        "left_command"
+                                    ]
+                                },
+                                "type": "basic"
                             }
-                          ]
-                        }
-                      ]
+                        ]
                     },
                     {
-                      "description": "Change input source to English by left_command, Russian by right_command",
-                      "manipulators": [
-                        {
-                          "from": {
-                            "key_code": "left_command",
-                            "modifiers": {
-                              "optional": ["any"]
-                            }
-                          },
-                          "to": [
+                        "description": "Pause to sleep displays or sleep mac (If held)",
+                        "manipulators": [
                             {
-                              "key_code": "left_command"
+                                "from": {
+                                    "key_code": "pause"
+                                },
+                                "to_if_alone": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application \"Alfred 4\" to run trigger \"sleep-mac-trigger\" in workflow\"ahmed.test.workflow.bundleid.sleep-workflow\"'"
+                                    }
+                                ],
+                                "to_if_held_down": {
+                                    "shell_command": "osascript -e 'tell application \"Alfred 4\" to run trigger \"sleep-displays-trigger\" in workflow\"ahmed.test.workflow.bundleid.sleep-displays-workflow\"'"
+                                },
+                                "type": "basic"
                             }
-                          ],
-                          "to_if_alone": [
-                            {
-                              "select_input_source": {
-                                "language": "^en$"
-                              }
-                            }
-                          ],
-                          "type": "basic"
-                        },
-                        {
-                          "from": {
-                            "key_code": "right_command",
-                            "modifiers": {
-                              "optional": ["any"]
-                            }
-                          },
-                          "to": [
-                            {
-                              "key_code": "right_command"
-                            }
-                          ],
-                          "to_if_alone": [
-                            {
-                              "select_input_source": {
-                                "language": "^ru$"
-                              }
-                            }
-                          ],
-                          "type": "basic"
-                        }
-                      ]
+                        ]
                     },
                     {
-                      "description": "Fn + square brackets to volume control",
-                      "manipulators": [
-                        {
-                          "from": {
-                            "key_code": "open_bracket",
-                            "modifiers": {
-                              "mandatory": "fn"
-                            }
-                          },
-                          "to": [
+                        "description": "Hyper + i/j/k/l == vim directional Keys",
+                        "manipulators": [
                             {
-                              "consumer_key_code": "volume_decrement"
-                            }
-                          ],
-                          "type": "basic"
-                        },
-                        {
-                          "from": {
-                            "key_code": "close_bracket",
-                            "modifiers": {
-                              "mandatory": "fn"
-                            }
-                          },
-                          "to": [
+                                "from": {
+                                    "key_code": "k",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_shift",
+                                            "left_command",
+                                            "left_control",
+                                            "left_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "up_arrow"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
                             {
-                              "consumer_key_code": "volume_increment"
-                            }
-                          ],
-                          "type": "basic"
-                        }
-                      ]
-                    },
-                    {
-                      "description": "Fn + curly brackets to brightness control",
-                      "manipulators": [
-                        {
-                          "from": {
-                            "key_code": "open_bracket",
-                            "modifiers": {
-                              "mandatory": [ "fn", "shift" ]
-                            }
-                          },
-                          "to": [
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_shift",
+                                            "left_command",
+                                            "left_control",
+                                            "left_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_arrow"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
                             {
-                              "consumer_key_code": "display_brightness_decrement"
-                            }
-                          ],
-                          "type": "basic"
-                        },
-                        {
-                          "from": {
-                            "key_code": "close_bracket",
-                            "modifiers": {
-                              "mandatory": [ "fn", "shift" ]
-                            }
-                          },
-                          "to": [
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_shift",
+                                            "left_command",
+                                            "left_control",
+                                            "left_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "down_arrow"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
                             {
-                              "consumer_key_code": "display_brightness_increment"
-                            }
-                          ],
-                          "type": "basic"
-                        }
-                      ]
-                    },
-                    {
-                      "description": "Fn + Backslash to play/pause",
-                      "manipulators": [
-                        {
-                          "from": {
-                            "key_code": "backslash",
-                            "modifiers": {
-                              "mandatory": "fn"
-                            }
-                          },
-                          "to": [
+                                "from": {
+                                    "key_code": "l",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_shift",
+                                            "left_command",
+                                            "left_control",
+                                            "left_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_arrow"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
                             {
-                              "consumer_key_code": "play_or_pause"
+                                "from": {
+                                    "key_code": "semicolon",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_shift",
+                                            "left_command",
+                                            "left_control",
+                                            "left_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_arrow",
+                                        "modifiers": [
+                                            "left_command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
                             }
-                          ],
-                          "type": "basic"
-                        }
-                      ]
-                    },
-                    {
-                      "description": "Fn + Command + squared brackets to fastforward and rewind",
-                      "manipulators": [
-                        {
-                          "from": {
-                            "key_code": "open_bracket",
-                            "modifiers": {
-                              "mandatory": [ "fn", "command" ]
-                            }
-                          },
-                          "to": [
-                            {
-                              "consumer_key_code": "rewind"
-                            }
-                          ],
-                          "type": "basic"
-                        },
-                        {
-                          "from": {
-                            "key_code": "close_bracket",
-                            "modifiers": {
-                              "mandatory": [ "fn", "command" ]
-                            }
-                          },
-                          "to": [
-                            {
-                              "consumer_key_code": "fastforward"
-                            }
-                          ],
-                          "type": "basic"
-                        }
-                      ]
+                        ]
                     }
-
-                  ]
+                ]
             },
             "devices": [
+                {
+                    "disable_built_in_keyboard_if_exists": true,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 6991,
+                        "vendor_id": 6940
+                    },
+                    "ignore": false,
+                    "manipulate_caps_lock_led": true,
+                    "simple_modifications": []
+                },
                 {
                     "disable_built_in_keyboard_if_exists": false,
                     "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": false,
-                        "product_id": 630,
+                        "product_id": 635,
                         "vendor_id": 1452
                     },
                     "ignore": false,
+                    "manipulate_caps_lock_led": true,
+                    "simple_modifications": []
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 592,
+                        "vendor_id": 1452
+                    },
+                    "ignore": true,
                     "manipulate_caps_lock_led": true,
                     "simple_modifications": []
                 }
             ],
             "fn_function_keys": [
                 {
-                  "from": {
-                    "key_code": "f1"
-                  },
-                  "to": {
-                    "consumer_key_code": "display_brightness_decrement"
-                  }
+                    "from": {
+                        "key_code": "f1"
+                    },
+                    "to": {
+                        "consumer_key_code": "display_brightness_decrement"
+                    }
                 },
                 {
-                  "from": {
-                    "key_code": "f2"
-                  },
-                  "to": {
-                    "consumer_key_code": "display_brightness_increment"
-                  }
+                    "from": {
+                        "key_code": "f2"
+                    },
+                    "to": {
+                        "consumer_key_code": "display_brightness_increment"
+                    }
                 },
                 {
-                  "from": {
-                    "key_code": "f3"
-                  },
-                  "to": {
-                    "key_code": "mission_control"
-                  }
+                    "from": {
+                        "key_code": "f3"
+                    },
+                    "to": {
+                        "key_code": "mission_control"
+                    }
                 },
                 {
-                  "from": {
-                    "key_code": "f4"
-                  },
-                  "to": {
-                    "key_code": "launchpad"
-                  }
+                    "from": {
+                        "key_code": "f4"
+                    },
+                    "to": {
+                        "key_code": "launchpad"
+                    }
                 },
                 {
-                  "from": {
-                    "key_code": "f5"
-                  },
-                  "to": {
-                    "key_code": "illumination_decrement"
-                  }
+                    "from": {
+                        "key_code": "f5"
+                    },
+                    "to": {
+                        "key_code": "illumination_decrement"
+                    }
                 },
                 {
-                  "from": {
-                    "key_code": "f6"
-                  },
-                  "to": {
-                    "key_code": "illumination_increment"
-                  }
+                    "from": {
+                        "key_code": "f6"
+                    },
+                    "to": {
+                        "key_code": "illumination_increment"
+                    }
                 },
                 {
-                  "from": {
-                    "key_code": "f7"
-                  },
-                  "to": {
-                    "consumer_key_code": "rewind"
-                  }
+                    "from": {
+                        "key_code": "f7"
+                    },
+                    "to": {
+                        "consumer_key_code": "rewind"
+                    }
                 },
                 {
-                  "from": {
-                    "key_code": "f8"
-                  },
-                  "to": {
-                    "consumer_key_code": "play_or_pause"
-                  }
+                    "from": {
+                        "key_code": "f8"
+                    },
+                    "to": {
+                        "consumer_key_code": "play_or_pause"
+                    }
                 },
                 {
-                  "from": {
-                    "key_code": "f9"
-                  },
-                  "to": {
-                    "consumer_key_code": "fastforward"
-                  }
+                    "from": {
+                        "key_code": "f9"
+                    },
+                    "to": {
+                        "consumer_key_code": "fastforward"
+                    }
                 },
                 {
-                  "from": {
-                    "key_code": "f10"
-                  },
-                  "to": {
-                    "consumer_key_code": "mute"
-                  }
+                    "from": {
+                        "key_code": "f10"
+                    },
+                    "to": {
+                        "consumer_key_code": "mute"
+                    }
                 },
                 {
-                  "from": {
-                    "key_code": "f11"
-                  },
-                  "to": {
-                    "consumer_key_code": "volume_decrement"
-                  }
+                    "from": {
+                        "key_code": "f11"
+                    },
+                    "to": {
+                        "consumer_key_code": "volume_decrement"
+                    }
                 },
                 {
-                  "from": {
-                    "key_code": "f12"
-                  },
-                  "to": {
-                    "consumer_key_code": "volume_increment"
-                  }
+                    "from": {
+                        "key_code": "f12"
+                    },
+                    "to": {
+                        "consumer_key_code": "volume_increment"
+                    }
                 }
             ],
             "name": "Default profile",
@@ -524,13 +585,279 @@
             "simple_modifications": [
                 {
                     "from": {
-                        "key_code": "caps_lock"
+                        "key_code": "application"
                     },
                     "to": {
-                        "key_code": "f17"
+                        "consumer_key_code": "display_brightness_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "left_command"
+                    },
+                    "to": {
+                        "key_code": "left_option"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "left_option"
+                    },
+                    "to": {
+                        "key_code": "left_command"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "right_control"
+                    },
+                    "to": {
+                        "consumer_key_code": "display_brightness_increment"
                     }
                 }
             ],
+            "virtual_hid_keyboard": {
+                "country_code": 0,
+                "mouse_key_xy_scale": 100
+            }
+        },
+        {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.simultaneous_threshold_milliseconds": 50,
+                    "basic.to_delayed_action_delay_milliseconds": 500,
+                    "basic.to_if_alone_timeout_milliseconds": 1000,
+                    "basic.to_if_held_down_threshold_milliseconds": 500,
+                    "mouse_motion_to_scroll.speed": 100
+                },
+                "rules": []
+            },
+            "devices": [],
+            "fn_function_keys": [
+                {
+                    "from": {
+                        "key_code": "f1"
+                    },
+                    "to": {
+                        "consumer_key_code": "display_brightness_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f2"
+                    },
+                    "to": {
+                        "consumer_key_code": "display_brightness_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f3"
+                    },
+                    "to": {
+                        "key_code": "mission_control"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f4"
+                    },
+                    "to": {
+                        "key_code": "launchpad"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f5"
+                    },
+                    "to": {
+                        "key_code": "illumination_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f6"
+                    },
+                    "to": {
+                        "key_code": "illumination_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f7"
+                    },
+                    "to": {
+                        "consumer_key_code": "rewind"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f8"
+                    },
+                    "to": {
+                        "consumer_key_code": "play_or_pause"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f9"
+                    },
+                    "to": {
+                        "consumer_key_code": "fastforward"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f10"
+                    },
+                    "to": {
+                        "consumer_key_code": "mute"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f11"
+                    },
+                    "to": {
+                        "consumer_key_code": "volume_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f12"
+                    },
+                    "to": {
+                        "consumer_key_code": "volume_increment"
+                    }
+                }
+            ],
+            "name": "Testing",
+            "parameters": {
+                "delay_milliseconds_before_open_device": 1000
+            },
+            "selected": false,
+            "simple_modifications": [],
+            "virtual_hid_keyboard": {
+                "country_code": 0,
+                "mouse_key_xy_scale": 100
+            }
+        },
+        {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.simultaneous_threshold_milliseconds": 50,
+                    "basic.to_delayed_action_delay_milliseconds": 500,
+                    "basic.to_if_alone_timeout_milliseconds": 1000,
+                    "basic.to_if_held_down_threshold_milliseconds": 500,
+                    "mouse_motion_to_scroll.speed": 100
+                },
+                "rules": []
+            },
+            "devices": [],
+            "fn_function_keys": [
+                {
+                    "from": {
+                        "key_code": "f1"
+                    },
+                    "to": {
+                        "consumer_key_code": "display_brightness_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f2"
+                    },
+                    "to": {
+                        "consumer_key_code": "display_brightness_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f3"
+                    },
+                    "to": {
+                        "key_code": "mission_control"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f4"
+                    },
+                    "to": {
+                        "key_code": "launchpad"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f5"
+                    },
+                    "to": {
+                        "key_code": "illumination_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f6"
+                    },
+                    "to": {
+                        "key_code": "illumination_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f7"
+                    },
+                    "to": {
+                        "consumer_key_code": "rewind"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f8"
+                    },
+                    "to": {
+                        "consumer_key_code": "play_or_pause"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f9"
+                    },
+                    "to": {
+                        "consumer_key_code": "fastforward"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f10"
+                    },
+                    "to": {
+                        "consumer_key_code": "mute"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f11"
+                    },
+                    "to": {
+                        "consumer_key_code": "volume_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f12"
+                    },
+                    "to": {
+                        "consumer_key_code": "volume_increment"
+                    }
+                }
+            ],
+            "name": "Nothing",
+            "parameters": {
+                "delay_milliseconds_before_open_device": 1000
+            },
+            "selected": false,
+            "simple_modifications": [],
             "virtual_hid_keyboard": {
                 "country_code": 0,
                 "mouse_key_xy_scale": 100
