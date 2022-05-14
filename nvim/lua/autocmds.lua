@@ -152,3 +152,10 @@ vim.api.nvim_create_autocmd('DirChanged', {
   command = 'lua require("functions").source_project_config()',
   group = '__myautocmds__',
 })
+
+-- Attach specific keybindings in which-key for specific filetypes
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*.md",
+	callback = function() require('plugins.which-key').attach_markdown(0) end,
+	group = '__myautocmds__',
+})
