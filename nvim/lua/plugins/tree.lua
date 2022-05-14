@@ -1,7 +1,14 @@
 -- luacheck: max line length 150
 
+local tree = require('nvim-tree')
+local treeview = require('nvim-tree.view')
+local utils = require('utils')
+local buf = require('bufferline.state')
+
 local keymap = vim.keymap
 local silent = { silent = true }
+
+local TREE_WIDTH = 30
 
 vim.g.nvim_tree_respect_buf_cwd = 1
 
@@ -171,7 +178,7 @@ require('nvim-tree').setup({
   },
   view = {
     -- width of the window, can be either a number (columns) or a string in `%`
-    width = 30,
+    width = TREE_WIDTH,
     hide_root_folder = false,
     -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
     side = 'left',
@@ -193,18 +200,18 @@ require('nvim-tree').setup({
   },
   actions = {
     open_file = {
-    quit_on_open = false,
-    -- if true the tree will resize itself after opening a file
-    resize_window = true,
-      window_picker = {
-        enable = true,
-        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-        exclude = {
-          filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
-          buftype = { "nofile", "terminal", "help" },
-        },
-      },
-    },
+    	quit_on_open = false,
+    	-- if true the tree will resize itself after opening a file
+		resize_window = true,
+		window_picker = {
+			enable = true,
+			chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+			exclude = {
+				filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+				buftype = { "nofile", "terminal", "help" },
+			},
+		},
+	},
   },
    renderer = {
     indent_markers = {
@@ -213,5 +220,22 @@ require('nvim-tree').setup({
    }
 })
 
-keymap.set('n', '<leader>f', '<Cmd>NvimTreeToggle<CR>', slient)
-keymap.set('n', '<leader>F', '<Cmd>NvimTreeFindFile<CR>z.', slient)
+keymap.set("n", "<leader>f", "<cmd>lua require'plugins.tree'.toggle()<CR>", { noremap = true, silent = true })
+
+local M = {}
+
+M.toggle = function()
+  local view = treeview.is_visible()
+  if not view then
+    buf.set_offset(TREE_WIDTH + 1, utils.add_whitespaces(13) .. 'File Explorer')
+    if vim.bo.filetype == 'dashboard' then tree.open() else tree.find_file(true) end
+    return
+  end
+
+  if view then
+    buf.set_offset(0)
+    treeview.close()
+  end
+end
+
+return M

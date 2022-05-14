@@ -55,4 +55,5 @@ if NvimConfig.colorscheme == 'aylin' then
   vim.highlight.link('LspReferenceText', 'CursorLine', true)
   vim.highlight.link('LspReferenceWrite', 'CursorLine', true)
   vim.highlight.link('LspReferenceRead', 'CursorLine', true)
+  vim.highlight.link('BufferOffset', NvimConfig.ui.float.highlight, true);
 end
