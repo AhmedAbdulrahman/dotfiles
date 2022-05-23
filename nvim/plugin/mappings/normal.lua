@@ -1,10 +1,28 @@
 local keymap = vim.keymap
-local silent = silent
+local silent = { silent = true }
 
 
 -- Plugins
 -- Refactor with spectre
 keymap.set('n', '<leader>pr', "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", silent)
+
+-- Lsp
+keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", silent)
+keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", silent)
+keymap.set("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", silent)
+keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references({ includeDeclaration = false })<CR>", silent)
+keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", silent)
+keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", silent)
+keymap.set("v", "<leader>ca", "<cmd>'<,'>lua vim.lsp.buf.range_code_action()<CR>", silent)
+keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", silent)
+keymap.set("n", "<leader>\\f", "<cmd>lua vim.lsp.buf.formatting()<CR>", silent)
+keymap.set("n", "<leader>cf", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", silent)
+keymap.set("v", "<leader>cf", "<cmd>'<.'>lua vim.lsp.buf.range_formatting()<CR>", silent)
+keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", silent)
+keymap.set({ 'n', 'i' }, "L", "<cmd>lua vim.lsp.buf.signature_help()<CR>", silent)
+keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float(nil, { focusable = false, scope = 'line', header = false, close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' }})<CR>", silent)
+keymap.set("n", "]g", "<cmd>lua vim.diagnostic.goto_next({ float = { border = 'rounded', max_width = 100 }})<CR>", silent)
+keymap.set("n", "[g", "<cmd>lua vim.diagnostic.goto_prev({ float = { border = 'rounded', max_width = 100 }})<CR>", silent)
 
 -- Avoid issues because of remapping <c-a> and <c-x> below
 vim.cmd([[
