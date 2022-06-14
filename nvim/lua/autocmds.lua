@@ -159,3 +159,9 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function() require('plugins.which-key').attach_markdown(0) end,
 	group = '__myautocmds__',
 })
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = { "*.ts", "*.tsx" },
+	callback = function() require('plugins.which-key').attach_typescript(0) end,
+	group = '__myautocmds__',
+})
