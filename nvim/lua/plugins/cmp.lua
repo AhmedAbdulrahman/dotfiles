@@ -49,7 +49,7 @@ local source_mapping = {
   buffer = NvimConfig.icons.buffer .. '[BUF]',
   calc = NvimConfig.icons.calculator,
   cmp_tabnine = NvimConfig.icons.light,
-  luasnip = NvimConfig.icons.snippet,
+  luasnip = NvimConfig.icons.snippet .. '[SNP]',
   npm = NvimConfig.icons.terminal .. '[NPM]',
   nvim_lsp = NvimConfig.icons.paragraph .. '[LSP]',
   nvim_lua = NvimConfig.icons.bomb,
@@ -134,7 +134,9 @@ cmp.setup({
           entry.completion_item.data ~= nil
           and entry.completion_item.data.detail ~= nil
         then
-          menu = menu .. '[' .. entry.completion_item.data.detail .. ']'
+          menu = menu .. entry.completion_item.data.detail
+        else
+          menu = menu .. 'TBN'
         end
       end
 
