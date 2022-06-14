@@ -69,6 +69,7 @@ return require('packer').startup({
 		use('jvgrootveld/telescope-zoxide')
 
 		-- LSP Base
+		use({ 'williamboman/nvim-lsp-installer' })
 		use({
 			'neovim/nvim-lspconfig',
 			requires = {
@@ -128,12 +129,6 @@ return require('packer').startup({
 		use({ 'saadparwaiz1/cmp_luasnip', after = 'cmp-npm' })
 		use({ 'hrsh7th/cmp-nvim-lsp-signature-help', after = 'cmp_luasnip' })
 
-		-- LSP Addons
-		use({
-			'williamboman/nvim-lsp-installer',
-			event = 'BufEnter',
-			after = 'cmp-nvim-lsp'
-		})
 		use({
 			'stevearc/dressing.nvim',
 			requires = 'MunifTanjim/nui.nvim',

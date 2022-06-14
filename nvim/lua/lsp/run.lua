@@ -2,7 +2,14 @@
 -- Setup installer & lsp configs
 local typescript_ok, typescript = pcall(require, 'typescript')
 
-require("nvim-lsp-installer").setup {
+local lsp_installer_ok, lsp_installer = pcall(require, 'nvim-lsp-installer')
+
+if not lsp_installer_ok then
+  return
+end
+
+lsp_installer.setup {
+	-- A list of servers to automatically install if they're not already installed
     ensure_installed = { "bashls", "cssls", "eslint", "graphql", "html", "jsonls", "sumneko_lua", "tailwindcss", "tsserver", "vetur", "vuels" }
 }
 
