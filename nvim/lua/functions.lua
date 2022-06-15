@@ -239,16 +239,11 @@ M.first_nvim_run = function()
         'info',
         { title = 'Nvim', timeout = 5000 }
       )
-      require('notify')(
-        'Please install treesitter servers manually by :TSInstall (all) command.',
-        'info',
-        { title = 'Installation', timeout = 10000 }
-      )
-      require('notify')(
-        'LSP Servers needs to be enabled manually in lsp/config.lua file.',
-        'info',
-        { title = 'Installation', timeout = 12000 }
-      )
+	  require('notify')(
+		"Please install treesitter servers manually by :TSInstall command.",
+	  	"info",
+		{ title = "Installation", timeout = 10000 }
+	)
     end)
     local suc = os.remove('/tmp/first-nvim-run')
     if not suc then
