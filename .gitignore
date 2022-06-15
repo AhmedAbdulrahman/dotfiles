@@ -12,7 +12,3 @@
 *.old
 log.*.txt
 node_modules
-
-extras/alfred/Alfred.alfredpreferences/clipboard/snippets.alfdb
-extras/alfred/Alfred.alfredpreferences/preferences/local/8eba23311385d1baaadb1929931f397b29758d9a
-extras/alfred/Alfred.alfredpreferences/remote/

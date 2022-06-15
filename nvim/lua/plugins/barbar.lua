@@ -70,10 +70,10 @@ vim.g.bufferline = {
 
 -- Buffers (Barbar)
 -- Go to Next/Previous Buffer
-keymap.set('n', '<Tab>', ':bnext<CR>', silent)
-keymap.set('n', 'gn', ':bnext<CR>', silent)
-keymap.set('n', '<S-Tab>', ':bprevious<CR>', silent)
-keymap.set('n', 'gp', ':bprevious<CR>', silent)
+keymap.set('n', '<Tab>', ':BufferNext<CR>', silent)
+keymap.set('n', 'gn', ':bn<CR>', silent)
+keymap.set('n', '<S-Tab>', ':BufferPrevious<CR>', silent)
+keymap.set('n', 'gp', ':bp<CR>', silent)
 keymap.set('n', '<S-q>', ':BufferClose<CR>', silent)
 
 -- Move between barbar buffers
