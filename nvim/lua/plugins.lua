@@ -98,11 +98,6 @@ return require('packer').startup({
 			},
 		})
 
-		use({
-			'jose-elias-alvarez/null-ls.nvim',
-			config = "require('lsp.null-ls')",
-		})
-
 		-- LSP Cmp
 		use({
 			'hrsh7th/nvim-cmp',
