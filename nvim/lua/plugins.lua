@@ -133,7 +133,8 @@ return require('packer').startup({
 		use({ 'folke/lsp-trouble.nvim', config = "require('plugins.trouble')" })
 		use({ 'nvim-lua/popup.nvim' })
 		use({
-			'SmiteshP/nvim-gps',
+			'ChristianChiarulli/nvim-gps',
+			branch = 'text_hl',
 			config = "require('plugins.gps')",
 			after = 'nvim-treesitter',
 		})

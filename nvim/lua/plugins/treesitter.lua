@@ -19,25 +19,19 @@ require('nvim-treesitter.configs').setup({
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = { 'haskell', 'verilog' }, -- list of parsers to ignore installing
 
-  query_linter = {
-    enable = true,
-    use_virtual_text = true,
-    lint_events = { 'BufWrite', 'CursorHold' },
-  },
-
   highlight = {
     enable = true,
     -- disable = { "c", "rust" },  -- list of language that will be disabled
-    additional_vim_regex_highlighting = false,
+    -- additional_vim_regex_highlighting = false,
   },
 
   incremental_selection = {
     enable = false,
     keymaps = {
-      init_selection = 'gnn',
-      node_incremental = 'grn',
-      scope_incremental = 'grc',
-      node_decremental = 'grm',
+		init_selection    = "<leader>gnn",
+		node_incremental  = "<leader>gnr",
+		scope_incremental = "<leader>gne",
+		node_decremental  = "<leader>gnt",
     },
   },
 
@@ -74,17 +68,6 @@ require('nvim-treesitter.configs').setup({
       'javascript.jsx',
       'typescript.tsx',
     },
-  },
-
-  autopairs = {
-    enable = true,
-  },
-
-  playground = {
-    enable = true,
-    disable = {},
-    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-    persist_queries = false, -- Whether the query persists across vim sessions
   },
 
   textobjects = {

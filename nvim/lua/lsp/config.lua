@@ -45,7 +45,7 @@ local codes = {
       icon = "  ",
       "unused-local",
       "@typescript-eslint/no-unused-vars",
-	  "no-unused-vars"
+      "no-unused-vars"
     },
     unused_function = {
       message = "  Don't define functions you don't use",
@@ -67,60 +67,61 @@ local codes = {
       message = " Should that be a global? (if so make it uppercase)",
       "lowercase-global",
     },
-	-- Typescript
-	no_console = {
-		icon = "  ",
-		"no-console",
-	},
+    -- Typescript
+    no_console = {
+      icon = "  ",
+      "no-console",
+    },
     -- Prettier
     prettier = {
       icon = "  ",
       "prettier/prettier"
     }
-}
+  }
 
-vim.diagnostic.config({
-  float = {
-    source = false,
-    format = function(diagnostic)
-      local code = diagnostic.user_data.lsp.code
+  vim.diagnostic.config({
+    float = {
+      source = false,
+      format = function(diagnostic)
+        local code = diagnostic.user_data.lsp.code
 
-      if not diagnostic.source or not code then
-        return string.format('%s', diagnostic.message)
-      end
+        if not diagnostic.source or not code then
+          return string.format('%s', diagnostic.message)
+        end
 
-      if diagnostic.source == 'eslint' then
-        for _, table in pairs(codes) do
+        if diagnostic.source == 'eslint' then
+          for _, table in pairs(codes) do
             if vim.tbl_contains(table, code) then
               return string.format('%s [%s]', table.icon .. diagnostic.message, code)
             end
-        end
-        return string.format('%s [%s]', diagnostic.message, code)
-      end
+          end
 
-      for _, table in pairs(codes) do
-        if vim.tbl_contains(table, code) then
-          return table.message
+          return string.format('%s [%s]', diagnostic.message, code)
         end
-      end
 
-      return string.format('%s [%s]', diagnostic.message, diagnostic.source)
-    end,
-  },
-  severity_sort = true,
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  virtual_text = {
-    prefix = NvimConfig.icons.circle,
-  },
-})
+        for _, table in pairs(codes) do
+          if vim.tbl_contains(table, code) then
+            return table.message
+          end
+        end
+
+        return string.format('%s [%s]', diagnostic.message, diagnostic.source)
+      end
+    },
+    severity_sort = true,
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    virtual_text = {
+      prefix = NvimConfig.icons.circle,
+    },
+  })
 
 -- UI
 
-local signs = { Error = ' ', Warn = ' ▲', Hint = ' ', Info = ' ' }
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 
 for type, icon in pairs(signs) do
-  local hl = 'DiagnosticSign' .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
