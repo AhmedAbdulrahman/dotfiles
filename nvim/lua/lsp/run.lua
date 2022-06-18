@@ -9,8 +9,10 @@ if not lsp_installer_ok then
 end
 
 lsp_installer.setup {
-	-- A list of servers to automatically install if they're not already installed
-    ensure_installed = { "bashls", "cssls", "eslint", "graphql", "html", "jsonls", "sumneko_lua", "tailwindcss", "tsserver", "vetur", "vuels" }
+  -- A list of servers to automatically install if they're not already installed
+  ensure_installed = { "bashls", "cssls", "eslint", "graphql", "html", "jsonls", "sumneko_lua", "tailwindcss", "tsserver", "vetur", "vuels" },
+  -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed
+  automatic_installation = true,
 }
 
 local lspconfig = require("lspconfig")
@@ -34,28 +36,26 @@ end
 
 -- It enables tsserver automatically so no need to call lspconfig.tsserver.setup
 if typescript_ok then
-  	require("typescript").setup({
-		disable_commands = false, -- prevent the plugin from creating Vim commands
-		disable_formatting = false, -- disable tsserver's formatting capabilities
-		debug = false, -- enable debug logging for commands
-		enable_import_on_completion = true,
-		import_all_timeout = 5000, -- ms
-		-- LSP Config options
-		server = {
-			capabilities = require('lsp.servers.tsserver').capabilities,
-			handlers = handlers,
-			on_attach = require('lsp.servers.tsserver').on_attach,
-		}
-	})
+  typescript.setup({
+    disable_commands = false, -- prevent the plugin from creating Vim commands
+    disable_formatting = false, -- disable tsserver's formatting capabilities
+    debug = false, -- enable debug logging for commands
+    -- LSP Config options
+    server = {
+      capabilities = require('lsp.servers.tsserver').capabilities,
+      handlers = handlers,
+      on_attach = require('lsp.servers.tsserver').on_attach,
+    }
+  })
 end
 
 lspconfig.tailwindcss.setup {
-	capabilities = require('lsp.servers.tsserver').capabilities,
-	filetypes = require('lsp.servers.tailwindcss').filetypes,
-	handlers = handlers,
-	init_options = require('lsp.servers.tailwindcss').init_options,
-	on_attach = require('lsp.servers.tailwindcss').on_attach,
-	settings = require('lsp.servers.tailwindcss').settings,
+  capabilities = require('lsp.servers.tsserver').capabilities,
+  filetypes = require('lsp.servers.tailwindcss').filetypes,
+  handlers = handlers,
+  init_options = require('lsp.servers.tailwindcss').init_options,
+  on_attach = require('lsp.servers.tailwindcss').on_attach,
+  settings = require('lsp.servers.tailwindcss').settings,
 }
 
 lspconfig.eslint.setup {
@@ -65,7 +65,7 @@ lspconfig.eslint.setup {
   settings = require('lsp.servers.eslint').settings,
 }
 
-  lspconfig.jsonls.setup {
+lspconfig.jsonls.setup {
   capabilities = capabilities,
   handlers = handlers,
   on_attach = on_attach,
@@ -85,7 +85,8 @@ lspconfig.vuels.setup {
   on_attach = on_attach,
 }
 
-for _, server in ipairs { "bashls", "cssls", "graphql", "html", "vetur" } do
+
+for _, server in ipairs { "bashls", "cssls", "graphql", "html", "volar" } do
   lspconfig[server].setup {
     on_attach = on_attach,
     capabilities = capabilities,

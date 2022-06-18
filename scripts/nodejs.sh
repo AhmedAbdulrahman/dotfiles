@@ -75,6 +75,7 @@ install_global_packages() {
 	"yaml-language-server"
 	"@tailwindcss/language-server"
 	"vls" # Vue language server
+	"@volar/vue-language-server" # Vue language server
 	)
 
 	yarn global add "${NPM_PACKAGES[@]}"
