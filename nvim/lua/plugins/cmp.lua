@@ -50,13 +50,13 @@ lspkind.init({
 })
 -- Setup
 local source_mapping = {
-  buffer = NvimConfig.icons.buffer .. '[BUF]',
-  calc = NvimConfig.icons.calculator,
-  cmp_tabnine = NvimConfig.icons.light,
-  luasnip = NvimConfig.icons.snippet .. '[SNP]',
   npm = NvimConfig.icons.terminal .. '[NPM]',
+  cmp_tabnine = NvimConfig.icons.light,
   nvim_lsp = NvimConfig.icons.paragraph .. '[LSP]',
+  buffer = NvimConfig.icons.buffer .. '[BUF]',
   nvim_lua = NvimConfig.icons.bomb,
+  luasnip = NvimConfig.icons.snippet .. '[SNP]',
+  calc = NvimConfig.icons.calculator,
   path = NvimConfig.icons.folderOpen2,
   treesitter = NvimConfig.icons.tree,
   zsh = NvimConfig.icons.terminal .. '[ZSH]',
@@ -134,9 +134,8 @@ cmp.setup({
       local maxwidth = 60
 
       if entry.source.name == 'cmp_tabnine' then
-        if
-          entry.completion_item.data ~= nil
-          and entry.completion_item.data.detail ~= nil
+        if entry.completion_item.data ~= nil
+            and entry.completion_item.data.detail ~= nil
         then
           menu = menu .. entry.completion_item.data.detail
         else
@@ -182,7 +181,7 @@ cmp.setup({
     documentation = {
       border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     },
-   },
+  },
 
   experimental = {
     native_menu = false,
