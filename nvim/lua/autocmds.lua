@@ -73,14 +73,6 @@ vim.api.nvim_create_autocmd('User', {
   group = 'Startified',
 })
 
-vim.api.nvim_create_augroup('Formatter', { clear = true })
--- Format on save, can be disabled using format_on_save function.
--- Check lsp/functions
-vim.api.nvim_create_autocmd(
-  'BufWritePre',
-  { pattern = '*', command = 'silent! FormatWrite', group = 'Formatter' }
-)
-
 vim.api.nvim_create_augroup('__myautocmds__', { clear = true })
 -- Save the current buffer after any changes.
 vim.api.nvim_create_autocmd('InsertLeave,TextChanged', {
@@ -155,47 +147,47 @@ vim.api.nvim_create_autocmd('DirChanged', {
 
 -- Attach specific keybindings in which-key for specific filetypes
 vim.api.nvim_create_autocmd("BufEnter", {
-	pattern = "*.md",
-	callback = function() require('plugins.which-key').attach_markdown(0) end,
-	group = '__myautocmds__',
+  pattern = "*.md",
+  callback = function() require('plugins.which-key').attach_markdown(0) end,
+  group = '__myautocmds__',
 })
 
 vim.api.nvim_create_autocmd("BufEnter", {
-	pattern = { "*.ts", "*.tsx" },
-	callback = function() require('plugins.which-key').attach_typescript(0) end,
-	group = '__myautocmds__',
+  pattern = { "*.ts", "*.tsx" },
+  callback = function() require('plugins.which-key').attach_typescript(0) end,
+  group = '__myautocmds__',
 })
 
 -- Winbar
 vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
-	callback = function()
-			local winbar_filetype_exclude = {
-				"help",
-				"startify",
-				"dashboard",
-				"packer",
-				"neogitstatus",
-				"NvimTree",
-				"Trouble",
-				"alpha",
-				"lir",
-				"Outline",
-				"spectre_panel",
-				"toggleterm",
-			}
+  callback = function()
+    local winbar_filetype_exclude = {
+      "help",
+      "startify",
+      "dashboard",
+      "packer",
+      "neogitstatus",
+      "NvimTree",
+      "Trouble",
+      "alpha",
+      "lir",
+      "Outline",
+      "spectre_panel",
+      "toggleterm",
+    }
 
-			if vim.tbl_contains(winbar_filetype_exclude, vim.bo.filetype) then
-				vim.opt_local.winbar = nil
-				return
-			end
+    if vim.tbl_contains(winbar_filetype_exclude, vim.bo.filetype) then
+      vim.opt_local.winbar = nil
+      return
+    end
 
-			local value = require("winbar").gps()
+    local value = require("winbar").gps()
 
-			if value == nil then
-				value = require("winbar").filename()
-			end
+    if value == nil then
+      value = require("winbar").filename()
+    end
 
-			vim.opt_local.winbar = value
-		end,
-	group = '__myautocmds__',
+    vim.opt_local.winbar = value
+  end,
+  group = '__myautocmds__',
 })
