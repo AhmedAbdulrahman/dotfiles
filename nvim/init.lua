@@ -11,6 +11,8 @@ require('lsp.run')
 require('lsp.functions')
 require('floating_man')
 
+require('snippets')
+
 local g = vim.g
 
 -- Disable unused built-in plugins. saves a lot
