@@ -10,60 +10,8 @@ local silent = { silent = true }
 
 local TREE_WIDTH = 30
 
-vim.g.nvim_tree_respect_buf_cwd = 1
-
--- Only show the current folder as the root instead of full path.
-vim.g.nvim_tree_root_folder_modifier = ':t'
-
 -- Highlight nodes according to current git status.
 -- vim.g.nvim_tree_git_hl = 1
-
--- Disable special files.
-vim.g.nvim_tree_special_files = {
-  'README.md',
-  'LICENSE',
-  'Makefile',
-  'package.json',
-  'package-lock.json',
-}
-
--- Set whether or not to show certain icons.
-vim.g.nvim_tree_show_icons = {
-  git = 1,
-  folders = 1,
-  files = 1,
-  folder_arrows = 1,
-  lsp = 1,
-}
-
--- Customize icons.
-vim.g.nvim_tree_icons = {
-  default = '',
-  symlink = '',
-  git = {
-    unstaged = '',
-    staged = '',
-    unmerged = '',
-    renamed = '',
-    untracked = '',
-    deleted = '',
-    ignored = '◌',
-  },
-  folder = {
-    default = '',
-    open = '',
-    empty = '',
-    empty_open = '',
-    symlink = '',
-    symlink_open = '',
-  },
-  lsp = {
-    hint = '',
-    info = '',
-    warning = '',
-    error = '',
-  },
-}
 
 local keymappings = {
   { key = { '<CR>', 'o', '<2-LeftMouse>' }, action = 'edit' },
@@ -105,6 +53,7 @@ local keymappings = {
 }
 
 require('nvim-tree').setup({
+  respect_buf_cwd = true,
   -- disables netrw completely
   disable_netrw = false,
   -- hijack netrw window on startup
@@ -213,11 +162,49 @@ require('nvim-tree').setup({
 		},
 	},
   },
-   renderer = {
+  renderer = {
+	-- Only show the current folder as the root instead of full path.
+	root_folder_modifier = ':t',
     indent_markers = {
       enable = true, -- Enable indent markers
     },
-   }
+	-- Disable special files.
+	special_files = {
+     'README.md',
+     'LICENSE',
+     'Makefile',
+     'package.json',
+     'package-lock.json',
+	},
+    icons = {
+      -- Customize icons.
+      glyphs = {
+		default = '',
+		symlink = '',
+		git = {
+			unstaged = '',
+			staged = '',
+			unmerged = '',
+			renamed = '',
+			untracked = '',
+			deleted = '',
+			ignored = '◌',
+		},
+		folder = {
+			default = '',
+			open = '',
+			empty = '',
+			empty_open = '',
+			symlink = '',
+			symlink_open = '',
+		},
+      },
+      -- Set whether or not to show certain icons.
+	  show = {
+		git = true,
+	  },
+    },
+  }
 })
 
 keymap.set("n", "<leader>f", "<cmd>lua require'plugins.tree'.toggle()<CR>", { noremap = true, silent = true })
