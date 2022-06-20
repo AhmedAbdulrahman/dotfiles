@@ -4,9 +4,20 @@ local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
 local utils = require('telescope.utils')
 local command_palette = require('plugins.telescope.command_palette')
+local icons = NvimConfig.icons;
 
 -- https://github.com/nvim-telescope/telescope.nvim/issues/1048
 local telescope_custom_actions = {}
+
+local git_icons = {
+  added = icons.gitAdd,
+  changed = icons.gitChange,
+  copied = ">",
+  deleted = icons.gitRemove,
+  renamed = "➡",
+  unmerged = "‡",
+  untracked = "?",
+}
 
 function telescope_custom_actions._multiopen(prompt_bufnr, open_cmd)
   local picker = action_state.get_current_picker(prompt_bufnr)
@@ -65,6 +76,7 @@ require('telescope').setup({
     selection_caret = '❯ ',
     sorting_strategy = 'ascending',
     color_devicons = true,
+    git_icons = git_icons,
     layout_config = {
       prompt_position = 'bottom',
       horizontal = {
@@ -93,10 +105,11 @@ require('telescope').setup({
         ['<C-A>'] = telescope_custom_actions.multi_selection_open,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
-        ["<C-q>"] = actions.send_selected_to_qflist,
+        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
         ["<C-s>"] = actions.cycle_previewers_next,
         ["<C-a>"] = actions.cycle_previewers_prev,
         ["<C-h>"] = "which_key",
+        ["<ESC>"] = actions.close,
       },
     },
     dynamic_preview_title = true,
@@ -154,6 +167,7 @@ function M.gh_prs()
   opts.prompt_title = ' Pull Requests'
   require('telescope').extensions.gh.pull_request(opts)
 end
+
 -- end github functions
 
 -- grep_string pre-filtered from grep_prompt
@@ -269,12 +283,12 @@ function M.find_configs()
 end
 
 function M.edit_dotfiles()
-	require('telescope.builtin').git_files({
-	cwd = "~/dotfiles",
-    prompt_title = "~ dotfiles ~",
-    color_devicons   = true,
+  require('telescope.builtin').git_files({
+    cwd             = "~/dotfiles",
+    prompt_title    = "~ dotfiles ~",
+    color_devicons  = true,
     layout_strategy = 'horizontal',
-    layout_config = { preview_width = 0.65, width = 0.75 },
+    layout_config   = { preview_width = 0.65, width = 0.75 },
   })
 end
 
