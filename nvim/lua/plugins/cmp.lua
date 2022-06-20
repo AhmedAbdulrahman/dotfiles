@@ -62,6 +62,17 @@ local source_mapping = {
   zsh = NvimConfig.icons.terminal .. '[ZSH]',
 }
 
+local buffer_option = {
+  -- Complete from all visible buffers (splits)
+  get_bufnrs = function()
+    local bufs = {}
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      bufs[vim.api.nvim_win_get_buf(win)] = true
+    end
+    return vim.tbl_keys(bufs)
+  end
+}
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -154,22 +165,15 @@ cmp.setup({
 
   -- You should specify your *installed* sources.
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'nvim_lsp_signature_help' },
-    { name = 'npm' },
-    { name = 'cmp_tabnine', max_item_count = 3 },
-    {
-      name = 'buffer',
-      option = {
-        get_bufnrs = function()
-          return vim.api.nvim_list_bufs()
-        end,
-      },
-    },
-    { name = 'path' },
-    { name = 'luasnip' },
-    { name = 'calc' },
-    { name = 'nvim_lua' },
+    { name = 'nvim_lsp', priority = 9 },
+    { name = 'nvim_lsp_signature_help', priority = 9 },
+    { name = 'npm', priority = 9 },
+    { name = 'cmp_tabnine', priority = 8, max_num_results = 3 },
+    { name = 'buffer', priority = 7, keyword_length = 5, option = buffer_option, max_item_count = 8 },
+    { name = 'luasnip', priority = 7, max_item_count = 8 },
+    { name = 'nvim_lua', priority = 5 },
+    { name = 'path', priority = 4 },
+    { name = 'calc', priority = 3 },
   },
 
   confirm_opts = {
