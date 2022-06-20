@@ -24,8 +24,8 @@ local ft_str = table.concat(
 
 vim.cmd(
   'autocmd Filetype '
-    .. ft_str
-    .. ' setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()'
+  .. ft_str
+  .. ' setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()'
 )
 
 -- Exported functions
@@ -92,9 +92,9 @@ M.heavy_plugins_blocklist = {
 --  from https://github.com/wincent/wincent/blob/c87f3e1e127784bb011b0352c9e239f9fde9854f/roles/dotfiles/files/.vim/autoload/autocmds.vim#L20-L37
 local function should_mkview()
   return vim.bo.buftype == ''
-    and vim.fn.getcmdwintype() == ''
-    and M.mkview_filetype_blocklist[vim.bo.filetype] == nil
-    and vim.fn.exists('$SUDO_USER') == 0 -- Don't create root-owned files.
+      and vim.fn.getcmdwintype() == ''
+      and M.mkview_filetype_blocklist[vim.bo.filetype] == nil
+      and vim.fn.exists('$SUDO_USER') == 0 -- Don't create root-owned files.
 end
 
 local function should_quit_on_q()
@@ -103,10 +103,10 @@ end
 
 local function should_turn_off_colorcolumn()
   return vim.bo.textwidth == 0
-    or vim.wo.diff == true
-    or M.colorcolumn_blocklist[vim.bo.filetype] == true
-    or vim.bo.buftype == 'terminal'
-    or vim.bo.readonly == true
+      or vim.wo.diff == true
+      or M.colorcolumn_blocklist[vim.bo.filetype] == true
+      or vim.bo.buftype == 'terminal'
+      or vim.bo.readonly == true
 end
 
 local function cleanup_marker(marker)
@@ -130,10 +130,9 @@ M.mkview = function()
       end
     end)
     if not success then
-      if
-        err:find('%f[%w]E186%f[%W]') == nil -- No previous directory: probably a `git` operation.
-        and err:find('%f[%w]E190%f[%W]') == nil -- Could be name or path length exceeding NAME_MAX or PATH_MAX.
-        and err:find('%f[%w]E5108%f[%W]') == nil
+      if err:find('%f[%w]E186%f[%W]') == nil -- No previous directory: probably a `git` operation.
+          and err:find('%f[%w]E190%f[%W]') == nil -- Could be name or path length exceeding NAME_MAX or PATH_MAX.
+          and err:find('%f[%w]E5108%f[%W]') == nil
       then
         error(err)
       end
@@ -154,20 +153,19 @@ M.quit_on_q = function()
       'n',
       'q',
       (
-          (vim.wo.diff == true or vim.bo.filetype == 'man') and ':qa!'
+      (vim.wo.diff == true or vim.bo.filetype == 'man') and ':qa!'
           or (vim.bo.filetype == 'qf') and ':cclose'
           or ':q'
-        ) .. '<cr>',
+      ) .. '<cr>',
       { buffer = true, silent = true }
     )
   end
 end
 
 M.disable_heavy_plugins = function()
-  if
-    M.heavy_plugins_blocklist[vim.bo.filetype] ~= nil
-    or vim.regex('\\.min\\..*$'):match_str(vim.fn.expand('%:t')) ~= nil
-    or vim.fn.getfsize(vim.fn.expand('%')) > 200000
+  if M.heavy_plugins_blocklist[vim.bo.filetype] ~= nil
+      or vim.regex('\\.min\\..*$'):match_str(vim.fn.expand('%:t')) ~= nil
+      or vim.fn.getfsize(vim.fn.expand('%')) > 200000
   then
     if vim.fn.exists(':ALEDisableBuffer') == 2 then
       vim.api.nvim_command(':ALEDisableBuffer')
@@ -188,28 +186,28 @@ M.highlight_overlength = function()
     -- [TODO]: figure out how to convert this to Lua
     vim.api.nvim_command(
       "let w:last_overlength = matchadd('OverLength', '"
-        .. overlength_pattern
-        .. "')"
+      .. overlength_pattern
+      .. "')"
     )
   end
 end
 
 M.yank_current_file_name = function()
-	local file_name = vim.api.nvim_buf_get_name(0)
-	local input_pipe = vim.loop.new_pipe(false)
+  local file_name = vim.api.nvim_buf_get_name(0)
+  local input_pipe = vim.loop.new_pipe(false)
 
-	local yanker = Job:new {
-	  writer = input_pipe,
-	  command = "pbcopy",
-	}
+  local yanker = Job:new {
+    writer = input_pipe,
+    command = "pbcopy",
+  }
 
-	-- @TODOUA: This works perfectly but double-check if it could be better(less)
-	yanker:start()
-	input_pipe:write(file_name)
-	input_pipe:close()
-	yanker:shutdown()
+  -- @TODOUA: This works perfectly but double-check if it could be better(less)
+  yanker:start()
+  input_pipe:write(file_name)
+  input_pipe:close()
+  yanker:shutdown()
 
-	require "notify"("Yanked: " .. file_name, "info", { title = "File Name Yanker", timeout = 1000 })
+  require "notify" ("Yanked: " .. file_name, "info", { title = "File Name Yanker", timeout = 1000 })
 end
 
 -- Project specific override
@@ -229,6 +227,91 @@ M.source_project_config = function()
   end
 end
 
+-- padding: 40px; ->
+-- padding: "40px",
+M.css_to_jss = function(opts)
+  local start_line, end_line
+  if type(opts) == "table" then
+    -- called via command
+    start_line, end_line = opts.line1 - 1, opts.line2
+  else
+    -- called as operator
+    start_line = vim.api.nvim_buf_get_mark(0, "[")[1] - 1
+    end_line = vim.api.nvim_buf_get_mark(0, "]")[1] + 1
+  end
+
+  local did_convert = false
+  for i, line in ipairs(vim.api.nvim_buf_get_lines(0, start_line, end_line, false)) do
+    -- if the line ends in a comma, it's probably already js
+    if line:sub(#line) == "," then
+      goto continue
+    end
+    -- ignore comments
+    if line:find("%/%*") then
+      goto continue
+    end
+
+    local indentation, name, val = line:match("(%s+)(.+):%s(.+)")
+    -- skip non-matching lines
+    if not (name and val) then
+      goto continue
+    end
+
+    local parsed_name = ""
+    for j, component in ipairs(vim.split(name, "-")) do
+      parsed_name = parsed_name .. (j == 1 and component or (component:sub(1, 1):upper() .. component:sub(2)))
+    end
+
+    local parsed_val = val:gsub(";", "")
+    -- keep numbers, wrap others in quotes
+    parsed_val = tonumber(parsed_val) or string.format('"%s"', parsed_val)
+    local parsed_line = table.concat({ indentation, parsed_name, ": ", parsed_val, "," })
+
+    did_convert = true
+    local row = start_line + i
+    vim.api.nvim_buf_set_lines(0, row - 1, row, false, { parsed_line })
+
+    ::continue::
+  end
+
+  if not did_convert then
+    utils.warnlog('Nothing to Convert', 'CSS-TO-JS')
+  end
+end
+
+-- const myString = "hello ${}" ->
+-- const myString = `hello ${}`
+M.change_template_string_quotes = function()
+  local row, col = table.unpack(vim.api.nvim_win_get_cursor(0))
+  row = row - 1
+
+  local quote_start, quote_end
+  utils.gfind(vim.api.nvim_get_current_line(), "[\"']", function(pos)
+    if not quote_start then
+      -- start at first quote
+      quote_start = pos
+    elseif pos < col then
+      -- move start if quote is closer to col
+      if (pos - col) > (quote_start - col) then
+        quote_start = pos
+      end
+    elseif not quote_end then
+      -- first quote after col is end
+      quote_end = pos
+    end
+  end)
+
+  -- if found, replace quotes with backticks
+  if quote_start and quote_start <= col and quote_end then
+    vim.api.nvim_buf_set_text(0, row, quote_start - 1, row, quote_start, { "`" })
+    vim.api.nvim_buf_set_text(0, row, quote_end - 1, row, quote_end, { "`" })
+  end
+
+  -- input and move cursor into pair
+  utils.input("${}", "n")
+  utils.input("<Left>")
+end
+
 M.first_nvim_run = function()
   local is_first_run = utils.file_exists('/tmp/first-nvim-run')
 
@@ -239,11 +322,11 @@ M.first_nvim_run = function()
         'info',
         { title = 'Nvim', timeout = 5000 }
       )
-	  require('notify')(
-		"Please install treesitter servers manually by :TSInstall command.",
-	  	"info",
-		{ title = "Installation", timeout = 10000 }
-	)
+      require('notify')(
+        "Please install treesitter servers manually by :TSInstall command.",
+        "info",
+        { title = "Installation", timeout = 10000 }
+      )
     end)
     local suc = os.remove('/tmp/first-nvim-run')
     if not suc then

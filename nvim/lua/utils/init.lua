@@ -28,8 +28,8 @@ function M.urlencode(str)
     str,
     "([^0-9a-zA-Z !'()*._~-])", -- locale independent
     function(c)
-      return string.format('%%%02X', string.byte(c))
-    end
+    return string.format('%%%02X', string.byte(c))
+  end
   )
 
   str = string.gsub(str, ' ', '%%20')
@@ -73,8 +73,7 @@ function M.errorlog(message, title)
 end
 
 function M.toggle_quicklist(path)
-  if
-    vim.fn.empty(vim.fn.filter(vim.fn.getwininfo(), 'v:val.quickfix')) == 1
+  if vim.fn.empty(vim.fn.filter(vim.fn.getwininfo(), 'v:val.quickfix')) == 1
   then
     vim.cmd('copen')
   else
@@ -88,17 +87,17 @@ function M.get_relative_fname()
 end
 
 function M.get_relative_gitpath()
-	local fpath = vim.fn.expand('%:h')
-	local fname = vim.fn.expand('%:t')
-	local gitpath = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
-	local ellipsis = '...'
-	local relative_gitpath = fpath:gsub(gitpath, '') .. '/' .. fname
+  local fpath = vim.fn.expand('%:h')
+  local fname = vim.fn.expand('%:t')
+  local gitpath = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+  local ellipsis = '...'
+  local relative_gitpath = fpath:gsub(gitpath, '') .. '/' .. fname
 
-	if vim.fn.winwidth(0) < 200 and #relative_gitpath > 30 then
-	  return ellipsis .. relative_gitpath:sub(20, #relative_gitpath)
-	end
+  if vim.fn.winwidth(0) < 200 and #relative_gitpath > 30 then
+    return ellipsis .. relative_gitpath:sub(20, #relative_gitpath)
+  end
 
-	return relative_gitpath
+  return relative_gitpath
 end
 
 function M.starts_with(str, start)
@@ -121,54 +120,67 @@ function M.sleep(n)
   os.execute('sleep ' .. tonumber(n))
 end
 
-M.jobstart = function(cmd, on_finish)
-	local has_error = false
-	local lines = {}
-
-	local function on_event(_, data, event)
-	  if event == "stdout" then
-		data = M.handle_job_data(data)
-		if not data then
-		  return
-		end
-
-		for i = 1, #data do
-		  table.insert(lines, data[i])
-		end
-	  elseif event == "stderr" then
-		data = M.handle_job_data(data)
-		if not data then
-		  return
-		end
-
-		has_error = true
-		local error_message = ""
-		for _, line in ipairs(data) do
-		  error_message = error_message .. line
-		end
-		M.log("Error during running a job: " .. error_message)
-	  elseif event == "exit" then
-		if not has_error then
-		  on_finish(lines)
-		end
-	  end
-	end
-
-	vim.fn.jobstart(cmd, {
-	  on_stderr = on_event,
-	  on_stdout = on_event,
-	  on_exit = on_event,
-	  stdout_buffered = true,
-	  stderr_buffered = true,
-	})
+function M.input(keys, mode)
+  vim.api.nvim_feedkeys(M.t(keys), mode or "m", true)
 end
 
-M.remove_whitespaces = function (string)
+function M.gfind(str, substr, cb, init)
+  init = init or 1
+  local start_pos, end_pos = str:find(substr, init)
+  if start_pos then
+    cb(start_pos, end_pos)
+    return M.gfind(str, substr, cb, end_pos + 1)
+  end
+end
+
+M.jobstart = function(cmd, on_finish)
+  local has_error = false
+  local lines = {}
+
+  local function on_event(_, data, event)
+    if event == "stdout" then
+      data = M.handle_job_data(data)
+      if not data then
+        return
+      end
+
+      for i = 1, #data do
+        table.insert(lines, data[i])
+      end
+    elseif event == "stderr" then
+      data = M.handle_job_data(data)
+      if not data then
+        return
+      end
+
+      has_error = true
+      local error_message = ""
+      for _, line in ipairs(data) do
+        error_message = error_message .. line
+      end
+      M.log("Error during running a job: " .. error_message)
+    elseif event == "exit" then
+      if not has_error then
+        on_finish(lines)
+      end
+    end
+  end
+
+  vim.fn.jobstart(cmd, {
+    on_stderr = on_event,
+    on_stdout = on_event,
+    on_exit = on_event,
+    stdout_buffered = true,
+    stderr_buffered = true,
+  })
+end
+
+M.remove_whitespaces = function(string)
   return string:gsub("%s+", "")
 end
 
 M.add_whitespaces = function(number)
-	return string.rep(" ", number)
+  return string.rep(" ", number)
 end
 
 return M
