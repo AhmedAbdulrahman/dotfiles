@@ -103,14 +103,14 @@ keymap.set('n', ']l', ':lbelow<CR>', silent)
 -- while the other buffer in the other window stays where you left
 
 -- Go previous and next buffers in buffer list.
-keymap.set('n','<M-p>', '<Cmd>bprevious<CR>', silent)
-keymap.set('n','<M-n>', '<Cmd>bnext<CR>', silent)
+keymap.set('n', '<M-p>', '<Cmd>bprevious<CR>', silent)
+keymap.set('n', '<M-n>', '<Cmd>bnext<CR>', silent)
 
 -- Horizontal Split with New Buffer
-keymap.set('n','<leader>bh', ':new<CR>', silent)
+keymap.set('n', '<leader>bh', ':new<CR>', silent)
 
 -- Vertical Split with New Buffer
-keymap.set('n','<leader>bv', ':vnew<CR>', silent)
+keymap.set('n', '<leader>bv', ':vnew<CR>', silent)
 
 -- Vertical Split with New Buffer
 keymap.set(
@@ -123,15 +123,15 @@ keymap.set(
 -- Vertical split with current buffer
 keymap.set(
   'n',
-  '<leader>vl',
-  ':ls<cr>:vsp<space>\\|<space>b<space>',
+  '<leader>vs',
+  '<C-W>v',
   silent
 )
 -- Horizontal split with current buffer
 keymap.set(
   'n',
   '<leader>hl',
-  ':ls<cr>:sp<space>\\|<space>b<space>',
+  '<C-W>s',
   silent
 )
 

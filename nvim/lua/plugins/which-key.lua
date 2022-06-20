@@ -1,6 +1,7 @@
 -- luacheck: max line length 200
+local wk = require "which-key"
 
-require('which-key').setup({
+wk.setup({
   plugins = {
     marks = true, -- shows a list of your marks on ' and `
     registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
@@ -60,16 +61,16 @@ require('which-key').setup({
   },
 })
 
-local opts = {
-  mode = 'n', -- NORMAL mode
-  prefix = '<leader>',
+local visual_opts = {
+  mode = "v", -- NORMAL mode
+  prefix = "<leader>",
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
   silent = true, -- use `silent` when creating keymaps
   noremap = true, -- use `noremap` when creating keymaps
   nowait = false, -- use `nowait` when creating keymaps
 }
 
-local mappings = {
+local normal_mode_mappings = {
 
   -- ignore
   ['1'] = 'which_key_ignore',
@@ -85,15 +86,15 @@ local mappings = {
   -- single
   ['='] = { '<cmd>vertical resize +5<CR>', 'resize +5' },
   ['-'] = { '<cmd>vertical resize -5<CR>', 'resize +5' },
-  ['v'] = { '<C-W>v', 'split right' },
-  ['V'] = { '<C-W>s', 'split below' },
+  --   ['v'] = { '<C-W>v', 'split right' },
+  --   ['V'] = { '<C-W>s', 'split below' },
   ['q'] = { 'quicklist' },
 
   ['/'] = {
     name = 'Dashboard',
     ['c'] = { ':e $MYVIMRC<CR>', 'open init' },
-    ['s'] = { '<cmd>PackerSync<CR>', 'packer sync' },
-    ['u'] = { '<cmd>PackerUpdate<CR>', 'packer update' },
+    i = { '<cmd>PackerInstall<CR>', 'install plugins' },
+    u = { '<cmd>PackerSync<CR>', 'update plugins' },
   },
 
   a = {
@@ -228,8 +229,43 @@ local mappings = {
   },
 }
 
-local wk = require('which-key')
-wk.register(mappings, opts)
+local visual_mode_mappings = {
+  -- single
+  ["s"] = { "<cmd>'<,'>sort<CR>", 'sort' },
+
+  a = {
+    name = "Actions",
+    c = { 'comment box' },
+  },
+
+  c = {
+    name = "LSP",
+    a = { 'range code action' },
+    f = { 'range format' },
+  },
+
+  g = {
+    name = "Git",
+    h = {
+      name = "Hunk",
+      r = "reset hunk",
+      s = "stage hunk",
+    },
+  },
+
+  p = {
+    name = "Project",
+    r = { 'refactor' },
+  },
+
+  t = {
+    name = "Table Mode",
+    t = { 'tableize' },
+  },
+}
+
+wk.register(normal_mode_mappings, opts)
+wk.register(visual_mode_mappings, visual_opts)
 
 local function attach_markdown(bufnr)
   wk.register({
