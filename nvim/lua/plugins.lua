@@ -50,16 +50,16 @@ return require('packer').startup({
     use({
       'nvim-telescope/telescope.nvim',
       config = "require('plugins.telescope')",
-	  requires = {
+      requires = {
         { 'nvim-lua/popup.nvim' },
         { 'nvim-lua/plenary.nvim' },
         { 'nvim-telescope/telescope-fzf-native.nvim' }
       }
     })
     -- Telescope Extensions
-	use({ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' })
+    use({ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' })
     use({ 'cljoly/telescope-repo.nvim' })
-	use({ 'kevinhwang91/nvim-bqf', ft = 'qf' })
+    use({ 'kevinhwang91/nvim-bqf', ft = 'qf' })
     use({ 'nvim-telescope/telescope-file-browser.nvim' })
     use({ 'nvim-telescope/telescope-ui-select.nvim' })
     use({ 'dhruvmanila/telescope-bookmarks.nvim' })
@@ -73,8 +73,8 @@ return require('packer').startup({
       end,
     })
     use('jvgrootveld/telescope-zoxide')
-	use({ 'nvim-pack/nvim-spectre' })
-	use({ 'kyazdani42/nvim-tree.lua', config = "require('plugins.tree')" })
+    use({ 'nvim-pack/nvim-spectre' })
+    use({ 'kyazdani42/nvim-tree.lua', config = "require('plugins.tree')" })
 
     -- LSP Base
     use({ 'williamboman/nvim-lsp-installer' })
@@ -150,8 +150,8 @@ return require('packer').startup({
     -- Formatter
     use({ 'mhartington/formatter.nvim', config = "require('plugins.formatter')" })
     -- General
-	use({ 'iamcco/markdown-preview.nvim', run = function() vim.fn["mkdp#util#install"]() end })
-	use { 'airblade/vim-rooter', setup = function() vim.g.rooter_patterns = NvimConfig.plugins.rooter.patterns end }
+    use({ 'iamcco/markdown-preview.nvim', run = function() vim.fn["mkdp#util#install"]() end })
+    use { 'airblade/vim-rooter', setup = function() vim.g.rooter_patterns = NvimConfig.plugins.rooter.patterns end }
     use({ 'AndrewRadev/switch.vim' })
     use({ 'AndrewRadev/splitjoin.vim' })
     use({
@@ -270,5 +270,6 @@ return require('packer').startup({
   config = {
     compile_path = compile_path,
     disable_commands = true,
+    max_jobs = 50,
   }
 })
