@@ -95,7 +95,7 @@ function M.get_relative_gitpath()
 	local relative_gitpath = fpath:gsub(gitpath, '') .. '/' .. fname
 
 	if vim.fn.winwidth(0) < 200 and #relative_gitpath > 30 then
-	  return ellipsis .. relative_gitpath:sub(25, #relative_gitpath)
+	  return ellipsis .. relative_gitpath:sub(20, #relative_gitpath)
 	end
 
 	return relative_gitpath
