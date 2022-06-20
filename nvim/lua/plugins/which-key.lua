@@ -189,7 +189,7 @@ local mappings = {
       "<cmd>lua require'telescope'.extensions.repo.cached_list{file_ignore_patterns={'/%.cache/', '/%.cargo/', '/%.local/', '/%timeshift/', '/usr/', '/srv/', '/%.oh%-my%-zsh'}}<CR>",
       'list',
     },
-	r = { 'refactor' },
+    r = { 'refactor' },
     t = { '<cmd>TodoTrouble<CR>', 'todo' },
     s = {
       '<cmd>SessionSave<CR>',
@@ -232,41 +232,54 @@ local wk = require('which-key')
 wk.register(mappings, opts)
 
 local function attach_markdown(bufnr)
-	wk.register({
-	  a = {
-		name = "Actions",
-		m = { '<cmd>MarkdownPreviewToggle<CR>', 'markdown preview' },
-	  }
-	}, {
-	  buffer = bufnr ,
-	  mode = "n", -- NORMAL mode
-	  prefix = "<leader>",
-	  silent = true, -- use `silent` when creating keymaps
-	  noremap = true, -- use `noremap` when creating keymaps
-	  nowait = false, -- use `nowait` when creating keymaps
-	})
+  wk.register({
+    a = {
+      name = "Actions",
+      m = { '<cmd>MarkdownPreviewToggle<CR>', 'markdown preview' },
+    }
+  }, {
+    buffer = bufnr,
+    mode = "n", -- NORMAL mode
+    prefix = "<leader>",
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = false, -- use `nowait` when creating keymaps
+  })
 end
 
 local function attach_typescript(bufnr)
-	wk.register({
-	  c = {
-		name = "LSP",
-		F = { '<cmd>TypescriptFixAll<CR>',                   'fix all' },
-		i = { '<cmd>TypescriptAddMissingImports<CR>',        'import all'},
-		o = { '<cmd>TypescriptOrganizeImports<CR>',          'organize imports'},
-		u = { '<cmd>TypescriptRemoveUnused<CR>',             'remove unused' },
-	  }
-	}, {
-	  buffer = bufnr ,
-	  mode = "n", -- NORMAL mode
-	  prefix = "<leader>",
-	  silent = true, -- use `silent` when creating keymaps
-	  noremap = true, -- use `noremap` when creating keymaps
-	  nowait = false, -- use `nowait` when creating keymaps
-	})
+  wk.register({
+    c = {
+      name = "LSP",
+      F = { '<cmd>TypescriptFixAll<CR>', 'fix all' },
+      i = { '<cmd>TypescriptAddMissingImports<CR>', 'import all' },
+      o = { '<cmd>TypescriptOrganizeImports<CR>', 'organize imports' },
+      u = { '<cmd>TypescriptRemoveUnused<CR>', 'remove unused' },
+    }
+  }, {
+    buffer = bufnr,
+    mode = "n", -- NORMAL mode
+    prefix = "<leader>",
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = false, -- use `nowait` when creating keymaps
+  })
+end
+
+local function attach_zen()
+  wk.register({
+    ["z"] = { '<cmd>ZenMode<CR>', 'zen' },
+  }, {
+    mode = "n", -- NORMAL mode
+    prefix = "<leader>",
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = false, -- use `nowait` when creating keymaps
+  })
 end
 
 return {
-	attach_markdown = attach_markdown,
-	attach_typescript = attach_typescript
+  attach_markdown = attach_markdown,
+  attach_typescript = attach_typescript,
+  attach_zen = attach_zen
 }
