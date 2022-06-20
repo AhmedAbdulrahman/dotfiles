@@ -10,6 +10,25 @@ local silent = { silent = true }
 
 local TREE_WIDTH = 30
 
+local git_icons = {
+  unstaged = "",
+  staged = "",
+  unmerged = "",
+  renamed = "➜",
+  untracked = "",
+  deleted = "",
+  ignored = "◌"
+}
+
+local folder_icons = {
+  default = '',
+  open = '',
+  empty = '',
+  empty_open = '',
+  symlink = '',
+  symlink_open = '',
+}
+
 -- Highlight nodes according to current git status.
 -- vim.g.nvim_tree_git_hl = 1
 
@@ -53,6 +72,7 @@ local keymappings = {
 }
 
 require('nvim-tree').setup({
+  --false by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree
   respect_buf_cwd = true,
   -- disables netrw completely
   disable_netrw = false,
@@ -149,60 +169,54 @@ require('nvim-tree').setup({
   },
   actions = {
     open_file = {
-    	quit_on_open = false,
-    	-- if true the tree will resize itself after opening a file
-		resize_window = true,
-		window_picker = {
-			enable = true,
-			chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-			exclude = {
-				filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
-				buftype = { "nofile", "terminal", "help" },
-			},
-		},
-	},
+      quit_on_open = false,
+      -- if true the tree will resize itself after opening a file
+      resize_window = true,
+      window_picker = {
+        enable = true,
+        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+        exclude = {
+          filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+          buftype = { "nofile", "terminal", "help" },
+        },
+      },
+    },
   },
   renderer = {
-	-- Only show the current folder as the root instead of full path.
-	root_folder_modifier = ':t',
+    add_trailing = false,
+    group_empty = true,
+    highlight_git = true,
+    highlight_opened_files = "none",
+    -- Only show the current folder as the root instead of full path.
+    root_folder_modifier = ':t',
     indent_markers = {
-      enable = true, -- Enable indent markers
+      enable = false, -- Enable indent markers
+      icons = {
+        corner = "└ ",
+        edge = "│ ",
+        none = "  ",
+      },
     },
-	-- Disable special files.
-	special_files = {
-     'README.md',
-     'LICENSE',
-     'Makefile',
-     'package.json',
-     'package-lock.json',
-	},
+    -- Disable special files.
+    special_files = {
+      'README.md',
+      'LICENSE',
+      'Makefile',
+      'package.json',
+      'package-lock.json',
+    },
     icons = {
       -- Customize icons.
       glyphs = {
-		default = '',
-		symlink = '',
-		git = {
-			unstaged = '',
-			staged = '',
-			unmerged = '',
-			renamed = '',
-			untracked = '',
-			deleted = '',
-			ignored = '◌',
-		},
-		folder = {
-			default = '',
-			open = '',
-			empty = '',
-			empty_open = '',
-			symlink = '',
-			symlink_open = '',
-		},
+        default = '',
+        symlink = '',
+        git = git_icons,
+        folder = folder_icons,
       },
       -- Set whether or not to show certain icons.
-	  show = {
-		git = true,
-	  },
+      show = {
+        git = true,
+      },
     },
   }
 })
