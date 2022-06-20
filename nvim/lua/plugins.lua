@@ -59,6 +59,7 @@ return require('packer').startup({
     -- Telescope Extensions
 	use({ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' })
     use({ 'cljoly/telescope-repo.nvim' })
+	use({ 'kevinhwang91/nvim-bqf', ft = 'qf' })
     use({ 'nvim-telescope/telescope-file-browser.nvim' })
     use({ 'nvim-telescope/telescope-ui-select.nvim' })
     use({ 'dhruvmanila/telescope-bookmarks.nvim' })
