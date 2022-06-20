@@ -46,17 +46,23 @@ return require('packer').startup({
     })
     use({ 'RRethy/nvim-treesitter-textsubjects', after = { 'nvim-treesitter' } })
 
-    -- 🔭 Telescope
+    -- 🔭 Navigating (Telescope/Tree/Refactor)
     use({
       'nvim-telescope/telescope.nvim',
       config = "require('plugins.telescope')",
+	  requires = {
+        { 'nvim-lua/popup.nvim' },
+        { 'nvim-lua/plenary.nvim' },
+        { 'nvim-telescope/telescope-fzf-native.nvim' }
+      }
     })
     -- Telescope Extensions
-    use('cljoly/telescope-repo.nvim')
+	use({ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' })
+    use({ 'cljoly/telescope-repo.nvim' })
     use({ 'nvim-telescope/telescope-file-browser.nvim' })
     use({ 'nvim-telescope/telescope-ui-select.nvim' })
-    use('dhruvmanila/telescope-bookmarks.nvim')
-    use('nvim-telescope/telescope-github.nvim')
+    use({ 'dhruvmanila/telescope-bookmarks.nvim' })
+    use({ 'nvim-telescope/telescope-github.nvim' })
     -- Trying command palette
     use({ 'LinArcX/telescope-command-palette.nvim' })
     use({
@@ -65,8 +71,9 @@ return require('packer').startup({
         require('neoclip').setup()
       end,
     })
-    use({ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' })
     use('jvgrootveld/telescope-zoxide')
+	use({ 'nvim-pack/nvim-spectre' })
+	use({ 'kyazdani42/nvim-tree.lua', config = "require('plugins.tree')" })
 
     -- LSP Base
     use({ 'williamboman/nvim-lsp-installer' })
@@ -142,15 +149,8 @@ return require('packer').startup({
     -- Formatter
     use({ 'mhartington/formatter.nvim', config = "require('plugins.formatter')" })
     -- General
-    use({
-      'iamcco/markdown-preview.nvim',
-      run = 'cd app && npm install',
-      setup = function()
-        vim.g.mkdp_filetypes = { 'markdown' }
-      end,
-      ft = { 'markdown' },
-    })
-    use({ 'nvim-pack/nvim-spectre' })
+	use({ 'iamcco/markdown-preview.nvim', run = function() vim.fn["mkdp#util#install"]() end })
+	use { 'airblade/vim-rooter', setup = function() vim.g.rooter_patterns = NvimConfig.plugins.rooter.patterns end }
     use({ 'AndrewRadev/switch.vim' })
     use({ 'AndrewRadev/splitjoin.vim' })
     use({
@@ -233,16 +233,6 @@ return require('packer').startup({
       requires = { 'rafamadriz/friendly-snippets' },
       after = 'cmp_luasnip',
     })
-
-    -- Nvim Tree / Rooter
-    use({ 'kyazdani42/nvim-tree.lua', config = "require('plugins.tree')" })
-    use({
-      'airblade/vim-rooter',
-      setup = function()
-        vim.g.rooter_patterns = NvimConfig.plugins.rooter.patterns
-      end,
-    })
-
     -- Debug
     -- TODO: Configure dap
     -- use {'rcarriga/nvim-dap-ui', requires = {"mfussenegger/nvim-dap"}}
