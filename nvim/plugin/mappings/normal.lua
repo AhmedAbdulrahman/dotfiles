@@ -3,6 +3,10 @@ local silent = { silent = true }
 
 
 -- Plugins
+-- Comment Box
+keymap.set("n", "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>", silent)
+keymap.set("v", "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>", silent)
+
 -- Refactor with spectre
 keymap.set('n', '<leader>pr', "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", silent)
 

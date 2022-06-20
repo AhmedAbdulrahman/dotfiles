@@ -163,6 +163,7 @@ return require('packer').startup({
       config = "require('plugins.comment')",
       after = 'nvim-treesitter',
     })
+    use({ 'LudoPinelli/comment-box.nvim' })
     use({
       'akinsho/nvim-toggleterm.lua',
       branch = 'main',
