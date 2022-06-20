@@ -47,6 +47,7 @@ return require('packer').startup({
     use({ 'RRethy/nvim-treesitter-textsubjects', after = { 'nvim-treesitter' } })
 
     -- 🔭 Navigating (Telescope/Tree/Refactor)
+    use({ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' })
     use({
       'nvim-telescope/telescope.nvim',
       config = "require('plugins.telescope')",
@@ -57,7 +58,6 @@ return require('packer').startup({
       }
     })
     -- Telescope Extensions
-    use({ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' })
     use({ 'cljoly/telescope-repo.nvim' })
     use({ 'kevinhwang91/nvim-bqf', ft = 'qf' })
     use({ 'nvim-telescope/telescope-file-browser.nvim' })
