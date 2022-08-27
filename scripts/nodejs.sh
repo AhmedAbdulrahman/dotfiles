@@ -64,7 +64,6 @@ install_global_packages() {
 	"nodemon"
 	"gatsby-cli"
 	"@sanity/cli"
-	"spaceship-prompt"
 	"typescript-language-server"
 	"source-map-explorer"
 	"typescript"
