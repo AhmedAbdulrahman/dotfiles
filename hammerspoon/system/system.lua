@@ -1,7 +1,7 @@
 -- ultra bindings
 local ultra = { 'ctrl', 'alt', 'cmd' }
 
-local capitalize        = require('utils').capitalize
+local utils        = require('utils')
 local template          = require('template')
 
 
@@ -25,7 +25,7 @@ function setTheme(theme)
     // has to be done this way so template function works, lol
     alfredApp && alfredApp.setTheme("{ALFRED_THEME}");
   ]], {
-    ALFRED_THEME = 'Mojave ' .. capitalize(theme),
+    ALFRED_THEME = 'Mojave ' .. utils.capitalize(theme),
     DARK_MODE = theme == 'dark' and 'true' or 'false',
   }))
 end
@@ -41,10 +41,10 @@ end
 
 function toggleDND()
     local imagePath = os.getenv('HOME') .. '/.hammerspoon/assets/notification-center.png'
-  
+
     local isEnabled = isDNDEnabled()
     local afterTime = isEnabled and 0.0 or 6.0
-  
+
     -- is not enabled, will be enabled
     if not isEnabled then
       hs.notify.new({
@@ -53,11 +53,11 @@ function toggleDND()
         contentImage = imagePath
       }):send()
     end
-  
+
     -- toggle, wait a bit if we've send notification
     hs.timer.doAfter(afterTime, function()
       hs.execute('do-not-disturb ' .. (isEnabled == true and 'off' or 'on'), true)
-  
+
       -- is enabled, was disabled
       if isEnabled then
         hs.notify.new({
@@ -71,11 +71,11 @@ end
 
 function toggleWiFi()
     local newStatus = not hs.wifi.interfaceDetails().power
-  
+
     hs.wifi.setPower(newStatus)
-  
+
     local imagePath = os.getenv('HOME') .. '/.hammerspoon/assets/airport.png'
-  
+
     hs.notify.new({
       title        = 'Wi-Fi',
       subTitle     = 'Power: ' .. (newStatus and 'On' or 'Off'),
