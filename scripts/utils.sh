@@ -8,7 +8,7 @@ RED="${e}[0;91m"
 YELLOW="${e}[0;93m"
 GREEN="${e}[0;92m"
 BLUE="${e}[1;34m"
-COLUMNS=$(tput cols) 
+COLUMNS=$(tput cols)
 
 answer_is_yes() {
     [[ "$REPLY" =~ ^[Yy]$ ]] \
@@ -283,7 +283,7 @@ on_finish() {
   print_in_yellow  '\n   -_-_-_-_-_-_-_-_-_-_-_-_-_-_''|   /\_/\\'
   print_in_green   '\n   -_-_-_-_-_-_-_-_-_-_-_-_-_-''~|__( ^ .^)'
   print_in_blue    '\n   -_-_-_-_-_-_-_-_-_-_-_-_-_-_''""  ""\n\n'
-  
+
   print_warning    "P.S: Don't forget to restart your terminal ;)"
 }
 
@@ -383,8 +383,7 @@ show_spinner() {
 
 brew_install() {
 
-    declare -r CMD="$4"
-    declare -r CMD_ARGUMENTS="$5"
+    declare -r CMD_ARGUMENTS="$4"
     declare -r FORMULA="$2"
     declare -r FORMULA_READABLE_NAME="$1"
     declare -r TAP_VALUE="$3"
@@ -415,11 +414,11 @@ brew_install() {
     # Install the specified formula.
 
     # shellcheck disable=SC2086
-    if brew $CMD list "$FORMULA" &> /dev/null; then
+    if brew list "$FORMULA" $CMD_ARGUMENTS &> /dev/null; then
         print_success "$FORMULA_READABLE_NAME"
     else
         execute \
-            "brew $CMD install $FORMULA $CMD_ARGUMENTS" \
+            "brew install $FORMULA $CMD_ARGUMENTS" \
             "$FORMULA_READABLE_NAME"
     fi
 
