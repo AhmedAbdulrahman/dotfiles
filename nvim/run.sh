@@ -197,8 +197,7 @@ function setup() {
   cd $DOTFILES_DIR
 
   msg "${BOLD}Installing plugins...${NC}" 1
-  "$NVIM_DIR" --headless -u nvim/.install/installation_config.lua \
-    -c 'autocmd User PackerComplete quitall' \
+  nvim -c 'autocmd User PackerComplete quitall' \
     -c 'PackerSync'
   msg "${BOLD}${GREEN}Done${NC}" 1 0
 
