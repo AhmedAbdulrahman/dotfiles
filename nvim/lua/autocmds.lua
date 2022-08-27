@@ -146,18 +146,22 @@ vim.api.nvim_create_autocmd('DirChanged', {
 })
 
 -- Attach specific keybindings in which-key for specific filetypes
+local present, wk = pcall(require, "which-key")
+if not present then return end
+local _, pwk = pcall(require, "plugins.which-key")
+
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*.md",
-  callback = function() require('plugins.which-key').attach_markdown(0) end,
+  callback = function() pwk.attach_markdown(0) end,
   group = '__myautocmds__',
 })
 
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = { "*.ts", "*.tsx" },
-  callback = function() require('plugins.which-key').attach_typescript(0) end,
+  callback = function() pwk.attach_typescript(0) end,
   group = '__myautocmds__',
 })
-vim.api.nvim_create_autocmd("BufEnter", { callback = function() if NvimConfig.plugins.zen.enabled then require('plugins.which-key').attach_zen() end end })
+vim.api.nvim_create_autocmd("BufEnter", { callback = function() if NvimConfig.plugins.zen.enabled then pwk.attach_zen() end end })
 -- Winbar (for nvim 0.8+)
 if vim.fn.has('nvim-0.8') == 1 then
   vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
@@ -174,7 +178,6 @@ if vim.fn.has('nvim-0.8') == 1 then
         "lir",
         "Outline",
         "spectre_panel",
-        "toggleterm",
         "TelescopePrompt"
       }
 
@@ -183,10 +186,16 @@ if vim.fn.has('nvim-0.8') == 1 then
         return
       end
 
+	  local present, winbar = pcall(require, "winbar")
+      if not present or type(winbar) == "boolean" then
+        vim.opt_local.winbar = nil
+        return
+      end
+
       local value = require("winbar").gps()
 
       if value == nil then
-        value = require("winbar").filename()
+        value = winbar.filename()
       end
 
       vim.opt_local.winbar = value
