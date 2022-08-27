@@ -65,16 +65,8 @@ hs.hotkey.bind({ 'ctrl', 'cmd' }, 'c', gridset('2,0 8x12'))
 hs.hotkey.bind({ 'ctrl', 'alt', 'cmd' }, 'c', gridset('3,0 6x12'))
 
 -- -- Move between screens
-hs.hotkey.bind(
-  { 'ctrl', 'alt', 'cmd' },
-  'Left',
-  hs.fnutils.partial(winmovescreen, 'left')
-)
-hs.hotkey.bind(
-  { 'ctrl', 'alt', 'cmd' },
-  'Right',
-  hs.fnutils.partial(winmovescreen, 'right')
-)
+hs.hotkey.bind({ 'ctrl', 'cmd' }, 'p', hs.fnutils.partial(winmovescreen, 'left'))
+hs.hotkey.bind({ 'ctrl', 'cmd' }, 'n', hs.fnutils.partial(winmovescreen, 'right'))
 
 -- grid gui
 hs.hotkey.bind({ 'shift', 'cmd' }, 'g', hs.grid.show)
