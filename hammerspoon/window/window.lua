@@ -1,9 +1,18 @@
 -- Window management
+local utils        = require('utils')
 
 -- Uncomment if you want to disable Animation
 -- hs.window.animationDuration = 0
 
 -- Hotkeys
+local hints = hs.hints
+-- Hints
+hints.fontName = "Helvetica-Bold"
+hints.fontSize = 18
+hints.showTitleThresh = 0
+-- hints.style           = "vimperator" -- Buggy, gets slow after a while
+
+
 local opt = { 'alt' }
 local optcmd = { 'alt', 'cmd' }
 local shftopt = { 'shift', 'alt' }
@@ -70,3 +79,8 @@ hs.hotkey.bind({ 'ctrl', 'cmd' }, 'n', hs.fnutils.partial(winmovescreen, 'right'
 
 -- grid gui
 hs.hotkey.bind({ 'shift', 'cmd' }, 'g', hs.grid.show)
+
+-- Hints
+hs.hotkey.bind({ "⌃", "⌥", "⌘" }, "space", function()
+	hints.windowHints(utils.getAllValidWindows())
+end)

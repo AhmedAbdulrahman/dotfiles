@@ -56,4 +56,18 @@ module.toPath = function(...)
 	return table.concat({...}, '/')
 end
 
+module.getAllValidWindows = function(...)
+	local allWindows = hs.window.allWindows()
+	local windows = {}
+	local index = 1
+	for i = 1, #allWindows do
+		local w = allWindows[i]
+		if w:screen() then
+			windows[index] = w
+			index = index + 1
+		end
+	end
+	return windows
+end
+
 return module
