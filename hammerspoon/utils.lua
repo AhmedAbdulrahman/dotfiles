@@ -70,4 +70,13 @@ module.getAllValidWindows = function(...)
 	return windows
 end
 
+-- Move a window a number of pixels in x and y
+module.nudge = function(xpos, ypos)
+	local win = hs.window.focusedWindow()
+	local f = win:frame()
+	f.x = f.x + xpos
+	f.y = f.y + ypos
+	win:setFrame(f)
+end
+
 return module
