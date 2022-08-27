@@ -183,12 +183,12 @@
                                 },
                                 "to_if_alone": [
                                     {
-                                        "shell_command": "afplay /Users/ahmed/.config/karabiner/rimshot-sound.mp3"
+                                        "shell_command": "afplay /Users/ahmed.abdulrahman/.config/karabiner/rimshot-sound.mp3"
                                     }
                                 ],
                                 "to_if_held_down": [
                                     {
-                                        "shell_command": "afplay --rate 0.3 /Users/ahmed/.config/karabiner/rimshot-sound.mp3"
+                                        "shell_command": "afplay --rate 0.3 /Users/ahmed.abdulrahman/.config/karabiner/rimshot-sound.mp3"
                                     }
                                 ],
                                 "type": "basic"
