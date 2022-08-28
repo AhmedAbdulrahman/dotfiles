@@ -16,7 +16,7 @@ end
 function setTheme(theme)
   hs.osascript.javascript(template([[
     var systemEvents = Application("System Events");
-    var alfredApp = Application("Alfred 4");
+    var alfredApp = Application("Alfred 5");
 
     ObjC.import("stdlib");
 
