@@ -1,5 +1,6 @@
 # vim:ft=zsh:
 
+# zmodload zsh/zprof
 # Anonymous function to create a closure to no leak local variables
 () {
 
