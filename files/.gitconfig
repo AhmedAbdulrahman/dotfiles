@@ -5,8 +5,11 @@
 	useconfigonly = true
 
 # use separate file for username / github token / etc
-[include]
-	path = ~/.gitconfig.local
+[includeIf "gitdir:~/Projects/iKas/"]
+	path = ~/.gitconfig.ikas
+
+[includeIf "gitdir:~/"]
+  path = ~/.gitconfig.local
 
 [gpg]
   program = /usr/local/bin/gpg
