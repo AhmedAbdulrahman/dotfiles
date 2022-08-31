@@ -1,6 +1,8 @@
-# Use smart URL pasting and escaping.
-autoload -Uz bracketed-paste-url-magic && zle -N bracketed-paste bracketed-paste-url-magic
-autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
+# use smart URL pasting and escaping
+autoload -Uz bracketed-paste-url-magic
+zle -N bracketed-paste bracketed-paste-url-magic
+autoload -Uz url-quote-magic
+zle -N self-insert url-quote-magic
 
 setopt AUTO_RESUME          # Treat single word simple commands without redirection as candidates for resumption of an existing job.
 setopt INTERACTIVE_COMMENTS # Allow comments starting with `#` even in interactive shells.
@@ -35,52 +37,6 @@ export LANG="${LANGUAGE}"
 export LC_ALL="${LANGUAGE}"
 export LC_CTYPE="${LANGUAGE}"
 
-# ---------------------------------------------
-# Set less or more as the default pager.
-# ---------------------------------------------
-if (( ! ${+PAGER} )); then
-  if (( ${+commands[less]} )); then
-    export PAGER=less
-  else
-    export PAGER=more
-  fi
-fi
-
-# Better spell checking & auto correction prompt
-export SPROMPT="zsh: correct %F{red}'%R'%f to %F{blue}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
-
-# Browser
-if [ "$(uname)" = "Darwin" ]; then
-  export BROWSER='open'
-fi
-
-# Editors
-# Set neovim as default EDITOR if it's available, otherwise use vim
-(( $+commands[nvim] )) && export EDITOR=nvim || export EDITOR=vim
-export VISUAL=$EDITOR # For GUI
-export GIT_EDITOR=$EDITOR # For GIT
-export PAGER='less' # For PAGER
-
-# Set MANPAGER based on $EDITOR
-case $EDITOR in
-    nvim) export MANPAGER="nvim +'set ft=man' -" ;;
-     vim) export MANPAGER="/bin/sh -c \"col -b | vim -c 'set ft=man' -\"" ;;
-       *) export MANPAGER='less' ;;
-esac
-export MANWIDTH=120¬
-
-# # Default editor for local and remote sessions
-# if [[ -n "$SSH_CONNECTION" ]]; then
-#   # on the server
-#   if [ command -v vim >/dev/null 2>&1 ]; then
-#     export EDITOR='vim'
-#   else
-#     export EDITOR='vi'
-#   fi
-# else
-#   export EDITOR='vim'
-# fi
-
 # Less
 # Set the default Less options.
 # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
@@ -92,6 +48,14 @@ export LESS='-F -g -i -M -R -S -w -X -z-4'
 if (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
+
+
+# Browser
+if [ "$(uname)" = "Darwin" ]; then
+  export BROWSER='open'
+fi
+
+
 
 # ---------------------------------------------
 # Temporary Files
@@ -111,6 +75,8 @@ TMPPREFIX="${TMPDIR%/}/zsh"
 #     mkdir -p ${PROJECTS}
 # fi
 
+# Better spell checking & auto correction prompt
+export SPROMPT="zsh: correct %F{red}'%R'%f to %F{blue}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
 # Ensure UID is exported so Docker can use it
 export UID=$UID

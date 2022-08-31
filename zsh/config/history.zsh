@@ -1,5 +1,5 @@
 #  History {{{
-    typeset -g HISTFILE="${XDG_DATA_HOME:-$HOME}/.zhistory" # Where history logs are stored.
+    # typeset -g HISTFILE="${XDG_DATA_HOME:-$HOME}/.zhistory" # Where history logs are stored.
     typeset -g HISTSIZE=10000000 # The maximum number of events stored in the internal history list.
     typeset -g SAVEHIST=$HISTSIZE # The maximum number of history events to save in the history file.
 
