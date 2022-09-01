@@ -57,7 +57,7 @@ cdpath=(
 path=(
     ./bin(N-/)
     ./node_modules/.bin
-    ${ZDOTDIR}/bin(N-/)
+    ${ZDOTDIR}/bin
     ${HOME}/.bin/local(N-/)
     ${HOME}/.bin(N-/)
     ${HOME}/.cargo/bin(N-/)
@@ -135,6 +135,9 @@ if [[ -f ${HOME}/.zshrc.local ]]; then
 else
     [[ -z "${HOMEBREW_GITHUB_API_TOKEN}" ]] && echo "⚠ HOMEBREW_GITHUB_API_TOKEN not set." && _has_unset_config=yes
     [[ -z "${GITHUB_TOKEN}" ]] && echo "⚠ GITHUB_TOKEN not set." && _has_unset_config=yes
+    [[ -z "${NPM_REGISTRY_TOKEN}" ]] && echo "⚠ NPM_REGISTRY_TOKEN not set." && _has_unset_config=yes
+    [[ -z "${GITHUB_REGISTRY_TOKEN}" ]] && echo "⚠ GITHUB_REGISTRY_TOKEN not set." && _has_unset_config=yes
+    [[ -z "${GH_PASS}" ]] && echo "⚠ GH_PASS not set." && _has_unset_config=yes
     [[ ${_has_unset_config:-no} == "yes" ]] && echo "Set the missing configs in ~/.zshrc"
 fi
 
