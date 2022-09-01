@@ -1,8 +1,8 @@
-vim.cmd [[setlocal spell]]
-vim.cmd [[setlocal linebreak]]
-vim.cmd [[setlocal nolist]]
+local utils = require('utils')
 
-if vim.fn.executable 'grip' == 1 then
+utils.plaintext()
+
+if vim.fn.executable 'gh' == 1 then
   vim.cmd [[nnoremap <buffer><leader>p :call ahmed#utils#openMarkdownPreview()<CR>]]
 end
 

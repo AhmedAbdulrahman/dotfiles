@@ -88,9 +88,9 @@ function! utils#openMarkdownPreview() abort
     unlet s:markdown_job_id
   endif
   let s:markdown_job_id = jobstart(
-        \ 'grip --pass $GITHUB_TOKEN ' . shellescape(expand('%:p')) . " 0 2>&1 | awk '/Running/ { printf $4 }'",
-        \ { 'on_stdout': 'OnGripStart', 'pty': 1 })
-  function! OnGripStart(_, output, __)
+        \ 'gh markdown-preview ' . shellescape(expand('%:p')) . " 2>&1 | awk '/Accepting connections at/ { printf $4 }'",
+        \ { 'on_stdout': 'OnMarkdownPreviewStart', 'pty': 1 })
+  function! OnMarkdownPreviewStart(_, output, __)
     call system('open ' . a:output[0])
   endfunction
 endfunction

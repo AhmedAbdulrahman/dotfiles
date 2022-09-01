@@ -38,9 +38,10 @@ main() {
   brew_install "Openssl" "openssl"
   brew_install "Git" "git"
   brew_install "GitHub CLI" "gh"
-  brew_install "Git Delta" "git-delta"
+  brew_install "Git Delta" "delta"
   brew_install "Git Tig" "tig"
   brew_install "Exiftool" "exiftool"
+  brew_install "Glow -> Render markdown on the CLI, with pizzazz!" "glow"
 #   brew_install "Python3" "python3"
 
   brew_install "Gawk" "gawk"
@@ -61,13 +62,13 @@ main() {
   brew_install "Transcrypt  -> Configure transparent encryption of files in a Git repo" "transcrypt"
 #   brew_install "Yarn" "yarn"
   print_in_purple "\n   Languages\n"
-#   brew_install "Node" "node"
+  brew_install "Rustup -> Rust toolchain installer" "rustup-init"
+  brew_install "Perl -> Highly capable, feature-rich programming language" "perl"
 
 #   brew_install "Ruby" "ruby"
 
   print_in_purple "\n   Core apps\n"
   brew_install "Tmux -> Terminal multiplexer" "tmux --HEAD"
-  brew_install "Perl -> Highly capable, feature-rich programming language" "perl"
   brew_install "Cpanminus -> get, unpack, build and install modules from CPAN" "cpanminus"
   brew_install "Newsboat -> RSS/Atom feed reader for text terminals" "newsboat"
 

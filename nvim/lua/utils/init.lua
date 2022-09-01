@@ -54,6 +54,28 @@ function M.notify(msg, level)
   vim.notify(msg, level or vim.log.levels.INFO, { title = ':: Local ::' })
 end
 
+function M.plaintext()
+	vim.cmd [[setlocal spell]]
+	vim.cmd [[setlocal linebreak]]
+	vim.cmd [[setlocal nolist]]
+	vim.cmd [[setlocal wrap]]
+
+	if vim.bo.filetype == 'gitcommit' then
+		-- Git commit messages body are constraied to 72 characters
+		vim.cmd [[setlocal textwidth=72]]
+	else
+		vim.cmd [[setlocal textwidth=0]]
+		vim.cmd [[setlocal wrapmargin=0]]
+	end
+
+	-- Break undo sequences into chunks (after punctuation); see: `:h i_CTRL-G_u`
+	-- https://twitter.com/vimgifs/status/913390282242232320
+	vim.keymap.set({ 'i' }, '.', '.<c-g>u', { buffer = true })
+	vim.keymap.set({ 'i' }, '?', '?<c-g>u', { buffer = true })
+	vim.keymap.set({ 'i' }, '!', '!<c-g>u', { buffer = true })
+	vim.keymap.set({ 'i' }, ',', ',<c-g>u', { buffer = true })
+end
+
 function M.file_exists(path)
   local f = io.open(path, 'r')
   if f ~= nil then
