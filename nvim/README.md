@@ -18,7 +18,6 @@ These are the main plugins used with NVIM config:
 -   [`aylin`](https://github.com/AhmedAbdulrahman/aylin.vim) - Aylin a modern and minimal VIM dark theme with bright colors.
 -   [`autopairs`](https://github.com/windwp/nvim-autopairs) - Auto pair plugin
 -   [`bufferline`](https://github.com/akinsho/bufferline.nvim) - A snazzy bufferline for Neovim
--   [`bufdel`](https://github.com/ojroques/nvim-bufdel) - A Neovim plugin to improve buffer deletion
 -   [`bqf`](https://github.com/kevinhwang91/nvim-bqf) - Better quickfix window in Neovim, polish old quickfix window
 -   [`cmp`](https://github.com/hrsh7th/nvim-cmp) - Auto completion support
     -   [`cmp-buffer`](https://github.com/hrsh7th/cmp-buffer) - cmp source for buffer words
@@ -31,22 +30,19 @@ These are the main plugins used with NVIM config:
     -   [`cmp-cmdline`](https://github.com/hrsh7th/cmp-cmdline) - cmp source for cmdline
     -   [`cmp-calc`](https://github.com/hrsh7th/cmp-calc) - cmp source for calc
     -   [`cmp-tmux`](https://github.com/andersevenrud/cmp-tmux) - cmp source for tmux
--   [`fzf-lua`](https://github.com/ibhagwan/fzf-lua) - Lua implementation of fuzzy finder fzf plugin
+-   [`telescope`](https://github.com/nvim-telescope/telescope.nvim) - Find, Filter, Preview, Pick. All lua, all the time.
 -   [`formatter`](https://github.com/mhartington/formatter.nvim) - A format runner for neovim, written in lua
 -   [`indent-blankline`](https://github.com/lukas-reineke/indent-blankline.nvim) - Display the indention levels with thin vertical lines
 -   [`colorizer`](https://github.com/norcalli/nvim-colorizer.lua) - High-performance color highlighter
 -   [`filetype`](https://github.com/nathom/filetype.nvim) - A faster version of filetype.vim
 -   [`gitsigns`](https://github.com/lewis6991/gitsigns.nvim) - Asynchronous git diff in sign column
--   [`github-hub`](https://github.com/jez/vim-github-hub) - A Vim filetype plugin for github/hub
 -   [`conflict-marker`](https://github.com/rhysd/conflict-marker.vim) - Weapon to fight against conflicts in Vim
 -   [`fugitive`](https://github.com/tpope/vim-fugitive) - Git client
 -   [`git-messenger`](https://github.com/rhysd/git-messenger.vim) - Vim and Neovim plugin to reveal the commit messages under the cursor
 -   [`diffview`](https://github.com/sindrets/diffview.nvim) - Single tabpage interface for all modified files in git
 -   [`plenary`](https://github.com/nvim-lua/plenary.nvim) - Asynchronous modules using coroutines
--   [`twig`](https://github.com/evidens/vim-twig) - Twig syntax highlighting, snipMate, etc
--   [`sexp`](https://github.com/guns/vim-sexp) - Precision Editing for S-expressions
 -   [`lspconfig`](https://github.com/neovim/nvim-lspconfig) - Quickstart configurations for the neovim LSP client
--   [`lsp-colors`](https://github.com/folke/lsp-colors.nvim) - Create missing LSP diagnostics highlight groups for color schemes
+<!-- -   [`lsp-colors`](https://github.com/folke/lsp-colors.nvim) - Create missing LSP diagnostics highlight groups for color schemes -->
 -   [`trouble`](https://github.com/folke/trouble.nvim) - A pretty diagnostics, references, telescope results
 -   [`typescript-language-server`](https://github.com/theia-ide/typescript-language-server) - TypeScript & JavaScript Language Server
 -   [`css-language-server`](https://github.com/vscode-langservers/vscode-css-languageserver-bin) - CSS Language Server
@@ -58,29 +54,23 @@ These are the main plugins used with NVIM config:
 -   [`lualine`](https://github.com/nvim-lualine/lualine.nvim) - A blazing fast and easy to configure neovim statusline plugin written in pure lua
 -   [`playground`](https://github.com/nvim-treesitter/playground) - Treesitter playground integrated into Neovim
 -   [`nvim-treesitter`](https://github.com/nvim-treesitter/nvim-treesitter) - Nvim Treesitter configurations and abstraction layer
--   [`orgmode`](https://github.com/kristijanhusak/orgmode.nvim) - Orgmode clone written in Lua for Neovim 0.5+
+<!-- -   [`orgmode`](https://github.com/kristijanhusak/orgmode.nvim) - Orgmode clone written in Lua for Neovim 0.5+ -->
 -   [`nvim-tree`](https://github.com/kyazdani42/nvim-tree.lua) - File explorer
 -   [`nvim-web-devicons`](https://github.com/kyazdani42/nvim-web-devicons) - Nerd Font icon API support
--   [`nvim-fzf`](https://github.com/vijaymarupudi/nvim-fzf) - Asynchronous Lua API for using fzf
--   [`vim-easydir`](https://github.com/duggiefresh/vim-easydir) - create, edit and save files and parent directories
 -   [`startify`](https://github.com/mhinz/vim-startify) - 🔗 The fancy start screen for Vim.
 -   [`markdown`](https://github.com/plasticboy/vim-markdown) - Markdown Vim Mode
 -   [`markdown-preview`](https://github.com/iamcco/markdown-preview.nvim) - Markdown preview plugin for (neo)vim
--   [`polyglot`](https://github.com/sheerun/vim-polyglot) - Big collection of language packs as scripts are loaded only on demand
 -   [`undotree`](https://github.com/mbbill/undotree) - The undo history visualizer for VIM
--   [`eunuch`](https://github.com/tpope/vim-eunuch) - Helpers for UNIX
--   [`sexp`](https://github.com/tpope/vim-sexp-mappings-for-regular-people) - Vim-sexp mappings for regular people
--   [`conjure`](https://github.com/Olical/conjure) - Interactive evaluation for Neovim (Clojure, Fennel, Janet, Racket, Hy, MIT Scheme, Guile)
--   [`loupe`](https://github.com/wincent/loupe) - Enhanced in-file search for Vim
+
 -   [`repeat`](https://github.com/tpope/vim-repeat) - Enable repeating supported plugin maps with "."
--   [`apathy`](https://github.com/tpope/vim-apathy) - Set the 'path' option for miscellaneous file types
--   [`symbols-outline`](https://github.com/simrat39/symbols-outline.nvim) - A tree like view for symbols in Neovim
+-   [`speeddating`](https://github.com/tpope/vim-speeddating) - Use CTRL-A/CTRL-X to increment dates, times, and more
+-   [`surround`](https://github.com/tpope/vim-surround) - Delete/change/add parentheses/quotes/XML-tags/much more with ease
 -   [`tmux-navigator`](https://github.com/christoomey/vim-tmux-navigator) - Seamless navigation between tmux panes and vim splits
--   [`abolish`](https://github.com/tpope/tpope-vim-abolish) - Easily search for, substitute, and abbreviate multiple variants of a word
 -   [`visual-star-search`](https://github.com/nelstrom/vim-visual-star-search) - Start a \* or # search from a visual block
 -   [`lightspeed`](https://github.com/ggandor/lightspeed.nvim) - Next-generation motion plugin with incremental input processing
 -   [`package-info`](https://github.com/vuki656/package-info.nvim) - The set of npm/yarn commands
 -   [`peekaboo`](https://github.com/junegunn/vim-peekaboo) - Peekaboo extends " and @ in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
+-   [`easy-align`](https://github.com/junegunn/vim-easy-align) -  A Vim alignment plugin
 
 ## NVIM Keybindings
 
