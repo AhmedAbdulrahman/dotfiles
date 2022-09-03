@@ -20,7 +20,8 @@ PACKAGES=(
     "pylint"
     'virtualenvwrapper'
     'requests'
-    'ipdb'
+    'ipdb',
+	'vobject' # Mutt calendar script
 )
 
 FLAGS=''
