@@ -11,70 +11,9 @@ You can check installed LSP servers by `:LspInstallInfo`.
 To change NvimConfig related config use the `config.lua` file.
 To change Nvim settings use the `settings.lua` file.
 
-## Plugins
+## Keybindings
 
-These are the main plugins used with NVIM config:
-
--   [`aylin`](https://github.com/AhmedAbdulrahman/aylin.vim) - Aylin a modern and minimal VIM dark theme with bright colors.
--   [`autopairs`](https://github.com/windwp/nvim-autopairs) - Auto pair plugin
--   [`bufferline`](https://github.com/akinsho/bufferline.nvim) - A snazzy bufferline for Neovim
--   [`bqf`](https://github.com/kevinhwang91/nvim-bqf) - Better quickfix window in Neovim, polish old quickfix window
--   [`cmp`](https://github.com/hrsh7th/nvim-cmp) - Auto completion support
-    -   [`cmp-buffer`](https://github.com/hrsh7th/cmp-buffer) - cmp source for buffer words
-    -   [`cmp-emoji`](https://github.com/hrsh7th/cmp-emoji) - cmp source for emoji
-    -   [`cmp-lsp`](https://github.com/hrsh7th/cmp-nvim-lsp) - cmp source for LSP clent
-    -   [`cmp-conjure`](https://github.com/PaterJason/cmp-conjure) - cmp source for conjure
-    -   [`cmp-luasnip`](https://github.com/saadparwaiz1/cmp_luasnip) - cmp source for luasnip snippets
-    -   [`cmp-path`](https://github.com/hrsh7th/cmp-path) - cmp source for filesystem paths
-    -   [`cmp-spell`](https://github.com/f3fora/cmp-spell) - cmp source for spell
-    -   [`cmp-cmdline`](https://github.com/hrsh7th/cmp-cmdline) - cmp source for cmdline
-    -   [`cmp-calc`](https://github.com/hrsh7th/cmp-calc) - cmp source for calc
-    -   [`cmp-tmux`](https://github.com/andersevenrud/cmp-tmux) - cmp source for tmux
--   [`telescope`](https://github.com/nvim-telescope/telescope.nvim) - Find, Filter, Preview, Pick. All lua, all the time.
--   [`formatter`](https://github.com/mhartington/formatter.nvim) - A format runner for neovim, written in lua
--   [`indent-blankline`](https://github.com/lukas-reineke/indent-blankline.nvim) - Display the indention levels with thin vertical lines
--   [`colorizer`](https://github.com/norcalli/nvim-colorizer.lua) - High-performance color highlighter
--   [`filetype`](https://github.com/nathom/filetype.nvim) - A faster version of filetype.vim
--   [`gitsigns`](https://github.com/lewis6991/gitsigns.nvim) - Asynchronous git diff in sign column
--   [`conflict-marker`](https://github.com/rhysd/conflict-marker.vim) - Weapon to fight against conflicts in Vim
--   [`fugitive`](https://github.com/tpope/vim-fugitive) - Git client
--   [`git-messenger`](https://github.com/rhysd/git-messenger.vim) - Vim and Neovim plugin to reveal the commit messages under the cursor
--   [`diffview`](https://github.com/sindrets/diffview.nvim) - Single tabpage interface for all modified files in git
--   [`plenary`](https://github.com/nvim-lua/plenary.nvim) - Asynchronous modules using coroutines
--   [`lspconfig`](https://github.com/neovim/nvim-lspconfig) - Quickstart configurations for the neovim LSP client
-<!-- -   [`lsp-colors`](https://github.com/folke/lsp-colors.nvim) - Create missing LSP diagnostics highlight groups for color schemes -->
--   [`trouble`](https://github.com/folke/trouble.nvim) - A pretty diagnostics, references, telescope results
--   [`typescript-language-server`](https://github.com/theia-ide/typescript-language-server) - TypeScript & JavaScript Language Server
--   [`css-language-server`](https://github.com/vscode-langservers/vscode-css-languageserver-bin) - CSS Language Server
--   [`html-language-server`](https://github.com/vscode-langservers/vscode-html-languageserver-bin) - HTML Language Server
--   [`json-language-server`](https://github.com/vscode-langservers/vscode-json-languageserver) - JSON Language Server
--   [`lua-language-server`](https://github.com/sumneko/lua-language-server) - Lua Language Server
--   [`luasnip`](https://github.com/L3MON4D3/LuaSnip) - High-performance snippet engine
-    -   [`friendly-snippets`](https://github.com/rafamadriz/friendly-snippets) - Snippets collection for a set of different programming languages for faster development
--   [`lualine`](https://github.com/nvim-lualine/lualine.nvim) - A blazing fast and easy to configure neovim statusline plugin written in pure lua
--   [`playground`](https://github.com/nvim-treesitter/playground) - Treesitter playground integrated into Neovim
--   [`nvim-treesitter`](https://github.com/nvim-treesitter/nvim-treesitter) - Nvim Treesitter configurations and abstraction layer
-<!-- -   [`orgmode`](https://github.com/kristijanhusak/orgmode.nvim) - Orgmode clone written in Lua for Neovim 0.5+ -->
--   [`nvim-tree`](https://github.com/kyazdani42/nvim-tree.lua) - File explorer
--   [`nvim-web-devicons`](https://github.com/kyazdani42/nvim-web-devicons) - Nerd Font icon API support
--   [`startify`](https://github.com/mhinz/vim-startify) - 🔗 The fancy start screen for Vim.
--   [`markdown`](https://github.com/plasticboy/vim-markdown) - Markdown Vim Mode
--   [`markdown-preview`](https://github.com/iamcco/markdown-preview.nvim) - Markdown preview plugin for (neo)vim
--   [`undotree`](https://github.com/mbbill/undotree) - The undo history visualizer for VIM
-
--   [`repeat`](https://github.com/tpope/vim-repeat) - Enable repeating supported plugin maps with "."
--   [`speeddating`](https://github.com/tpope/vim-speeddating) - Use CTRL-A/CTRL-X to increment dates, times, and more
--   [`surround`](https://github.com/tpope/vim-surround) - Delete/change/add parentheses/quotes/XML-tags/much more with ease
--   [`tmux-navigator`](https://github.com/christoomey/vim-tmux-navigator) - Seamless navigation between tmux panes and vim splits
--   [`visual-star-search`](https://github.com/nelstrom/vim-visual-star-search) - Start a \* or # search from a visual block
--   [`lightspeed`](https://github.com/ggandor/lightspeed.nvim) - Next-generation motion plugin with incremental input processing
--   [`package-info`](https://github.com/vuki656/package-info.nvim) - The set of npm/yarn commands
--   [`peekaboo`](https://github.com/junegunn/vim-peekaboo) - Peekaboo extends " and @ in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
--   [`easy-align`](https://github.com/junegunn/vim-easy-align) -  A Vim alignment plugin
-
-## NVIM Keybindings
-
-These are the most useful custom key bindings I use in custom config. Space `(SPC)` set as Leader key.
+Here you can find some of my custom key bindings I use in nvim config. Space `(SPC)` set as Leader key.
 
 <details>
 <summary>Searching</summary>
