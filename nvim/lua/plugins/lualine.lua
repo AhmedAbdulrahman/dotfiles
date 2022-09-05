@@ -27,6 +27,19 @@ local conditions = {
     local gitdir = vim.fn.finddir('.git', filepath .. ';')
     return gitdir and #gitdir > 0 and #gitdir < #filepath
   end,
+  spell_status = function()
+    local spell = vim.api.nvim_get_option_value('spell', {})
+    local lang = vim.api.nvim_get_option_value('spelllang', {})
+    if spell then
+      local res = '[SPELL'
+      if lang then
+        res = res .. ' ' .. string.upper(lang)
+      end
+      res = res .. ']'
+      return res
+    end
+    return ''
+  end,
 }
 
 -- Config
@@ -40,7 +53,10 @@ local config = {
       -- We are going to use lualine_c an lualine_x as left and
       -- right section. Both are highlighted by c theme .  So we
       -- are just setting default looks o statusline
-      normal = { c = { fg = colors.fg, bg = colors.bg } },
+      normal = {
+        c = { fg = colors.fg, bg = colors.bg },
+        y = { fg = colors.fg, bg = colors.bg },
+      },
       inactive = { c = { fg = colors.fg, bg = colors.bg } },
     },
   },
@@ -48,7 +64,15 @@ local config = {
     -- these are to remove the defaults
     lualine_a = {},
     lualine_b = {},
-    lualine_y = {},
+    lualine_y = {
+      conditions.spell_status,
+      -- {
+      -- 	'filetype',
+      -- 	separator = {
+      -- 		left = '⦁',
+      -- 	}
+      -- }
+    },
     lualine_z = {},
     -- These will be filled later
     lualine_c = {},
@@ -146,7 +170,7 @@ ins_left({ 'progress', color = { fg = colors.fg, gui = 'bold' } })
 ins_left({
   'diagnostics',
   sources = { 'nvim_diagnostic' },
-  symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
+  symbols = { error = ' ', warn = ' ', info = ' ' },
   color_error = colors.red,
   color_warn = colors.yellow,
   color_info = colors.cyan,
@@ -211,7 +235,7 @@ ins_right({
 ins_right({
   'diff',
   -- Is it me or the symbol for modified us really weird
-  symbols = { added = ' ', modified = '柳 ', removed = ' ' },
+  symbols = { added = ' ', modified = '柳 ', removed = ' ' },
   color_added = colors.green,
   color_modified = colors.orange,
   color_removed = colors.red,
