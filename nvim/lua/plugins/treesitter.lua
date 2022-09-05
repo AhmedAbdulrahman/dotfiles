@@ -21,17 +21,30 @@ require('nvim-treesitter.configs').setup({
 
   highlight = {
     enable = true,
-    -- disable = { "c", "rust" },  -- list of language that will be disabled
-    -- additional_vim_regex_highlighting = false,
+    use_languagetree = true,
+    disable = function(lang, bufnr) -- Disable in large files
+      -- Remove the org part to use TS highlighter for some of the highlights (Experimental)
+      return lang == 'org' or vim.api.nvim_buf_line_count(bufnr) > 10000
+    end,
+    -- https://github.com/nvim-treesitter/nvim-treesitter/pull/1042
+    -- https://www.reddit.com/r/neovim/comments/ok9frp/v05_treesitter_does_anyone_have_python_indent/h57kxuv/?context=3
+    -- Required since TS highlighter doesn't support all syntax features (conceal)
+    additional_vim_regex_highlighting = {
+      'python',
+      'org',
+      'lua',
+      'vim',
+      'zsh',
+    },
   },
 
   incremental_selection = {
     enable = false,
     keymaps = {
-		init_selection    = "<leader>gnn",
-		node_incremental  = "<leader>gnr",
-		scope_incremental = "<leader>gne",
-		node_decremental  = "<leader>gnt",
+      init_selection = '<leader>gnn',
+      node_incremental = '<leader>gnr',
+      scope_incremental = '<leader>gne',
+      node_decremental = '<leader>gnt',
     },
   },
 
@@ -55,6 +68,10 @@ require('nvim-treesitter.configs').setup({
   context_commentstring = {
     enable = true,
     enable_autocmd = false,
+  },
+
+  autopairs = {
+    enable = true,
   },
 
   autotag = {
@@ -106,12 +123,12 @@ require('nvim-treesitter.configs').setup({
         ['iC'] = '@conditional.inner',
       },
     },
-	swap = {
-		enable = true,
-		swap_next = {
-		  ["~"] = "@parameter.inner",
-		},
-	},
+    swap = {
+      enable = true,
+      swap_next = {
+        ['~'] = '@parameter.inner',
+      },
+    },
   },
 
   textsubjects = {
