@@ -57,7 +57,7 @@ cdpath=(
 path=(
     ./bin(N-/)
     ./node_modules/.bin
-    ${ZDOTDIR}/bin
+    ${ZDOTDIR}/bin(N-/)
     ${HOME}/.bin/local(N-/)
     ${HOME}/.bin(N-/)
     ${HOME}/.cargo/bin(N-/)
