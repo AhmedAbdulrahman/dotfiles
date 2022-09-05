@@ -28,6 +28,7 @@ return require('packer').startup({
 
     -- Themes
     use({ 'AhmedAbdulrahman/aylin.vim', branch = '0.5-nvim' })
+    use({ 'arzg/vim-substrata' })
 
     -- Treesitter
     use({
