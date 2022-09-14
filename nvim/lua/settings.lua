@@ -166,6 +166,7 @@ opt.grepprg = 'grep ' -- Program to use for the :grep command.
   .. '--exclude-dir={.git,node_modules} '
   .. '--perl-regexp'
 opt.grepformat = '%f:%l:%c:%m,%f:%l:%m' -- Format to recognize for the :grep command output.
+opt.fillchars = 'stl: '
 opt.ignorecase = true -- Ignore case in search patterns.
 opt.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
 opt.smartcase = true -- Set 'noignorecase' if search pattern contains an uppercase letter.
@@ -245,12 +246,8 @@ opt.writebackup = false -- Not needed
 
 -- keep backup files out of the way
 if not vim.fn.has('nvim-0.6') then
-  vim.opt.backupdir = string.format(
-    '%s,%s%s',
-    '.',
-    vim.fn.stdpath('data'),
-    '/backup//'
-  )
+  vim.opt.backupdir =
+    string.format('%s,%s%s', '.', vim.fn.stdpath('data'), '/backup//')
 end
 
 opt.swapfile = false
