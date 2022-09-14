@@ -37,6 +37,10 @@ local handlers = {
     vim.lsp.handlers.signature_help,
     { border = NvimConfig.ui.float.border }
   ),
+  ['textDocument/publishDiagnostics'] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics,
+    { virtual_text = NvimConfig.lsp.virtual_text }
+  ),
 }
 
 local function on_attach()
