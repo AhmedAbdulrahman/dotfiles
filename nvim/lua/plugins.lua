@@ -204,6 +204,13 @@ return require('packer').startup({
         require('nvim-surround').setup({})
       end,
     })
+    use({
+      'sunjon/shade.nvim',
+      config = function()
+        require('shade').setup()
+        require('shade').toggle()
+      end,
+    })
     use({ 'dhruvasagar/vim-table-mode' })
     use({ 'mg979/vim-visual-multi' })
     use({ 'junegunn/vim-easy-align' })
