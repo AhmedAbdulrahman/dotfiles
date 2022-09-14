@@ -1,5 +1,5 @@
 -- luacheck: max line length 200
-local present, wk = pcall(require, "which-key")
+local present, wk = pcall(require, 'which-key')
 if not present then
   return
 end
@@ -39,7 +39,7 @@ wk.setup({
     group = '+', -- symbol prepended to a group
   },
   window = {
-    border = NvimConfig.ui.float.border or "rounded", -- none, single, double, shadow, rounded
+    border = NvimConfig.ui.float.border or 'rounded', -- none, single, double, shadow, rounded
     position = 'bottom', -- bottom, top
     margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
     padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
@@ -64,9 +64,18 @@ wk.setup({
   },
 })
 
+local opts = {
+  mode = 'n', -- NORMAL mode
+  prefix = '<leader>',
+  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
+  noremap = true, -- use `noremap` when creating keymaps
+  nowait = false, -- use `nowait` when creating keymaps
+}
+
 local visual_opts = {
-  mode = "v", -- NORMAL mode
-  prefix = "<leader>",
+  mode = 'v', -- NORMAL mode
+  prefix = '<leader>',
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
   silent = true, -- use `silent` when creating keymaps
   noremap = true, -- use `noremap` when creating keymaps
@@ -143,7 +152,7 @@ local normal_mode_mappings = {
     i = { 'step into' },
     o = { 'step over' },
     O = { 'step out' },
-    s = { 'scopes' },
+    t = { 'terminate' },
   },
 
   g = {
@@ -234,35 +243,35 @@ local normal_mode_mappings = {
 
 local visual_mode_mappings = {
   -- single
-  ["s"] = { "<cmd>'<,'>sort<CR>", 'sort' },
+  ['s'] = { "<cmd>'<,'>sort<CR>", 'sort' },
 
   a = {
-    name = "Actions",
+    name = 'Actions',
     c = { 'comment box' },
   },
 
   c = {
-    name = "LSP",
+    name = 'LSP',
     a = { 'range code action' },
     f = { 'range format' },
   },
 
   g = {
-    name = "Git",
+    name = 'Git',
     h = {
-      name = "Hunk",
-      r = "reset hunk",
-      s = "stage hunk",
+      name = 'Hunk',
+      r = 'reset hunk',
+      s = 'stage hunk',
     },
   },
 
   p = {
-    name = "Project",
+    name = 'Project',
     r = { 'refactor' },
   },
 
   t = {
-    name = "Table Mode",
+    name = 'Table Mode',
     t = { 'tableize' },
   },
 }
@@ -273,13 +282,13 @@ wk.register(visual_mode_mappings, visual_opts)
 local function attach_markdown(bufnr)
   wk.register({
     a = {
-      name = "Actions",
+      name = 'Actions',
       m = { '<cmd>MarkdownPreviewToggle<CR>', 'markdown preview' },
-    }
+    },
   }, {
     buffer = bufnr,
-    mode = "n", -- NORMAL mode
-    prefix = "<leader>",
+    mode = 'n', -- NORMAL mode
+    prefix = '<leader>',
     silent = true, -- use `silent` when creating keymaps
     noremap = true, -- use `noremap` when creating keymaps
     nowait = false, -- use `nowait` when creating keymaps
@@ -289,28 +298,29 @@ end
 local function attach_typescript(bufnr)
   wk.register({
     c = {
-      name = "LSP",
+      name = 'LSP',
       F = { '<cmd>TypescriptFixAll<CR>', 'fix all' },
       i = { '<cmd>TypescriptAddMissingImports<CR>', 'import all' },
       o = { '<cmd>TypescriptOrganizeImports<CR>', 'organize imports' },
       u = { '<cmd>TypescriptRemoveUnused<CR>', 'remove unused' },
-    }
+    },
   }, {
     buffer = bufnr,
-    mode = "n", -- NORMAL mode
-    prefix = "<leader>",
+    mode = 'n', -- NORMAL mode
+    prefix = '<leader>',
     silent = true, -- use `silent` when creating keymaps
     noremap = true, -- use `noremap` when creating keymaps
     nowait = false, -- use `nowait` when creating keymaps
   })
 end
 
-local function attach_zen()
+local function attach_zen(bufnr)
   wk.register({
-    ["z"] = { '<cmd>ZenMode<CR>', 'zen' },
+    ['z'] = { '<cmd>ZenMode<CR>', 'zen' },
   }, {
-    mode = "n", -- NORMAL mode
-    prefix = "<leader>",
+    buffer = bufnr,
+    mode = 'n', -- NORMAL mode
+    prefix = '<leader>',
     silent = true, -- use `silent` when creating keymaps
     noremap = true, -- use `noremap` when creating keymaps
     nowait = false, -- use `nowait` when creating keymaps
@@ -320,5 +330,5 @@ end
 return {
   attach_markdown = attach_markdown,
   attach_typescript = attach_typescript,
-  attach_zen = attach_zen
+  attach_zen = attach_zen,
 }

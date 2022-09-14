@@ -53,6 +53,12 @@ return require('packer').startup({
       after = { 'nvim-treesitter' },
     })
     use({ 'RRethy/nvim-treesitter-textsubjects', after = { 'nvim-treesitter' } })
+    use({
+      'm-demare/hlargs.nvim',
+      config = function()
+        require('hlargs').setup({ color = '#F7768E' })
+      end,
+    })
 
     -- 🔭 Navigating (Telescope/Tree/Refactor)
     use({ 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' })

@@ -31,9 +31,9 @@ NvimConfig = {
       }, -- Default
     },
     zen = {
-      enabled = false,
       kitty_enabled = false,
+      enabled = true, -- sync after change
     },
   },
-  icons = icons
+  icons = icons,
 }
