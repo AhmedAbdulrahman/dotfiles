@@ -21,4 +21,5 @@ read_globals = {
 
 globals = {
   "vim.g",
+ 'NvimConfig',
 }
