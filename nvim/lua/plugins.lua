@@ -1,10 +1,17 @@
 local fn = vim.fn
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-local compile_path = install_path .. "/plugin/packer_compiled.lua"
+local compile_path = install_path .. '/plugin/packer_compiled.lua'
 local packer_bootstrap = nil
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+  packer_bootstrap = fn.system({
+    'git',
+    'clone',
+    '--depth',
+    '1',
+    'https://github.com/wbthomason/packer.nvim',
+    install_path,
+  })
 end
 
 return require('packer').startup({
@@ -55,8 +62,8 @@ return require('packer').startup({
       requires = {
         { 'nvim-lua/popup.nvim' },
         { 'nvim-lua/plenary.nvim' },
-        { 'nvim-telescope/telescope-fzf-native.nvim' }
-      }
+        { 'nvim-telescope/telescope-fzf-native.nvim' },
+      },
     })
     -- Telescope Extensions
     use({ 'cljoly/telescope-repo.nvim' })
@@ -149,10 +156,23 @@ return require('packer').startup({
     })
     use({ 'jose-elias-alvarez/typescript.nvim' })
     -- Formatter
-    use({ 'mhartington/formatter.nvim', config = "require('plugins.formatter')" })
+    use({
+      'mhartington/formatter.nvim',
+      config = "require('plugins.formatter')",
+    })
     -- General
-    use({ 'iamcco/markdown-preview.nvim', run = function() vim.fn["mkdp#util#install"]() end })
-    use { 'airblade/vim-rooter', setup = function() vim.g.rooter_patterns = NvimConfig.plugins.rooter.patterns end }
+    use({
+      'iamcco/markdown-preview.nvim',
+      run = function()
+        vim.fn['mkdp#util#install']()
+      end,
+    })
+    use({
+      'airblade/vim-rooter',
+      setup = function()
+        vim.g.rooter_patterns = NvimConfig.plugins.rooter.patterns
+      end,
+    })
     use({ 'AndrewRadev/switch.vim' })
     use({ 'AndrewRadev/splitjoin.vim' })
     use({
@@ -172,7 +192,12 @@ return require('packer').startup({
     })
     use({ 'tpope/vim-repeat' })
     use({ 'tpope/vim-speeddating' })
-    use({ 'tpope/vim-surround' })
+    use({
+      'kylechui/nvim-surround',
+      config = function()
+        require('nvim-surround').setup({})
+      end,
+    })
     use({ 'dhruvasagar/vim-table-mode' })
     use({ 'mg979/vim-visual-multi' })
     use({ 'junegunn/vim-easy-align' })
@@ -237,9 +262,9 @@ return require('packer').startup({
       after = 'cmp_luasnip',
     })
     -- Debug
-    -- TODO: Configure dap
-    -- use {'rcarriga/nvim-dap-ui', requires = {"mfussenegger/nvim-dap"}}
-    -- use {'mfussenegger/nvim-dap', config = "require('plugins.dap')"}
+    use({ 'theHamsta/nvim-dap-virtual-text' })
+    use({ 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap' } })
+    use({ 'mfussenegger/nvim-dap', config = "require('plugins.dap')" })
 
     -- Git
     use({
@@ -249,10 +274,11 @@ return require('packer').startup({
       event = 'BufRead',
     })
     use({ 'sindrets/diffview.nvim' })
-    use({ 'akinsho/git-conflict.nvim',
+    use({
+      'akinsho/git-conflict.nvim',
       config = function()
         require('git-conflict').setup()
-      end
+      end,
     })
 
     use({
@@ -276,7 +302,7 @@ return require('packer').startup({
     display = {
       open_fn = function()
         return require('packer.util').float({ border = 'rounded' })
-      end
-    }
-  }
+      end,
+    },
+  },
 })
