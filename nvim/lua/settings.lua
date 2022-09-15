@@ -148,8 +148,10 @@ if not vim.fn.has('nvim-0.6') then
   vim.opt.inccommand = 'nosplit'
 end
 opt.shiftround = true -- Round indent to multiple of 'shiftwidth'.
+opt.foldcolumn = '0'
+opt.foldnestmax = 0
+opt.foldlevel = 99 -- Using ufo provider need a large value
 opt.foldlevelstart = 99 -- Start editing with all folds open.
-opt.foldtext = 'CustomFold()' --- Emit custom function for foldtext
 opt.foldopen = { -- Specifies for which type of commands folds will be opened.
   'hor', -- Horizontal movements: "l", "w", "fx", etc.
   'mark', -- Jumping to a mark: "'m", CTRL-O, etc.
@@ -272,8 +274,8 @@ else
   -- - <50 save/restore 50 lines from each register
   -- - s10 max item size 10KB
   -- - h do not save/restore 'hlsearch' setting
-  au.group('MyNeovimShada', function(g)
-    g(
+  au.group('MyNeovimShada', function(gr)
+    gr(
       { 'CursorHold', 'FocusGained', 'FocusLost' },
       { '*', [[if &bt == '' | rshada|wshada | endif]] }
     )

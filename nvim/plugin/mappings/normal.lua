@@ -1,32 +1,86 @@
 local keymap = vim.keymap
 local silent = { silent = true }
 
-
 -- Plugins
 -- Comment Box
-keymap.set("n", "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>", silent)
-keymap.set("v", "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>", silent)
+keymap.set(
+  'n',
+  '<leader>ac',
+  "<cmd>lua require('comment-box').lbox()<CR>",
+  silent
+)
+keymap.set(
+  'v',
+  '<leader>ac',
+  "<cmd>lua require('comment-box').lbox()<CR>",
+  silent
+)
 
 -- Refactor with spectre
-keymap.set('n', '<leader>pr', "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", silent)
+keymap.set(
+  'n',
+  '<leader>pr',
+  "<cmd>lua require('spectre').open_visual({select_word=true})<CR>",
+  silent
+)
 
 -- Lsp
-keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", silent)
-keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", silent)
-keymap.set("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", silent)
-keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references({ includeDeclaration = false })<CR>", silent)
-keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", silent)
-keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", silent)
-keymap.set("v", "<leader>ca", "<cmd>'<,'>lua vim.lsp.buf.range_code_action()<CR>", silent)
-keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", silent)
-keymap.set("n", "<leader>\\f", "<cmd>lua vim.lsp.buf.formatting()<CR>", silent)
-keymap.set("n", "<leader>cf", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", silent)
-keymap.set("v", "<leader>cf", "<cmd>'<.'>lua vim.lsp.buf.range_formatting()<CR>", silent)
-keymap.set("n", "<leader>cl", "<cmd>lua vim.diagnostic.open_float(nil, { focusable = false, scope = 'line', header = false, border = 'rounded', max_width = 100, close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' }})<CR>", silent)
-keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", silent)
-keymap.set("n", "L", "<cmd>lua vim.lsp.buf.signature_help()<CR>", silent)
-keymap.set("n", "]g", "<cmd>lua vim.diagnostic.goto_next({ float = { border = 'rounded', max_width = 100 }})<CR>", silent)
-keymap.set("n", "[g", "<cmd>lua vim.diagnostic.goto_prev({ float = { border = 'rounded', max_width = 100 }})<CR>", silent)
+keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', silent)
+keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', silent)
+keymap.set('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', silent)
+keymap.set(
+  'n',
+  'gr',
+  '<cmd>lua vim.lsp.buf.references({ includeDeclaration = false })<CR>',
+  silent
+)
+keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', silent)
+keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', silent)
+keymap.set(
+  'v',
+  '<leader>ca',
+  "<cmd>'<,'>lua vim.lsp.buf.range_code_action()<CR>",
+  silent
+)
+keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', silent)
+keymap.set('n', '<leader>\\f', '<cmd>lua vim.lsp.buf.formatting()<CR>', silent)
+keymap.set(
+  'n',
+  '<leader>cf',
+  '<cmd>lua vim.lsp.buf.format({ async = true })<CR>',
+  silent
+)
+keymap.set(
+  'v',
+  '<leader>cf',
+  "<cmd>'<.'>lua vim.lsp.buf.range_formatting()<CR>",
+  silent
+)
+keymap.set(
+  'n',
+  '<leader>cl',
+  "<cmd>lua vim.diagnostic.open_float(nil, { focusable = false, scope = 'line', header = false, border = 'rounded', max_width = 100, close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' }})<CR>",
+  silent
+)
+keymap.set('n', 'K', function()
+  local winid = require('ufo').peekFoldedLinesUnderCursor()
+  if not winid then
+    vim.lsp.buf.hover()
+  end
+end)
+keymap.set('n', 'L', '<cmd>lua vim.lsp.buf.signature_help()<CR>', silent)
+keymap.set(
+  'n',
+  ']g',
+  "<cmd>lua vim.diagnostic.goto_next({ float = { border = 'rounded', max_width = 100 }})<CR>",
+  silent
+)
+keymap.set(
+  'n',
+  '[g',
+  "<cmd>lua vim.diagnostic.goto_prev({ float = { border = 'rounded', max_width = 100 }})<CR>",
+  silent
+)
 
 -- Avoid issues because of remapping <c-a> and <c-x> below
 vim.cmd([[
@@ -125,19 +179,9 @@ keymap.set(
 )
 
 -- Vertical split with current buffer
-keymap.set(
-  'n',
-  '<leader>vs',
-  '<C-W>v',
-  silent
-)
+keymap.set('n', '<leader>vs', '<C-W>v', silent)
 -- Horizontal split with current buffer
-keymap.set(
-  'n',
-  '<leader>hl',
-  '<C-W>s',
-  silent
-)
+keymap.set('n', '<leader>hl', '<C-W>s', silent)
 
 -- Space to NOP to prevent Leader issues
 keymap.set('n', '<Space>', '<NOP>', silent)
@@ -196,8 +240,18 @@ keymap.set('n', 'gV', [[`[v`]']])
 -- The `zzzv` keeps search matches in the middle of the window.
 -- and make sure n will go forward when searching with ? or #
 -- https://vi.stackexchange.com/a/2366/4600
-keymap.set('n', 'n', [[(v:searchforward ? 'n' : 'N') . 'zzzv']], { expr = true })
-keymap.set('n', 'N', [[(v:searchforward ? 'N' : 'n') . 'zzzv']], { expr = true })
+keymap.set(
+  'n',
+  'n',
+  [[(v:searchforward ? 'n' : 'N') . 'zzzv']],
+  { expr = true }
+)
+keymap.set(
+  'n',
+  'N',
+  [[(v:searchforward ? 'N' : 'n') . 'zzzv']],
+  { expr = true }
+)
 
 -- Center { & } movements
 keymap.set('n', '{', '{zz')

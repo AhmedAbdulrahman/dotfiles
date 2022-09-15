@@ -217,6 +217,11 @@ return require('packer').startup({
         require('shade').toggle()
       end,
     })
+    use({
+      'kevinhwang91/nvim-ufo',
+      requires = 'kevinhwang91/promise-async',
+      config = "require('plugins.nvim-ufo')",
+    })
     use({ 'dhruvasagar/vim-table-mode' })
     use({ 'mg979/vim-visual-multi' })
     use({ 'junegunn/vim-easy-align' })
