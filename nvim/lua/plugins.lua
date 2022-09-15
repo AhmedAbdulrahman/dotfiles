@@ -314,10 +314,16 @@ return require('packer').startup({
     use({ 'sindrets/diffview.nvim', config = "require('plugins.diffview')" })
     use({
       'akinsho/git-conflict.nvim',
+      tag = '*',
       config = function()
         require('git-conflict').setup()
       end,
     })
+    use({
+      'ThePrimeagen/git-worktree.nvim',
+      config = "require('plugins.worktree')",
+    })
+    use({ 'kdheepak/lazygit.nvim' })
 
     use({
       'Pocco81/TrueZen.nvim',
