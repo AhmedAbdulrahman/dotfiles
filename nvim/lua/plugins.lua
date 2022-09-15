@@ -167,11 +167,25 @@ return require('packer').startup({
       after = 'nvim-treesitter',
     })
     use({ 'jose-elias-alvarez/typescript.nvim' })
+    use({
+      'axelvc/template-string.nvim',
+      config = function()
+        require('template-string').setup()
+      end,
+    })
+    use({
+      'lvimuser/lsp-inlayhints.nvim',
+      config = function()
+        require('lsp-inlayhints').setup()
+      end,
+    })
+
     -- Formatter
     use({
       'mhartington/formatter.nvim',
       config = "require('plugins.formatter')",
     })
+
     -- General
     use({
       'iamcco/markdown-preview.nvim',
