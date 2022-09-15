@@ -311,7 +311,7 @@ return require('packer').startup({
       config = "require('plugins.gitsigns')",
       event = 'BufRead',
     })
-    use({ 'sindrets/diffview.nvim' })
+    use({ 'sindrets/diffview.nvim', config = "require('plugins.diffview')" })
     use({
       'akinsho/git-conflict.nvim',
       config = function()
