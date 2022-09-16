@@ -219,6 +219,10 @@ return require('packer').startup({
     use({ 'tpope/vim-repeat' })
     use({ 'tpope/vim-speeddating' })
     use({
+      'Shatur/neovim-session-manager',
+      config = "require('plugins.session-manager')",
+    })
+    use({
       'kylechui/nvim-surround',
       config = function()
         require('nvim-surround').setup({})
