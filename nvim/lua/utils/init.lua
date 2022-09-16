@@ -28,8 +28,8 @@ function M.urlencode(str)
     str,
     "([^0-9a-zA-Z !'()*._~-])", -- locale independent
     function(c)
-    return string.format('%%%02X', string.byte(c))
-  end
+      return string.format('%%%02X', string.byte(c))
+    end
   )
 
   str = string.gsub(str, ' ', '%%20')
@@ -55,25 +55,25 @@ function M.notify(msg, level)
 end
 
 function M.plaintext()
-	vim.cmd [[setlocal spell]]
-	vim.cmd [[setlocal linebreak]]
-	vim.cmd [[setlocal nolist]]
-	vim.cmd [[setlocal wrap]]
+  vim.cmd([[setlocal spell]])
+  vim.cmd([[setlocal linebreak]])
+  vim.cmd([[setlocal nolist]])
+  vim.cmd([[setlocal wrap]])
 
-	if vim.bo.filetype == 'gitcommit' then
-		-- Git commit messages body are constraied to 72 characters
-		vim.cmd [[setlocal textwidth=72]]
-	else
-		vim.cmd [[setlocal textwidth=0]]
-		vim.cmd [[setlocal wrapmargin=0]]
-	end
+  if vim.bo.filetype == 'gitcommit' then
+    -- Git commit messages body are constraied to 72 characters
+    vim.cmd([[setlocal textwidth=72]])
+  else
+    vim.cmd([[setlocal textwidth=0]])
+    vim.cmd([[setlocal wrapmargin=0]])
+  end
 
-	-- Break undo sequences into chunks (after punctuation); see: `:h i_CTRL-G_u`
-	-- https://twitter.com/vimgifs/status/913390282242232320
-	vim.keymap.set({ 'i' }, '.', '.<c-g>u', { buffer = true })
-	vim.keymap.set({ 'i' }, '?', '?<c-g>u', { buffer = true })
-	vim.keymap.set({ 'i' }, '!', '!<c-g>u', { buffer = true })
-	vim.keymap.set({ 'i' }, ',', ',<c-g>u', { buffer = true })
+  -- Break undo sequences into chunks (after punctuation); see: `:h i_CTRL-G_u`
+  -- https://twitter.com/vimgifs/status/913390282242232320
+  vim.keymap.set({ 'i' }, '.', '.<c-g>u', { buffer = true })
+  vim.keymap.set({ 'i' }, '?', '?<c-g>u', { buffer = true })
+  vim.keymap.set({ 'i' }, '!', '!<c-g>u', { buffer = true })
+  vim.keymap.set({ 'i' }, ',', ',<c-g>u', { buffer = true })
 end
 
 function M.file_exists(path)
@@ -94,12 +94,27 @@ function M.errorlog(message, title)
   require('notify')(message, 'error', { title = title or 'Error' })
 end
 
-function M.toggle_quicklist(path)
-  if vim.fn.empty(vim.fn.filter(vim.fn.getwininfo(), 'v:val.quickfix')) == 1
+function M.toggle_quicklist()
+  if
+    vim.fn.empty(vim.fn.filter(vim.fn.getwininfo(), 'v:val.quickfix')) == 1
   then
     vim.cmd('copen')
   else
     vim.cmd('cclose')
+  end
+end
+
+function M.diagnostic_toggle_virtual_text()
+  local virtual_text = vim.b.lsp_virtual_text_enabled
+  -- assume it's on currently
+  if virtual_text == nil then
+    virtual_text = true
+  end
+  virtual_text = not virtual_text
+  vim.b.lsp_virtual_text_enabled = virtual_text
+
+  for key, _ in pairs(vim.diagnostic.get_namespaces()) do
+    vim.diagnostic.show(key, 0, nil, { virtual_text = virtual_text })
   end
 end
 
@@ -127,7 +142,7 @@ function M.starts_with(str, start)
 end
 
 function M.end_with(str, ending)
-  return ending == "" or str:sub(- #ending) == ending
+  return ending == '' or str:sub(-#ending) == ending
 end
 
 function M.split(s, delimiter)
@@ -143,7 +158,7 @@ function M.sleep(n)
 end
 
 function M.input(keys, mode)
-  vim.api.nvim_feedkeys(M.t(keys), mode or "m", true)
+  vim.api.nvim_feedkeys(M.t(keys), mode or 'm', true)
 end
 
 function M.gfind(str, substr, cb, init)
@@ -160,8 +175,8 @@ M.jobstart = function(cmd, on_finish)
   local lines = {}
 
   local function on_event(_, data, event)
-    if event == "stdout" then
-      data = M.handle_job_data(data)
+    if event == 'stdout' then
+      data = handle_job_data(data)
       if not data then
         return
       end
@@ -169,19 +184,19 @@ M.jobstart = function(cmd, on_finish)
       for i = 1, #data do
         table.insert(lines, data[i])
       end
-    elseif event == "stderr" then
-      data = M.handle_job_data(data)
+    elseif event == 'stderr' then
+      data = handle_job_data(data)
       if not data then
         return
       end
 
       has_error = true
-      local error_message = ""
+      local error_message = ''
       for _, line in ipairs(data) do
         error_message = error_message .. line
       end
-      M.log("Error during running a job: " .. error_message)
-    elseif event == "exit" then
+      M.log('Error during running a job: ' .. error_message)
+    elseif event == 'exit' then
       if not has_error then
         on_finish(lines)
       end
@@ -198,11 +213,11 @@ M.jobstart = function(cmd, on_finish)
 end
 
 M.remove_whitespaces = function(string)
-  return string:gsub("%s+", "")
+  return string:gsub('%s+', '')
 end
 
 M.add_whitespaces = function(number)
-  return string.rep(" ", number)
+  return string.rep(' ', number)
 end
 
 return M

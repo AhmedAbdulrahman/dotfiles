@@ -21,7 +21,7 @@ vim.g.bufferline = {
   clickable = true,
 
   -- Excludes buffers from the tabline
-  exclude_ft = {'qf'},
+  exclude_ft = { 'qf' },
   -- exclude_name = ['package.json'],
 
   -- Enable/disable icons
@@ -71,9 +71,9 @@ vim.g.bufferline = {
 -- Buffers (Barbar)
 -- Go to Next/Previous Buffer
 keymap.set('n', '<Tab>', ':BufferNext<CR>', silent)
-keymap.set('n', 'gn', ':bn<CR>', silent)
+-- keymap.set('n', 'gn', ':bn<CR>', silent)
 keymap.set('n', '<S-Tab>', ':BufferPrevious<CR>', silent)
-keymap.set('n', 'gp', ':bp<CR>', silent)
+-- keymap.set('n', 'gp', ':bp<CR>', silent)
 keymap.set('n', '<S-q>', ':BufferClose<CR>', silent)
 
 -- Move between barbar buffers

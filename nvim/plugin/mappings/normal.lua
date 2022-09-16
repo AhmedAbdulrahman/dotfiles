@@ -68,16 +68,23 @@ keymap.set('n', 'K', function()
     vim.lsp.buf.hover()
   end
 end)
+
+keymap.set(
+  'n',
+  'gj',
+  "<cmd>lua require'utils'.diagnostic_toggle_virtual_text()<CR>",
+  { noremap = true, silent = true }
+)
 keymap.set('n', 'L', '<cmd>lua vim.lsp.buf.signature_help()<CR>', silent)
 keymap.set(
   'n',
-  ']g',
+  'gn',
   "<cmd>lua vim.diagnostic.goto_next({ float = { border = 'rounded', max_width = 100 }})<CR>",
   silent
 )
 keymap.set(
   'n',
-  '[g',
+  'gp',
   "<cmd>lua vim.diagnostic.goto_prev({ float = { border = 'rounded', max_width = 100 }})<CR>",
   silent
 )
