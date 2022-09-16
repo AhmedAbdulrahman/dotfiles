@@ -244,7 +244,11 @@ return require('packer').startup({
     use({ 'mg979/vim-visual-multi' })
     use({ 'junegunn/vim-easy-align' })
     use({ 'nacro90/numb.nvim', config = "require('plugins.numb')" })
-    use({ 'folke/todo-comments.nvim' })
+    -- NOTE: folke is now active , this fork will be deleted on 18-09-22
+    use({
+      'B4mbus/todo-comments.nvim',
+      config = "require('plugins.todo-comments')",
+    })
     use({
       'folke/zen-mode.nvim',
       config = "require('plugins.zen')",
