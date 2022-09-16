@@ -241,7 +241,12 @@ return require('packer').startup({
       config = "require('plugins.nvim-ufo')",
     })
     use({ 'dhruvasagar/vim-table-mode' })
-    use({ 'mg979/vim-visual-multi' })
+    use({
+      'mg979/vim-visual-multi',
+      config = function()
+        vim.g.VM_leader = ';'
+      end,
+    })
     use({ 'junegunn/vim-easy-align' })
     use({ 'nacro90/numb.nvim', config = "require('plugins.numb')" })
     -- NOTE: folke is now active , this fork will be deleted on 18-09-22
