@@ -56,6 +56,7 @@ opt.mouse = table.concat({ -- Enable mouse support for normal and visual modes.
   'v', -- Visual mode
   --   'a'
 })
+-- line numbers
 opt.number = true --- Shows current line number
 opt.relativenumber = true --- Enables relative number
 opt.startofline = true -- Move cursor to the start of each line when jumping with certain commands.
@@ -191,6 +192,7 @@ opt.breakindent = true -- Wrapped lines will be visually indented with same amou
 opt.breakindentopt = 'sbr,shift:' .. bo.shiftwidth
 opt.showbreak = '↳  ' -- DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
 opt.wrap = false -- Prevent wrapping for long lines.don't wrap text by default
+vim.wo.colorcolumn = '80' -- formatting hints
 opt.textwidth = 80
 opt.linebreak = true -- Wrap long lines at a character in 'breakat'.
 opt.number = true -- Print the line number in front of each line.
@@ -209,10 +211,10 @@ opt.clipboard = 'unnamed,unnamedplus' -- yank and paste between vim and everythi
 
 -- Buffer Options
 opt.modeline = false -- Disable modeline feature altogether.
-opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for.
-opt.shiftwidth = 0 -- Number of spaces to use for each step of auto indent.
 opt.softtabstop = -1 -- Number of spaces that a <Tab> counts.
 opt.expandtab = true -- Use spaces instead of tab characters.
+opt.shiftwidth = 2 -- Number of spaces to use for each step of auto indent.
+opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for.
 opt.undofile = true -- Persist undo history to an undo file.
 -- Use cmd until https://github.com/neovim/neovim/issues/14670 is fixed.
 -- cmd('set keymap=diacritic') -- Enable diacritic key mappings in keymap folder.
