@@ -89,6 +89,7 @@ return require('packer').startup({
     use('jvgrootveld/telescope-zoxide')
     use({ 'nvim-pack/nvim-spectre' })
     use({ 'kyazdani42/nvim-tree.lua', config = "require('plugins.tree')" })
+    use({ 'sidebar-nvim/sidebar.nvim', config = "require('plugins.sidebar')" })
     use({
       'gbprod/stay-in-place.nvim',
       config = function()
