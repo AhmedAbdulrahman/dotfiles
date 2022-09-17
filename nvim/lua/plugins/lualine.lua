@@ -40,6 +40,19 @@ local conditions = {
     end
     return ''
   end,
+  current_buffer_number = function()
+    return '﬘ ' .. vim.api.nvim_get_current_buf()
+  end,
+  word_count = function()
+    if vim.bo.filetype == 'markdown' or vim.bo.filetype == 'text' then
+      return string.format(
+        '%%4* %d %s %%*',
+        vim.fn.wordcount()['words'],
+        'words'
+      )
+    end
+    return ''
+  end,
 }
 
 -- Config
@@ -66,6 +79,8 @@ local config = {
     lualine_b = {},
     lualine_y = {
       conditions.spell_status,
+      { conditions.current_buffer_number, color = { fg = colors.fg } },
+      { conditions.word_count, color = { fg = colors.fg } },
       -- {
       -- 	'filetype',
       -- 	separator = {
@@ -158,6 +173,7 @@ ins_left({
   file_status = true, -- displays file status (readonly status, modified status)
   path = 0, -- 0 = just filename, 1 = relative path, 2 = absolute path
   shorting_target = 40, -- Shortens path to leave 40 space in the window
+  symbols = { modified = '[]', readonly = ' ' },
   -- for other components. Terrible name any suggestions?
   condition = conditions.buffer_not_empty,
   color = { fg = colors.violet, gui = 'bold' },
@@ -201,7 +217,7 @@ ins_left({
     end
     return msg
   end,
-  icon = ' LSP:',
+  icon = 'LSP:',
   color = { fg = '#ffffff', gui = 'bold' },
 })
 
