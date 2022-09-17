@@ -170,6 +170,19 @@ function M.gfind(str, substr, cb, init)
   end
 end
 
+-- NOTE: The lazy helpers are from here: https://github.com/mrjones2014/legendary.nvim/blob/master/lua/legendary/helpers.lua
+function M.lazy(fn, ...)
+  local args = { ... }
+  return function()
+    fn(unpack(args))
+  end
+end
+
+function M.tree_width(percentage)
+  percentage = percentage or 0.2
+  return math.min(40, vim.fn.round(vim.o.columns * percentage))
+end
+
 M.jobstart = function(cmd, on_finish)
   local has_error = false
   local lines = {}
