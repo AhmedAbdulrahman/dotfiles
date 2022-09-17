@@ -126,6 +126,15 @@ keymap.set('n', '<leader>O', ':put! =repeat(nr2char(10), v:count1)<CR>')
 keymap.set('n', 'x', '"_x', silent)
 keymap.set('n', 'X', '"_X', silent)
 
+-- ** Copy/Paste ** --
+keymap.set(
+  'n',
+  '<Leader>v',
+  ':lua require("functions").smart_paste()<CR>',
+  { noremap = true, silent = true }
+)
+keymap.set('v', '<Leader>c', '"+y', { noremap = true, silent = true })
+
 -- Refactor word under cursor.
 keymap.set('n', 'c*', '/\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgn')
 keymap.set('n', 'c#', '?\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgN')
@@ -189,6 +198,15 @@ keymap.set(
 keymap.set('n', '<leader>vs', '<C-W>v', silent)
 -- Horizontal split with current buffer
 keymap.set('n', '<leader>hl', '<C-W>s', silent)
+
+-- Zoom a buffer split
+keymap.set(
+  'n',
+  '<Leader>-',
+  ':wincmd _<CR>:wincmd |<CR>',
+  { noremap = true, silent = true }
+)
+keymap.set('n', '<Leader>=', ':wincmd =<CR>', { noremap = true, silent = true })
 
 -- Space to NOP to prevent Leader issues
 keymap.set('n', '<Space>', '<NOP>', silent)

@@ -313,6 +313,12 @@ M.change_template_string_quotes = function()
   utils.input('<Left>')
 end
 
+M.smart_paste = function()
+  vim.opt.paste = true
+  vim.cmd('normal "+p')
+  vim.opt.paste = false
+end
+
 M.first_nvim_run = function()
   local is_first_run = utils.file_exists('/tmp/first-nvim-run')
 
