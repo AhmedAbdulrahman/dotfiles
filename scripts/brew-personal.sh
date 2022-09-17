@@ -15,6 +15,7 @@ main() {
   brew_install "Zathura PDF Poppler" "zathura-pdf-poppler"
   brew_install "Youtube DL -> Download YouTube videos from the command-line" "youtube-dl"
   brew_install "Quickjs interpreter for VIM Codi" "quickjs"
+  brew_install "LuaRocks -> Package manager for Lua" "luarocks"
   #   GUI
   brew_install "Chrome Canary -> Experiment and test the raw browser," "google-chrome-canary" "homebrew/cask-versions" "--cask"
   brew_install "Chrome Beta -> Preview upcoming features before they’re released." "google-chrome-beta" "homebrew/cask-versions" "--cask"
