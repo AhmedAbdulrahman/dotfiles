@@ -6,10 +6,10 @@ function changeVolume(diff)
       hs.audiodevice.defaultOutputDevice():setMuted(false)
     end
     hs.alert.closeAll(0.0)
-    hs.alert.show("Volume " .. new .. "%", {}, 0.5)
+    hs.alert.show('Volume ' .. new .. '%', {}, 0.5)
     hs.audiodevice.defaultOutputDevice():setVolume(new)
   end
 end
 
-hs.hotkey.bind({'cmd'}, 'Down', changeVolume(-3))
-hs.hotkey.bind({'cmd'}, 'Up', changeVolume(3))
+-- hs.hotkey.bind({'cmd'}, 'Down', changeVolume(-3))
+-- hs.hotkey.bind({'cmd'}, 'Up', changeVolume(3))

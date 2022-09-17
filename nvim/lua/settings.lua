@@ -56,6 +56,7 @@ opt.mouse = table.concat({ -- Enable mouse support for normal and visual modes.
   'v', -- Visual mode
   --   'a'
 })
+-- line numbers
 opt.number = true --- Shows current line number
 opt.relativenumber = true --- Enables relative number
 opt.startofline = true -- Move cursor to the start of each line when jumping with certain commands.
@@ -84,7 +85,7 @@ opt.viewoptions = 'cursor,folds' -- save/restore just these (with `:{mk,load}vie
 opt.sidescroll = 3 -- Columns to scroll horizontally when cursor is moved off the screen.
 opt.sidescrolloff = 5 -- Minimum number of screen columns to keep to cursor right.
 -- Fix slight delay after pressing ESC then O http://ksjoberg.com/vim-esckeys.html
-opt.timeoutlen = 300 --- Faster completion
+opt.timeoutlen = 200 -- Faster completion (cannot be lower than 200 because then commenting doesn't work)
 opt.ttimeoutlen = 0 -- Time in milliseconds to wait for a key code sequence to complete.
 opt.updatetime = 100 -- Trigger CursorHold event faster.
 opt.updatecount = 0 -- Update swapfiles every 80 typed chars (I don't use swap files anymore)
@@ -148,8 +149,10 @@ if not vim.fn.has('nvim-0.6') then
   vim.opt.inccommand = 'nosplit'
 end
 opt.shiftround = true -- Round indent to multiple of 'shiftwidth'.
+opt.foldcolumn = '0'
+opt.foldnestmax = 0
+opt.foldlevel = 99 -- Using ufo provider need a large value
 opt.foldlevelstart = 99 -- Start editing with all folds open.
-opt.foldtext = 'CustomFold()' --- Emit custom function for foldtext
 opt.foldopen = { -- Specifies for which type of commands folds will be opened.
   'hor', -- Horizontal movements: "l", "w", "fx", etc.
   'mark', -- Jumping to a mark: "'m", CTRL-O, etc.
@@ -166,7 +169,9 @@ opt.grepprg = 'grep ' -- Program to use for the :grep command.
   .. '--exclude-dir={.git,node_modules} '
   .. '--perl-regexp'
 opt.grepformat = '%f:%l:%c:%m,%f:%l:%m' -- Format to recognize for the :grep command output.
+opt.fillchars = 'stl: '
 opt.ignorecase = true -- Ignore case in search patterns.
+opt.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
 opt.smartcase = true -- Set 'noignorecase' if search pattern contains an uppercase letter.
 opt.undolevels = 100000 -- Maximum number of changes that can be undone.
 opt.splitbelow = true -- Splitting a window will put the new window below of the current one.
@@ -187,11 +192,12 @@ opt.breakindent = true -- Wrapped lines will be visually indented with same amou
 opt.breakindentopt = 'sbr,shift:' .. bo.shiftwidth
 opt.showbreak = '↳  ' -- DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
 opt.wrap = false -- Prevent wrapping for long lines.don't wrap text by default
+vim.wo.colorcolumn = '80' -- formatting hints
 opt.textwidth = 80
 opt.linebreak = true -- Wrap long lines at a character in 'breakat'.
 opt.number = true -- Print the line number in front of each line.
 opt.cursorline = true -- Highlight the screen line of the cursor with CursorLine.
-opt.signcolumn = 'auto:3' -- Always draw the sign column even there is no sign in it.
+opt.signcolumn = 'yes:2' -- Always draw the sign column even there is no sign in it.
 opt.foldmethod = 'indent' -- Use indent folding method to fold lines.
 opt.emoji = false
 opt.formatoptions:remove('c')
@@ -205,10 +211,10 @@ opt.clipboard = 'unnamed,unnamedplus' -- yank and paste between vim and everythi
 
 -- Buffer Options
 opt.modeline = false -- Disable modeline feature altogether.
-opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for.
-opt.shiftwidth = 0 -- Number of spaces to use for each step of auto indent.
 opt.softtabstop = -1 -- Number of spaces that a <Tab> counts.
 opt.expandtab = true -- Use spaces instead of tab characters.
+opt.shiftwidth = 2 -- Number of spaces to use for each step of auto indent.
+opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for.
 opt.undofile = true -- Persist undo history to an undo file.
 -- Use cmd until https://github.com/neovim/neovim/issues/14670 is fixed.
 -- cmd('set keymap=diacritic') -- Enable diacritic key mappings in keymap folder.
@@ -244,12 +250,8 @@ opt.writebackup = false -- Not needed
 
 -- keep backup files out of the way
 if not vim.fn.has('nvim-0.6') then
-  vim.opt.backupdir = string.format(
-    '%s,%s%s',
-    '.',
-    vim.fn.stdpath('data'),
-    '/backup//'
-  )
+  vim.opt.backupdir =
+    string.format('%s,%s%s', '.', vim.fn.stdpath('data'), '/backup//')
 end
 
 opt.swapfile = false
@@ -274,8 +276,8 @@ else
   -- - <50 save/restore 50 lines from each register
   -- - s10 max item size 10KB
   -- - h do not save/restore 'hlsearch' setting
-  au.group('MyNeovimShada', function(g)
-    g(
+  au.group('MyNeovimShada', function(gr)
+    gr(
       { 'CursorHold', 'FocusGained', 'FocusLost' },
       { '*', [[if &bt == '' | rshada|wshada | endif]] }
     )

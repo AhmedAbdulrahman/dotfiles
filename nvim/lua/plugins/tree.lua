@@ -1,65 +1,36 @@
 -- luacheck: max line length 150
 
-local map = require('utils.map')
-local opts = { noremap = true, silent = true }
+local tree = require('nvim-tree')
+local treeview = require('nvim-tree.view')
+local utils = require('utils')
+local buf = require('bufferline.state')
 
-vim.g.nvim_tree_respect_buf_cwd = 1
+local keymap = vim.keymap
+local silent = { silent = true }
 
--- Only show the current folder as the root instead of full path.
-vim.g.nvim_tree_root_folder_modifier = ':t'
+local TREE_WIDTH = 30
+
+local git_icons = {
+  unstaged = "",
+  staged = "",
+  unmerged = "",
+  renamed = "➜",
+  untracked = "",
+  deleted = "",
+  ignored = "◌"
+}
+
+local folder_icons = {
+  default = '',
+  open = '',
+  empty = '',
+  empty_open = '',
+  symlink = '',
+  symlink_open = '',
+}
 
 -- Highlight nodes according to current git status.
 -- vim.g.nvim_tree_git_hl = 1
-
--- Enable indent markers.
-vim.g.nvim_tree_indent_markers = 1
-
--- Disable special files.
-vim.g.nvim_tree_special_files = {
-  'README.md',
-  'LICENSE',
-  'Makefile',
-  'package.json',
-  'package-lock.json',
-}
-
--- Set whether or not to show certain icons.
-vim.g.nvim_tree_show_icons = {
-  git = 1,
-  folders = 1,
-  files = 1,
-  folder_arrows = 1,
-  lsp = 1,
-}
-
--- Customize icons.
-vim.g.nvim_tree_icons = {
-  default = '',
-  symlink = '',
-  git = {
-    unstaged = '',
-    staged = '',
-    unmerged = '',
-    renamed = '',
-    untracked = '',
-    deleted = '',
-    ignored = '◌',
-  },
-  folder = {
-    default = '',
-    open = '',
-    empty = '',
-    empty_open = '',
-    symlink = '',
-    symlink_open = '',
-  },
-  lsp = {
-    hint = '',
-    info = '',
-    warning = '',
-    error = '',
-  },
-}
 
 local keymappings = {
   { key = { '<CR>', 'o', '<2-LeftMouse>' }, action = 'edit' },
@@ -101,6 +72,8 @@ local keymappings = {
 }
 
 require('nvim-tree').setup({
+  --false by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree
+  respect_buf_cwd = true,
   -- disables netrw completely
   disable_netrw = false,
   -- hijack netrw window on startup
@@ -109,17 +82,8 @@ require('nvim-tree').setup({
   open_on_setup = false,
   -- will not open on setup if the filetype is in this list
   ignore_ft_on_setup = {},
-  -- closes neovim automatically when the tree is the last **WINDOW** in the view
-  auto_close = false,
   -- opens the tree when changing/opening a new tab if the tree wasn't previously opened
   open_on_tab = false,
-  -- hijacks new directory buffers when they are opened.
-  update_to_buf_dir = {
-    -- enable the feature
-    enable = true,
-    -- allow to open the tree if it was previously closed
-    auto_open = true,
-  },
   -- hijack the cursor in the tree to put it at the start of the filename
   hijack_cursor = false,
   -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
@@ -150,7 +114,7 @@ require('nvim-tree').setup({
   -- configuration options for the system open command (`s` in the tree by default)
   system_open = {
     -- the command to run this, leaving nil should work in most cases
-    cmd = nil,
+    cmd = "",
     -- the command arguments as a list
     args = {},
   },
@@ -183,12 +147,12 @@ require('nvim-tree').setup({
   },
   view = {
     -- width of the window, can be either a number (columns) or a string in `%`
-    width = 30,
+    width = TREE_WIDTH,
     hide_root_folder = false,
     -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
     side = 'left',
     -- if true the tree will resize itself after opening a file
-    auto_resize = false,
+    -- auto_resize = false, unknown option
     mappings = {
       -- custom only false will merge the list with the default mappings
       -- if true, it will only use your list to set the mappings
@@ -196,8 +160,8 @@ require('nvim-tree').setup({
       -- list of mappings to set on the tree manually
       list = keymappings,
     },
-    number = true,
-    relativenumber = true,
+    number = false,
+    relativenumber = false,
   },
   trash = {
     cmd = 'trash',
@@ -205,13 +169,74 @@ require('nvim-tree').setup({
   },
   actions = {
     open_file = {
-      quit_on_open = true,
+      quit_on_open = false,
+      -- if true the tree will resize itself after opening a file
+      resize_window = true,
       window_picker = {
         enable = true,
+        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+        exclude = {
+          filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+          buftype = { "nofile", "terminal", "help" },
+        },
       },
     },
   },
+  renderer = {
+    add_trailing = false,
+    group_empty = true,
+    highlight_git = true,
+    highlight_opened_files = "none",
+    -- Only show the current folder as the root instead of full path.
+    root_folder_modifier = ':t',
+    indent_markers = {
+      enable = false, -- Enable indent markers
+      icons = {
+        corner = "└ ",
+        edge = "│ ",
+        none = "  ",
+      },
+    },
+    -- Disable special files.
+    special_files = {
+      'README.md',
+      'LICENSE',
+      'Makefile',
+      'package.json',
+      'package-lock.json',
+    },
+    icons = {
+      -- Customize icons.
+      glyphs = {
+        default = '',
+        symlink = '',
+        git = git_icons,
+        folder = folder_icons,
+      },
+      -- Set whether or not to show certain icons.
+      show = {
+        git = true,
+      },
+    },
+  }
 })
 
-map.nnoremap('<leader>f', '<Cmd>NvimTreeToggle<CR>', opts)
-map.nnoremap('<leader>F', '<Cmd>NvimTreeFindFile<CR>z.', opts)
+keymap.set("n", "<leader>f", "<cmd>lua require'plugins.tree'.toggle()<CR>", { noremap = true, silent = true })
+
+local M = {}
+
+M.toggle = function()
+  local view = treeview.is_visible()
+  if not view then
+    buf.set_offset(TREE_WIDTH + 1, utils.add_whitespaces(13) .. 'File Explorer')
+    if vim.bo.filetype == 'dashboard' then tree.open() else tree.find_file(true) end
+    return
+  end
+
+  if view then
+    buf.set_offset(0)
+    treeview.close()
+  end
+end
+
+return M

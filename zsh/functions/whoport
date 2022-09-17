@@ -1,0 +1,6 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Find who's using a specific port
+
+unalias whoport 2> /dev/null
+
+lsof -i :$1

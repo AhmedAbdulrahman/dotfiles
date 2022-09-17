@@ -18,6 +18,9 @@ bindkey -M viins '^?' backward-delete-char # Delete left char with backspace key
 bindkey -M viins '^B' backward-kill-word # Delete a WORD backward.
 bindkey -M viins '^[[3~' delete-char # Ensure delete key always delete forward.
 
+# Remove ^G (list-expand) so we can use our fzf-widgets
+bindkey -r '^G'
+
 # Normal Mode
 bindkey -M vicmd 'j' down-line # Override down-line-or-history.
 bindkey -M vicmd 'k' up-line # Override up-line-or-history.
@@ -55,9 +58,6 @@ bindkey -M menuselect '^H' backward-char # Navigate left completion.
 bindkey -M menuselect '^I' down-line-or-history # <Tab> to selection completion forward.
 bindkey -M menuselect '^[[Z' reverse-menu-complete # <S-Tab> to select completion backward.
 
-# Remove ^G (list-expand) so we can use our fzf-widgets
-bindkey -r '^G'
-
 # ZLE hooks for prompt's vi mode status
 function zle-keymap-select zle-line-init zle-line-finish {
     case "${KEYMAP}" in
@@ -70,16 +70,55 @@ function zle-keymap-select zle-line-init zle-line-finish {
     esac
 }
 
+# Use ! in normal mode to edit the current line
+# Use a custom widget so my editor is always $GIT_EDITOR, that waits for the
+# editor
+function edit-command-line() {
+    autoload -Uz edit-command-line
+    zle -N edit-command-line
+    VISUAL=$GIT_EDITOR edit-command-line
+}
+zle -N edit-command-line
+bindkey -M vicmd '!' edit-command-line
+
+# Automatically expand .... to ../..
+double-dot-expand() {
+  if [[ ${LBUFFER} == *... ]]; then
+    LBUFFER="${LBUFFER%.}/.."
+  else
+    LBUFFER+='.'
+  fi
+}
+zle -N double-dot-expand
+bindkey "." double-dot-expand
+
+
 zle -N zle-line-init
 zle -N zle-line-finish
 zle -N zle-keymap-select
 
+for widget (${ZDOTDIR:-$HOME}/widgets/*.zsh) source $widget
+
 # Ensure no delay when changing modes
 export KEYTIMEOUT=1
 
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd '!' edit-command-line
+# Expand aliases
+# http://www.math.cmu.edu/~gautam/sj/blog/20140625-zsh-expand-alias.html
+# https://github.com/ninrod/dotfiles/blob/master/zsh/expand-alias.zsh
+
+function expand-ealias() {
+  if [[ $LBUFFER =~ "(^|[;|&])\s*(${(j:|:)ealiases})\$" ]]; then
+	zle _expand_alias
+	zle expand-word
+  fi
+  zle magic-space
+}
+
+zle -N expand-ealias
+
+bindkey -M viins ' '        expand-ealias
+bindkey -M viins '^ '       magic-space     # control-space to bypass completion
+bindkey -M isearch " "      magic-space     # normal space during searches
 
 # FZF Folder Widget
 bindkey '^q' fzf-cd-widget

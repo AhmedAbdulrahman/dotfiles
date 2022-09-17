@@ -1,12 +1,23 @@
 
 ; vim: ft=gitconfig
 
+[commit]
+	verbose = true
+	# gpgsign = true
+
+[init]
+	# requires Git 2.28 or later
+	defaultBranch = main
+
 [user]
 	useconfigonly = true
 
 # use separate file for username / github token / etc
-[include]
-	path = ~/.gitconfig.local
+[includeIf "gitdir:~/iKas/"]
+	path = ~/.gitconfig.ikas
+
+[includeIf "gitdir:~/"]
+  path = ~/.gitconfig.local
 
 [gpg]
   program = /usr/local/bin/gpg
@@ -19,19 +30,27 @@
 	excludesfile = ~/.config/git/.gitignore
   	attributesfile = ~/.config/git/.gitattributes
 	untrackedCache = true
-	pager = delta_
 	; hash (#) conflicts with Markdown when I use hb to open PRs etc...
 	commentChar = %
+	pager = delta_
+
+[interactive]
+	diffFilter = delta_ --color-only
+
+[add.interactive]
+	useBuiltin = false # required for delta with git 2.37.0
 
 [delta]
 	syntax-theme = none
+	navigate = true # use n and N to move between diff sections
+	hyperlinks = true
 	file-modified-label = MODIFIED:
 	file-removed-label  = REMOVED:
 	file-added-label    = ADDED:
 	file-renamed-label  = RENAMED:
-	features = labels customization
+	features = labels decorations
 
-[delta "customization"]
+[delta "decorations"]
 	whitespace-error-style = 22 reverse
 	zero-style = 8
 	commit-decoration-style = bold yellow box
@@ -65,6 +84,7 @@
 	hidden = !git ls-files -v | grep \"^[a-z]\"
 	hide = update-index --assume-unchanged
 	l = log --color=always --graph --pretty=format:\"%C(blue)%h %Creset- %C(green)(%cr) %Creset%s - %C(cyan)%aN %C(magenta)%d\" --date=auto:human
+	lf = l --numstat
 	la = l --all --simplify-by-decoration
 	lastchange = log -p --follow -n 1
 	publish="!git push -u origin $(git branch-name)"
@@ -133,9 +153,6 @@
 [pager]
   show-branch = true
   status = true
-
-[interactive]
-	diffFilter = delta_ --color-only
 
 # so much color
 [color]

@@ -1,32 +1,36 @@
-local map = require('utils.map')
-local opts = { noremap = true, silent = true }
+local keymap = vim.keymap
+local silent = { silent = true }
+
+-- Plugins
+-- Refactor with spectre
+keymap.set('x', '<leader>pr', "<cmd>lua require('spectre').open_visual()<CR>")
 
 -- https://github.com/mhinz/vim-galore#dont-lose-selection-when-shifting-sidewards
-map.xnoremap('<', '<gv')
-map.xnoremap('>', '>gv')
+keymap.set('x', '<', '<gv')
+keymap.set('x', '>', '>gv')
 
 -- Keep visual mode indenting
-map.vnoremap('<', '<gv', opts)
-map.vnoremap('>', '>gv', opts)
+keymap.set('x', '<', '<gv', slient)
+keymap.set('x', '>', '>gv', slient)
 
 -- Don't yank on delete char
-map.vnoremap('x', '"_x', opts)
-map.vnoremap('X', '"_X', opts)
+keymap.set('x', 'x', '"_x', slient)
+keymap.set('x', 'X', '"_X', slient)
 
 -- Don't yank on visual paste
-map.vnoremap('p', '"_dP', opts)
+keymap.set('x', 'p', '"_dP', slient)
 
 -- Make dot work in visual mode
-map.vnoremap('.', ':norm.<CR>')
+keymap.set('x', '.', ':norm.<CR>')
 
 -- Easyalign
-map.xnoremap('ga', '<Plug>(EasyAlign)', { silent = true })
+keymap.set('x', 'ga', '<Plug>(EasyAlign)', silent)
 
-map.vmap('<Leader>hu', ':call utils#HtmlUnEscape()<cr>', {
+keymap.set('x', '<Leader>hu', ':call utils#HtmlUnEscape()<cr>', {
   silent = true,
 })
 
-map.vmap('<Leader>he', ':call utils#HtmlEscape()<cr>', {
+keymap.set('x', '<Leader>he', ':call utils#HtmlEscape()<cr>', {
   silent = true,
 })
 
@@ -37,34 +41,36 @@ vim.cmd([[function! ExecuteMacroOverVisualRange()
 	execute ":'<,'>normal @".nr2char(getchar())
   endfunction]])
 
-map.xnoremap('@', ':<C-u>call ExecuteMacroOverVisualRange()<CR>')
+keymap.set('x','@', ':<C-u>call ExecuteMacroOverVisualRange()<CR>')
 
 -- More easier increment/decrement mappings
-map.xnoremap('+', 'g<C-a>')
-map.xnoremap('-', 'g<C-x>')
+keymap.set('x','+', 'g<C-a>')
+keymap.set('x','-', 'g<C-x>')
 
 -- Execute "q" macro over visual line selections
-map.xnoremap('Q', [[:'<,'>:normal @q<CR>]])
+keymap.set('x','Q', [[:'<,'>:normal @q<CR>]])
 
 -- Always search with 'very magic' mode.
-map.xnoremap('/', '/\v')
-map.xnoremap('?', '?\v')
+keymap.set('x','/', '/\v')
+keymap.set('x','?', '?\v')
 
 -- easy regex replace for current word
-map.xnoremap('<leader>r', ':<c-u>%s/\\%V')
+keymap.set('x','<leader>r', ':<c-u>%s/\\%V')
 
 -- Move highlighted lines
-map.xnoremap(
+keymap.set(
+  'x',
   'K',
   ':call mappings#visual#movelines#moveup()<CR>',
-  { silent = true }
+  silent
 )
-map.xnoremap(
+keymap.set(
+  'x',
   'J',
   ':call mappings#visual#movelines#movedown()<CR>',
-  { silent = true }
+  silent
 )
 
 -- -- Move selected line / block of text in visual mode
--- map.xnoremap('K', ":move '<-2<CR>gv-gv", opts)
--- map.xnoremap('J', ":move '>+1<CR>gv-gv", opts)
+-- keymap.set('x', 'K', ":move '<-2<CR>gv-gv", slient)
+-- keymap.set('x', 'J', ":move '>+1<CR>gv-gv", slient)

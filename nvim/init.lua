@@ -1,12 +1,17 @@
-require('impatient') -- This needs to be first
+pcall(require, 'impatient') -- This needs to be first
 require('packer_commands')
+require('globals')
 require('config')
 require('settings')
 require('colorscheme')
 require('autocmds')
 require('functions')
 require('lsp.config')
-require('globals')
+require('lsp.run')
+require('lsp.functions')
+require('floating_man')
+
+require('snippets')
 
 local g = vim.g
 
@@ -28,3 +33,27 @@ g.loaded_getscriptPlugin = 1
 g.loaded_logipat = 1
 g.loaded_tutor_mode_plugin = 1
 g.loaded_matchit = 1
+
+g.markdown_fenced_languages = {
+  'css',
+  'erb=eruby',
+  'javascript',
+  'js=javascript',
+  'jsx=javascriptreact',
+  'ts=typescript',
+  'tsx=typescriptreact',
+  'json=jsonc',
+  'ruby',
+  'sass',
+  'scss=sass',
+  'xml',
+  'html',
+  'py=python',
+  'python',
+  'clojure',
+  'clj=clojure',
+  'cljs=clojure',
+  'stylus=css',
+  'less=css',
+  'viml=vim',
+}

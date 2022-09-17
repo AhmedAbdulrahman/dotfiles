@@ -1,6 +1,10 @@
 -- Requires
 local lspkind = require('lspkind')
-local tabnine = require('cmp_tabnine.config')
+
+local cmp_tabnine_status_ok, tabnine = pcall(require, "cmp_tabnine.config")
+if not cmp_tabnine_status_ok then
+  return
+end
 
 local cmp_status_ok, cmp = pcall(require, 'cmp')
 if not cmp_status_ok then
@@ -20,18 +24,53 @@ local check_backspace = function()
   return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
 end
 
+lspkind.init({
+  symbol_map = {
+    Text = '',
+    Method = 'ƒ',
+    Function = 'ﬦ',
+    Constructor = '',
+    Variable = '',
+    Class = '',
+    Interface = 'ﰮ',
+    Module = '',
+    Property = '',
+    Unit = '',
+    Value = '',
+    Enum = '了',
+    Keyword = '',
+    Snippet = '﬌',
+    Color = '',
+    File = '',
+    Folder = '',
+    EnumMember = '',
+    Constant = '',
+    Struct = '',
+  },
+})
 -- Setup
 local source_mapping = {
-  buffer = NvimConfig.icons.buffer .. '[BUF]',
-  calc = NvimConfig.icons.calculator,
-  cmp_tabnine = NvimConfig.icons.light,
-  luasnip = NvimConfig.icons.snippet,
   npm = NvimConfig.icons.terminal .. '[NPM]',
+  cmp_tabnine = NvimConfig.icons.light,
   nvim_lsp = NvimConfig.icons.paragraph .. '[LSP]',
+  buffer = NvimConfig.icons.buffer .. '[BUF]',
   nvim_lua = NvimConfig.icons.bomb,
+  luasnip = NvimConfig.icons.snippet .. '[SNP]',
+  calc = NvimConfig.icons.calculator,
   path = NvimConfig.icons.folderOpen2,
   treesitter = NvimConfig.icons.tree,
   zsh = NvimConfig.icons.terminal .. '[ZSH]',
+}
+
+local buffer_option = {
+  -- Complete from all visible buffers (splits)
+  get_bufnrs = function()
+    local bufs = {}
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      bufs[vim.api.nvim_win_get_buf(win)] = true
+    end
+    return vim.tbl_keys(bufs)
+  end
 }
 
 cmp.setup({
@@ -60,7 +99,7 @@ cmp.setup({
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
     ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
+      select = NvimConfig.plugins.completion.select_first_on_enter,
     }),
     ['<C-e>'] = cmp.mapping({
       i = cmp.mapping.abort(),
@@ -99,19 +138,19 @@ cmp.setup({
 
   formatting = {
     format = function(entry, vim_item)
-      local lspkind = require('lspkind')
       vim_item.kind = lspkind.symbolic(vim_item.kind, { with_text = true })
 
       -- set a name for each source
       local menu = source_mapping[entry.source.name]
-      local maxwidth = 50
+      local maxwidth = 60
 
       if entry.source.name == 'cmp_tabnine' then
-        if
-          entry.completion_item.data ~= nil
-          and entry.completion_item.data.detail ~= nil
+        if entry.completion_item.data ~= nil
+            and entry.completion_item.data.detail ~= nil
         then
-          menu = menu .. '[' .. entry.completion_item.data.detail .. ']'
+          menu = menu .. entry.completion_item.data.detail
+        else
+          menu = menu .. 'TBN'
         end
       end
 
@@ -126,15 +165,15 @@ cmp.setup({
 
   -- You should specify your *installed* sources.
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'nvim_lsp_signature_help' },
-    { name = 'npm' },
-    { name = 'cmp_tabnine', max_item_count = 3 },
-    { name = 'buffer', keyword_length = 5 },
-    { name = 'path' },
-    { name = 'luasnip' },
-    { name = 'calc' },
-    { name = 'nvim_lua' },
+    { name = 'nvim_lsp', priority = 9 },
+    { name = 'nvim_lsp_signature_help', priority = 9 },
+    { name = 'npm', priority = 9 },
+    { name = 'cmp_tabnine', priority = 8, max_num_results = 3 },
+    { name = 'buffer', priority = 7, keyword_length = 5, option = buffer_option, max_item_count = 8 },
+    { name = 'luasnip', priority = 7, max_item_count = 8 },
+    { name = 'nvim_lua', priority = 5 },
+    { name = 'path', priority = 4 },
+    { name = 'calc', priority = 3 },
   },
 
   confirm_opts = {
@@ -142,8 +181,10 @@ cmp.setup({
     select = false,
   },
 
-  documentation = {
-    border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+  window = {
+    documentation = {
+      border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+    },
   },
 
   experimental = {

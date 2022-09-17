@@ -11,18 +11,17 @@ type pip3 >/dev/null 2>&1 || {
 }
 
 PACKAGES=(
-    "setuptools"
     "pip"
+    "setuptools"
     "vim-vint"
-    "websocket-client"
     "poetry"
     "black"
     "pynvim"
     "pylint"
-    "tuir"
     'virtualenvwrapper'
     'requests'
-    'ipdb'
+    'ipdb',
+	'vobject' # Mutt calendar script
 )
 
 FLAGS=''

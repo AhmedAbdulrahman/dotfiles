@@ -1,15 +1,15 @@
-local map = require('utils.map')
 local au = require('utils.au')
-local opts = { noremap = true, silent = true }
+local keymap = vim.keymap
+local silent = { silent = true }
 
 -- Make word uppercase
-map.inoremap('<C-u>', '<ESC>viwUi', { noremap = true })
+keymap.set('i', '<C-u>', '<ESC>viwUi', slient)
 
 -- Disable arrow keys
-map.imap('<up>', '<nop>')
-map.imap('<down>', '<nop>')
-map.imap('<left>', '<nop>')
-map.imap('<right>', '<nop>')
+keymap.set('i', '<up>', '<nop>')
+keymap.set('i', '<down>', '<nop>')
+keymap.set('i', '<left>', '<nop>')
+keymap.set('i', '<right>', '<nop>')
 -- "BUG: 🐛 vim ≥ 8.2, the below mapping TOTALLY breaks mouse actions ie.
 -- ...no scrolling with `vimdiff`
 -- if vim.fn.has 'nvim'
@@ -18,25 +18,25 @@ map.imap('<right>', '<nop>')
 
 -- NOTE: - the below insert mappings will bind 'jk' / 'kj' to ESC
 -- key functionality, so need to use <ESC> in insert mode
-map.imap('jk', '<esc>')
-map.imap('kj', '<esc>')
-map.imap('jj', '<esc>')
-map.imap('kk', '<esc>')
+keymap.set('i', 'jk', '<esc>')
+keymap.set('i', 'kj', '<esc>')
+keymap.set('i', 'jj', '<esc>')
+keymap.set('i', 'kk', '<esc>')
 
-map.inoremap('<Down>', '<ESC><Down>', {
+keymap.set('i', '<Down>', '<ESC><Down>', {
   silent = true,
 })
 
 -- save file using CTRL-S and back to normal mode
-map.inoremap('<C-s>', '<ESC> :w<CR>', opts)
+keymap.set('i', '<C-s>', '<ESC> :w<CR>', slient)
 
 -- This keybinding allows you to jump to the end of the line
 -- and we are switched back to insert mode
-map.inoremap('<C-l>', '<C-o>$')
+keymap.set('i', '<C-l>', '<C-o>$')
 
 -- This keybinding allows you to instead jump to beginning of a line
 -- while in insert mode.
-map.inoremap('<C-a>', '<C-o>0')
+keymap.set('i', '<C-a>', '<C-o>0')
 
 -- https://twitter.com/vimgifs/status/913390282242232320
 -- :h i_CTRL-G_u
@@ -45,28 +45,28 @@ au.group('__prose_mappings__', {
         'FileType',
         'markdown,text',
         function()
-            map.inoremap('.', '.<c-g>u', { buffer = true })
+            keymap.set('i', '.', '.<c-g>u', { buffer = true })
         end,
     },
     {
         'FileType',
         'markdown,text',
         function()
-            map.inoremap('?', '?<c-g>u', { buffer = true })
+            keymap.set('i', '?', '?<c-g>u', { buffer = true })
         end,
     },
 	{
         'FileType',
         'markdown,text',
         function()
-            map.inoremap('!', '!<c-g>u', { buffer = true })
+			keymap.set('i', '!', '!<c-g>u', { buffer = true })
         end,
     },
 	{
         'FileType',
         'markdown,text',
         function()
-            map.inoremap(',', ',<c-g>u', { buffer = true })
+            keymap.set('i', ',', ',<c-g>u', { buffer = true })
         end,
     },
 })

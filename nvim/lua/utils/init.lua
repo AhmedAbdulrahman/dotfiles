@@ -54,6 +54,28 @@ function M.notify(msg, level)
   vim.notify(msg, level or vim.log.levels.INFO, { title = ':: Local ::' })
 end
 
+function M.plaintext()
+  vim.cmd([[setlocal spell]])
+  vim.cmd([[setlocal linebreak]])
+  vim.cmd([[setlocal nolist]])
+  vim.cmd([[setlocal wrap]])
+
+  if vim.bo.filetype == 'gitcommit' then
+    -- Git commit messages body are constraied to 72 characters
+    vim.cmd([[setlocal textwidth=72]])
+  else
+    vim.cmd([[setlocal textwidth=0]])
+    vim.cmd([[setlocal wrapmargin=0]])
+  end
+
+  -- Break undo sequences into chunks (after punctuation); see: `:h i_CTRL-G_u`
+  -- https://twitter.com/vimgifs/status/913390282242232320
+  vim.keymap.set({ 'i' }, '.', '.<c-g>u', { buffer = true })
+  vim.keymap.set({ 'i' }, '?', '?<c-g>u', { buffer = true })
+  vim.keymap.set({ 'i' }, '!', '!<c-g>u', { buffer = true })
+  vim.keymap.set({ 'i' }, ',', ',<c-g>u', { buffer = true })
+end
+
 function M.file_exists(path)
   local f = io.open(path, 'r')
   if f ~= nil then
@@ -72,7 +94,7 @@ function M.errorlog(message, title)
   require('notify')(message, 'error', { title = title or 'Error' })
 end
 
-function M.toggle_quicklist(path)
+function M.toggle_quicklist()
   if
     vim.fn.empty(vim.fn.filter(vim.fn.getwininfo(), 'v:val.quickfix')) == 1
   then
@@ -82,15 +104,37 @@ function M.toggle_quicklist(path)
   end
 end
 
+function M.diagnostic_toggle_virtual_text()
+  local virtual_text = vim.b.lsp_virtual_text_enabled
+  -- assume it's on currently
+  if virtual_text == nil then
+    virtual_text = true
+  end
+  virtual_text = not virtual_text
+  vim.b.lsp_virtual_text_enabled = virtual_text
+
+  for key, _ in pairs(vim.diagnostic.get_namespaces()) do
+    vim.diagnostic.show(key, 0, nil, { virtual_text = virtual_text })
+  end
+end
+
 function M.get_relative_fname()
   local fname = vim.fn.expand('%:p')
   return fname:gsub(vim.fn.getcwd() .. '/', '')
 end
 
-function M.get_relative_gitdir()
-  local fname = vim.fn.expand('%:p')
+function M.get_relative_gitpath()
+  local fpath = vim.fn.expand('%:h')
+  local fname = vim.fn.expand('%:t')
   local gitpath = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
-  return fname:gsub(gitpath .. '/', '')
+  local ellipsis = '...'
+  local relative_gitpath = fpath:gsub(gitpath, '') .. '/' .. fname
+
+  if vim.fn.winwidth(0) < 200 and #relative_gitpath > 30 then
+    return ellipsis .. relative_gitpath:sub(20, #relative_gitpath)
+  end
+
+  return relative_gitpath
 end
 
 function M.starts_with(str, start)
@@ -113,7 +157,33 @@ function M.sleep(n)
   os.execute('sleep ' .. tonumber(n))
 end
 
-function M.jobstart(cmd, on_finish)
+function M.input(keys, mode)
+  vim.api.nvim_feedkeys(M.t(keys), mode or 'm', true)
+end
+
+function M.gfind(str, substr, cb, init)
+  init = init or 1
+  local start_pos, end_pos = str:find(substr, init)
+  if start_pos then
+    cb(start_pos, end_pos)
+    return M.gfind(str, substr, cb, end_pos + 1)
+  end
+end
+
+-- NOTE: The lazy helpers are from here: https://github.com/mrjones2014/legendary.nvim/blob/master/lua/legendary/helpers.lua
+function M.lazy(fn, ...)
+  local args = { ... }
+  return function()
+    fn(unpack(args))
+  end
+end
+
+function M.tree_width(percentage)
+  percentage = percentage or 0.2
+  return math.min(40, vim.fn.round(vim.o.columns * percentage))
+end
+
+M.jobstart = function(cmd, on_finish)
   local has_error = false
   local lines = {}
 
@@ -153,6 +223,14 @@ function M.jobstart(cmd, on_finish)
     stdout_buffered = true,
     stderr_buffered = true,
   })
+end
+
+M.remove_whitespaces = function(string)
+  return string:gsub('%s+', '')
+end
+
+M.add_whitespaces = function(number)
+  return string.rep(' ', number)
 end
 
 return M

@@ -9,6 +9,9 @@ NvimConfig = {
     },
   },
   plugins = {
+    completion = {
+      select_first_on_enter = false,
+    },
     dashboard = {
       fuzzy_plugin = 'telescope', -- telescope/clap/fzf
     },
@@ -28,26 +31,12 @@ NvimConfig = {
       }, -- Default
     },
     zen = {
-      enabled = false,
       kitty_enabled = false,
+      enabled = true, -- sync after change
     },
   },
   icons = icons,
-  -- LSP settings (for overriding per client)
-  -- Load servers (They will be automatically installed after next "Sync plugins" launch)
-  -- Check installed servers by :LspInstallInfo
   lsp = {
-    servers = {
-      -- 'bash',
-      -- 'css',
-      -- 'eslint',
-      -- 'graphql',
-      -- 'html',
-      -- 'json',
-      -- 'lua',
-      -- 'tailwind',
-      -- 'tsserver',
-      -- 'vue2'
-    },
+    virtual_text = false, -- show virtual text (errors, warnings, info) inline messages
   },
 }

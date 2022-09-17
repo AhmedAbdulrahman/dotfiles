@@ -27,6 +27,32 @@ local conditions = {
     local gitdir = vim.fn.finddir('.git', filepath .. ';')
     return gitdir and #gitdir > 0 and #gitdir < #filepath
   end,
+  spell_status = function()
+    local spell = vim.api.nvim_get_option_value('spell', {})
+    local lang = vim.api.nvim_get_option_value('spelllang', {})
+    if spell then
+      local res = '[SPELL'
+      if lang then
+        res = res .. ' ' .. string.upper(lang)
+      end
+      res = res .. ']'
+      return res
+    end
+    return ''
+  end,
+  current_buffer_number = function()
+    return '﬘ ' .. vim.api.nvim_get_current_buf()
+  end,
+  word_count = function()
+    if vim.bo.filetype == 'markdown' or vim.bo.filetype == 'text' then
+      return string.format(
+        '%%4* %d %s %%*',
+        vim.fn.wordcount()['words'],
+        'words'
+      )
+    end
+    return ''
+  end,
 }
 
 -- Config
@@ -40,7 +66,10 @@ local config = {
       -- We are going to use lualine_c an lualine_x as left and
       -- right section. Both are highlighted by c theme .  So we
       -- are just setting default looks o statusline
-      normal = { c = { fg = colors.fg, bg = colors.bg } },
+      normal = {
+        c = { fg = colors.fg, bg = colors.bg },
+        y = { fg = colors.fg, bg = colors.bg },
+      },
       inactive = { c = { fg = colors.fg, bg = colors.bg } },
     },
   },
@@ -48,7 +77,17 @@ local config = {
     -- these are to remove the defaults
     lualine_a = {},
     lualine_b = {},
-    lualine_y = {},
+    lualine_y = {
+      conditions.spell_status,
+      { conditions.current_buffer_number, color = { fg = colors.fg } },
+      { conditions.word_count, color = { fg = colors.fg } },
+      -- {
+      -- 	'filetype',
+      -- 	separator = {
+      -- 		left = '⦁',
+      -- 	}
+      -- }
+    },
     lualine_z = {},
     -- These will be filled later
     lualine_c = {},
@@ -134,6 +173,7 @@ ins_left({
   file_status = true, -- displays file status (readonly status, modified status)
   path = 0, -- 0 = just filename, 1 = relative path, 2 = absolute path
   shorting_target = 40, -- Shortens path to leave 40 space in the window
+  symbols = { modified = '[]', readonly = ' ' },
   -- for other components. Terrible name any suggestions?
   condition = conditions.buffer_not_empty,
   color = { fg = colors.violet, gui = 'bold' },
@@ -146,7 +186,7 @@ ins_left({ 'progress', color = { fg = colors.fg, gui = 'bold' } })
 ins_left({
   'diagnostics',
   sources = { 'nvim_diagnostic' },
-  symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
+  symbols = { error = ' ', warn = ' ', info = ' ' },
   color_error = colors.red,
   color_warn = colors.yellow,
   color_info = colors.cyan,
@@ -177,7 +217,7 @@ ins_left({
     end
     return msg
   end,
-  icon = ' LSP:',
+  icon = 'LSP:',
   color = { fg = '#ffffff', gui = 'bold' },
 })
 
@@ -211,7 +251,7 @@ ins_right({
 ins_right({
   'diff',
   -- Is it me or the symbol for modified us really weird
-  symbols = { added = ' ', modified = '柳 ', removed = ' ' },
+  symbols = { added = ' ', modified = '柳 ', removed = ' ' },
   color_added = colors.green,
   color_modified = colors.orange,
   color_removed = colors.red,

@@ -64,7 +64,6 @@ install_global_packages() {
 	"nodemon"
 	"gatsby-cli"
 	"@sanity/cli"
-	"spaceship-prompt"
 	"typescript-language-server"
 	"source-map-explorer"
 	"typescript"
@@ -74,6 +73,8 @@ install_global_packages() {
 	"pyright"
 	"yaml-language-server"
 	"@tailwindcss/language-server"
+	"vls" # Vue language server
+	"@volar/vue-language-server" # Vue language server
 	)
 
 	yarn global add "${NPM_PACKAGES[@]}"

@@ -1,0 +1,7 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Convert unix time to date
+
+unalias timezsh 2> /dev/null
+
+shell=${1-$SHELL}
+for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done

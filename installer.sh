@@ -2,7 +2,7 @@
 
 declare -r GITHUB_REPOSITORY="AhmedAbdulrahman/dotfiles"
 declare -r GITHUB_REPO_URL_BASE="https://github.com/$GITHUB_REPOSITORY"
-declare -r HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/master/install"
+declare -r HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 declare -r LINUXBREW_INSTALLER_URL="https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh"
 declare -r DOTFILES_UTILS_URL="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/master/scripts/utils.sh"
 
@@ -139,7 +139,7 @@ install_package_manager() {
       print_warning "Seems like you don't have Homebrew installed!"
       print_info "Installing Homebrew...This may take a while"
 
-      printf "\n" | ruby -e "$(curl -fsSL ${HOMEBREW_INSTALLER_URL})" &> /dev/null
+      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install)"
 
       print_result $? "Homebrew"
 

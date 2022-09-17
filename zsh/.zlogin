@@ -20,7 +20,7 @@
   fi
 
   #zcompile configurations
-  for config in ${ZDOTDIR:-${HOME}/dotfiles/zsh}}/config/^*.zwc*; do
+  for config in ${ZDOTDIR:-${HOME}/dotfiles/zsh}/config/^*.zwc*; do
       zrecompile -pq ${config}
   done;
 

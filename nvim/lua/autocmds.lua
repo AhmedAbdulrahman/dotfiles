@@ -73,13 +73,6 @@ vim.api.nvim_create_autocmd('User', {
   group = 'Startified',
 })
 
-vim.api.nvim_create_augroup('Formatter', { clear = true })
--- Format on save
-vim.api.nvim_create_autocmd(
-  'BufWritePost',
-  { pattern = '*', command = 'silent! FormatWrite', group = 'Formatter' }
-)
-
 vim.api.nvim_create_augroup('__myautocmds__', { clear = true })
 -- Save the current buffer after any changes.
 vim.api.nvim_create_autocmd('InsertLeave,TextChanged', {
@@ -151,3 +144,78 @@ vim.api.nvim_create_autocmd('DirChanged', {
   command = 'lua require("functions").source_project_config()',
   group = '__myautocmds__',
 })
+
+-- Attach specific keybindings in which-key for specific filetypes
+local present, _ = pcall(require, 'which-key')
+if not present then
+  return
+end
+local _, pwk = pcall(require, 'plugins.which-key')
+
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*.md',
+  callback = function()
+    pwk.attach_markdown(0)
+  end,
+  group = '__myautocmds__',
+})
+
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = { '*.ts', '*.tsx' },
+  callback = function()
+    pwk.attach_typescript(0)
+  end,
+  group = '__myautocmds__',
+})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = '*',
+  callback = function()
+    if NvimConfig.plugins.zen.enabled and vim.bo.filetype ~= 'alpha' then
+      pwk.attach_zen(0)
+    end
+  end,
+})
+-- Winbar (for nvim 0.8+)
+if vim.fn.has('nvim-0.8') == 1 then
+  vim.api.nvim_create_autocmd({ 'CursorMoved', 'BufWinEnter', 'BufFilePost' }, {
+    callback = function()
+      local winbar_filetype_exclude = {
+        'help',
+        'startify',
+        'dashboard',
+        'packer',
+        'neogitstatus',
+        'NvimTree',
+        'Trouble',
+        'alpha',
+        'lir',
+        'Outline',
+        'spectre_panel',
+        'TelescopePrompt',
+      }
+
+      if vim.bo.filetype == 'toggleterm' then
+        return
+      end
+
+      if vim.tbl_contains(winbar_filetype_exclude, vim.bo.filetype) then
+        vim.opt_local.winbar = nil
+        return
+      end
+
+      local winbar_present, winbar = pcall(require, 'internal.winbar')
+      if not winbar_present or type(winbar) == 'boolean' then
+        vim.opt_local.winbar = nil
+        return
+      end
+
+      local value = require('winbar').gps()
+
+      if value == nil then
+        value = winbar.filename()
+      end
+
+      vim.opt_local.winbar = value
+    end,
+  })
+end

@@ -1,31 +1,13 @@
 -- luacheck: max line length 160
 
 local utils = require('utils')
-local map = require('utils.map')
-local async = require('plenary.async')
+local async_present, async = pcall(require, 'plenary.async')
+if not async_present then
+  return
+end
 
--- Custom Folds, make them look better
-vim.cmd([[
-  function! CustomFold()
-    return printf('   %-6d%s', v:foldend - v:foldstart + 1, getline(v:foldstart))
-  endfunction
-]])
-
--- It manages folds automatically based on treesitter
-local parsers = require('nvim-treesitter.parsers')
-local configs = parsers.get_parser_configs()
-local ft_str = table.concat(
-  vim.tbl_map(function(ft)
-    return configs[ft].filetype or ft
-  end, parsers.available_parsers()),
-  ','
-)
-
-vim.cmd(
-  'autocmd Filetype '
-    .. ft_str
-    .. ' setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()'
-)
+local Job = require('plenary.job')
+local keymap = vim.keymap
 
 -- Exported functions
 local M = {}
@@ -149,13 +131,14 @@ end
 
 M.quit_on_q = function()
   if should_quit_on_q() then
-    map.nnoremap(
+    keymap.set(
+      'n',
       'q',
       (
-          (vim.wo.diff == true or vim.bo.filetype == 'man') and ':qa!'
-          or (vim.bo.filetype == 'qf') and ':cclose'
-          or ':q'
-        ) .. '<cr>',
+        (vim.wo.diff == true or vim.bo.filetype == 'man') and ':qa!'
+        or (vim.bo.filetype == 'qf') and ':cclose'
+        or ':q'
+      ) .. '<cr>',
       { buffer = true, silent = true }
     )
   end
@@ -192,6 +175,28 @@ M.highlight_overlength = function()
   end
 end
 
+M.yank_current_file_name = function()
+  local file_name = vim.api.nvim_buf_get_name(0)
+  local input_pipe = vim.loop.new_pipe(false)
+
+  local yanker = Job:new({
+    writer = input_pipe,
+    command = 'pbcopy',
+  })
+
+  -- @TODOUA: This works perfectly but double-check if it could be better(less)
+  yanker:start()
+  input_pipe:write(file_name)
+  input_pipe:close()
+  yanker:shutdown()
+
+  require('notify')(
+    'Yanked: ' .. file_name,
+    'info',
+    { title = 'File Name Yanker', timeout = 1000 }
+  )
+end
+
 -- Project specific override
 -- Better than what I had before https://github.com/mhinz/vim-startify/issues/292#issuecomment-335006879
 M.source_project_config = function()
@@ -209,6 +214,111 @@ M.source_project_config = function()
   end
 end
 
+-- padding: 40px; ->
+-- padding: "40px",
+M.css_to_jss = function(opts)
+  local start_line, end_line
+  if type(opts) == 'table' then
+    -- called via command
+    start_line, end_line = opts.line1 - 1, opts.line2
+  else
+    -- called as operator
+    start_line = vim.api.nvim_buf_get_mark(0, '[')[1] - 1
+    end_line = vim.api.nvim_buf_get_mark(0, ']')[1] + 1
+  end
+
+  local did_convert = false
+  for i, line in
+    ipairs(vim.api.nvim_buf_get_lines(0, start_line, end_line, false))
+  do
+    -- if the line ends in a comma, it's probably already js
+    if line:sub(#line) == ',' then
+      goto continue
+    end
+    -- ignore comments
+    if line:find('%/%*') then
+      goto continue
+    end
+
+    local indentation, name, val = line:match('(%s+)(.+):%s(.+)')
+    -- skip non-matching lines
+    if not (name and val) then
+      goto continue
+    end
+
+    local parsed_name = ''
+    for j, component in ipairs(vim.split(name, '-')) do
+      parsed_name = parsed_name
+        .. (
+          j == 1 and component
+          or (component:sub(1, 1):upper() .. component:sub(2))
+        )
+    end
+
+    local parsed_val = val:gsub(';', '')
+    -- keep numbers, wrap others in quotes
+    parsed_val = tonumber(parsed_val) or string.format('"%s"', parsed_val)
+    local parsed_line =
+      table.concat({ indentation, parsed_name, ': ', parsed_val, ',' })
+
+    did_convert = true
+    local row = start_line + i
+    vim.api.nvim_buf_set_lines(0, row - 1, row, false, { parsed_line })
+
+    ::continue::
+  end
+
+  if not did_convert then
+    utils.warnlog('Nothing to Convert', 'CSS-TO-JS')
+  end
+end
+
+-- const myString = "hello ${}" ->
+-- const myString = `hello ${}`
+M.change_template_string_quotes = function()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  row = row - 1
+
+  local quote_start, quote_end
+  utils.gfind(vim.api.nvim_get_current_line(), '["\']', function(pos)
+    if not quote_start then
+      -- start at first quote
+      quote_start = pos
+    elseif pos < col then
+      -- move start if quote is closer to col
+      if (pos - col) > (quote_start - col) then
+        quote_start = pos
+      end
+    elseif not quote_end then
+      -- first quote after col is end
+      quote_end = pos
+    end
+  end)
+
+  -- if found, replace quotes with backticks
+  if quote_start and quote_start <= col and quote_end then
+    vim.api.nvim_buf_set_text(
+      0,
+      row,
+      quote_start - 1,
+      row,
+      quote_start,
+      { '`' }
+    )
+    vim.api.nvim_buf_set_text(0, row, quote_end - 1, row, quote_end, { '`' })
+  end
+
+  -- input and move cursor into pair
+  utils.input('${}', 'n')
+  utils.input('<Left>')
+end
+
+M.smart_paste = function()
+  vim.opt.paste = true
+  vim.cmd('normal "+p')
+  vim.opt.paste = false
+end
+
 M.first_nvim_run = function()
   local is_first_run = utils.file_exists('/tmp/first-nvim-run')
 
@@ -220,14 +330,9 @@ M.first_nvim_run = function()
         { title = 'Nvim', timeout = 5000 }
       )
       require('notify')(
-        'Please install treesitter servers manually by :TSInstall (maintained) command.',
+        'Please install treesitter servers manually by :TSInstall command.',
         'info',
         { title = 'Installation', timeout = 10000 }
-      )
-      require('notify')(
-        'LSP Servers needs to be enabled manually in lsp/config.lua file.',
-        'info',
-        { title = 'Installation', timeout = 12000 }
       )
     end)
     local suc = os.remove('/tmp/first-nvim-run')
@@ -237,6 +342,18 @@ M.first_nvim_run = function()
   end
 end
 
-M.first_nvim_run()
+-- M.first_nvim_run()
+
+local present, win = pcall(require, 'lspconfig.ui.windows')
+if not present then
+  return
+end
+
+local _default_opts = win.default_opts
+win.default_opts = function(options)
+  local opts = _default_opts(options)
+  opts.border = NvimConfig.ui.float.border
+  return opts
+end
 
 return M

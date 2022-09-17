@@ -1,6 +1,10 @@
 -- luacheck: max line length 200
+local present, wk = pcall(require, 'which-key')
+if not present then
+  return
+end
 
-require('which-key').setup({
+wk.setup({
   plugins = {
     marks = true, -- shows a list of your marks on ' and `
     registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
@@ -35,7 +39,7 @@ require('which-key').setup({
     group = '+', -- symbol prepended to a group
   },
   window = {
-    border = 'none', -- none, single, double, shadow
+    border = NvimConfig.ui.float.border or 'rounded', -- none, single, double, shadow, rounded
     position = 'bottom', -- bottom, top
     margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
     padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
@@ -69,7 +73,16 @@ local opts = {
   nowait = false, -- use `nowait` when creating keymaps
 }
 
-local mappings = {
+local visual_opts = {
+  mode = 'v', -- NORMAL mode
+  prefix = '<leader>',
+  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
+  noremap = true, -- use `noremap` when creating keymaps
+  nowait = false, -- use `nowait` when creating keymaps
+}
+
+local normal_mode_mappings = {
 
   -- ignore
   ['1'] = 'which_key_ignore',
@@ -83,23 +96,41 @@ local mappings = {
   ['9'] = 'which_key_ignore',
 
   -- single
-  ['+'] = { '<cmd>vertical resize +2<CR>', 'resize +2' },
-  ['-'] = { '<cmd>vertical resize -2<CR>', 'resize +2' },
-  ['='] = { '<C-W>=', 'balance windows' },
-  ['v'] = { '<C-W>v', 'split right' },
-  ['V'] = { '<C-W>s', 'split below' },
+  ['='] = { '<cmd>vertical resize +5<CR>', 'resize +5' },
+  ['-'] = { '<cmd>vertical resize -5<CR>', 'resize +5' },
+  --   ['v'] = { '<C-W>v', 'split right' },
+  --   ['V'] = { '<C-W>s', 'split below' },
   ['q'] = { 'quicklist' },
 
   ['/'] = {
     name = 'Dashboard',
-    ['c'] = { ':e $MYVIMRC<CR>', 'open init' },
-    ['s'] = { '<cmd>PackerSync<CR>', 'packer sync' },
-    ['u'] = { '<cmd>PackerUpdate<CR>', 'packer update' },
+    c = { '<cmd>e $MYVIMRC<CR>', 'open config' },
+    i = { '<cmd>PackerInstall<CR>', 'install plugins' },
+    u = { '<cmd>PackerSync<CR>', 'update plugins' },
+    s = {
+      name = 'Session',
+      c = {
+        '<cmd>SessionManager load_session<CR>',
+        'choose session',
+      },
+      r = {
+        '<cmd>SessionManager delete_session<CR>',
+        'remove session',
+      },
+      d = {
+        '<cmd>SessionManager load_current_dir_session<CR>',
+        'load current dir session',
+      },
+      l = {
+        '<cmd>SessionManager load_last_session<CR>',
+        'load last session',
+      },
+      s = { '<cmd>SessionManager save_current_session<CR>', 'save session' },
+    },
   },
 
   a = {
     name = 'Actions',
-    m = { '<cmd>MarkdownPreviewToggle<CR>', 'markdown preview' },
     n = { '<cmd>set nonumber!<CR>', 'line numbers' },
     r = { '<cmd>set norelativenumber!<CR>', 'relative number' },
     t = { '<cmd>ToggleTerm direction=float<CR>', 'terminal float' },
@@ -122,19 +153,13 @@ local mappings = {
 
   c = {
     name = 'LSP',
-    a = {
-      '<cmd>Telescope lsp_code_action<CR>',
-      'telescope code action',
-    },
+    a = { 'code action' },
     d = { '<cmd>TroubleToggle<CR>', 'local diagnostics' },
     D = { '<cmd>Telescope diagnostics<CR>', 'workspace diagnostics' },
     f = { 'format' },
-    i = { '<cmd>TSLspImportAll<CR>', 'import all' },
     l = { 'line diagnostics' },
-    o = { '<cmd>TSLspOrganize<CR>', 'organize imports' },
-    q = { '<cmd>TSLspFixCurrent<CR>', 'quick fix' },
     r = { 'rename' },
-    s = { '<cmd>Telescope symbols<CR>', 'symbols' },
+    t = { '<cmd>LspToggleAutoFormat<CR>', 'toggle format on save' },
   },
 
   d = {
@@ -147,7 +172,7 @@ local mappings = {
     i = { 'step into' },
     o = { 'step over' },
     O = { 'step out' },
-    s = { 'scopes' },
+    t = { 'terminate' },
   },
 
   g = {
@@ -160,15 +185,44 @@ local mappings = {
       '<cmd>!git add .<CR>',
       'add all',
     },
-    b = { '<cmd>lua require("blame").open()<CR>', 'blame' },
+    b = {
+      '<cmd>lua require("internal.blame").open()<CR>',
+      'blame',
+    },
+    B = {
+      '<cmd>Telescope git_branches<CR>',
+      'branches',
+    },
+    c = {
+      name = 'Conflict',
+      b = {
+        '<cmd>GitConflictChooseBoth<CR>',
+        'choose both',
+      },
+      n = {
+        '<cmd>GitConflictNextConflict<CR>',
+        'move to next conflict',
+      },
+      o = {
+        '<cmd>GitConflictChooseOurs<CR>',
+        'choose ours',
+      },
+      p = {
+        '<cmd>GitConflictPrevConflict<CR>',
+        'move to prev conflict',
+      },
+      t = {
+        '<cmd>GitConflictChooseTheirs<CR>',
+        'choose theirs',
+      },
+    },
     d = {
-      '<cmd>lua require("plugins.diffview").toggle()<CR>',
+      '<cmd>lua require("plugins.diffview").toggle_file_history()<CR>',
       'diff file',
     },
     g = { 'lazygit' },
     h = {
       name = 'Hunk',
-      b = 'blame line',
       d = 'diff hunk',
       p = 'preview',
       R = 'reset buffer',
@@ -180,13 +234,29 @@ local mappings = {
     },
     l = {
       name = 'Log',
-      a = 'commits',
-      c = 'buffer commits',
+      A = {
+        "<cmd>lua require('plugins.telescope').my_git_commits()<CR>",
+        'commits (Telescope)',
+      },
+      a = {
+        '<cmd>LazyGitFilter<CR>',
+        'commits',
+      },
+      C = {
+        "<cmd>lua require('plugins.telescope').my_git_bcommits()<CR>",
+        'buffer commits (Telescope)',
+      },
+      c = {
+        '<cmd>LazyGitFilterCurrentFile<CR>',
+        'buffer commits',
+      },
     },
     m = { 'blame line' },
-    s = {
-      '<cmd>Telescope git_status<CR>',
-      'status',
+    s = { '<cmd>lua require("plugins.diffview").toggle_status()<CR>', 'status' },
+    w = {
+      name = 'Worktree',
+      w = 'worktrees',
+      c = 'create worktree',
     },
   },
 
@@ -198,6 +268,7 @@ local mappings = {
       "<cmd>lua require'telescope'.extensions.repo.cached_list{file_ignore_patterns={'/%.cache/', '/%.cargo/', '/%.local/', '/%timeshift/', '/usr/', '/srv/', '/%.oh%-my%-zsh'}}<CR>",
       'list',
     },
+    r = { 'refactor' },
     t = { '<cmd>TodoTrouble<CR>', 'todo' },
     s = {
       '<cmd>SessionSave<CR>',
@@ -212,7 +283,7 @@ local mappings = {
       'color schemes',
     },
     d = {
-      '<cmd>lua require("plugins.telescope").edit_neovim()<CR>',
+      '<cmd>lua require("plugins.telescope").edit_dotfiles()<CR>',
       'dotfiles',
     },
     h = {
@@ -236,5 +307,111 @@ local mappings = {
   },
 }
 
-local wk = require('which-key')
-wk.register(mappings, opts)
+local visual_mode_mappings = {
+  -- single
+  ['s'] = { "<cmd>'<,'>sort<CR>", 'sort' },
+
+  a = {
+    name = 'Actions',
+    c = { 'comment box' },
+  },
+
+  c = {
+    name = 'LSP',
+    a = { 'range code action' },
+    f = { 'range format' },
+  },
+
+  g = {
+    name = 'Git',
+    h = {
+      name = 'Hunk',
+      r = 'reset hunk',
+      s = 'stage hunk',
+    },
+  },
+
+  p = {
+    name = 'Project',
+    r = { 'refactor' },
+  },
+
+  t = {
+    name = 'Table Mode',
+    t = { 'tableize' },
+  },
+}
+
+wk.register(normal_mode_mappings, opts)
+wk.register(visual_mode_mappings, visual_opts)
+
+local function attach_markdown(bufnr)
+  wk.register({
+    a = {
+      name = 'Actions',
+      m = { '<cmd>MarkdownPreviewToggle<CR>', 'markdown preview' },
+    },
+  }, {
+    buffer = bufnr,
+    mode = 'n', -- NORMAL mode
+    prefix = '<leader>',
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = false, -- use `nowait` when creating keymaps
+  })
+end
+
+local function attach_typescript(bufnr)
+  wk.register({
+    c = {
+      name = 'LSP',
+      F = { '<cmd>TypescriptFixAll<CR>', 'fix all' },
+      i = { '<cmd>TypescriptAddMissingImports<CR>', 'import all' },
+      o = { '<cmd>TypescriptOrganizeImports<CR>', 'organize imports' },
+      u = { '<cmd>TypescriptRemoveUnused<CR>', 'remove unused' },
+    },
+  }, {
+    buffer = bufnr,
+    mode = 'n', -- NORMAL mode
+    prefix = '<leader>',
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = false, -- use `nowait` when creating keymaps
+  })
+end
+
+local function attach_zen(bufnr)
+  wk.register({
+    ['z'] = { '<cmd>ZenMode<CR>', 'zen' },
+  }, {
+    buffer = bufnr,
+    mode = 'n', -- NORMAL mode
+    prefix = '<leader>',
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = false, -- use `nowait` when creating keymaps
+  })
+end
+
+local function attach_spectre(bufnr)
+  wk.register({
+    ['R'] = { '[SPECTRE] Replace all' },
+    ['o'] = { '[SPECTRE] Show options' },
+    ['q'] = { '[SPECTRE] Send all to quicklist' },
+    ['v'] = { '[SPECTRE] Change view mode' },
+  }, {
+    buffer = bufnr,
+    mode = 'n', -- NORMAL mode
+    prefix = '<leader>',
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = false, -- use `nowait` when creating keymaps
+  })
+end
+
+return {
+  attach_markdown = attach_markdown,
+  attach_typescript = attach_typescript,
+  attach_zen = attach_zen,
+  attach_spectre = attach_spectre,
+}

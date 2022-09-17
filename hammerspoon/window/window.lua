@@ -1,13 +1,22 @@
 -- Window management
+local utils        = require('utils')
 
 -- Uncomment if you want to disable Animation
 -- hs.window.animationDuration = 0
 
 -- Hotkeys
-local opt = { 'alt' }
-local optcmd = { 'alt', 'cmd' }
-local shftopt = { 'shift', 'alt' }
-local shftcmd = { 'shift', 'cmd' }
+local hints = hs.hints
+-- Hints
+hints.fontName = "Helvetica-Bold"
+hints.fontSize = 18
+hints.showTitleThresh = 0
+-- hints.style           = "vimperator" -- Buggy, gets slow after a while
+
+
+local opt = { '⌥' }
+local optcmd = { '⌥', '⌘' }
+local shftopt = { '⇧', '⌥' }
+local shftcmd = { '⇧', '⌘' }
 
 hs.grid.MARGINX = 10
 hs.grid.MARGINY = 10
@@ -33,24 +42,24 @@ function winmovescreen(how)
 end
 
 -- Full Bindings
-hs.hotkey.bind({ 'ctrl', 'alt', 'cmd' }, 'F', gridset('0,0 12x12'))
+hs.hotkey.bind({ '⌃', '⌥', '⌘' }, 'F', gridset('0,0 12x12'))
 
 -- Half Bindings
 -- Vertical halves
-hs.hotkey.bind({ 'ctrl', 'cmd' }, 'h', gridset('0,0 6x12'))
-hs.hotkey.bind({ 'ctrl', 'cmd' }, 'l', gridset('6,0 6x12'))
+hs.hotkey.bind({ '⌃', '⌘' }, 'h', gridset('0,0 6x12'))
+hs.hotkey.bind({ '⌃', '⌘' }, 'l', gridset('6,0 6x12'))
 -- Horizontal halves
-hs.hotkey.bind({ 'ctrl', 'cmd' }, 'k', gridset('0,0 12x6'))
-hs.hotkey.bind({ 'ctrl', 'cmd' }, 'j', gridset('0,6 12x6'))
+hs.hotkey.bind({ '⌃', '⌘' }, 'k', gridset('0,0 12x6'))
+hs.hotkey.bind({ '⌃', '⌘' }, 'j', gridset('0,6 12x6'))
 
 -- Third Bindings
 -- Vertical thirds
-hs.hotkey.bind({ 'ctrl', 'alt' }, 'h', gridset('0,0 4x12'))
-hs.hotkey.bind({ 'ctrl', 'alt' }, 'k', gridset('4,0 4x12'))
-hs.hotkey.bind({ 'ctrl', 'alt' }, 'l', gridset('8,0 4x12'))
+hs.hotkey.bind({ '⌃', '⌥' }, 'h', gridset('0,0 4x12'))
+hs.hotkey.bind({ '⌃', '⌥' }, 'k', gridset('4,0 4x12'))
+hs.hotkey.bind({ '⌃', '⌥' }, 'l', gridset('8,0 4x12'))
 -- Horizontal thirds
-hs.hotkey.bind({ 'ctrl', 'alt' }, 'j', gridset('0,0 8x12'))
-hs.hotkey.bind({ 'ctrl', 'alt' }, ';', gridset('4,0 8x12'))
+hs.hotkey.bind({ '⌃', '⌥' }, 'j', gridset('0,0 8x12'))
+hs.hotkey.bind({ '⌃', '⌥' }, ';', gridset('4,0 8x12'))
 
 -- Quarter Bindings
 hs.hotkey.bind(optcmd, '-', gridset('0,0 6x6'))
@@ -59,22 +68,25 @@ hs.hotkey.bind(optcmd, '[', gridset('0,6 6x6'))
 hs.hotkey.bind(optcmd, ']', gridset('6,6 6x6'))
 
 -- Centered Big
-hs.hotkey.bind({ 'ctrl', 'cmd' }, 'c', gridset('2,0 8x12'))
+hs.hotkey.bind({ '⌃', '⌘' }, 'c', gridset('2,0 8x12'))
 
 -- Centered Small
-hs.hotkey.bind({ 'ctrl', 'alt', 'cmd' }, 'c', gridset('3,0 6x12'))
+hs.hotkey.bind({ '⌃', '⌥', '⌘' }, 'c', gridset('3,0 6x12'))
 
 -- -- Move between screens
-hs.hotkey.bind(
-  { 'ctrl', 'alt', 'cmd' },
-  'Left',
-  hs.fnutils.partial(winmovescreen, 'left')
-)
-hs.hotkey.bind(
-  { 'ctrl', 'alt', 'cmd' },
-  'Right',
-  hs.fnutils.partial(winmovescreen, 'right')
-)
+hs.hotkey.bind({ '⌃', '⌘' }, 'p', hs.fnutils.partial(winmovescreen, 'left'))
+hs.hotkey.bind({ '⌃', '⌘' }, 'n', hs.fnutils.partial(winmovescreen, 'right'))
 
 -- grid gui
-hs.hotkey.bind({ 'shift', 'cmd' }, 'g', hs.grid.show)
+hs.hotkey.bind({ '⇧', '⌘' }, 'g', hs.grid.show)
+
+-- Movement hotkeys (Moved to Raycast -- keep for later)
+hs.hotkey.bind({ "⌥", "⌘" }, "down",  function() utils.nudge(0, 100) end)
+hs.hotkey.bind({ "⌥", "⌘" }, "up",    function() utils.nudge(0, -100) end)
+hs.hotkey.bind({ "⌥", "⌘" }, "right", function() utils.nudge(100, 0) end)
+hs.hotkey.bind({ "⌥", "⌘" }, "left",  function() utils.nudge(-100, 0) end)
+
+-- Hints
+hs.hotkey.bind({ "⌃", "⌥", "⌘" }, "space", function()
+	hints.windowHints(utils.getAllValidWindows())
+end)

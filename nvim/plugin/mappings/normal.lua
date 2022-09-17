@@ -1,5 +1,93 @@
-local map = require('utils.map')
-local opts = { noremap = true, silent = true }
+local keymap = vim.keymap
+local silent = { silent = true }
+
+-- Plugins
+-- Comment Box
+keymap.set(
+  'n',
+  '<leader>ac',
+  "<cmd>lua require('comment-box').lbox()<CR>",
+  silent
+)
+keymap.set(
+  'v',
+  '<leader>ac',
+  "<cmd>lua require('comment-box').lbox()<CR>",
+  silent
+)
+
+-- Refactor with spectre
+keymap.set(
+  'n',
+  '<leader>pr',
+  "<cmd>lua require('spectre').open_visual({select_word=true})<CR>",
+  silent
+)
+
+-- Lsp
+keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', silent)
+keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', silent)
+keymap.set('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', silent)
+keymap.set(
+  'n',
+  'gr',
+  '<cmd>lua vim.lsp.buf.references({ includeDeclaration = false })<CR>',
+  silent
+)
+keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', silent)
+keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', silent)
+keymap.set(
+  'v',
+  '<leader>ca',
+  "<cmd>'<,'>lua vim.lsp.buf.range_code_action()<CR>",
+  silent
+)
+keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', silent)
+keymap.set('n', '<leader>\\f', '<cmd>lua vim.lsp.buf.formatting()<CR>', silent)
+keymap.set(
+  'n',
+  '<leader>cf',
+  '<cmd>lua vim.lsp.buf.format({ async = true })<CR>',
+  silent
+)
+keymap.set(
+  'v',
+  '<leader>cf',
+  "<cmd>'<.'>lua vim.lsp.buf.range_formatting()<CR>",
+  silent
+)
+keymap.set(
+  'n',
+  '<leader>cl',
+  "<cmd>lua vim.diagnostic.open_float(nil, { focusable = false, scope = 'line', header = false, border = 'rounded', max_width = 100, close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' }})<CR>",
+  silent
+)
+keymap.set('n', 'K', function()
+  local winid = require('ufo').peekFoldedLinesUnderCursor()
+  if not winid then
+    vim.lsp.buf.hover()
+  end
+end)
+
+keymap.set(
+  'n',
+  'gj',
+  "<cmd>lua require'utils'.diagnostic_toggle_virtual_text()<CR>",
+  { noremap = true, silent = true }
+)
+keymap.set('n', 'L', '<cmd>lua vim.lsp.buf.signature_help()<CR>', silent)
+keymap.set(
+  'n',
+  'gn',
+  "<cmd>lua vim.diagnostic.goto_next({ float = { border = 'rounded', max_width = 100 }})<CR>",
+  silent
+)
+keymap.set(
+  'n',
+  'gp',
+  "<cmd>lua vim.diagnostic.goto_prev({ float = { border = 'rounded', max_width = 100 }})<CR>",
+  silent
+)
 
 -- Avoid issues because of remapping <c-a> and <c-x> below
 vim.cmd([[
@@ -7,187 +95,216 @@ vim.cmd([[
   nnoremap <Plug>SpeedDatingFallbackDown <c-x>
 ]])
 
-map.nnoremap('<leader>Q', ':quitall<CR>', {
+keymap.set('n', '<leader>Q', ':quitall<CR>', {
   silent = true,
 })
 -- Override Ex mode with run @@ to record, Q to replay
-map.nnoremap('Q', '@@')
+keymap.set('n', 'Q', '@@')
 
 -- Make word uppercase
-map.nnoremap('<C-u>', 'viwU<ESC>', { noremap = true })
+keymap.set('n', '<C-u>', 'viwU<ESC>', { noremap = true })
 
 -- Easyalign
-map.nnoremap('ga', '<Plug>(EasyAlign)', { silent = true })
+keymap.set('n', 'ga', '<Plug>(EasyAlign)', silent)
 
 -- Better window movement
-map.nnoremap('<C-h>', '<C-w>h', { silent = true })
-map.nnoremap('<C-j>', '<C-w>j', { silent = true })
-map.nnoremap('<C-k>', '<C-w>k', { silent = true })
-map.nnoremap('<C-l>', '<C-w>l', { silent = true })
+keymap.set('n', '<C-h>', '<C-w>h', silent)
+keymap.set('n', '<C-j>', '<C-w>j', silent)
+keymap.set('n', '<C-k>', '<C-w>k', silent)
+keymap.set('n', '<C-l>', '<C-w>l', silent)
 
 -- Insert an empty new line 							without entering insert mode
-map.nnoremap('<leader>o', ':put =repeat(nr2char(10), v:count1)<CR>')
-map.nnoremap('<leader>O', ':put! =repeat(nr2char(10), v:count1)<CR>')
+keymap.set('n', '<leader>o', ':put =repeat(nr2char(10), v:count1)<CR>')
+keymap.set('n', '<leader>O', ':put! =repeat(nr2char(10), v:count1)<CR>')
 
 -- -- Always search with 'very magic' mode.
--- map.nnoremap('/', '/\v')
--- map.nnoremap('?', '?\v')
+-- keymap.set('n', '/', '/\v')
+-- keymap.set('n', '?', '?\v')
 
 -- Always send contents of a `x` command to the black hole register.
 -- Don't yank on delete char
-map.nnoremap('x', '"_x', opts)
-map.nnoremap('X', '"_X', opts)
+keymap.set('n', 'x', '"_x', silent)
+keymap.set('n', 'X', '"_X', silent)
+
+-- ** Copy/Paste ** --
+keymap.set(
+  'n',
+  '<Leader>v',
+  ':lua require("functions").smart_paste()<CR>',
+  { noremap = true, silent = true }
+)
+keymap.set('v', '<Leader>c', '"+y', { noremap = true, silent = true })
 
 -- Refactor word under cursor.
-map.nnoremap('c*', '/\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgn')
-map.nnoremap('c#', '?\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgN')
+keymap.set('n', 'c*', '/\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgn')
+keymap.set('n', 'c#', '?\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgN')
 
 -- Reveal syntax group under cursor.
-map.nnoremap(
+keymap.set(
+  'n',
   '<F10>',
   "<Cmd>lua require('mappings/normal/syntax').reveal_syntax_group()<CR>",
-  { silent = true }
+  silent
 )
 
 -- Construct grep search.
-map.nnoremap('g/', ':Grep<Space>')
-map.nnoremap('gS', ':Grep!<Space>')
+keymap.set('n', 'g/', ':Grep<Space>')
+keymap.set('n', 'gS', ':Grep!<Space>')
 
 -- Open URL under cursor in browser or open path in GUI explorer.
--- map.nnoremap('gb', ':execute printf('silent !xdg-open "%s" 2>/dev/null', expand('<cfile>'))<CR>', {
+-- keymap.set('gb', ':execute printf('silent !xdg-open "%s" 2>/dev/null', expand('<cfile>'))<CR>', {
 -- 	silent = true,
 -- })
 
 -- Toggle common options.
-map.nnoremap('cos', ':set spell!<CR>', { silent = true })
-map.nnoremap('cow', ':set wrap!<CR>', { silent = true })
-map.nnoremap('coh', ':nohlsearch<CR>', { silent = true })
-map.nnoremap('coH', ':set hlsearch!<CR>', { silent = true })
+keymap.set('n', 'cos', ':set spell!<CR>', silent)
+keymap.set('n', 'cow', ':set wrap!<CR>', silent)
+keymap.set('n', 'coh', ':nohlsearch<CR>', silent)
+keymap.set('n', 'coH', ':set hlsearch!<CR>', silent)
 
 -- save file using CTRL-S
--- map.nnoremap('<C-s>', ':write<Cr>', { silent = true })
+-- keymap.set('<C-s>', ':write<Cr>', silent)
 
 -- Jump to a tag directly when there is only one match.
-map.nnoremap('<C-]>', 'g<C-]>zt')
+keymap.set('n', '<C-]>', 'g<C-]>zt')
 
 -- Go previous and next location list entry.
-map.nnoremap('[l', ':labove<CR>', { silent = true })
-map.nnoremap(']l', ':lbelow<CR>', { silent = true })
+keymap.set('n', '[l', ':labove<CR>', silent)
+keymap.set('n', ']l', ':lbelow<CR>', silent)
 
 -- Buffers and windows are independent.
 -- That means you can navigate through one buffer in one window,
 -- while the other buffer in the other window stays where you left
 
 -- Go previous and next buffers in buffer list.
-map.nnoremap('<M-p>', '<Cmd>bprevious<CR>', { silent = true })
-map.nnoremap('<M-n>', '<Cmd>bnext<CR>', { silent = true })
+keymap.set('n', '<M-p>', '<Cmd>bprevious<CR>', silent)
+keymap.set('n', '<M-n>', '<Cmd>bnext<CR>', silent)
 
 -- Horizontal Split with New Buffer
-map.nnoremap('<leader>bh', ':new<CR>', { silent = true })
+keymap.set('n', '<leader>bh', ':new<CR>', silent)
 
 -- Vertical Split with New Buffer
-map.nnoremap('<leader>bv', ':vnew<CR>', { silent = true })
+keymap.set('n', '<leader>bv', ':vnew<CR>', silent)
 
 -- Vertical Split with New Buffer
-map.nnoremap(
+keymap.set(
+  'n',
   '<leader>b',
   ':set nomore <Bar> :ls <Bar> :set more <CR>:b<Space>',
-  { silent = true }
+  silent
 )
 
 -- Vertical split with current buffer
-map.nnoremap(
-  '<leader>vl',
-  ':ls<cr>:vsp<space>\\|<space>b<space>',
-  { silent = true }
-)
+keymap.set('n', '<leader>vs', '<C-W>v', silent)
 -- Horizontal split with current buffer
-map.nnoremap(
-  '<leader>hl',
-  ':ls<cr>:sp<space>\\|<space>b<space>',
-  { silent = true }
+keymap.set('n', '<leader>hl', '<C-W>s', silent)
+
+-- Zoom a buffer split
+keymap.set(
+  'n',
+  '<Leader>-',
+  ':wincmd _<CR>:wincmd |<CR>',
+  { noremap = true, silent = true }
 )
+keymap.set('n', '<Leader>=', ':wincmd =<CR>', { noremap = true, silent = true })
 
 -- Space to NOP to prevent Leader issues
-map.nnoremap('<Space>', '<NOP>', opts)
+keymap.set('n', '<Space>', '<NOP>', silent)
 
 -- Open links under cursor in browser with gx
 if vim.fn.has('macunix') == 1 then
-  map.nnoremap(
+  keymap.set(
+    'n',
     'gx',
     "<cmd>silent execute '!open ' . shellescape('<cWORD>')<CR>",
-    { silent = true }
+    silent
   )
 else
-  map.nnoremap(
+  keymap.set(
+    'n',
     'gx',
     "<cmd>silent execute '!xdg-open ' . shellescape('<cWORD>')<CR>",
-    { silent = true }
+    silent
   )
 end
 
 -- Make arrowkey do something usefull, resize the viewports accordingly
-map.nnoremap('<Right>', ':vertical resize -2<CR>', { silent = true })
-map.nnoremap('<Left>', ':vertical resize +2<CR>', { silent = true })
-map.nnoremap('<Down>', ':resize -2<CR>', { silent = true })
-map.nnoremap('<Up>', ':resize +2<CR>', { silent = true })
+keymap.set('n', '<Right>', ':vertical resize -2<CR>', silent)
+keymap.set('n', '<Left>', ':vertical resize +2<CR>', silent)
+keymap.set('n', '<Down>', ':resize -2<CR>', silent)
+keymap.set('n', '<Up>', ':resize +2<CR>', silent)
 
 -- Go to the alternate buffer.
-map.nnoremap('<C-n>', '<C-^>')
+-- keymap.set('<C-n>', '<C-^>')
 -- Open a new buffer in current session
--- map.nnoremap('<leader>e', ':e <C-R>=expand("%:p:h") . "/" <CR>')
+-- keymap.set('<leader>e', ':e <C-R>=expand("%:p:h") . "/" <CR>')
 -- Indent the entire file 😯, do you believe in magic
-map.nnoremap('<leader>i', 'mmgg=G`m<CR>')
+keymap.set('n', '<leader>i', 'mmgg=G`m<CR>')
 
 -- QuickFix navigation mappings.
-map.nnoremap('<Up>', ':cprevious<CR>', { silent = true })
-map.nnoremap('<Down>', ':cnext<CR>', { silent = true })
-map.nnoremap('<Left>', ':cpfile<CR>', { silent = true })
-map.nnoremap('<Right>', ':cnfile<CR>', { silent = true })
+keymap.set('n', '<Up>', ':cprevious<CR>', silent)
+keymap.set('n', '<Down>', ':cnext<CR>', silent)
+keymap.set('n', '<Left>', ':cpfile<CR>', silent)
+keymap.set('n', '<Right>', ':cnfile<CR>', silent)
 
-map.nnoremap('<Space>,', ':cp<CR>', { silent = true })
-map.nnoremap('<Space>.', ':cn<CR>', { silent = true })
+keymap.set('n', '<Space>,', ':cp<CR>', silent)
+keymap.set('n', '<Space>.', ':cn<CR>', silent)
 
 -- Toggle quicklist
-map.nnoremap(
+keymap.set(
+  'n',
   '<leader>q',
   '<cmd>lua require("utils").toggle_quicklist()<CR>',
   { noremap = true, silent = true }
 )
 
 -- highlight last inserted text
-map.nnoremap('gV', [[`[v`]']])
+keymap.set('n', 'gV', [[`[v`]']])
 
 -- From https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
 -- The `zzzv` keeps search matches in the middle of the window.
 -- and make sure n will go forward when searching with ? or #
 -- https://vi.stackexchange.com/a/2366/4600
-map.nnoremap('n', [[(v:searchforward ? 'n' : 'N') . 'zzzv']], { expr = true })
-map.nnoremap('N', [[(v:searchforward ? 'N' : 'n') . 'zzzv']], { expr = true })
+keymap.set(
+  'n',
+  'n',
+  [[(v:searchforward ? 'n' : 'N') . 'zzzv']],
+  { expr = true }
+)
+keymap.set(
+  'n',
+  'N',
+  [[(v:searchforward ? 'N' : 'n') . 'zzzv']],
+  { expr = true }
+)
 
 -- Center { & } movements
-map.nnoremap('{', '{zz')
-map.nnoremap('}', '}zz')
+keymap.set('n', '{', '{zz')
+keymap.set('n', '}', '}zz')
 
 -- Move by 'display lines' rather than 'logical lines' if no v:count was
 -- provided.  When a v:count is provided, move by logical lines.
 -- Store relative line number jumps in the jumplist if they exceed a threshold.
-map.nnoremap(
+keymap.set(
+  'n',
   'j',
   [[v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj']],
   { expr = true }
 )
-map.xnoremap(
+keymap.set(
+  'x',
   'j',
   [[v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj']],
   { expr = true }
 )
-map.nnoremap(
+keymap.set(
+  'n',
   'k',
   [[v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk']],
   { expr = true }
 )
-map.xnoremap(
+keymap.set(
+  'x',
   'k',
   [[v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk']],
   { expr = true }
@@ -195,53 +312,55 @@ map.xnoremap(
 
 -- Make `Y` behave like `C` and `D` (to the end of line)
 if not vim.fn.has('nvim-0.6') then
-  map.nnoremap('Y', 'y$')
+  keymap.set('n', 'Y', 'y$')
 end
 
--- map.nnoremap('<Leader>p', [[:t.<left><left>]])
--- map.nnoremap('<leader>e', [[:exe getline(line('.'))<cr>]])
+-- keymap.set('n', '<Leader>p', [[:t.<left><left>]])
+-- keymap.set('n', '<leader>e', [[:exe getline(line('.'))<cr>]])
 
--- map.nnoremap('<leader>z', ':call ahmed#utils#ZoomToggle()<cr>', {
+-- keymap.set('n', '<leader>z', ':call ahmed#utils#ZoomToggle()<cr>', {
 --   silent = true,
 -- })
 
--- map.nnoremap('<C-g>', ':call ahmed#utils#SynStack()<cr>')
+-- keymap.set('n', '<C-g>', ':call ahmed#utils#SynStack()<cr>')
 
 -- maintain the same shortcut as vim-gtfo becasue it's in my muscle memory.
--- map.nnoremap('gof', ':call ahmed#utils#OpenFileFolder()<cr>', {
+-- keymap.set('n', 'gof', ':call ahmed#utils#OpenFileFolder()<cr>', {
 --   silent = true,
 -- })
 
 -- Quick note taking per project
-map.nmap('<Localleader>t', ':tab drop .git/todo.md<CR>')
+keymap.set('n', '<Localleader>t', ':tab drop .git/todo.md<CR>')
 
 -- More easier increment/decrement mappings
-map.nnoremap('+', '<C-a>')
-map.nnoremap('-', '<C-x>')
+keymap.set('n', '+', '<C-a>')
+keymap.set('n', '-', '<C-x>')
 
 -- Redirect change operations to the blackhole
-map.nnoremap('c', '"_c')
-map.nnoremap('C', '"_C')
+keymap.set('n', 'c', '"_c')
+keymap.set('n', 'C', '"_C')
 
 -- Create a directory if it doesn't exist
-map.nnoremap('<leader>mkd', ':!mkdir -p %:p:h<', {
+keymap.set('n', '<leader>mkd', ':!mkdir -p %:p:h<', {
   silent = true,
 })
 
 -- new file in current directory
-map.nnoremap('<Leader>n', [[:e <C-R>=expand("%:p:h") . "/" <CR>]])
+keymap.set('n', '<Leader>n', [[:e <C-R>=expand("%:p:h") . "/" <CR>]])
 
 -- Remove highlights
-map.nnoremap('<CR>', ':noh<CR><CR>', opts)
+keymap.set('n', '<CR>', ':noh<CR><CR>', silent)
 
 -- Manually invoke speeddating in case switch.vim didn't work
-map.nnoremap(
+keymap.set(
+  'n',
   '<C-a>',
   ':if !switch#Switch() <bar> call speeddating#increment(v:count1) <bar> endif<CR>',
-  opts
+  silent
 )
-map.nnoremap(
+keymap.set(
+  'n',
   '<C-x>',
   ":if !switch#Switch({'reverse': 1}) <bar> call speeddating#increment(-v:count1) <bar> endif<CR>",
-  opts
+  silent
 )

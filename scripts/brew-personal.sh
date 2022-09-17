@@ -9,55 +9,46 @@ main() {
 
   brew_tap "zegervdv/zathura"
 
-  # goes here ....
-  brew_install "Ranger" "ranger"
-  brew_install "Asciinema" "asciinema"
+  brew_install "Ranger -> File browser" "ranger"
+  brew_install "Asciinema -> Record and share terminal sessions" "asciinema"
   brew_install "Zathura" "zathura"
   brew_install "Zathura PDF Poppler" "zathura-pdf-poppler"
-  brew_install "Composer" "composer"
-  brew_install "Youtube Downloader" "youtube-dl"
+  brew_install "Youtube DL -> Download YouTube videos from the command-line" "youtube-dl"
   brew_install "Quickjs interpreter for VIM Codi" "quickjs"
-  brew_install "Adopt Open JDK 8" "adoptopenjdk8" "homebrew/cask" "cask"
+  brew_install "LuaRocks -> Package manager for Lua" "luarocks"
   #   GUI
-  brew_install "Chrome Canary" "google-chrome-canary" "homebrew/cask-versions" "cask"
-  brew_install "Chromium" "chromium" "homebrew/cask" "cask"
-  brew_install "Firefox Developer" "firefox-developer-edition" "homebrew/cask-versions" "cask"
-  brew_install "Firefox Nightly" "firefox-nightly" "homebrew/cask-versions" "cask"
-  brew_install "Insomnia" "insomnia" "homebrew/cask" "cask"
-  brew_install "Discord" "discord" "homebrew/cask" "cask"
-  brew_install "Sequel Pro" "sequel-pro" "homebrew/cask" "cask"
-  brew_install "Kap" "kap" "homebrew/cask" "cask"
-  brew_install "Figma" "figma" "homebrew/cask" "cask"
-  brew_install "ImageOptim" "imageoptim" "homebrew/cask" "cask"
-  brew_install "Karabiner Elements" "karabiner-elements" "homebrew/cask" "cask"
-  brew_install "Hammerspoon" "hammerspoon" "homebrew/cask" "cask"
-  brew_install "MPV" "mpv" "homebrew/cask" "cask"
-  brew_install "INNA -> The modern media player for macOS" "iina" "homebrew/cask" "cask"
-  brew_install "Raycast lets you control your tools with a few keystrokes" "raycast" "homebrew/cask" "cask"
-  brew_install "VLC" "vlc" "homebrew/cask" "cask"
-  brew_install "Utorrent" "utorrent" "homebrew/cask" "cask"
-  brew_install "Docker" "docker" "homebrew/cask" "cask"
-  brew_install "Transmit" "transmit" "homebrew/cask" "cask"
-  brew_install "DB Browser for SQLite" "db-browser-for-sqlite" "homebrew/cask" "cask"
-  brew_install "Android Studio" "android-studio" "homebrew/cask" "cask"
-  brew_install "Flutter" "flutter" "homebrew/cask" "cask"
-  brew_install "CoreLocationCLI gets the physical location of your device and prints it to standard output" "corelocationcli" "homebrew/cask" "cask"
+  brew_install "Chrome Canary -> Experiment and test the raw browser," "google-chrome-canary" "homebrew/cask-versions" "--cask"
+  brew_install "Chrome Beta -> Preview upcoming features before they’re released." "google-chrome-beta" "homebrew/cask-versions" "--cask"
+  brew_install "Firefox Developer -> All the latest developer tools in beta" "firefox-developer-edition" "homebrew/cask-versions" "--cask"
+  brew_install "Firefox Nightly -> For testing about-to-be-released features in the most stable pre-release build." "firefox-nightly" "homebrew/cask-versions" "--cask"
+  brew_install "Insomnia -> HTTP and GraphQL Client" "insomnia" "homebrew/cask" "--cask"
+  brew_install "Discord -> Voice and text chat software" "discord" "homebrew/cask" "--cask"
+  brew_install "TablePlus -> Native GUI tool for relational databases" "tableplus" "homebrew/cask" "--cask"
+  brew_install "Kap -> Screen recorder built with web technology" "kap" "homebrew/cask" "--cask"
+  brew_install "ImageOptim -> Optimize images to a smaller size" "imageoptim" "homebrew/cask" "--cask"
+  brew_install "Karabiner Elements -> The one & only Keyboard customizer" "karabiner-elements" "homebrew/cask" "--cask"
+  brew_install "Hammerspoon -> Desktop automation application" "hammerspoon" "homebrew/cask" "--cask"
+  brew_install "MPV -> Cross-platform media player" "mpv" "homebrew/cask" "--cask"
+  brew_install "INNA -> The modern media player for macOS" "iina" "homebrew/cask" "--cask"
+  brew_install "Raycast -> lets you control your tools with a few keystrokes" "raycast" "homebrew/cask" "--cask"
+  brew_install "Alfred -> Application launcher and productivity software" "alfred" "homebrew/cask" "--cask"
+  brew_install "VLC -> Multimedia player" "vlc" "homebrew/cask" "--cask"
+  brew_install "Webtorrent -> Torrent streaming application" "webtorrent" "homebrew/cask" "--cask"
+  brew_install "CoreLocation CLI -> Print location information from CoreLocation" "corelocationcli" "homebrew/cask" "--cask"
 #   Fonts
-  brew_install "Fira Code Font" "font-fira-code" "homebrew/cask" "cask"
-  brew_install "Hack Nerd Font" "font-hack-nerd-font" "homebrew/cask" "cask"
-  brew_install "Jetbrains Mono" "font-jetbrains-mono" "homebrew/cask" "cask"
-  brew_install "Jetbrains Mono Nerd Font" "font-jetbrainsmono-nerd-font" "homebrew/cask" "cask"
-  brew_install "Jetbrains Mono Nerd Font Mono" "font-jetbrainsmono-nerd-font-mono" "homebrew/cask" "cask"
+  brew_install "Fira Code Font" "font-fira-code" "homebrew/cask" "--cask"
+  brew_install "Hack Nerd Font" "font-hack-nerd-font" "homebrew/cask" "--cask"
+  brew_install "Jetbrains Mono" "font-jetbrains-mono" "homebrew/cask" "--cask"
 # Others
-  brew_install "Xquartz Open-source version of the X.Org X Window System" "xquartz" "homebrew/cask" "cask"
-  brew_install "Obsidian - Knowledge base" "obsidian" "homebrew/cask" "cask"
+  brew_install "Xquartz Open-source version of the X.Org X Window System" "xquartz" "homebrew/cask" "--cask"
+  brew_install "Obsidian - Knowledge base" "obsidian" "homebrew/cask" "--cask"
+  brew_install "Background Music -> a macOS audio utility: automatically pause your music, set individual apps' volumes and record system audio." "background-music" "homebrew/cask" "--cask"
+
   print_in_purple "\n   Installing Apps from the App Store...\n"
   # Spark
   mas install 1176895641
   # Slack
   mas install 803453959
-  # Dashlane
-  mas install 552383089
   # Alfred
   mas install 405843582
   # Byword'
@@ -68,8 +59,6 @@ main() {
   mas install 1384080005
   # TweetDeck
   mas install 485812721
-  # WhatsApp
-  mas install 1147396723
   # Telegram
   mas install 747648890
   # Guidance
