@@ -342,7 +342,10 @@ return require('packer').startup({
       config = "require('plugins.worktree')",
     })
     use({ 'kdheepak/lazygit.nvim' })
-
+    use({
+      'ruifm/gitlinker.nvim',
+      config = "require('plugins.gitlinker')",
+    })
     use({
       'Pocco81/TrueZen.nvim',
       cmd = {
