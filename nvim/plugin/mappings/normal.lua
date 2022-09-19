@@ -104,6 +104,14 @@ keymap.set('n', 'Q', '@@')
 -- Make word uppercase
 keymap.set('n', '<C-u>', 'viwU<ESC>', { noremap = true })
 
+-- Print Current Datetime
+keymap.set(
+  'n',
+  '<leader>ncd',
+  ':lua require("functions").notify_current_datetime()<CR>',
+  silent
+)
+
 -- Easyalign
 keymap.set('n', 'ga', '<Plug>(EasyAlign)', silent)
 

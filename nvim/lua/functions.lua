@@ -319,6 +319,15 @@ M.smart_paste = function()
   vim.opt.paste = false
 end
 
+M.notify_current_datetime = function()
+  local dt = vim.fn.strftime('%c')
+  require('notify')(
+    'Current Date Time: ' .. dt,
+    'info',
+    { title = 'Date & Time', timeout = 200 }
+  )
+end
+
 M.first_nvim_run = function()
   local is_first_run = utils.file_exists('/tmp/first-nvim-run')
 
