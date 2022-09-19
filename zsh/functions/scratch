@@ -1,0 +1,9 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Create a random temporary scratch directory and cd into it.
+
+local SCRATCH=$(mktemp -d)
+echo 'Spawing subshell in scratch directory:'
+echo "  $SCRATCH"
+(cd $SCRATCH; zsh)
+echo "Removing scratch directory"
+rm -rf "$SCRATCH"
