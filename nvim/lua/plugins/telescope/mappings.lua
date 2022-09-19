@@ -1,5 +1,5 @@
 local keymap = vim.keymap
-local silent = silent
+local silent = { silent = true }
 
 -- TELESCOPE keymaps 🔭 --
 -- command palette
@@ -104,14 +104,14 @@ keymap.set(
 -- git_bcommits - file scoped commits with diff preview. <C-V> for vsp diff to parent
 keymap.set(
   'n',
-  '<leader>gc',
+  '<leader>gfc',
   [[<Cmd>lua require'telescope.builtin'.git_bcommits({prompt_title = '  ', results_title='Git File Commits'})<CR>]],
   silent
 )
 -- git_commits (log) git log
 keymap.set(
   'n',
-  '<leader>gl',
+  '<leader>gc',
   [[<Cmd>lua require'telescope.builtin'.git_commits()<CR>]],
   silent
 )
@@ -196,12 +196,12 @@ keymap.set(
   silent
 )
 -- Grep word under cursor
-keymap.set(
-  'n',
-  '<leader>g',
-  [[<Cmd>lua require'telescope.builtin'.grep_string()<CR>]],
-  silent
-)
+-- keymap.set(
+--   'n',
+--   '<leader>g',
+--   [[<Cmd>lua require'telescope.builtin'.grep_string()<CR>]],
+--   silent
+-- )
 -- Grep word under cursor - case-sensitive (exact word) - made for use with Replace All - see <leader>ra
 keymap.set(
   'n',
