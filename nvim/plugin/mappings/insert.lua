@@ -3,7 +3,7 @@ local keymap = vim.keymap
 local silent = { silent = true }
 
 -- Make word uppercase
-keymap.set('i', '<C-u>', '<ESC>viwUi', slient)
+keymap.set('i', '<C-u>', '<ESC>viwUi', silent)
 
 -- Disable arrow keys
 keymap.set('i', '<up>', '<nop>')
@@ -23,12 +23,10 @@ keymap.set('i', 'kj', '<esc>')
 keymap.set('i', 'jj', '<esc>')
 keymap.set('i', 'kk', '<esc>')
 
-keymap.set('i', '<Down>', '<ESC><Down>', {
-  silent = true,
-})
+keymap.set('i', '<Down>', '<ESC><Down>', silent)
 
 -- save file using CTRL-S and back to normal mode
-keymap.set('i', '<C-s>', '<ESC> :w<CR>', slient)
+keymap.set('i', '<C-s>', '<ESC> :w<CR>', silent)
 
 -- This keybinding allows you to jump to the end of the line
 -- and we are switched back to insert mode
@@ -41,32 +39,32 @@ keymap.set('i', '<C-a>', '<C-o>0')
 -- https://twitter.com/vimgifs/status/913390282242232320
 -- :h i_CTRL-G_u
 au.group('__prose_mappings__', {
-    {
-        'FileType',
-        'markdown,text',
-        function()
-            keymap.set('i', '.', '.<c-g>u', { buffer = true })
-        end,
-    },
-    {
-        'FileType',
-        'markdown,text',
-        function()
-            keymap.set('i', '?', '?<c-g>u', { buffer = true })
-        end,
-    },
-	{
-        'FileType',
-        'markdown,text',
-        function()
-			keymap.set('i', '!', '!<c-g>u', { buffer = true })
-        end,
-    },
-	{
-        'FileType',
-        'markdown,text',
-        function()
-            keymap.set('i', ',', ',<c-g>u', { buffer = true })
-        end,
-    },
+  {
+    'FileType',
+    'markdown,text',
+    function()
+      keymap.set('i', '.', '.<c-g>u', { buffer = true })
+    end,
+  },
+  {
+    'FileType',
+    'markdown,text',
+    function()
+      keymap.set('i', '?', '?<c-g>u', { buffer = true })
+    end,
+  },
+  {
+    'FileType',
+    'markdown,text',
+    function()
+      keymap.set('i', '!', '!<c-g>u', { buffer = true })
+    end,
+  },
+  {
+    'FileType',
+    'markdown,text',
+    function()
+      keymap.set('i', ',', ',<c-g>u', { buffer = true })
+    end,
+  },
 })

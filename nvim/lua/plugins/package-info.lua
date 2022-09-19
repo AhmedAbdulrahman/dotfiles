@@ -32,21 +32,41 @@ keymap.set('n', '<leader>ns', ":lua require('package-info').show()<CR>", silent)
 keymap.set('n', '<leader>nc', ":lua require('package-info').hide()<CR>", silent)
 
 -- Update package on line
-keymap.set('n', '<leader>nu', ":lua require('package-info').update()<CR>", silent)
+keymap.set(
+  'n',
+  '<leader>nu',
+  ":lua require('package-info').update()<CR>",
+  silent
+)
 
 -- Delete package on line
-keymap.set('n', '<leader>nd', ":lua require('package-info').delete()<CR>", silent)
+keymap.set(
+  'n',
+  '<leader>nd',
+  ":lua require('package-info').delete()<CR>",
+  silent
+)
 
 -- Install a new package
-keymap.set('n', '<leader>ni', ":lua require('package-info').install()<CR>", silent)
+keymap.set(
+  'n',
+  '<leader>ni',
+  ":lua require('package-info').install()<CR>",
+  silent
+)
 
 -- Reinstall dependencies
-keymap.set('n', '<leader>nr', ":lua require('package-info').reinstall()<CR>", silent)
+keymap.set(
+  'n',
+  '<leader>nr',
+  ":lua require('package-info').reinstall()<CR>",
+  silent
+)
 
 -- Install a different package version
 keymap.set(
   'n',
   '<leader>np',
   ":lua require('package-info').change_version()<CR>",
-  opts
+  silent
 )

@@ -10,15 +10,15 @@ keymap.set('x', '<', '<gv')
 keymap.set('x', '>', '>gv')
 
 -- Keep visual mode indenting
-keymap.set('x', '<', '<gv', slient)
-keymap.set('x', '>', '>gv', slient)
+keymap.set('x', '<', '<gv', silent)
+keymap.set('x', '>', '>gv', silent)
 
 -- Don't yank on delete char
-keymap.set('x', 'x', '"_x', slient)
-keymap.set('x', 'X', '"_X', slient)
+keymap.set('x', 'x', '"_x', silent)
+keymap.set('x', 'X', '"_X', silent)
 
 -- Don't yank on visual paste
-keymap.set('x', 'p', '"_dP', slient)
+keymap.set('x', 'p', '"_dP', silent)
 
 -- Make dot work in visual mode
 keymap.set('x', '.', ':norm.<CR>')
@@ -41,36 +41,26 @@ vim.cmd([[function! ExecuteMacroOverVisualRange()
 	execute ":'<,'>normal @".nr2char(getchar())
   endfunction]])
 
-keymap.set('x','@', ':<C-u>call ExecuteMacroOverVisualRange()<CR>')
+keymap.set('x', '@', ':<C-u>call ExecuteMacroOverVisualRange()<CR>')
 
 -- More easier increment/decrement mappings
-keymap.set('x','+', 'g<C-a>')
-keymap.set('x','-', 'g<C-x>')
+keymap.set('x', '+', 'g<C-a>')
+keymap.set('x', '-', 'g<C-x>')
 
 -- Execute "q" macro over visual line selections
-keymap.set('x','Q', [[:'<,'>:normal @q<CR>]])
+keymap.set('x', 'Q', [[:'<,'>:normal @q<CR>]])
 
 -- Always search with 'very magic' mode.
-keymap.set('x','/', '/\v')
-keymap.set('x','?', '?\v')
+keymap.set('x', '/', '/\v')
+keymap.set('x', '?', '?\v')
 
 -- easy regex replace for current word
-keymap.set('x','<leader>r', ':<c-u>%s/\\%V')
+keymap.set('x', '<leader>r', ':<c-u>%s/\\%V')
 
 -- Move highlighted lines
-keymap.set(
-  'x',
-  'K',
-  ':call mappings#visual#movelines#moveup()<CR>',
-  silent
-)
-keymap.set(
-  'x',
-  'J',
-  ':call mappings#visual#movelines#movedown()<CR>',
-  silent
-)
+keymap.set('x', 'K', ':call mappings#visual#movelines#moveup()<CR>', silent)
+keymap.set('x', 'J', ':call mappings#visual#movelines#movedown()<CR>', silent)
 
 -- -- Move selected line / block of text in visual mode
--- keymap.set('x', 'K', ":move '<-2<CR>gv-gv", slient)
--- keymap.set('x', 'J', ":move '>+1<CR>gv-gv", slient)
+-- keymap.set('x', 'K', ":move '<-2<CR>gv-gv", silent)
+-- keymap.set('x', 'J', ":move '>+1<CR>gv-gv", silent)

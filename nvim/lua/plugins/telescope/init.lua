@@ -4,7 +4,7 @@ local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
 local utils = require('telescope.utils')
 local command_palette = require('plugins.telescope.command_palette')
-local icons = NvimConfig.icons;
+local icons = NvimConfig.icons
 
 -- https://github.com/nvim-telescope/telescope.nvim/issues/1048
 local telescope_custom_actions = {}
@@ -12,11 +12,11 @@ local telescope_custom_actions = {}
 local git_icons = {
   added = icons.gitAdd,
   changed = icons.gitChange,
-  copied = ">",
+  copied = '>',
   deleted = icons.gitRemove,
-  renamed = "➡",
-  unmerged = "‡",
-  untracked = "?",
+  renamed = '➡',
+  unmerged = '‡',
+  untracked = '?',
 }
 
 function telescope_custom_actions._multiopen(prompt_bufnr, open_cmd)
@@ -103,13 +103,13 @@ require('telescope').setup({
       i = {
         ['<esc>'] = actions.close,
         ['<C-A>'] = telescope_custom_actions.multi_selection_open,
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
-        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-        ["<C-s>"] = actions.cycle_previewers_next,
-        ["<C-a>"] = actions.cycle_previewers_prev,
-        ["<C-h>"] = "which_key",
-        ["<ESC>"] = actions.close,
+        ['<C-j>'] = actions.move_selection_next,
+        ['<C-k>'] = actions.move_selection_previous,
+        ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
+        ['<C-s>'] = actions.cycle_previewers_next,
+        ['<C-a>'] = actions.cycle_previewers_prev,
+        ['<C-h>'] = 'which_key',
+        ['<ESC>'] = actions.close,
       },
     },
     dynamic_preview_title = true,
@@ -198,7 +198,7 @@ function M.search_todos()
 end
 
 M.project_files = function()
-  local _, ret, stderr = utils.get_os_command_output({
+  local _, ret, _ = utils.get_os_command_output({
     'git',
     'rev-parse',
     '--is-inside-work-tree',
@@ -284,11 +284,11 @@ end
 
 function M.edit_dotfiles()
   require('telescope.builtin').git_files({
-    cwd             = "~/dotfiles",
-    prompt_title    = "~ dotfiles ~",
-    color_devicons  = true,
+    cwd = '~/dotfiles',
+    prompt_title = '~ dotfiles ~',
+    color_devicons = true,
     layout_strategy = 'horizontal',
-    layout_config   = { preview_width = 0.65, width = 0.75 },
+    layout_config = { preview_width = 0.65, width = 0.75 },
   })
 end
 

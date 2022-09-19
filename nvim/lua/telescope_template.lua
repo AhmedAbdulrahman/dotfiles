@@ -5,21 +5,21 @@ local action_state = require('telescope.actions.state')
 local finders = require('telescope.finders')
 local sorters = require('telescope.sorters')
 
-function handle_cr(prompt_bufnr)
+local function handle_cr(prompt_bufnr)
   local selected = action_state.get_selected_entry()
   local cmd = 'mycmd ' .. selected[1]
   vim.cmd(cmd)
   actions.close(prompt_bufnr)
 end
 
-function next_item(prompt_bufnr)
+local function next_item(prompt_bufnr)
   actions.move_selection_next(prompt_bufnr)
   local selected = action_state.get_selected_entry()
   local cmd = 'mycmd ' .. selected[1]
   vim.cmd(cmd)
 end
 
-function prev_item(prompt_bufnr)
+local function prev_item(prompt_bufnr)
   actions.move_selection_previous(prompt_bufnr)
   local selected = action_state.get_selected_entry()
   local cmd = 'mycmd ' .. selected[1]
@@ -33,7 +33,7 @@ local opts = {
   finder = finders.new_table(items),
   sorter = sorters.get_generic_fuzzy_sorter({}),
 
-  attach_mappings = function(prompt_bufnr, map)
+  attach_mappings = function(_, map)
     map('n', '<CR>', handle_cr)
     map('n', 'j', next_item)
     map('n', 'k', prev_item)

@@ -55,7 +55,7 @@ require('lightspeed').setup({
   instant_repeat_bwd_key = nil,
   -- If no values are given, these will be set at runtime,
   -- based on `jump_to_first_match`.
-  labels = nil,
+  --   labels = nil,
   cycle_group_fwd_key = nil,
   cycle_group_bwd_key = nil,
   -- This can get _really_ slow if the window has a lot of content,

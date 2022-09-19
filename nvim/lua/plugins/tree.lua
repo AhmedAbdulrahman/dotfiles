@@ -6,18 +6,18 @@ local utils = require('utils')
 local buf = require('bufferline.state')
 
 local keymap = vim.keymap
-local silent = { silent = true }
+local opts = { noremap = true, silent = true }
 
 local TREE_WIDTH = 30
 
 local git_icons = {
-  unstaged = "",
-  staged = "",
-  unmerged = "",
-  renamed = "➜",
-  untracked = "",
-  deleted = "",
-  ignored = "◌"
+  unstaged = '',
+  staged = '',
+  unmerged = '',
+  renamed = '➜',
+  untracked = '',
+  deleted = '',
+  ignored = '◌',
 }
 
 local folder_icons = {
@@ -114,7 +114,7 @@ require('nvim-tree').setup({
   -- configuration options for the system open command (`s` in the tree by default)
   system_open = {
     -- the command to run this, leaving nil should work in most cases
-    cmd = "",
+    cmd = '',
     -- the command arguments as a list
     args = {},
   },
@@ -174,10 +174,17 @@ require('nvim-tree').setup({
       resize_window = true,
       window_picker = {
         enable = true,
-        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+        chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
         exclude = {
-          filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
-          buftype = { "nofile", "terminal", "help" },
+          filetype = {
+            'notify',
+            'packer',
+            'qf',
+            'diff',
+            'fugitive',
+            'fugitiveblame',
+          },
+          buftype = { 'nofile', 'terminal', 'help' },
         },
       },
     },
@@ -186,15 +193,15 @@ require('nvim-tree').setup({
     add_trailing = false,
     group_empty = true,
     highlight_git = true,
-    highlight_opened_files = "none",
+    highlight_opened_files = 'none',
     -- Only show the current folder as the root instead of full path.
     root_folder_modifier = ':t',
     indent_markers = {
       enable = false, -- Enable indent markers
       icons = {
-        corner = "└ ",
-        edge = "│ ",
-        none = "  ",
+        corner = '└ ',
+        edge = '│ ',
+        none = '  ',
       },
     },
     -- Disable special files.
@@ -218,10 +225,15 @@ require('nvim-tree').setup({
         git = true,
       },
     },
-  }
+  },
 })
 
-keymap.set("n", "<leader>f", "<cmd>lua require'plugins.tree'.toggle()<CR>", { noremap = true, silent = true })
+keymap.set(
+  'n',
+  '<leader>f',
+  "<cmd>lua require'plugins.tree'.toggle()<CR>",
+  opts
+)
 
 local M = {}
 
@@ -229,7 +241,11 @@ M.toggle = function()
   local view = treeview.is_visible()
   if not view then
     buf.set_offset(TREE_WIDTH + 1, utils.add_whitespaces(13) .. 'File Explorer')
-    if vim.bo.filetype == 'dashboard' then tree.open() else tree.find_file(true) end
+    if vim.bo.filetype == 'dashboard' then
+      tree.open()
+    else
+      tree.find_file(true)
+    end
     return
   end
 

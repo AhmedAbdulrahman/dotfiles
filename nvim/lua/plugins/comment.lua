@@ -44,7 +44,7 @@ require('Comment').setup({
   ---Pre-hook, called before commenting the line
   ---@type function|nil
   ---@param ctx Ctx
-  pre_hook = function(ctx)
+  pre_hook = function()
     return require('ts_context_commentstring.internal').calculate_commentstring()
   end,
 

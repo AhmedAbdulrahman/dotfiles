@@ -1,3 +1,5 @@
+-- luacheck: globals _LAZYGIT_TOGGLE _HTOP_TOGGLE
+
 local keymap = vim.keymap
 local silent = { silent = true }
 
@@ -84,12 +86,7 @@ end
 
 vim.cmd([[command! Htop lua _HTOP_TOGGLE()]])
 
-keymap.set(
-  'n',
-  '<Space>gg',
-  '<cmd>lua _LAZYGIT_TOGGLE()<CR>',
-  silent
-)
+keymap.set('n', '<Space>gg', '<cmd>lua _LAZYGIT_TOGGLE()<CR>', silent)
 
 function _G.set_terminal_keymaps()
   local opts = { noremap = true }
