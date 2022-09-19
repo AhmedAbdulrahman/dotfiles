@@ -186,10 +186,6 @@ local normal_mode_mappings = {
       'add all',
     },
     b = {
-      '<cmd>lua require("internal.blame").open()<CR>',
-      'blame',
-    },
-    B = {
       '<cmd>Telescope git_branches<CR>',
       'branches',
     },
