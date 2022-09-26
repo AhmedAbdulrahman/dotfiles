@@ -250,9 +250,8 @@ return require('packer').startup({
     })
     use({ 'junegunn/vim-easy-align' })
     use({ 'nacro90/numb.nvim', config = "require('plugins.numb')" })
-    -- NOTE: folke is now active , this fork will be deleted on 18-09-22
     use({
-      'B4mbus/todo-comments.nvim',
+      'folke/todo-comments.nvim',
       config = "require('plugins.todo-comments')",
     })
     use({
