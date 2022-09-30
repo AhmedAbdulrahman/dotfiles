@@ -248,7 +248,12 @@ return require('packer').startup({
         vim.g.VM_leader = ';'
       end,
     })
-    use({ 'junegunn/vim-easy-align' })
+    use({
+      'echasnovski/mini.nvim',
+      config = function()
+        require('mini.align').setup()
+      end,
+    })
     use({ 'nacro90/numb.nvim', config = "require('plugins.numb')" })
     use({
       'folke/todo-comments.nvim',
