@@ -18,8 +18,9 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 
 vim.api.nvim_create_augroup('Highlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
-  command = "silent! lua vim.highlight.on_yank() {higroup='IncSearch', timeout=400}",
-  group = 'Highlight',
+  callback = function()
+    vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 100 })
+  end,
 })
 
 vim.api.nvim_create_augroup('LspNodeModules', { clear = true })
