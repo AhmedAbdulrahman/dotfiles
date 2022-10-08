@@ -13,7 +13,7 @@ main() {
   brew_install "Asciinema -> Record and share terminal sessions" "asciinema"
   brew_install "Zathura" "zathura"
   brew_install "Zathura PDF Poppler" "zathura-pdf-poppler"
-  brew_install "Youtube DL -> Download YouTube videos from the command-line" "youtube-dl"
+  brew_install "Youtube DLP -> A youtube-dl fork with additional features and fixes" "yt-dlp"
   brew_install "Quickjs interpreter for VIM Codi" "quickjs"
   brew_install "LuaRocks -> Package manager for Lua" "luarocks"
   #   GUI
