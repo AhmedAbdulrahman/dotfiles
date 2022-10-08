@@ -63,7 +63,10 @@ main() {
 #   brew_install "Yarn" "yarn"
   print_in_purple "\n   Languages\n"
   brew_install "Rustup -> Rust toolchain installer" "rustup-init"
+  brew_install "Rust Analyzer -> Experimental Rust compiler front-end for IDEs" "rust-analyzer"
   brew_install "Perl -> Highly capable, feature-rich programming language" "perl"
+  brew_install "Kotlin" "kotlin"
+  brew_install "Ktlint -> Anti-bikeshedding Kotlin linter with built-in formatter" "ktlint"
 
 #   brew_install "Ruby" "ruby"
 
@@ -118,7 +121,6 @@ main() {
 
   brew_install "Reattach Namespace -> Accessing the Mac OS X pasteboard in tmux" "reattach-to-user-namespace"
   brew_install "Tealdeer -> A very fast implementation of tldr in Rust." "tealdeer" # rust implementation of `tldr`
-  brew_install "Rust Analyzer -> Experimental Rust compiler front-end for IDEs" "rust-analyzer"
   brew_install "ZK - a plain text note-taking assistant" "zk"
   brew_install "Vale -> A command-line tool that brings code-like linting to prose" "vale"
   brew_install "Proselint -> A linter is a computer program that, like a spell checker, scans through a document and analyzes it" "proselint"
