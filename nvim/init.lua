@@ -18,7 +18,6 @@ local g = vim.g
 -- Disable unused built-in plugins. saves a lot
 g.loaded_gzip = 1
 g.loaded_rrhelper = 1
-g.did_load_filetypes = 1
 g.did_install_default_menus = 1
 g.loaded_tarPlugin = 1
 g.loaded_zipPlugin = 1
