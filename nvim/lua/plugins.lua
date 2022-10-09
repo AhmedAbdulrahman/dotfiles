@@ -21,10 +21,6 @@ return require('packer').startup({
 
     -- Needed to load first
     use({ 'lewis6991/impatient.nvim' })
-    use({
-      'nathom/filetype.nvim',
-      config = "require('plugins.filetype')",
-    })
     use({ 'nvim-lua/plenary.nvim' })
     use({ 'kyazdani42/nvim-web-devicons' })
     use({
@@ -298,6 +294,14 @@ return require('packer').startup({
       disable = not NvimConfig.plugins.package_info.enabled,
     })
     use({ 'RRethy/vim-illuminate' })
+    use({
+      'andweeb/presence.nvim',
+      config = function()
+        require('presence'):setup({
+          buttons = false,
+        })
+      end,
+    })
 
     -- Snippets & Language & Syntax
     use({
