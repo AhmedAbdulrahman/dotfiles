@@ -1,4 +1,4 @@
--- luacheck: globals hs spoon trueR Install, no unused
+-- luacheck: globals hs spoon trueR Install CURR_SCREEN_WINFILTER CURR_SPACE_WINFILTER, no unused
 
 ---init
 local alert = require('hs.alert')
@@ -18,6 +18,13 @@ else
 end
 
 alert.show(table.concat(buf))
+
+--- Window filters
+CURR_SPACE_WINFILTER = hs.window.filter.new():setCurrentSpace(true)
+CURR_SCREEN_WINFILTER = hs.window.filter.new(function(w)
+  return w:screen() == hs.screen.mainScreen()
+    and CURR_SPACE_WINFILTER:isWindowAllowed(w)
+end)
 
 local function appWatcherFunction(appName, eventType, appObject)
   if eventType == hs.application.watcher.activated then
