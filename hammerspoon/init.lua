@@ -1,8 +1,10 @@
+-- luacheck: globals hs spoon trueR Install, no unused
+
 ---init
-alert = require('hs.alert')
-buf = {}
-log = hs.logger.new('main', 'info')
-wm = hs.webview.windowMasks
+local alert = require('hs.alert')
+local buf = {}
+local log = hs.logger.new('main', 'info')
+local wm = hs.webview.windowMasks
 
 hs.loadSpoon('SpoonInstall')
 spoon.SpoonInstall.use_syncinstall = trueR
@@ -17,12 +19,27 @@ end
 
 alert.show(table.concat(buf))
 
+local function appWatcherFunction(appName, eventType, appObject)
+  if eventType == hs.application.watcher.activated then
+    if appName == 'Finder' then
+      -- Bring all Finder windows forward when one gets activated
+      appObject:selectMenuItem({ 'Window', 'Bring All to Front' })
+    end
+  end
+end
+local appWatcher = hs.application.watcher.new(appWatcherFunction)
+
+appWatcher:start()
+print('Application Watcher started.')
+
 print('==================================================')
 require('application.application')
+require('amphetamine.amphetamine')
 require('battery.battery')
 require('brightness.brightness')
 require('clipboard.clipboard')
 require('corners.corners')
+require('console.console')
 require('health.health')
 require('hotkey.hotkey')
 require('ime.ime')
@@ -38,3 +55,4 @@ require('translation.translation')
 require('usb.usb')
 require('volume.volume')
 require('window.window')
+require('wifi.wifi')
