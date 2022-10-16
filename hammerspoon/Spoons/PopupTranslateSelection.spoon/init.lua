@@ -6,6 +6,8 @@
 ---
 --- Download: [https://github.com/Hammerspoon/Spoons/raw/master/Spoons/PopupTranslateSelection.spoon.zip](https://github.com/Hammerspoon/Spoons/raw/master/Spoons/PopupTranslateSelection.spoon.zip)
 
+-- luacheck: globals hs mousepoint, no unused
+
 local obj={}
 obj.__index = obj
 
@@ -80,7 +82,7 @@ end
 -- It tries through hs.uielement, but if that fails it
 -- tries issuing a Cmd-c and getting the pasteboard contents
 -- afterwards.
-function current_selection()
+local function current_selection()
    local elem=hs.uielement.focusedElement()
    local sel=nil
    if elem then

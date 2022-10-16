@@ -1,3 +1,5 @@
+-- luacheck: globals hs
+
 local function English()
     hs.keycodes.currentSourceID("com.apple.keylayout.ABC")
 end
@@ -10,9 +12,9 @@ local app2Ime = {
     {'/Applications/System Preferences.app', 'English'},
 }
 
-function updateFocusAppInputMethod()
+local function updateFocusAppInputMethod()
     local focusAppPath = hs.window.frontmostWindow():application():path()
-    for index, app in pairs(app2Ime) do
+    for _, app in pairs(app2Ime) do
         local appPath = app[1]
         local expectedIme = app[2]
 
@@ -38,11 +40,11 @@ hs.hotkey.bind({'ctrl', 'cmd'}, ".", function()
 end)
 
 -- Handle cursor focus and application's screen manage.
-function applicationWatcher(appName, eventType, appObject)
+local function applicationWatcher(_, eventType, _)
     if (eventType == hs.application.watcher.activated) then
         updateFocusAppInputMethod()
     end
 end
 
-appWatcher = hs.application.watcher.new(applicationWatcher)
+local appWatcher = hs.application.watcher.new(applicationWatcher)
 appWatcher:start()

@@ -1,3 +1,5 @@
+-- luacheck: globals hs, no unused
+
 -- initial status
 local cache  = {
   batteryCharged    = hs.battery.isCharged(),
@@ -66,7 +68,7 @@ module.stop = function()
 end
 
 module.start()
-  
+
 -- stop module on shutdown
 hs.shutdownCallback = function()
     module.stop()

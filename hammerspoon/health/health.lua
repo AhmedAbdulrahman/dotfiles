@@ -1,3 +1,5 @@
+-- luacheck: globals hs
+
 local cache  = {}
 local module = { cache = cache }
 
@@ -47,7 +49,7 @@ module.stop = function()
 end
 
 module.start()
-  
+
 -- stop module on shutdown
 hs.shutdownCallback = function()
     module.stop()

@@ -4,6 +4,8 @@
 ---
 --- Download: [https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip](https://github.com/Hammerspoon/Spoons/raw/master/Spoons/SpoonInstall.spoon.zip)
 
+-- luacheck: globals hs
+
 local obj={}
 obj.__index = obj
 
@@ -72,7 +74,7 @@ end
 
 -- Internal callback to process and store the data from docs.json about a repository
 -- callback is called with repo as arguments, only if the call is successful
-function obj:_storeRepoJSON(repo, callback, status, body, hdrs)
+function obj:_storeRepoJSON(repo, callback, status, body)
    local success=nil
    if (status < 100) or (status >= 400) then
       self.logger.ef("Error fetching JSON data for repository '%s'. Error code %d: %s", repo, status, body or "<no error message>")
@@ -80,7 +82,7 @@ function obj:_storeRepoJSON(repo, callback, status, body, hdrs)
       local json = hs.json.decode(body)
       if json then
          self.repos[repo].data = {}
-         for i,v in ipairs(json) do
+         for _,v in ipairs(json) do
             v.download_url = self.repos[repo].download_base_url .. v.name .. ".spoon.zip"
             self.repos[repo].data[v.name] = v
          end
@@ -170,7 +172,7 @@ end
 --- Notes:
 ---  * For now, the repository data is not persisted, so you need to update it after every restart if you want to use any of the install functions.
 function obj:asyncUpdateAllRepos()
-   for k,v in pairs(self.repos) do
+   for k,_ in pairs(self.repos) do
       self:asyncUpdateRepo(k)
    end
 end
@@ -189,7 +191,7 @@ end
 ---  * This is a synchronous call, which means Hammerspoon will be blocked until it finishes.
 ---  * For now, the repository data is not persisted, so you need to update it after every restart if you want to use any of the install functions.
 function obj:updateAllRepos()
-   for k,v in pairs(self.repos) do
+   for k,_ in pairs(self.repos) do
       self:updateRepo(k)
    end
 end
@@ -206,7 +208,7 @@ end
 function obj:repolist()
    local keys={}
    -- Create sorted list of keys
-   for k,v in pairs(self.repos) do table.insert(keys, k) end
+   for k,_ in pairs(self.repos) do table.insert(keys, k) end
    table.sort(keys)
    return keys
 end
@@ -227,7 +229,7 @@ function obj:search(pat)
    local res={}
    for repo,v in pairs(self.repos) do
       if v.data then
-         for spoon,rec in pairs(v.data) do
+         for _,rec in pairs(v.data) do
             if string.find(string.lower(rec.name .. "\n" .. rec.desc), pat) then
                table.insert(res, { name = rec.name, desc = rec.desc, repo = repo })
             end
@@ -244,7 +246,7 @@ end
 
 -- Internal callback function to finalize the installation of a spoon after the zip file has been downloaded.
 -- callback, if given, is called with (urlparts, success) as arguments
-function obj:_installSpoonFromZipURLgetCallback(urlparts, callback, status, body, headers)
+function obj:_installSpoonFromZipURLgetCallback(urlparts, callback, status, body)
    local success=nil
    if (status < 100) or (status >= 400) then
       self.logger.ef("Error downloading %s. Error code %d: %s", urlparts.absoluteString, status, body or "<none>")
@@ -258,7 +260,7 @@ function obj:_installSpoonFromZipURLgetCallback(urlparts, callback, status, body
          f:close()
 
          -- Check its contents - only one *.spoon directory should be in there
-         output = _x(string.format("/usr/bin/unzip -l %s '*.spoon/' | /usr/bin/awk '$NF ~ /\\.spoon\\/$/ { print $NF }' | /usr/bin/wc -l", outfile),
+         local output = _x(string.format("/usr/bin/unzip -l %s '*.spoon/' | /usr/bin/awk '$NF ~ /\\.spoon\\/$/ { print $NF }' | /usr/bin/wc -l", outfile),
                      "Error examining downloaded zip file %s, leaving it in place for your examination.", outfile)
          if output then
             if (tonumber(output) or 0) == 1 then
@@ -272,7 +274,7 @@ function obj:_installSpoonFromZipURLgetCallback(urlparts, callback, status, body
                   success=true
                end
             else
-               self.logger.ef("The downloaded zip file %s is invalid - it should contain exactly one spoon. Leaving it in place for your examination.", outfile) 
+               self.logger.ef("The downloaded zip file %s is invalid - it should contain exactly one spoon. Leaving it in place for your examination.", outfile)
             end
          end
       end
@@ -320,7 +322,7 @@ function obj:installSpoonFromZipURL(url)
    local urlparts = hs.http.urlParts(url)
    local dlfile = urlparts.lastPathComponent
    if dlfile and dlfile ~= "" and urlparts.pathExtension == "zip" then
-      a,b,c=hs.http.get(url)
+      local a,b,c=hs.http.get(url)
       return self:_installSpoonFromZipURLgetCallback(urlparts, nil, a, b, c)
    else
       self.logger.ef("Invalid URL %s, must point to a zip file", url)
@@ -377,7 +379,7 @@ end
 ---
 --- Returns:
 ---  * `true` if the installation was successful, `nil` otherwise.
-function obj:installSpoonFromRepo(name, repo, callback)
+function obj:installSpoonFromRepo(name, repo)
    if not repo then repo = 'default' end
    if self:_is_valid_spoon(name, repo) then
       return self:installSpoonFromZipURL(self.repos[repo].data[name].download_url)

@@ -4,6 +4,8 @@
 ---
 --- Download: [https://github.com/Hammerspoon/Spoons/raw/master/Spoons/MouseCircle.spoon.zip](https://github.com/Hammerspoon/Spoons/raw/master/Spoons/MouseCircle.spoon.zip)
 
+-- luacheck: globals hs mousepoint, no unused
+
 local obj = {}
 obj.__index = obj
 
