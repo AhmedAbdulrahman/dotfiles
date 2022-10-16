@@ -1,13 +1,15 @@
-local hyper = {'ctrl', 'cmd'}
+-- luacheck: globals hs
 
-hs.hotkey.bind(hyper, "L", hs.caffeinate.systemSleep)
+local hyper = { 'ctrl', 'cmd' }
 
 -- show front activated app infos
-hs.hotkey.bind(
-    hyper, ".",
-    function()
-        hs.alert.show(string.format("App path:        %s\nApp name:      %s\nIM source id:  %s",
-                                    hs.window.focusedWindow():application():path(),
-                                    hs.window.focusedWindow():application():name(),
-                                    hs.keycodes.currentSourceID()))
-    end)
+hs.hotkey.bind(hyper, '.', function()
+  hs.alert.show(
+    string.format(
+      'App path:        %s\nApp name:      %s\nIM source id:  %s',
+      hs.window.focusedWindow():application():path(),
+      hs.window.focusedWindow():application():name(),
+      hs.keycodes.currentSourceID()
+    )
+  )
+end)
