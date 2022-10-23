@@ -87,6 +87,10 @@ return require('packer').startup({
     use({ 'kyazdani42/nvim-tree.lua', config = "require('plugins.tree')" })
     use({ 'sidebar-nvim/sidebar.nvim', config = "require('plugins.sidebar')" })
     use({
+      'karb94/neoscroll.nvim',
+      config = "require('plugins.neoscroll')",
+    })
+    use({
       'gbprod/stay-in-place.nvim',
       config = function()
         require('stay-in-place').setup({})
