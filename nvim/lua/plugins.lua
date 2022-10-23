@@ -325,6 +325,11 @@ return require('packer').startup({
       config = "require('plugins.colorizer')",
     })
     use({
+      'danymat/neogen',
+      config = "require('plugins.neogen')",
+      requires = 'nvim-treesitter/nvim-treesitter',
+    })
+    use({
       'L3MON4D3/LuaSnip',
       requires = { 'rafamadriz/friendly-snippets' },
       after = 'cmp_luasnip',
