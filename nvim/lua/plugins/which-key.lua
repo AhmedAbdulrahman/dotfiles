@@ -272,6 +272,60 @@ local normal_mode_mappings = {
     },
   },
 
+  r = {
+    name = 'Rust Crates',
+    ['t'] = { '<cmd>lua require("plugins.crates").toggle()<CR>', 'Toggle' },
+
+    ['r'] = { '<cmd>lua require("plugins.crates").reload()<CR>', 'Reload' },
+
+    ['v'] = {
+      '<cmd>lua require("plugins.crates").show_versions_popup()<CR>',
+      'Versions popup',
+    },
+    ['f'] = {
+      '<cmd>lua require("plugins.crates").show_features_popup()<CR>',
+      'Features popup',
+    },
+    ['d'] = {
+      '<cmd>lua require("plugins.crates").show_dependencies_popup()<CR>',
+      'Dependencies popup',
+    },
+
+    ['u'] = {
+      '<cmd>lua require("plugins.crates").update_crate()<CR>',
+      'Update crate',
+    },
+    ['U'] = {
+      '<cmd>lua require("plugins.crates").upgrade_crate()<CR>',
+      'Upgrade crate',
+    },
+    ['a'] = {
+      '<cmd>lua require("plugins.crates").update_all_crates()<CR>',
+      'Update all crates',
+    },
+    ['A'] = {
+      '<cmd>lua require("plugins.crates").upgrade_all_crates()<CR>',
+      'Upgrade all crates',
+    },
+
+    ['H'] = {
+      '<cmd>lua require("plugins.crates").open_homepage()<CR>',
+      'Open homepage',
+    },
+    ['R'] = {
+      '<cmd>lua require("plugins.crates").open_repository()<CR>',
+      'Open repository',
+    },
+    ['D'] = {
+      '<cmd>lua require("plugins.crates").open_documentation()<CR>',
+      'Open documentation',
+    },
+    ['C'] = {
+      '<cmd>lua require("plugins.crates").open_crates_io()<CR>',
+      'Open crates.io',
+    },
+  },
+
   s = {
     name = 'Search',
     c = {
@@ -405,9 +459,33 @@ local function attach_spectre(bufnr)
   })
 end
 
+local function attach_crates(bufnr)
+  wk.register({
+    ['c'] = {
+      name = 'Crates',
+      ['u'] = {
+        ":lua require('crates').update_crates()<cr>",
+        'Update selected crates',
+      },
+      ['U'] = {
+        ":lua require('crates').upgrade_crates()<cr>",
+        'Upgrade selected crates',
+      },
+    },
+  }, {
+    buffer = bufnr,
+    mode = 'v', -- NORMAL mode
+    prefix = '<leader>',
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = false, -- use `nowait` when creating keymaps
+  })
+end
+
 return {
   attach_markdown = attach_markdown,
   attach_typescript = attach_typescript,
   attach_zen = attach_zen,
   attach_spectre = attach_spectre,
+  attach_crates = attach_crates,
 }

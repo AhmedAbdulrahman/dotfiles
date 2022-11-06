@@ -309,6 +309,11 @@ return require('packer').startup({
 
     -- Snippets & Language & Syntax
     use({
+      'Saecki/crates.nvim',
+      requires = { 'nvim-lua/plenary.nvim' },
+      config = "require('plugins.crates')",
+    })
+    use({
       'windwp/nvim-autopairs',
       after = { 'nvim-treesitter', 'nvim-cmp' },
       config = "require('plugins.autopairs')",
