@@ -1,98 +1,95 @@
+-- luacheck: globals hs, no unused
 -- ultra bindings
 local ultra = { 'ctrl', 'alt', 'cmd' }
 
-local utils        = require('utils')
-local template          = require('template')
+local utils = require('utils')
 
+-- --- My monitors
+-- print(hs.inspect(hs.screen.allScreens()))
+-- SCREEN1 = hs.screen.allScreens()[1]:name()
+-- if hs.screen.allScreens()[2] then
+--   SCREEN2 = hs.screen.allScreens()[2]:name()
+-- end
 
-function isDarkModeEnabled()
-  local _, res = hs.osascript.javascript([[
-    Application("System Events").appearancePreferences.darkMode()
-  ]])
+-- --- Window filters
+-- CURR_SPACE_WINFILTER = hs.window.filter.new():setCurrentSpace(true)
+-- CURR_SCREEN_WINFILTER = hs.window.filter.new(function(w)
+--   return w:screen() == hs.screen.mainScreen() and CURR_SPACE_WINFILTER:isWindowAllowed(w)
+-- end)
 
-  return res
-end
+-- function displaySleep()
+--     hs.task.new('/usr/bin/pmset', nil, { 'displaysleepnow' }):start()
+-- end
 
-function setTheme(theme)
-  hs.osascript.javascript(template([[
-    var systemEvents = Application("System Events");
-    var alfredApp = Application("Alfred 5");
+--   -- toggles
+-- hs.fnutils.each({
+--   { key = 't', fn = toggleTheme     },
+--   { key = 'd', fn = toggleDND       },
+--   { key = 'w', fn = toggleWiFi      },
+--   { key = 'q', fn = displaySleep    },
+-- }, function(object)
+--     hs.hotkey.bind(ultra, object.key, object.fn)
+-- end)
 
-    ObjC.import("stdlib");
+-- Menubar Item
+-- ----------------------------------------------
 
-    systemEvents.appearancePreferences.darkMode = {DARK_MODE};
+-- local function getScreenWindows()
+-- 	local windowsOnScreenByName = {}
+--   hs.fnutils.each(CURR_SCREEN_WINFILTER:getWindows(), function(win)
+--     if win:application() and win:application():name() then
+--       windowsOnScreenByName[win:application():name()]=win
+--     end
+--   end)
 
-    // has to be done this way so template function works, lol
-    alfredApp && alfredApp.setTheme("{ALFRED_THEME}");
-  ]], {
-    ALFRED_THEME = 'Mojave ' .. utils.capitalize(theme),
-    DARK_MODE = theme == 'dark' and 'true' or 'false',
-  }))
-end
+--   print("Windows on screen:\n"..hs.inspect(windowsOnScreenByName))
+--   -- hs.alert.show("getScreenWindows: "..dumpObj(windowsOnScreenByName))
+--   return hs.screen.mainScreen(), windowsOnScreenByName
+-- end
 
-function toggleTheme()
-  setTheme(isDarkModeEnabled() and 'light' or 'dark')
-end
+-- local function getWindowTitle(winByName, appName)
+-- 	if not winByName[appName] then return nil else return winByName[appName]:title() end
+-- end
 
-function isDNDEnabled()
-    local _, _, _, rc = hs.execute('do-not-disturb status | grep -q "on"', true)
-    return rc == 0
-end
+-- local function notesSlackMailLayout()
+-- 	local focusedScreen, winByName = getScreenWindows()
+-- 	hs.layout.apply({
+-- 	  {nil, getWindowTitle(winByName, "Google Chrome"), focusedScreen, {x=0, y=0, w=0.8, h=1}, nil, nil},
+-- 	  {"Slack", nil, SCREEN1, {x=0, y=0.3, w=1, h=0.7}, nil, nil},
+-- 	})
+-- end
 
-function toggleDND()
-    local imagePath = os.getenv('HOME') .. '/.hammerspoon/assets/notification-center.png'
+-- local function readingSublimeFirefoxSafariLayout()
+-- 	local focusedScreen, winByName = getScreenWindows()
+-- 	hs.layout.apply({
+-- 	  {nil, getWindowTitle(winByName, "Google Chrome"), focusedScreen, {x=0, y=0.1, w=0.5, h=0.8}, nil, nil},
+-- 	  {nil, getWindowTitle(winByName, "Visual Studio Code"), focusedScreen, {x=0, y=0.5, w=0.5, h=0.5}, nil, nil},
+-- 	  {nil, getWindowTitle(winByName, "kitty"), focusedScreen, {x=0.5, y=0.5, w=0.5, h=0.5}, nil, nil},
+-- 	})
+-- end
 
-    local isEnabled = isDNDEnabled()
-    local afterTime = isEnabled and 0.0 or 6.0
+-- local layoutMapping = {
+-- 	Slack = notesSlackMailLayout,
+-- 	Safari = readingSublimeFirefoxSafariLayout,
+-- }
 
-    -- is not enabled, will be enabled
-    if not isEnabled then
-      hs.notify.new({
-        title        = 'Do Not Disturb',
-        subTitle     = 'Enabled',
-        contentImage = imagePath
-      }):send()
-    end
+-- local function tileWindows()
+--     local wins = hs.window.filter.new():setCurrentSpace(true):getWindows()
+--     local screen = hs.screen.mainScreen():currentMode()
+--     local rect = hs.geometry(0, 0, screen['w'], screen['h'])
+--     hs.window.tiling.tileWindows(wins, rect)
+-- end
 
-    -- toggle, wait a bit if we've send notification
-    hs.timer.doAfter(afterTime, function()
-      hs.execute('do-not-disturb ' .. (isEnabled == true and 'off' or 'on'), true)
-
-      -- is enabled, was disabled
-      if isEnabled then
-        hs.notify.new({
-          title        = 'Do Not Disturb',
-          subTitle     = 'Disabled',
-          contentImage = imagePath
-        }):send()
-      end
-    end)
-end
-
-function toggleWiFi()
-    local newStatus = not hs.wifi.interfaceDetails().power
-
-    hs.wifi.setPower(newStatus)
-
-    local imagePath = os.getenv('HOME') .. '/.hammerspoon/assets/airport.png'
-
-    hs.notify.new({
-      title        = 'Wi-Fi',
-      subTitle     = 'Power: ' .. (newStatus and 'On' or 'Off'),
-      contentImage = imagePath
-    }):send()
-end
-
-function displaySleep()
-    hs.task.new('/usr/bin/pmset', nil, { 'displaysleepnow' }):start()
-end
-
-  -- toggles
-hs.fnutils.each({
-  { key = 't', fn = toggleTheme     },
-  { key = 'd', fn = toggleDND       },
-  { key = 'w', fn = toggleWiFi      },
-  { key = 'q', fn = displaySleep    },
-}, function(object)
-    hs.hotkey.bind(ultra, object.key, object.fn)
-end)
+-- local function layoutCurrentScreen()
+-- 	local windows=CURR_SCREEN_WINFILTER:getWindows()
+-- 	local foundWin=hs.fnutils.find(windows, function(win)
+-- 	  return win:application() and layoutMapping[win:application():name()] ~= nil
+-- 	end)
+-- 	local appName=foundWin:application():name()
+-- 	if foundWin then
+-- 	  hs.alert.show("Arranging windows for "..appName)
+-- 	  layoutMapping[appName]()
+-- 	else
+-- 	  print("Cannot determine desired layout: "..hs.inspect(windows))
+-- 	end
+-- end

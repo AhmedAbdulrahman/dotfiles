@@ -1,60 +1,58 @@
 -- luacheck: globals hs mousepoint, no unused
+local utils = require('utils')
 
 -- creates callback function to select application windows by application name
 local function mkFocusByPreferredApplicationTitle(stopOnFirst, ...)
-    local arguments = { ... } -- create table to close over variadic args
-    return function()
-      local nowFocused = hs.window.focusedWindow()
-      local appFound = false
-      for _, app in ipairs(arguments) do
-        if stopOnFirst and appFound then
-          break
-        end
-        log:d('Searching for app ', app)
-        local application = hs.application.get(app)
-        if application ~= nil then
-          log:d('Found app', application)
-          local window = application:mainWindow()
-          if window ~= nil then
-            log:d('Found main window', window)
-            if window == nowFocused then
-              log:d('Already focused, moving on', application)
-            else
-              window:focus()
-              appFound = true
-            end
+  local arguments = { ... } -- create table to close over variadic args
+  return function()
+    local nowFocused = hs.window.focusedWindow()
+    local appFound = false
+    for _, app in ipairs(arguments) do
+      if stopOnFirst and appFound then
+        break
+      end
+      log:d('Searching for app ', app)
+      local application = hs.application.get(app)
+      if application ~= nil then
+        log:d('Found app', application)
+        local window = application:mainWindow()
+        if window ~= nil then
+          log:d('Found main window', window)
+          if window == nowFocused then
+            log:d('Already focused, moving on', application)
+          else
+            window:focus()
+            appFound = true
           end
         end
       end
-      return appFound
     end
+    return appFound
+  end
 end
 
 local function appActivation(application)
-    hs.application.launchOrFocus(application)
-    hs.application.enableSpotlightForNameSearches(true)
-    local app = hs.appfinder.appFromName(application)
-    if app then
-      app:activate()
-      app:unhide()
-    end
+  hs.application.launchOrFocus(application)
+  hs.application.enableSpotlightForNameSearches(true)
+  local app = hs.appfinder.appFromName(application)
+  if app then
+    app:activate()
+    app:unhide()
+  end
 end
 
 -- focus applications
 local function focusOrOpen(app)
-	local focus = mkFocusByPreferredApplicationTitle(true, app)
-	return (focus() or appActivation(app))
+  local focus = mkFocusByPreferredApplicationTitle(true, app)
+  return (focus() or appActivation(app))
 end
-
 
 -- launch applications
 local function hyperFocusOrOpen(key, app)
-    hs.hotkey.bind({ 'ctrl' }, key, function()
-      focusOrOpen(app)
-    end)
-  end
-
-
+  hs.hotkey.bind({ 'ctrl' }, key, function()
+    focusOrOpen(app)
+  end)
+end
 
 local applicationHotkeys = {
   -- [a]ctivity monitor
@@ -107,7 +105,8 @@ local function disableBrowserHotkeys()
   end
 end
 
-local browserWindowFilter = hs.window.filter.new({ 'Brave Browser', 'Google Chrome' })
+local browserWindowFilter =
+  hs.window.filter.new({ 'Brave Browser', 'Google Chrome' })
 browserWindowFilter:subscribe(
   hs.window.filter.windowFocused,
   enableBrowserHotkeys
@@ -134,4 +133,4 @@ hs.hotkey.bind({ 'cmd', 'shift', 'ctrl' }, 'r', function()
   hs.reload()
 end)
 
-hs.notify.new({ title = 'Hammerspoon', informativeText = 'Config loaded' }):send()
+utils.notify('Config loaded.')

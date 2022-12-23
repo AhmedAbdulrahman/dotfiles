@@ -1,3 +1,4 @@
+-- luacheck: globals hs, no unused
 -- module: timer - quickly create timers with reminders
 -- (Inspired by Timer.app, by Michael Villar, though not *nearly* as pretty)
 --
@@ -13,7 +14,7 @@ local visible = false
 local timers = nil
 local tickTimer = nil
 local menu = hs.menubar.new()
-menu:setTooltip("Quick timer")
+menu:setTooltip('Quick timer')
 
 -- constants
 local TICK = 1
@@ -38,44 +39,58 @@ end
 
 -- play the alert sound, if defined
 local function playAlertSound()
-  if alertSound == nil then return end
+  if alertSound == nil then
+    return
+  end
   alertSound:stop()
   alertSound:play()
 end
 
 -- send a notification to the user, with the message from the expired timer
 local function notify(index)
-  if timers[index] == nil then return end
+  if timers[index] == nil then
+    return
+  end
   local subTitle = timers[index].message
   local infoText = utils.prettyMinutes(timers[index].seconds) .. ' Elapsed'
-  hs.notify.new(module.name, {
-    title = 'Timer Expired',
-    subTitle = subTitle,
-    informativeText = infoText,
-    contentImage = module.cfg.icon,
-    hasActionButton = false,
-    autoWithdraw = true,
-  }):send()
+  hs.notify
+    .new(module.name, {
+      title = 'Timer Expired',
+      subTitle = subTitle,
+      informativeText = infoText,
+      contentImage = module.cfg.icon,
+      hasActionButton = false,
+      autoWithdraw = true,
+    })
+    :send()
 end
 
 -- update the menubar icon, removing it from the menubar if no timers are left,
 -- or returning it to the menubar if timers are started.
 local function update()
   if timers == nil or #timers == 0 then
-    if tickTimer then tickTimer:stop() end
-    if menu then menu:setTitle("⧖") end
+    if tickTimer then
+      tickTimer:stop()
+    end
+    if menu then
+      menu:setTitle('⧖')
+    end
   else
     if menu then
-		menu:returnToMenuBar():priority(module.cfg.menupriority)
-		menu:setTitle("⧗")
-	end
-    if tickTimer and not tickTimer:running() then tickTimer:start() end
+      menu:returnToMenuBar():priority(module.cfg.menupriority)
+      menu:setTitle('⧗')
+    end
+    if tickTimer and not tickTimer:running() then
+      tickTimer:start()
+    end
   end
 end
 
 -- destroy a timer
 local function killTimer(index)
-  if timers[index] == nil then return end
+  if timers[index] == nil then
+    return
+  end
   timers[index].counter = nil
   table.remove(timers, index)
   update()
@@ -84,7 +99,9 @@ end
 -- callback called when a timer expires. send a notification, play a sound, and
 -- destroy the timer.
 local function onTimerExpire(index)
-  if timers[index] == nil then return end
+  if timers[index] == nil then
+    return
+  end
   notify(index)
   playAlertSound()
   killTimer(index)
@@ -93,7 +110,7 @@ end
 -- timer callback, called every TICK. decrements running timers and determines
 -- when they ought to expire.
 local function onTick()
-  for i,timer in ipairs(timers) do
+  for i, timer in ipairs(timers) do
     timer.counter.incr()
     if timer.counter.get() > timer.seconds then
       onTimerExpire(i)
@@ -151,7 +168,7 @@ end
 -- timer resets it to its original time. ctrl-clicking a timer deletes it.
 local function menuClickCallback(--[[mods]])
   local options = {}
-  for k,timer in ipairs(timers) do
+  for k, timer in ipairs(timers) do
     local timeLeft = utils.prettyMinutes(timer.seconds - timer.counter.get())
     local timeReset = utils.prettyMinutes(timer.seconds)
     local title = '[' .. timeReset .. '/-' .. timeLeft .. '] ' .. timer.message
@@ -164,7 +181,7 @@ local function menuClickCallback(--[[mods]])
       end
     end
 
-    options[#options+1] = {title=title, fn=timerClickCallback}
+    options[#options + 1] = { title = title, fn = timerClickCallback }
   end
   return options
 end
@@ -217,19 +234,27 @@ function module.start()
   -- add commands
   local choices = {}
   for _, command in ipairs(commands) do
-    choices[#choices+1] = command
+    choices[#choices + 1] = command
   end
   chooser:choices(choices)
 end
 
 function module.stop()
-  if chooser then chooser:delete() end
-  if menu then menu:delete() end
-  if tickTimer then tickTimer:stop() end
+  if chooser then
+    chooser:delete()
+  end
+  if menu then
+    menu:delete()
+  end
+  if tickTimer then
+    tickTimer:stop()
+  end
 
   alertSound:stop()
 
-  for k,_ in ipairs(timers) do killTimer(k) end
+  for k, _ in ipairs(timers) do
+    killTimer(k)
+  end
 
   tickTimer = nil
   chooser = nil
@@ -240,13 +265,19 @@ function module.stop()
 end
 
 module.cfg = {
-	menupriority = 1350,            -- menubar priority (lower is lefter)
-	width = 28,
-	defaultTime = 5*60,  -- in seconds
-	icon  = utils.toPath(utils.toPath(utils.toPath(os.getenv('HOME'), '.hammerspoon'),   'assets'), 'tidy-clock-icon.png'),
-	sound = utils.toPath(utils.toPath(utils.toPath(os.getenv('HOME'), '.hammerspoon'),   'assets'), 'alert.caf'),
-	volume = 1.0,
+  menupriority = 1350, -- menubar priority (lower is lefter)
+  width = 28,
+  defaultTime = 5 * 60, -- in seconds
+  icon = utils.toPath(
+    utils.toPath(utils.toPath(os.getenv('HOME'), '.hammerspoon'), 'assets'),
+    'tidy-clock-icon.png'
+  ),
+  sound = utils.toPath(
+    utils.toPath(utils.toPath(os.getenv('HOME'), '.hammerspoon'), 'assets'),
+    'alert.caf'
+  ),
+  volume = 1.0,
 }
 module.start()
 
-hs.hotkey.bind({'alt', 'shift'}, hs.keycodes.map.space, module.toggle)
+hs.hotkey.bind({ 'alt', 'shift' }, hs.keycodes.map.space, module.toggle)

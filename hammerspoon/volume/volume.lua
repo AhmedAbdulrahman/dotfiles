@@ -1,4 +1,5 @@
-function changeVolume(diff)
+-- luacheck: globals hs, no unused
+local function changeVolume(diff)
   return function()
     local current = hs.audiodevice.defaultOutputDevice():volume()
     local new = math.min(100, math.max(0, math.floor(current + diff)))

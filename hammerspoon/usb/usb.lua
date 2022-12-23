@@ -1,7 +1,7 @@
-
-function usbDeviceCallback(data)
-  print("usbDeviceCallback: "..hs.inspect(data))
+-- luacheck: globals hs, no unused
+local function usbDeviceCallback(data)
+  print('usbDeviceCallback: ' .. hs.inspect(data))
 end
 
-usbWatcher = hs.usb.watcher.new(usbDeviceCallback)
+local usbWatcher = hs.usb.watcher.new(usbDeviceCallback)
 usbWatcher:start()
