@@ -39,7 +39,7 @@ keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', silent)
 keymap.set(
   'v',
   '<leader>ca',
-  "<cmd>'<,'>lua vim.lsp.buf.range_code_action()<CR>",
+  "<cmd>'<,'>lua vim.lsp.buf.code_action()<CR>",
   silent
 )
 keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', silent)
@@ -58,7 +58,7 @@ keymap.set(
 )
 keymap.set(
   'n',
-  '<leader>cl',
+  'gl',
   "<cmd>lua vim.diagnostic.open_float(nil, { focusable = false, scope = 'line', header = false, border = 'rounded', max_width = 100, close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' }})<CR>",
   silent
 )
@@ -102,7 +102,16 @@ keymap.set('n', '<leader>Q', ':quitall<CR>', {
 keymap.set('n', 'Q', '@@')
 
 -- Make word uppercase
-keymap.set('n', '<C-u>', 'viwU<ESC>', { noremap = true })
+-- keymap.set('n', '<C-u>', 'viwU<ESC>', { noremap = true })
+
+-- Delete highlighted word into the void register then paste it over
+keymap.set('n', '<leader>p', '"_dP')
+keymap.set('v', '<leader>p', '"_dP')
+keymap.set('x', '<leader>p', '"_dP')
+
+-- This will help with Vertical edit mode so we dont need to press <ESC> to
+-- save changes vertically
+keymap.set('i', '<C-c>', '<ESC>')
 
 -- Print Current Datetime
 keymap.set(
@@ -116,9 +125,9 @@ keymap.set(
 keymap.set('n', 'ga', '<Plug>(EasyAlign)', silent)
 
 -- Better window movement
-keymap.set('n', '<C-h>', '<C-w>h', silent)
+-- keymap.set('n', '<C-h>', '<C-w>h', silent)
 keymap.set('n', '<C-j>', '<C-w>j', silent)
-keymap.set('n', '<C-k>', '<C-w>k', silent)
+-- keymap.set('n', '<C-k>', '<C-w>k', silent)
 keymap.set('n', '<C-l>', '<C-w>l', silent)
 
 -- Insert an empty new line 							without entering insert mode
@@ -142,6 +151,14 @@ keymap.set(
   { noremap = true, silent = true }
 )
 keymap.set('v', '<Leader>c', '"+y', { noremap = true, silent = true })
+
+keymap.set(
+  'n',
+  '<leader>s',
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]
+)
+-- Make file executable.
+keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { silent = true })
 
 -- Refactor word under cursor.
 keymap.set('n', 'c*', '/\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgn')
