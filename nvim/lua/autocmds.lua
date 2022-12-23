@@ -78,13 +78,13 @@ vim.api.nvim_create_augroup('__myautocmds__', { clear = true })
 -- Save the current buffer after any changes.
 vim.api.nvim_create_autocmd('InsertLeave,TextChanged', {
   pattern = '*',
-  command = 'nnoremap <buffer><leader>p :call autocmds#savebuffer#()',
+  command = 'nnoremap <buffer><leader>sb :call autocmds#savebuffer#()',
   group = '__myautocmds__',
 })
 --  Set current working directory.
 vim.api.nvim_create_autocmd('VimEnter', {
   pattern = '*',
-  command = 'nnoremap <buffer><leader>p :call autocmds#setroot#()',
+  command = 'nnoremap <buffer><leader>sr :call autocmds#setroot#()',
   group = '__myautocmds__',
 })
 -- Automatically make splits equal in size
