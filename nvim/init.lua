@@ -1,11 +1,13 @@
-pcall(require, 'impatient') -- This needs to be first
-require('packer_commands')
-require('globals')
-require('config')
-require('settings')
-require('colorscheme')
-require('autocmds')
-require('functions')
+-- Utils
+require('utils.globals')
+require('utils.functions')
+-- Core Config
+require('core.config')
+require('core.settings')
+require('core.colorscheme')
+require('core.lazy')
+require('core.autocmds')
+-- LSP Config
 require('lsp.config')
 require('lsp.run')
 require('lsp.functions')

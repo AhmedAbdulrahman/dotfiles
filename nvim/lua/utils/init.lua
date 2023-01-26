@@ -118,6 +118,23 @@ function M.diagnostic_toggle_virtual_text()
   end
 end
 
+function M.diagnosticFormat(diagnostic, mode)
+  local msg = vim.trim(diagnostic.message)
+  local source = diagnostic.source:gsub('%.$', '')
+  local code = tostring(diagnostic.code)
+  local out
+
+  if source == 'stylelint' or code == 'nil' then -- stylelint already includes the code in the message, write-good has no codes
+    out = msg
+  else
+    out = msg .. ' (' .. code .. ')'
+  end
+  if diagnostic.source and mode == 'float' then
+    out = out .. ' [' .. source .. ']'
+  end
+  return out
+end
+
 function M.get_relative_fname()
   local fname = vim.fn.expand('%:p')
   return fname:gsub(vim.fn.getcwd() .. '/', '')
