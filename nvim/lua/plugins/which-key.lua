@@ -105,8 +105,8 @@ local normal_mode_mappings = {
   ['/'] = {
     name = 'Dashboard',
     c = { '<cmd>e $MYVIMRC<CR>', 'open config' },
-    i = { '<cmd>PackerInstall<CR>', 'install plugins' },
-    u = { '<cmd>PackerSync<CR>', 'update plugins' },
+    i = { '<cmd>Lazy<CR>', 'manage plugins' },
+    u = { '<cmd>Lazy update<CR>', 'update plugins' },
     s = {
       name = 'Session',
       c = {
@@ -260,10 +260,10 @@ local normal_mode_mappings = {
     name = 'Project',
     f = { 'file' },
     w = { 'word' },
-    l = {
-      "<cmd>lua require'telescope'.extensions.repo.cached_list{file_ignore_patterns={'/%.cache/', '/%.cargo/', '/%.local/', '/%timeshift/', '/usr/', '/srv/', '/%.oh%-my%-zsh'}}<CR>",
-      'list',
-    },
+    -- l = {
+    --   "<cmd>lua require'telescope'.extensions.repo.cached_list{file_ignore_patterns={'/%.cache/', '/%.cargo/', '/%.local/', '/%timeshift/', '/usr/', '/srv/', '/%.oh%-my%-zsh'}}<CR>",
+    --   'list',
+    -- },
     r = { 'refactor' },
     t = { '<cmd>TodoTrouble<CR>', 'todo' },
     s = {
