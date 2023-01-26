@@ -16,6 +16,8 @@ if not snip_status_ok then
   return
 end
 
+local has_copilot, copilot_cmp = pcall(require, 'copilot_cmp.comparators')
+
 require('luasnip/loaders/from_vscode').lazy_load()
 
 -- Utils
@@ -57,13 +59,14 @@ lspkind.init({
     EnumMember = '',
     Constant = '',
     Struct = '',
+    Copilot = '[]',
   },
 })
 -- Setup
 local source_mapping = {
   npm = NvimConfig.icons.terminal .. '[NPM]',
   cmp_tabnine = NvimConfig.icons.light,
-  Copilot = NvimConfig.icons.copilot,
+  copilot = NvimConfig.icons.copilot .. '[COP]',
   nvim_lsp = NvimConfig.icons.paragraph .. '[LSP]',
   buffer = NvimConfig.icons.buffer .. '[BUF]',
   nvim_lua = NvimConfig.icons.bomb,
@@ -108,7 +111,16 @@ cmp.setup({
     }),
     ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-2), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(2), { 'i', 'c' }),
-    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<C-Space>'] = cmp.mapping(
+      cmp.mapping.complete({
+        config = {
+          sources = {
+            { name = 'copilot' },
+          },
+        },
+      }),
+      { 'i', 'c' }
+    ),
     ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = NvimConfig.plugins.completion.select_first_on_enter,
@@ -199,14 +211,19 @@ cmp.setup({
   },
 
   sorting = {
+    --keep priority weight at 2 for much closer matches to appear above copilot
+    --set to 1 to make copilot always appear on top
     comparators = {
       deprioritize_snippet,
       cmp.config.compare.exact,
-      cmp.config.compare.locality,
-      cmp.config.compare.recently_used,
-      cmp.config.compare.score,
+      has_copilot and copilot_cmp.prioritize or nil,
+      has_copilot and copilot_cmp.score or nil,
       cmp.config.compare.offset,
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.locality,
       cmp.config.compare.sort_text,
+      cmp.config.compare.length,
       cmp.config.compare.order,
     },
   },
@@ -218,12 +235,14 @@ cmp.setup({
 
   window = {
     completion = cmp.config.window.bordered({
-      winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+      winhighlight = 'Normal:CmpMenu,FloatBorder:CmpMenuBorder,CursorLine:CmpSelection,Search:None',
       border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+      scrollbar = '║',
     }),
     documentation = cmp.config.window.bordered({
       winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
       border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+      scrollbar = '║',
     }),
   },
 
@@ -231,6 +250,8 @@ cmp.setup({
     native_menu = false,
     ghost_text = true,
   },
+
+  preselect = cmp.PreselectMode.Item,
 })
 
 -- ╭──────────────────────────────────────────────────────────╮

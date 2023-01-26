@@ -399,7 +399,15 @@ return {
       require('plugins.neogen')
     end,
   },
-  { 'L3MON4D3/LuaSnip' },
+  { 'L3MON4D3/LuaSnip', dependencies = 'rafamadriz/friendly-snippets' },
+  {
+    'zbirenbaum/copilot.lua',
+    disable = not NvimConfig.plugins.copilot.enabled,
+    event = 'InsertEnter',
+    config = function()
+      require('plugins.copilot')
+    end,
+  },
 
   --     -- {
   --     --     "ThePrimeagen/refactoring.nvim",
