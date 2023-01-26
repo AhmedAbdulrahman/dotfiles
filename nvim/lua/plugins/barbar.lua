@@ -2,7 +2,7 @@ local keymap = vim.keymap
 local silent = { silent = true }
 
 -- Set barbar's options
-require('bufferline').setup = {
+require('bufferline').setup({
   -- Enable/disable animations
   animation = true,
 
@@ -66,7 +66,7 @@ require('bufferline').setup = {
   -- Sets the name of unnamed buffers. By default format is "[Buffer X]"
   -- where X is the buffer number. But only a static string is accepted here.
   no_name_title = nil,
-}
+})
 
 -- Buffers (Barbar)
 -- Go to Next/Previous Buffer
