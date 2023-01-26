@@ -117,7 +117,7 @@ keymap.set('i', '<C-c>', '<ESC>')
 keymap.set(
   'n',
   '<leader>ncd',
-  ':lua require("functions").notify_current_datetime()<CR>',
+  ':lua require("utils.functions").notify_current_datetime()<CR>',
   silent
 )
 
@@ -147,7 +147,7 @@ keymap.set('n', 'X', '"_X', silent)
 keymap.set(
   'n',
   '<Leader>v',
-  ':lua require("functions").smart_paste()<CR>',
+  ':lua require("utils.functions").smart_paste()<CR>',
   { noremap = true, silent = true }
 )
 keymap.set('v', '<Leader>c', '"+y', { noremap = true, silent = true })

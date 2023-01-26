@@ -59,19 +59,19 @@ local on_attach = function(client, bufnr)
   vim.keymap.set(
     'n',
     '${',
-    '<cmd>lua require("functions").change_template_string_quotes()<CR>',
+    '<cmd>lua require("utils.functions").change_template_string_quotes()<CR>',
     { nowait = true }
   )
   vim.keymap.set(
     'i',
     '${',
-    '<cmd>lua require("functions").change_template_string_quotes()<CR>'
+    '<cmd>lua require("utils.functions").change_template_string_quotes()<CR>'
   )
 
   vim.api.nvim_buf_create_user_command(
     bufnr,
     'CssToJs',
-    'lua require("functions").css_to_jss()',
+    'lua require("utils.functions").css_to_jss()',
     { range = true }
   )
   vim.keymap.set(
