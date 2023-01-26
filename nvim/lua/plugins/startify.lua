@@ -16,10 +16,8 @@ vim.g.startify_ascii = {
 }
 vim.g.startify_custom_header =
   [[map(startify#fortune#boxed() + g:startify_ascii, "repeat(' ', 5).v:val")]]
-vim.g.startify_custom_header_quotes = vim.tbl_extend(
-  'force',
-  vim.fn['startify#fortune#predefined_quotes'](),
-  {
+vim.g.startify_custom_header_quotes =
+  vim.tbl_extend('force', vim.fn['startify#fortune#predefined_quotes'](), {
     {
       'Simplicity is a great virtue but it requires hard work to achieve it',
       'and education to appreciate it. And to make matters worse: complexity',
@@ -168,8 +166,7 @@ vim.g.startify_custom_header_quotes = vim.tbl_extend(
       '',
       '— Jeff Atwood',
     },
-  }
-)
+  })
 
 vim.g.startify_bookmarks = {
   { t = '.git/todo.md' },
@@ -180,9 +177,9 @@ vim.g.startify_bookmarks = {
 }
 
 vim.g.startify_commands = {
-  { s = { 'Packer Sync', ':PackerSync' } },
-  { u = { 'Packer Update', ':PackerUpdate' } },
-  { c = { 'Packer Clean', ':PackerClean' } },
+  { s = { 'Lazy Sync', ':Lazy sync' } },
+  { u = { 'Lazy Update', ':Lazy update' } },
+  { c = { 'Lazy Clean', ':Lazy clean' } },
 }
 
 vim.g.startify_lists = {
@@ -208,5 +205,5 @@ vim.g.startify_skiplist = {
   'plugged/.*/doc',
   'pack/.*/doc',
   '.*/vimwiki/.*',
-  'node_modules'
+  'node_modules',
 }
