@@ -63,6 +63,7 @@ lspkind.init({
 local source_mapping = {
   npm = NvimConfig.icons.terminal .. '[NPM]',
   cmp_tabnine = NvimConfig.icons.light,
+  Copilot = NvimConfig.icons.copilot,
   nvim_lsp = NvimConfig.icons.paragraph .. '[LSP]',
   buffer = NvimConfig.icons.buffer .. '[BUF]',
   nvim_lua = NvimConfig.icons.bomb,
@@ -182,6 +183,7 @@ cmp.setup({
     { name = 'nvim_lsp', priority = 9 },
     { name = 'nvim_lsp_signature_help', priority = 9 },
     { name = 'npm', priority = 9 },
+    { name = 'copilot', priority = 8 },
     { name = 'cmp_tabnine', priority = 8, max_num_results = 3 },
     {
       name = 'buffer',

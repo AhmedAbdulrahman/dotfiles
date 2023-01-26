@@ -169,13 +169,13 @@ return {
           require('plugins.cmp-npm')
         end,
       },
-      -- {
-      -- 	'zbirenbaum/copilot-cmp',
-      -- 	disable = not NvimConfig.plugins.copilot.enabled,
-      -- 	config = function()
-      -- 	  require('copilot_cmp').setup()
-      -- 	end
-      -- },
+      {
+        'zbirenbaum/copilot-cmp',
+        disable = not NvimConfig.plugins.copilot.enabled,
+        config = function()
+          require('copilot_cmp').setup()
+        end,
+      },
     },
     config = function()
       require('plugins.cmp')
