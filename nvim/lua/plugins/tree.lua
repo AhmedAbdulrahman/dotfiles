@@ -5,9 +5,6 @@ local treeview = require('nvim-tree.view')
 local utils = require('utils')
 local buf_api = require('bufferline.api')
 
-local keymap = vim.keymap
-local opts = { noremap = true, silent = true }
-
 local TREE_WIDTH = 30
 
 local git_icons = {
@@ -71,7 +68,7 @@ local keymappings = {
   { key = 'S', action = 'search_node' },
 }
 
-require('nvim-tree').setup({
+tree.setup({
   --false by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree
   respect_buf_cwd = true,
   -- disables netrw completely
@@ -228,7 +225,12 @@ require('nvim-tree').setup({
   },
 })
 
-keymap.set('n', '<leader>f', "<cmd>lua require'nvim-tree'.toggle()<CR>", opts)
+vim.api.nvim_set_keymap(
+  'n',
+  '<leader>f',
+  "<cmd>lua require'nvim-tree'.toggle()<CR>",
+  { noremap = true, silent = true }
+)
 
 local M = {}
 
