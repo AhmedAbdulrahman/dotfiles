@@ -148,31 +148,33 @@ cmp.setup({
   },
 
   formatting = {
-    format = function(entry, vim_item)
-      vim_item.kind = lspkind.symbolic(vim_item.kind, { with_text = true })
+    format = lspkind.cmp_format({
+      mode = 'symbol_text',
+      max_width = 50,
+      symbol_map = source_mapping,
+      before = function(entry, vim_item)
+        vim_item.kind = lspkind.symbolic(vim_item.kind, { with_text = true })
 
-      -- set a name for each source
-      local menu = source_mapping[entry.source.name]
-      local maxwidth = 60
+        -- set a name for each source
+        local menu = source_mapping[entry.source.name]
+        local maxwidth = 60
 
-      if entry.source.name == 'cmp_tabnine' then
-        if
-          entry.completion_item.data ~= nil
-          and entry.completion_item.data.detail ~= nil
-        then
-          menu = menu .. entry.completion_item.data.detail
-        else
-          menu = menu .. 'TBN'
+        if entry.source.name == 'cmp_tabnine' then
+          if
+            entry.completion_item.data ~= nil
+            and entry.completion_item.data.detail ~= nil
+          then
+            menu = menu .. entry.completion_item.data.detail
+          else
+            menu = menu .. 'TBN'
+          end
         end
-      end
 
-      vim_item.menu = menu
-      if #vim_item.abbr > maxwidth then
-        vim_item.abbr = vim_item.abbr:sub(1, maxwidth) .. '...'
-      end
-
-      return vim_item
-    end,
+        vim_item.menu = menu
+        vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
+        return vim_item
+      end,
+    }),
   },
 
   -- You should specify your *installed* sources.
