@@ -136,7 +136,7 @@ require('telescope').load_extension('zoxide')
 
 -- https://github.com/cljoly/telescope-repo.nvim
 -- <leader>rl
-require('telescope').load_extension('repo')
+-- require('telescope').load_extension('repo')
 
 -- https://github.com/AckslD/nvim-neoclip.lua
 -- <C-n>
