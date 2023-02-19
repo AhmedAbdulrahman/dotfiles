@@ -26,7 +26,7 @@ mason_lsp.setup({
     'graphql',
     'html',
     'jsonls',
-    'sumneko_lua',
+    'lua_ls',
     'tailwindcss',
     'tsserver',
     'vuels',
@@ -119,11 +119,11 @@ lspconfig.jsonls.setup({
   settings = require('lsp.servers.jsonls').settings,
 })
 
-lspconfig.sumneko_lua.setup({
+lspconfig.lua_ls.setup({
   capabilities = capabilities,
   handlers = handlers,
   on_attach = on_attach,
-  settings = require('lsp.servers.sumneko_lua').settings,
+  settings = require('lsp.servers.lua_ls').settings,
 })
 
 lspconfig.vuels.setup({
