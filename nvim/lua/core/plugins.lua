@@ -408,6 +408,38 @@ return {
       require('plugins.copilot')
     end,
   },
+  {
+    'jackMort/ChatGPT.nvim',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+    },
+    keys = {
+      { '<leader>t', '<cmd>ChatGPT<cr>', desc = 'ChatGPT' },
+      {
+        '<leader><C-t>',
+        '<cmd>ChatGPTActAs<cr>',
+        desc = 'ChatGPT with awesome prompt',
+      },
+      {
+        '<leader>T',
+        '<cmd>ChatGPTEditWithInstructions<cr>',
+        mode = { 'x', 'n' },
+        desc = 'ChatGPT with code',
+      },
+    },
+    opts = {
+      keymaps = {
+        scroll_up = '<C-b>',
+        scroll_down = '<C-f>',
+      },
+    },
+    config = function()
+      require('chatgpt').setup()
+    end,
+    cmd = { 'ChatGPT', 'ChatGPTEditWithInstructions' },
+  },
 
   --     -- {
   --     --     "ThePrimeagen/refactoring.nvim",
