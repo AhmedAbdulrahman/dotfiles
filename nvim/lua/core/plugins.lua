@@ -216,9 +216,9 @@ return {
   { 'jose-elias-alvarez/typescript.nvim' },
   {
     'axelvc/template-string.nvim',
-    config = function()
-      require('template-string').setup()
-    end,
+    event = 'InsertEnter',
+    ft = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
+    config = true, -- run require("template-string").setup()
   },
   {
     'lvimuser/lsp-inlayhints.nvim',
