@@ -1,0 +1,6 @@
+{
+	"tokio main": {
+		"prefix": "tokio main",
+		"body": ["#[tokio::main]", "async fn main() {", "\t$0", "}"]
+	}
+}

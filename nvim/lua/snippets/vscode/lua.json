@@ -1,0 +1,37 @@
+{
+	"require": {
+		"prefix": "req",
+		"body": ["require(\"$1\")"],
+		"description": "Require module"
+	},
+	"return": {
+		"prefix": "rt",
+		"body": ["return $0"],
+		"description": "return value"
+	},
+	"local": {
+		"prefix": "local",
+		"body": ["local $1 = $0"],
+		"description": "create a variable"
+	},
+	"function": {
+		"prefix": ["function()"],
+		"body": ["function($2)", "\t$0", "end$1"]
+	},
+	"pcall": {
+		"prefix": "= pcall",
+		"body": ["local ok, value = pcall(${3:function})"],
+		"description": "Protect call a function as a variable"
+	},
+	"hook function": {
+		"prefix": "hook function",
+		"body": [
+			"${1:hooked_function} = (function(func)",
+			"\treturn function(...)",
+			"\t\t${2:-- hook here}",
+			"\t\treturn func(...)",
+			"\tend",
+			"end)($1)"
+		]
+	}
+}

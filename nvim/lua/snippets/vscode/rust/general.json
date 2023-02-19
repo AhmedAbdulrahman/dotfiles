@@ -1,0 +1,233 @@
+{
+	"Ok": {
+		"prefix": "Ok",
+		"body": ["Ok(${1})"],
+		"description": "Ok(…)"
+	},
+	"Err": {
+		"prefix": "Err",
+		"body": ["Err(${1})"],
+		"description": "Err(…)"
+	},
+	"Some": {
+		"prefix": "Some",
+		"body": ["Some(${1})"],
+		"description": "Some(…)"
+	},
+	"const": {
+		"prefix": "const",
+		"body": ["const ${1:CONST}: ${2:Type} = ${4:init};"],
+		"description": "const …: … = …;"
+	},
+	"else": {
+		"prefix": "else",
+		"body": ["else {", "\t${1:todo!()}", "}"],
+		"description": "else { … }"
+	},
+	"enum": {
+		"prefix": "enum",
+		"body": [
+			"#[derive(Debug)]",
+			"enum ${1:Name} {",
+			"\t${2:Value1},",
+			"\t${3:Value2},$0",
+			"}"
+		],
+		"description": "enum … { … }"
+	},
+	"fn": {
+		"prefix": "fn",
+		"body": ["fn ${1:name}($2) ${3:-> bool }{", "\t${0:todo!()}", "}"],
+		"description": "fn …(…) { … }"
+	},
+	"fn self": {
+		"prefix": "fn self",
+		"body": ["fn ${1:name}(self$2) ${3:-> bool }{", "\t${0:todo!()}", "}"],
+		"description": "fn …(self, …) { … }"
+	},
+	"fn &self": {
+		"prefix": "fn &self",
+		"body": ["fn ${1:name}(&self$2) ${3:-> bool }{", "\t${0:todo!()}", "}"],
+		"description": "fn …(&self, …) { … }"
+	},
+	"fn &mut self": {
+		"prefix": "fn &mut self",
+		"body": [
+			"fn ${1:name}(&mut self$2) ${3:-> bool }{",
+			"\t${0:todo!()}",
+			"}"
+		],
+		"description": "fn …(&mut self, …) { … }"
+	},
+	"for": {
+		"prefix": "for",
+		"body": ["for $1 in $2 {", "\t${3:todo!()}", "}"],
+		"description": "for … in … { … }"
+	},
+	"if let": {
+		"prefix": "if let",
+		"body": ["if let $2 = $1 {", "\t${0:todo!()}", "}"],
+		"description": "if let … = … { … }"
+	},
+	"if let Some": {
+		"prefix": "if let Some",
+		"body": ["if let Some($1) = $2 {", "\t${0:todo!()}", "}"],
+		"description": "if let Some(…) = … { … }"
+	},
+	"if": {
+		"prefix": "if",
+		"body": ["if $1 {", "\t${2:todo!()}", "}"],
+		"description": "if … { … }"
+	},
+	"impl Trait": {
+		"prefix": "impl for",
+		"body": ["impl ${1:Trait} for ${2:Type} {", "\t$0", "}"],
+		"description": "impl … for … { … }"
+	},
+	"impl": {
+		"prefix": "impl",
+		"body": ["impl ${1:Type} {", "\t${2:todo!()}", "}"],
+		"description": "impl … { … }"
+	},
+	"inline fn": {
+		"prefix": "inline fn",
+		"body": ["#[inline]", "pub fn ${1:name}() {", "\t${2:todo!()}", "}"],
+		"description": "inlined function"
+	},
+	"let": {
+		"prefix": "let",
+		"body": ["let $1 = $0;"],
+		"description": "let … = …;"
+	},
+	"let if": {
+		"prefix": "let if ",
+		"body": [
+			"let $1 = if $2 {",
+			"\t${3:todo}",
+			"} else {",
+			"\t${4:todo}",
+			"};"
+		]
+	},
+	"loop": {
+		"prefix": "loop",
+		"body": ["loop {", "\t${2:todo!()}", "}"],
+		"description": "loop { … }"
+	},
+	"main": {
+		"prefix": "main",
+		"body": ["fn main() {", "\t${1:todo!()}", "}"],
+		"description": "fn main() { … }"
+	},
+	"match": {
+		"prefix": "match",
+		"body": ["match $1 {", "\t${2:todo!()}", "}"]
+	},
+	"match Option": {
+		"prefix": "match Option",
+		"body": ["match $1 {", "\tSome($2) => $3", "\tNone => $4,", "}"]
+	},
+	"let match": {
+		"prefix": "let match",
+		"body": ["let $1 = match $2 {", "\t$0", "};"]
+	},
+	"mod": {
+		"prefix": "mod",
+		"body": ["mod ${1:name};"],
+		"description": "mod …;"
+	},
+	"mod block": {
+		"prefix": "mod block",
+		"body": ["mod ${1:name} {", "\t${2:todo!()}", "}"],
+		"description": "mod … { … }"
+	},
+	"static": {
+		"prefix": "static",
+		"body": ["static ${1:NAME}: ${2:Type} = ${4:init};"],
+		"description": "static …: … = …;"
+	},
+	"'static": {
+		"prefix": "'static",
+		"body": ["'static"],
+		"description": "'static"
+	},
+	"struct tuple": {
+		"prefix": "tuple struct",
+		"body": ["struct ${1:Name}(${2:Type});"],
+		"description": "struct …(…);"
+	},
+	"struct unit": {
+		"prefix": "unit struct",
+		"body": ["struct ${1:Name};"],
+		"description": "struct …;"
+	},
+	"struct": {
+		"prefix": "struct",
+		"body": [
+			"#[derive(Debug)]",
+			"struct ${1:Name} {",
+			"\t${2:field}: ${3:Type}",
+			"}"
+		],
+		"description": "struct … { … }"
+	},
+	"test fn": {
+		"prefix": "test fn",
+		"body": ["#[test]", "fn ${1:name}() {", "\t${2:todo!()}", "}"],
+		"description": "#[test]"
+	},
+	"cfg test fn": {
+		"prefix": "cfg test fn",
+		"body": ["#[cfg(test)]", "fn ${1:name}() {", "\t${2:todo!()}", "}"],
+		"description": "#[cfg(test)]"
+	},
+	"trait": {
+		"prefix": "trait",
+		"body": ["trait $1 {", "\t${2:todo!()}", "}"],
+		"description": "trait … { … }"
+	},
+	"type": {
+		"prefix": "type",
+		"body": ["type ${1:Alias} = ${2:Type};"],
+		"description": "type … = …;"
+	},
+	"while let": {
+		"prefix": "while let",
+		"body": ["while let $1 = $2 {", "\t${0:todo!()}", "}"],
+		"description": "while let … = … { … }"
+	},
+	"while let Some": {
+		"prefix": "while let Some",
+		"body": ["while let Some($1) = $2 {", "\t${0:todo!()}", "}"],
+		"description": "while let … = … { … }"
+	},
+	"while": {
+		"prefix": "while",
+		"body": ["while ${1:condition} {", "\t${2:todo!()}", "}"],
+		"description": "while … { … }"
+	},
+	"async fn": {
+		"prefix": "async fn",
+		"body": [
+			"async fn ${1:name}($2) ${3:-> bool }{",
+			"\t${0:todo!()}",
+			"}"
+		],
+		"description": "async fn …(…) { … }"
+	},
+	"async": {
+		"prefix": "async",
+		"body": ["async $0"],
+		"description": "async"
+	},
+	"pub async": {
+		"prefix": "pub async",
+		"body": ["pub async $0"],
+		"description": "pub async"
+	},
+	"pub": {
+		"prefix": "pub",
+		"body": ["pub $0"],
+		"description": "pub"
+	}
+}

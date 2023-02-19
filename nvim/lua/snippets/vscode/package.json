@@ -1,0 +1,49 @@
+{
+	"name": "my-snippets",
+	"example": "https://github.com/rafamadriz/friendly-snippets",
+	"engines": {
+		"vscode": "^1.11.0"
+	},
+	"contributes": {
+		"snippets": [
+			{
+				"language": "lua",
+				"path": "./lua.json"
+			},
+			{
+				"language": "lua",
+				"path": "./neovim.json"
+			},
+			{
+				"language": "rust",
+				"path": "./rust/general.json"
+			},
+			{
+				"language": "rust",
+				"path": "./rust/macro.json"
+			},
+			{
+				"language": "rust",
+				"path": "./rust/advanced.json"
+			},
+			{
+				"language": "rust",
+				"path": "./rust/tokio.json"
+			},
+			{
+				"language": [
+					"plaintext",
+					"markdown",
+					"tex",
+					"html",
+					"global"
+				],
+				"path": "./global.json"
+			},
+			{
+				"language": "markdown",
+				"path": "./markdown.json"
+			}
+		]
+	}
+}

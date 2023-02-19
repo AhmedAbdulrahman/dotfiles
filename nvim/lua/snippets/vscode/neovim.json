@@ -1,0 +1,49 @@
+{
+	"vim.api.nvim_create_autocmd": {
+		"prefix": "vim.api.create_autocmd",
+		"body": [
+			"vim.api.nvim_create_autocmd(\"${1:FileType}\", {",
+			"\tpattern = ${2:\"*\"},",
+			"\tcallback = function()",
+			"\t\t$3",
+			"\tend",
+			"})"
+		]
+	},
+	"vim.cmd": {
+		"prefix": "vim.cmd",
+		"body": ["vim.cmd [[$1]]"]
+	},
+	"vim.api.nvim_feedkeys": {
+		"prefix": "vim.api.feedkeys",
+		"body": [
+			"local keys = \"${1:vib<cr>}\"",
+			"keys = vim.api.nvim_replace_termcodes(keys, true, false, true)",
+			"vim.api.nvim_feedkeys(keys, 'm', true)",
+			"$0"
+		],
+		"description": "simulate key sending in cmdline"
+	},
+	"vim.api.nvim_buf_get_name": {
+		"prefix": "vim.api.buf_get_name",
+		"body": ["vim.api.nvim_buf_get_name($1)"],
+		"description": "get buf path by number"
+	},
+	"getcwd": {
+		"prefix": "vim.fn.getcwd",
+		"body": ["vim.fn.getcwd()", "\t:gsub(vim.fn.getenv(\"HOME\"), \"~\")"],
+		"description": "get cwd"
+	},
+	"basename": {
+		"prefix": "basename",
+		"body": ["vim.fn.expand(\"%:t\")"]
+	},
+	"absolute path": {
+		"prefix": "absolute path",
+		"body": ["vim.fn.expand(\"%:p\")"]
+	},
+	"relative path": {
+		"prefix": "relative path",
+		"body": ["vim.fn.expand(\"%:.\")"]
+	}
+}

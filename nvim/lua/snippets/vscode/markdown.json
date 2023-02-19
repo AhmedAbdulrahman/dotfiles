@@ -1,0 +1,122 @@
+{
+	"header 1": {
+		"prefix": "h1",
+		"body": ["# ${0}"],
+		"description": "Add header level 1"
+	},
+	"header 2": {
+		"prefix": "h2",
+		"body": ["## ${0}"],
+		"description": "Add header level 2"
+	},
+	"header 3": {
+		"prefix": "h3",
+		"body": ["### ${0}"],
+		"description": "Add header level 3"
+	},
+	"header 4": {
+		"prefix": "h4",
+		"body": ["#### ${0}"],
+		"description": "Add header level 4"
+	},
+	"header 5": {
+		"prefix": "h5",
+		"body": ["##### ${0}"],
+		"description": "Add header level 5"
+	},
+	"header 6": {
+		"prefix": "h6",
+		"body": ["###### ${0}"],
+		"description": "Add header level 6"
+	},
+	"Links": {
+		"prefix": ["l", "link"],
+		"body": ["[${1}](${2}) ${0}"],
+		"description": "Add links"
+	},
+	"Images": {
+		"prefix": "img",
+		"body": ["![${1}](${2}) ${0}"],
+		"description": "Add images"
+	},
+	"Insert strikethrough": {
+		"prefix": "strikethrough",
+		"body": "~~${1}~~ ${0}",
+		"description": "Insert strikethrough"
+	},
+	"Insert bold text": {
+		"prefix": ["bold", "bo"],
+		"body": "**${1}** $0",
+		"description": "Insert bold text"
+	},
+	"Insert italic text": {
+		"prefix": ["it", "italic"],
+		"body": "*${1}* $0",
+		"description": "Insert italic text"
+	},
+	"Insert code": {
+		"prefix": "code",
+		"body": "`${1}` $0",
+		"description": "Insert code"
+	},
+	"Insert code block": {
+		"prefix": ["codeblock", "block"],
+		"body": ["```${1:language}", "$0", "```"],
+		"description": "Insert fenced code block"
+	},
+	"Insert horizontal rule": {
+		"prefix": "ruler",
+		"body": "----------\n",
+		"description": "Insert horizontal ruler"
+	},
+	"Insert task list": {
+		"prefix": "task",
+		"body": ["- [${1: }] ${2:text}", "${0}"],
+		"description": "Insert task list"
+	},
+	"Insert nx1 table": {
+		"prefix": "table1",
+		"body": [
+			"| ${1:Column1}  |",
+			"|-------------- |",
+			"| ${2:Item1}    |",
+			"${0}"
+		]
+	},
+	"Insert nx2 table": {
+		"prefix": "table2",
+		"body": [
+			"| ${1:Column1}   | ${2:Column2}    |",
+			"|--------------- | --------------- |",
+			"| ${3:Item1.1}   | ${4:Item2.1}   |",
+			"${0}"
+		]
+	},
+	"Insert nx3 table": {
+		"prefix": "table3",
+		"body": [
+			"| ${1:Column1}  | ${2:Column2}   | ${3:Column3}   |",
+			"|-------------- | -------------- | -------------- |",
+			"| ${4:Item1}    | ${5:Item1}     | ${6:Item1}     |",
+			"${0}"
+		]
+	},
+	"Insert nx4 table": {
+		"prefix": "table4",
+		"body": [
+			"| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    | ${4:Column4}    |",
+			"|---------------- | --------------- | --------------- | --------------- |",
+			"| ${5:Item1.1}    | ${6:Item2.1}    | ${7:Item3.1}    | ${8:Item4.1}    |",
+			"${0}"
+		]
+	},
+	"Insert nx5 table": {
+		"prefix": "table5",
+		"body": [
+			"| ${1:Column1}    | ${2:Column2}    | ${3:Column3}    | ${4:Column4}    | ${5:Column5}    |",
+			"|---------------- | --------------- | --------------- | --------------- | --------------- |",
+			"| ${6:Item1.1}    | ${7:Item2.1}    | ${8:Item3.1}    | ${9:Item4.1}    | ${10:Item5.1}   |",
+			"${0}"
+		]
+	}
+}
