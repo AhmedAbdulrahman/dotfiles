@@ -395,7 +395,13 @@ return {
       require('plugins.indent')
     end,
   },
-
+  {
+    'rareitems/printer.nvim',
+    lazy = false,
+    config = function()
+      require('plugins.printer')
+    end,
+  },
   {
     'danymat/neogen',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
