@@ -358,7 +358,28 @@ return {
     end,
   },
   { 'antoinemadec/FixCursorHold.nvim' }, -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
-  { 'rcarriga/nvim-notify' },
+  {
+    'rcarriga/nvim-notify',
+    config = function()
+      require('notify').setup({
+        background_colour = '#000000',
+      })
+    end,
+    init = function()
+      local banned_messages = {
+        'No information available',
+        'LSP[tsserver] Inlay Hints request failed. Requires TypeScript 4.4+.',
+      }
+      vim.notify = function(msg, ...)
+        for _, banned in ipairs(banned_messages) do
+          if msg == banned then
+            return
+          end
+        end
+        require('notify')(msg, ...)
+      end
+    end,
+  },
   {
     'vuki656/package-info.nvim',
     event = 'BufEnter package.json',
