@@ -24,7 +24,7 @@ symlink:
 		@echo "→ Symlinking files dir"
 		stow --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)" --dir="$(DOTFILES)" files
     else ifeq "$(dir)" "nvim"
-		sh $(DOTFILES)/nvim/run.sh
+		sh $(DOTFILES)/nvim/.install/run.sh
     else
 		@echo "→ Symlinking $(dir) dir"
 		sh $(DOTFILES)/$(dir)/setup.sh
