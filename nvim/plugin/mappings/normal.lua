@@ -43,7 +43,12 @@ keymap.set(
   silent
 )
 keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', silent)
-keymap.set('n', '<leader>\\f', '<cmd>lua vim.lsp.buf.formatting()<CR>', silent)
+keymap.set(
+  'n',
+  '<leader>F',
+  '<cmd>lua vim.lsp.buf.format({async = true})<CR>',
+  silent
+)
 keymap.set(
   'n',
   '<leader>cf',
@@ -53,7 +58,7 @@ keymap.set(
 keymap.set(
   'v',
   '<leader>cf',
-  "<cmd>'<.'>lua vim.lsp.buf.range_formatting()<CR>",
+  "<cmd>'<.'>lua vim.lsp.buf.formatexpr()<CR>",
   silent
 )
 keymap.set(
@@ -79,13 +84,13 @@ keymap.set('n', 'L', '<cmd>lua vim.lsp.buf.signature_help()<CR>', silent)
 keymap.set(
   'n',
   'gn',
-  "<cmd>lua vim.diagnostic.goto_next({ float = { border = 'rounded', max_width = 100 }})<CR>",
+  "<cmd>lua vim.diagnostic.goto_next({ wrap = true, float = { border = 'rounded', max_width = 100 }})<CR>",
   silent
 )
 keymap.set(
   'n',
   'gp',
-  "<cmd>lua vim.diagnostic.goto_prev({ float = { border = 'rounded', max_width = 100 }})<CR>",
+  "<cmd>lua vim.diagnostic.goto_prev({ wrap = true, float = { border = 'rounded', max_width = 100 }})<CR>",
   silent
 )
 
