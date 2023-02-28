@@ -11,13 +11,10 @@ ignore = {
   "212/_.*",  -- unused argument, for vars with "_" prefix
 }
 
-exclude_files = {
-    "hammerspoon/**/*.lua",
-}
-
 
 read_globals = {
   'vim',
+  'log'
 }
 
 globals = {
