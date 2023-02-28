@@ -1,4 +1,3 @@
-local au = require('utils.au')
 local keymap = vim.keymap
 local silent = { silent = true }
 
@@ -38,33 +37,33 @@ keymap.set('i', '<C-a>', '<C-o>0')
 
 -- https://twitter.com/vimgifs/status/913390282242232320
 -- :h i_CTRL-G_u
-au.group('__prose_mappings__', {
-  {
-    'FileType',
-    'markdown,text',
-    function()
-      keymap.set('i', '.', '.<c-g>u', { buffer = true })
-    end,
-  },
-  {
-    'FileType',
-    'markdown,text',
-    function()
-      keymap.set('i', '?', '?<c-g>u', { buffer = true })
-    end,
-  },
-  {
-    'FileType',
-    'markdown,text',
-    function()
-      keymap.set('i', '!', '!<c-g>u', { buffer = true })
-    end,
-  },
-  {
-    'FileType',
-    'markdown,text',
-    function()
-      keymap.set('i', ',', ',<c-g>u', { buffer = true })
-    end,
-  },
-})
+-- au.group('__prose_mappings__', {
+--   {
+--     'FileType',
+--     'markdown,text',
+--     function()
+--       keymap.set('i', '.', '.<c-g>u', { buffer = true })
+--     end,
+--   },
+--   {
+--     'FileType',
+--     'markdown,text',
+--     function()
+--       keymap.set('i', '?', '?<c-g>u', { buffer = true })
+--     end,
+--   },
+--   {
+--     'FileType',
+--     'markdown,text',
+--     function()
+--       keymap.set('i', '!', '!<c-g>u', { buffer = true })
+--     end,
+--   },
+--   {
+--     'FileType',
+--     'markdown,text',
+--     function()
+--       keymap.set('i', ',', ',<c-g>u', { buffer = true })
+--     end,
+--   },
+-- })
