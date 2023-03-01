@@ -139,7 +139,7 @@ install_package_manager() {
       print_warning "Seems like you don't have Homebrew installed!"
       print_info "Installing Homebrew...This may take a while"
 
-      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install)"
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
       print_result $? "Homebrew"
 
