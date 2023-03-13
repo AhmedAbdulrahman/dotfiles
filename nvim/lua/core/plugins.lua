@@ -440,27 +440,27 @@ return {
       require('plugins.neogen')
     end,
   },
-  {
-    'L3MON4D3/LuaSnip',
-    dependencies = {
-      'rafamadriz/friendly-snippets',
-      config = function()
-        require('luasnip.loaders.from_vscode').lazy_load({
-          -- I maintain my own snippets for these languages
-          exclude = {
-            'rust',
-          },
-        })
-      end,
-    },
-    opts = {
-      history = true,
-      delete_check_events = 'TextChanged',
-    },
-    config = function()
-      require('plugins.luasnip')
-    end,
-  },
+  --   {
+  --     'L3MON4D3/LuaSnip',
+  --     dependencies = {
+  --       'rafamadriz/friendly-snippets',
+  --       config = function()
+  --         require('luasnip.loaders.from_vscode').lazy_load({
+  --           -- I maintain my own snippets for these languages
+  --           exclude = {
+  --             'rust',
+  --           },
+  --         })
+  --       end,
+  --     },
+  --     opts = {
+  --       history = true,
+  --       delete_check_events = 'TextChanged',
+  --     },
+  --     config = function()
+  --       require('plugins.luasnip')
+  --     end,
+  --   },
   {
     'zbirenbaum/copilot.lua',
     disable = not NvimConfig.plugins.copilot.enabled,
