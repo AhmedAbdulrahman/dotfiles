@@ -23,9 +23,6 @@ keymap.set('x', 'p', '"_dP', silent)
 -- Make dot work in visual mode
 keymap.set('x', '.', ':norm.<CR>')
 
--- Easyalign
-keymap.set('x', 'ga', '<Plug>(EasyAlign)', silent)
-
 keymap.set('x', '<Leader>hu', ':call utils#HtmlUnEscape()<cr>', {
   silent = true,
 })

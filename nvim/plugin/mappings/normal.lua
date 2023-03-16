@@ -126,9 +126,6 @@ keymap.set(
   silent
 )
 
--- Easyalign
-keymap.set('n', 'ga', '<Plug>(EasyAlign)', silent)
-
 -- Better window movement
 -- keymap.set('n', '<C-h>', '<C-w>h', silent)
 keymap.set('n', '<C-j>', '<C-w>j', silent)
