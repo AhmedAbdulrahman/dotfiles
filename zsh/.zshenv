@@ -79,6 +79,8 @@ export BAT_CONFIG_PATH="${HOME}/.batrc"
 export RIPGREP_CONFIG_PATH="${HOME}/.rgrc"
 # Supress some npm ads
 export ADBLOCK=1
+# macOSX sdk path
+export SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
 
 # ---------------------------------------------
 # Environment settings
