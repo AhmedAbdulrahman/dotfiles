@@ -32,6 +32,20 @@ require('lazy').setup('core.plugins', {
   debug = false,
   ui = {
     border = NvimConfig.ui.float.border,
+	icons = {
+		cmd = '⌘',
+		config = '🛠',
+		event = '📅',
+		ft = '📂',
+		init = '⚙',
+		keys = '🗝',
+		plugin = '🔌',
+		runtime = '💻',
+		source = '📄',
+		start = '🚀',
+		task = '📌',
+		lazy = '💤 ',
+	},
   },
 })
 
