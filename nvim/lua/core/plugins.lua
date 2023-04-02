@@ -579,7 +579,13 @@ return {
       require('plugins.diffview')
     end,
   },
-{ 'akinsho/git-conflict.nvim', config = function() require('plugins.conflict') end },
+  {
+	'akinsho/git-conflict.nvim',
+	lazy = false,
+	config = function()
+		require('plugins.conflict')
+	end
+  },
   {
     'ThePrimeagen/git-worktree.nvim',
     config = function()
