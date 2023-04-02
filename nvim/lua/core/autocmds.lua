@@ -142,36 +142,47 @@ vim.api.nvim_create_autocmd('CursorHold', {
 --   group = '__myautocmds__',
 -- })
 
--- -- Attach specific keybindings in which-key for specific filetypes
--- local present, _ = pcall(require, 'which-key')
--- if not present then
---   return
--- end
--- local _, pwk = pcall(require, 'plugins.which-key')
+-- Attach specific keybindings in which-key for specific filetypes
+local present, _ = pcall(require, 'which-key')
+if not present then
+  return
+end
+local _, pwk = pcall(require, 'plugins.which-key')
 
--- vim.api.nvim_create_autocmd('BufEnter', {
---   pattern = '*.md',
---   callback = function()
---     pwk.attach_markdown(0)
---   end,
---   group = '__myautocmds__',
--- })
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*.md',
+  callback = function()
+    pwk.attach_markdown(0)
+  end,
+})
 
--- vim.api.nvim_create_autocmd('BufEnter', {
---   pattern = { '*.ts', '*.tsx' },
---   callback = function()
---     pwk.attach_typescript(0)
---   end,
---   group = '__myautocmds__',
--- })
--- -- vim.api.nvim_create_autocmd('FileType', {
--- --   pattern = '*',
--- --   callback = function()
--- --     if NvimConfig.plugins.zen.enabled and vim.bo.filetype ~= 'alpha' then
--- --       pwk.attach_zen(0)
--- --     end
--- --   end,
--- -- })
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = { '*.ts', '*.tsx' },
+  callback = function()
+    pwk.attach_typescript(0)
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = '*',
+  callback = function()
+    if NvimConfig.plugins.zen.enabled and vim.bo.filetype ~= 'alpha' then
+      pwk.attach_zen(0)
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = { "*test.js", "*test.ts", "*test.tsx" },
+  	callback = function() pwk.attach_jest(0) end
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "spectre_panel",
+	callback = function() pwk.attach_spectre(0) end
+})
+
+
 -- Winbar (for nvim 0.8+)
 if vim.fn.has('nvim-0.8') == 1 then
 	vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
