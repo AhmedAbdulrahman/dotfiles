@@ -511,7 +511,11 @@ return {
       },
     },
     config = function()
-      require('chatgpt').setup()
+      require('chatgpt').setup({
+		keymaps = {
+			close = { "<C-c>", "<Esc>" },
+		}
+	  })
     end,
     cmd = { 'ChatGPT', 'ChatGPTEditWithInstructions' },
   },
