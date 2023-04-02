@@ -118,12 +118,17 @@ vim.diagnostic.config({
   underline = true,
   update_in_insert = false,
   virtual_text = {
-    format = function(diagnostic)
-      return utils.diagnosticFormat(diagnostic, 'virtual_text')
-    end,
-    -- severity = {min = vim.diagnostic.severity.WARN}
-    -- prefix = NvimConfig.icons.circle,
+    prefix = NvimConfig.icons.circle,
   },
+--   virtual_text = function()
+-- 	return {
+-- 		format = function(diagnostic)
+-- 			return utils.diagnosticFormat(diagnostic, 'virtual_text')
+-- 		end,
+-- 		 -- severity = {min = vim.diagnostic.severity.WARN}
+-- 		 prefix = NvimConfig.icons.circle,
+-- 	}
+-- 	end,
 })
 
 -- UI
