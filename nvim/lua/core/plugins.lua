@@ -529,6 +529,34 @@ return {
   --     --     },
   --     -- },
 
+	{
+		"rcarriga/neotest",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"antoinemadec/FixCursorHold.nvim",
+			"haydenmeade/neotest-jest",
+		},
+		config = function()
+			require("plugins.neotest")
+		end,
+	},
+	{
+		"andythigpen/nvim-coverage",
+		dependencies = "nvim-lua/plenary.nvim",
+		cmd = {
+			"Coverage",
+			"CoverageSummary",
+			"CoverageLoad",
+			"CoverageShow",
+			"CoverageHide",
+			"CoverageToggle",
+			"CoverageClear",
+		},
+		config = function()
+			require("coverage").setup()
+		end,
+	},
   --     -- Debug
   --     { 'theHamsta/nvim-dap-virtual-text' },
   --     { 'rcarriga/nvim-dap-ui' },
