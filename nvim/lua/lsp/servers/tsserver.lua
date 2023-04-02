@@ -147,6 +147,9 @@ local settings = {
       includeInlayFunctionLikeReturnTypeHints = false,
       includeInlayEnumMemberValueHints = true,
     },
+	suggest = {
+		includeCompletionsForModuleExports = true,
+	},
   },
   javascript = {
     inlayHints = {
@@ -158,6 +161,9 @@ local settings = {
       includeInlayFunctionLikeReturnTypeHints = false,
       includeInlayEnumMemberValueHints = true,
     },
+	suggest = {
+		includeCompletionsForModuleExports = true,
+	},
   },
 }
 
