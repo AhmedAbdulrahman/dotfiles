@@ -85,6 +85,9 @@ return {
   {
     'kyazdani42/nvim-tree.lua',
     lazy = false,
+	keys = {
+		{ "<leader>f", "<cmd>lua require('nvim-tree.api').tree.toggle()<CR>", desc = "NvimTree" },
+	},
     config = function()
       require('plugins.tree')
     end,

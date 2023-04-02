@@ -228,7 +228,7 @@ tree.setup({
 vim.api.nvim_set_keymap(
   'n',
   '<leader>f',
-  "<cmd>lua require'nvim-tree'.toggle()<CR>",
+  "<cmd>lua require('nvim-tree.api').tree.toggle()<CR>",
   { noremap = true, silent = true }
 )
 
