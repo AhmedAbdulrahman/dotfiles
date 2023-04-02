@@ -376,6 +376,7 @@ return {
   },
   {
     'ggandor/lightspeed.nvim',
+	keys = "s",
     config = function()
       require('plugins.lightspeed')
     end,
