@@ -284,6 +284,17 @@ return {
       vim.g.rooter_patterns = NvimConfig.plugins.rooter.patterns
     end,
   },
+  {
+	"barrett-ruth/import-cost.nvim",
+	build = "sh install.sh yarn",
+	ft = {
+		"javascript",
+		"typescript",
+		"javascriptreact",
+		"typescriptreact",
+	},
+	config = true,
+  },
   { 'AndrewRadev/switch.vim', lazy = false },
   { 'AndrewRadev/splitjoin.vim' },
   {
