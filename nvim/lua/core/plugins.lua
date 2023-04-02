@@ -573,6 +573,7 @@ return {
   },
   {
     'sindrets/diffview.nvim',
+	lazy = false,
     event = 'BufRead',
     config = function()
       require('plugins.diffview')
