@@ -50,5 +50,5 @@ end
 
 require('copilot').setup({
   ft_disable = { 'go', 'dap-repl' },
-  copilot_node_command = '/Users/ahmed.abdulrahman/.nvm/versions/node/v16.15.1/bin/node',
+  copilot_node_command = vim.fn.substitute(vim.fn.system('which node'), '\n', '', '')
 })
