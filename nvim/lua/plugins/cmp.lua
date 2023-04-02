@@ -218,7 +218,7 @@ cmp.setup({
 
   -- You should specify your *installed* sources.
   sources = {
-    { name = 'nvim_lsp', priority = 9,
+    { name = 'nvim_lsp', priority = 10,
 	-- Limits LSP results to specific types based on line context (FIelds, Methods, Variables)
 	entry_filter = limit_lsp_types,
 	},
