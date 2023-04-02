@@ -109,13 +109,11 @@ return {
   },
   -- LSP Base
   {
-    'williamboman/mason.nvim',
-    cmd = 'Mason',
-  },
-  { 'williamboman/mason-lspconfig.nvim' },
-  {
     'neovim/nvim-lspconfig',
     dependencies = {
+      "mason.nvim",
+	  "williamboman/mason-lspconfig.nvim",
+	  "hrsh7th/cmp-nvim-lsp",
       {
         'j-hui/fidget.nvim',
         config = function()
@@ -133,6 +131,30 @@ return {
       { 'folke/lua-dev.nvim' },
     },
   },
+  {
+    'williamboman/mason.nvim',
+    cmd = 'Mason',
+	keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } }
+  },
+
+  -- Formatters
+	{
+		"jose-elias-alvarez/null-ls.nvim",
+		event = "BufNewFile",
+		dependencies = { "mason.nvim" },
+	},
+	{
+		"jay-babu/mason-null-ls.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = {
+			"williamboman/mason.nvim",
+			"jose-elias-alvarez/null-ls.nvim",
+		},
+		config = function()
+			require("plugins.null-ls")
+		end,
+	},
+
   {
     'stevearc/aerial.nvim',
     config = function()
@@ -161,6 +183,18 @@ return {
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-calc',
       'saadparwaiz1/cmp_luasnip',
+	  {
+		"L3MON4D3/LuaSnip",
+	  	dependencies = "rafamadriz/friendly-snippets",
+		config = function()
+			require('luasnip.loaders.from_vscode').lazy_load({
+				-- I maintain my own snippets for these languages
+				exclude = {
+				'rust',
+				},
+			})
+		end,
+	},
       'hrsh7th/cmp-nvim-lsp-signature-help',
       { 'tzachar/cmp-tabnine', build = './install.sh' },
       {
@@ -440,27 +474,6 @@ return {
       require('plugins.neogen')
     end,
   },
-  --   {
-  --     'L3MON4D3/LuaSnip',
-  --     dependencies = {
-  --       'rafamadriz/friendly-snippets',
-  --       config = function()
-  --         require('luasnip.loaders.from_vscode').lazy_load({
-  --           -- I maintain my own snippets for these languages
-  --           exclude = {
-  --             'rust',
-  --           },
-  --         })
-  --       end,
-  --     },
-  --     opts = {
-  --       history = true,
-  --       delete_check_events = 'TextChanged',
-  --     },
-  --     config = function()
-  --       require('plugins.luasnip')
-  --     end,
-  --   },
   {
     'zbirenbaum/copilot.lua',
     disable = not NvimConfig.plugins.copilot.enabled,
@@ -532,7 +545,7 @@ return {
       require('plugins.diffview')
     end,
   },
-  --    { 'akinsho/git-conflict.nvim', config = function() require('plugins.git.conflict') end },
+{ 'akinsho/git-conflict.nvim', config = function() require('plugins.conflict') end },
   {
     'ThePrimeagen/git-worktree.nvim',
     config = function()
