@@ -220,7 +220,7 @@ opt.undofile = true -- Persist undo history to an undo file.
 -- cmd('set keymap=diacritic') -- Enable diacritic key mappings in keymap folder.
 cmd('syntax sync minlines=256') -- Start highlighting from 256 lines backwards
 opt.synmaxcol = 300 -- Do not highlight very long lines
-opt.lazyredraw = true -- Don't bother updating screen during macro playback
+-- opt.lazyredraw = true -- Don't bother updating screen during macro playback
 
 -- File find: navigable menu for tab completion
 opt.wildmode = 'longest:full,list,full'
