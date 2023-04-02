@@ -1,5 +1,6 @@
 -- Requires
 local lspkind = require('lspkind')
+local types = require("cmp.types")
 
 local cmp_tabnine_status_ok, tabnine = pcall(require, 'cmp_tabnine.config')
 if not cmp_tabnine_status_ok then
@@ -20,9 +21,6 @@ local has_copilot, copilot_cmp = pcall(require, 'copilot_cmp.comparators')
 
 require('luasnip/loaders/from_vscode').lazy_load()
 
--- Utils
-local types = require('cmp.types')
-
 local check_backspace = function()
   local col = vim.fn.col('.') - 1
   return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
@@ -35,6 +33,34 @@ local deprioritize_snippet = function(entry1, entry2)
   if entry2:get_kind() == types.lsp.CompletionItemKind.Snippet then
     return true
   end
+end
+
+local function limit_lsp_types(entry, ctx)
+	local kind = entry:get_kind()
+	local line = ctx.cursor.line
+	local col = ctx.cursor.col
+	local char_before_cursor = string.sub(line, col - 1, col - 1)
+	local char_after_dot = string.sub(line, col, col)
+
+	if char_before_cursor == "." and char_after_dot:match("[a-zA-Z]") then
+		if
+			kind == types.lsp.CompletionItemKind.Method
+			or kind == types.lsp.CompletionItemKind.Field
+			or kind == types.lsp.CompletionItemKind.Property
+		then
+			return true
+		else
+			return false
+		end
+	elseif string.match(line, "^%s+%w+$") then
+		if kind == types.lsp.CompletionItemKind.Function or kind == types.lsp.CompletionItemKind.Variable then
+			return true
+		else
+			return false
+		end
+	end
+
+	return true
 end
 
 lspkind.init({
@@ -192,7 +218,10 @@ cmp.setup({
 
   -- You should specify your *installed* sources.
   sources = {
-    { name = 'nvim_lsp', priority = 9 },
+    { name = 'nvim_lsp', priority = 9,
+	-- Limits LSP results to specific types based on line context (FIelds, Methods, Variables)
+	entry_filter = limit_lsp_types,
+	},
     { name = 'nvim_lsp_signature_help', priority = 9 },
     { name = 'npm', priority = 9 },
     { name = 'copilot', priority = 8 },
