@@ -30,17 +30,12 @@ return {
       require('plugins.treesitter')
     end,
     dependencies = {
+	  "mrjones2014/nvim-ts-rainbow",
+	  "JoosepAlviste/nvim-ts-context-commentstring",
       'nvim-treesitter/nvim-treesitter-textobjects',
       'RRethy/nvim-treesitter-textsubjects',
       -- 'romgrk/nvim-treesitter-context',
-      -- 'JoosepAlviste/nvim-ts-context-commentstring',
       -- 'nvim-treesitter/playground',
-      {
-        'm-demare/hlargs.nvim',
-        config = function()
-          require('hlargs').setup({ color = '#F7768E' })
-        end,
-      },
     },
   },
 
@@ -466,7 +461,6 @@ return {
       require('plugins.autopairs')
     end,
   },
-  { 'p00f/nvim-ts-rainbow' },
   { 'mattn/emmet-vim' },
   { 'potatoesmaster/i3-vim-syntax' },
   {
