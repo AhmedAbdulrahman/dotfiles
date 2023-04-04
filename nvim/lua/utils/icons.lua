@@ -7,6 +7,7 @@ local icons = {
   calculator = '  ',
   checkSquare = '  ',
   copilot = '',
+  codeium = "",
   comment = '  ',
   container = '  ',
   cubeTree = '  ',

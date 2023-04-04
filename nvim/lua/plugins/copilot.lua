@@ -49,6 +49,8 @@ local resolve_node_cmd = function()
 end
 
 require('copilot').setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
   ft_disable = { 'go', 'dap-repl' },
   copilot_node_command = vim.fn.substitute(vim.fn.system('which node'), '\n', '', '')
 })

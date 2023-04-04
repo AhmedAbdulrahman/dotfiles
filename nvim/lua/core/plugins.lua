@@ -497,6 +497,17 @@ return {
   },
   -- AI
   {
+	"jcdickinson/codeium.nvim",
+	cond = NvimConfig.plugins.ai.codeium.enabled,
+	event = "InsertEnter",
+	cmd = "Codeium",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"hrsh7th/nvim-cmp",
+	},
+	config = true,
+  },
+  {
     'zbirenbaum/copilot.lua',
     disable = not NvimConfig.plugins.copilot.enabled,
     event = 'InsertEnter',
