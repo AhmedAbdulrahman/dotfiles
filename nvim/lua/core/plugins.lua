@@ -294,7 +294,19 @@ return {
 	config = true,
   },
   { 'AndrewRadev/switch.vim', lazy = false },
-  { 'AndrewRadev/splitjoin.vim' },
+  {
+	"Wansmer/treesj",
+	lazy = true,
+	cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
+	keys = {
+		{ "gJ", "<cmd>TSJToggle<CR>", desc = "Toggle Split/Join" },
+	},
+	config = function()
+		require("treesj").setup({
+			use_default_keymaps = false,
+		})
+	end,
+   },
   {
     'numToStr/Comment.nvim',
     branch = 'jsx',
