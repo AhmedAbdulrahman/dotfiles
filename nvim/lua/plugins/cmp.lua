@@ -60,6 +60,38 @@ local function limit_lsp_types(entry, ctx)
 	return true
 end
 
+local has_words_before = function()
+	if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+		return false
+	end
+	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+	return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+end
+
+--- Get completion context, i.e., auto-import/target module location.
+--- Depending on the LSP this information is stored in different parts of the
+--- lsp.CompletionItem payload. The process to find them is very manual: log the payloads
+--- And see where useful information is stored.
+---@param completion lsp.CompletionItem
+---@param source cmp.Source
+---@see Astronvim, because i just discovered they're already doing this thing, too
+--  https://github.com/AstroNvim/AstroNvim
+local function get_lsp_completion_context(completion, source)
+	local ok, source_name = pcall(function()
+		return source.source.client.config.name
+	end)
+	if not ok then
+		return nil
+	end
+	if source_name == "tsserver" then
+		return completion.detail
+	elseif source_name == "pyright" then
+		if completion.labelDetails ~= nil then
+			return completion.labelDetails.description
+		end
+	end
+end
+
 lspkind.init({
   symbol_map = {
     Text = '',
@@ -89,7 +121,8 @@ lspkind.init({
 local source_mapping = {
   npm = NvimConfig.icons.terminal .. '[NPM]',
   cmp_tabnine = NvimConfig.icons.light,
-  copilot = NvimConfig.icons.copilot .. '[COP]',
+  Copilot = NvimConfig.icons.copilot .. '[COP]',
+  Codeium = NvimConfig.icons.codeium,
   nvim_lsp = NvimConfig.icons.paragraph .. '[LSP]',
   buffer = NvimConfig.icons.buffer .. '[BUF]',
   nvim_lua = NvimConfig.icons.bomb,
@@ -145,6 +178,7 @@ cmp.setup({
       { 'i', 'c' }
     ),
     ['<CR>'] = cmp.mapping.confirm({
+	-- this is the important line for Copilot
       behavior = cmp.ConfirmBehavior.Replace,
       select = NvimConfig.plugins.completion.select_first_on_enter,
     }),
@@ -156,6 +190,8 @@ cmp.setup({
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
+	  elseif cmp.visible() and has_words_before() then
+		cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
       elseif luasnip.expandable() then
         luasnip.expand()
       elseif luasnip.expand_or_jumpable() then
@@ -184,45 +220,56 @@ cmp.setup({
   },
 
   formatting = {
-    format = lspkind.cmp_format({
-      mode = 'symbol_text',
-      max_width = 50,
-      symbol_map = source_mapping,
-      before = function(entry, vim_item)
-        vim_item.kind = lspkind.symbolic(vim_item.kind, { with_text = true })
+    format = function(entry, vim_item)
+		-- Set the highlight group for the Codeium source
+		if entry.source.name == "codeium" then
+			vim_item.kind_hl_group = "CmpItemKindCopilot"
+		end
 
-        -- set a name for each source
-        local menu = source_mapping[entry.source.name]
-        local maxwidth = 60
+		-- Get the item with kind from the lspkind plugin
+		local item_with_kind = require("lspkind").cmp_format({
+			mode = "symbol_text",
+			maxwidth = 50,
+			symbol_map = source_mapping,
+		})(entry, vim_item)
 
-        if entry.source.name == 'cmp_tabnine' then
-          if
-            entry.completion_item.data ~= nil
-            and entry.completion_item.data.detail ~= nil
-          then
-            menu = menu .. entry.completion_item.data.detail
-          else
-            menu = menu .. 'TBN'
-          end
-        end
+		item_with_kind.kind = lspkind.symbolic(item_with_kind.kind, { with_text = true })
+		item_with_kind.menu = source_mapping[entry.source.name]
+		item_with_kind.menu = vim.trim(item_with_kind.menu or "")
+		item_with_kind.abbr = string.sub(item_with_kind.abbr, 1, item_with_kind.maxwidth)
 
-        vim_item.menu = menu
-        vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
-        return vim_item
-      end,
-    }),
+		if entry.source.name == "cmp_tabnine" then
+			if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+				item_with_kind.kind = " " .. lspkind.symbolic("Event", { with_text = false }) .. " TabNine"
+				item_with_kind.menu = item_with_kind.menu .. entry.completion_item.data.detail
+			else
+				item_with_kind.kind = " " .. lspkind.symbolic("Event", { with_text = false }) .. " TabNine"
+				item_with_kind.menu = item_with_kind.menu .. " TBN"
+			end
+		end
+
+		local completion_context = get_lsp_completion_context(entry.completion_item, entry.source)
+		if completion_context ~= nil and completion_context ~= "" then
+			item_with_kind.menu = item_with_kind.menu .. [[ -> ]] .. completion_context
+		end
+
+		return item_with_kind
+	end,
   },
 
   -- You should specify your *installed* sources.
   sources = {
-    { name = 'nvim_lsp', priority = 10,
-	-- Limits LSP results to specific types based on line context (FIelds, Methods, Variables)
-	entry_filter = limit_lsp_types,
+    {
+		name = 'nvim_lsp',
+		priority = 10,
+		-- Limits LSP results to specific types based on line context (FIelds, Methods, Variables)
+		entry_filter = limit_lsp_types,
 	},
     { name = 'nvim_lsp_signature_help', priority = 9 },
     { name = 'npm', priority = 9 },
-    { name = 'copilot', priority = 8 },
-    { name = 'cmp_tabnine', priority = 8, max_num_results = 3 },
+	{ name = 'codeium', priority = 9 },
+	{ name = 'copilot', priority = 9 },
+    { name = 'cmp_tabnine', priority = 7, max_num_results = 3 },
     {
       name = 'buffer',
       priority = 7,
