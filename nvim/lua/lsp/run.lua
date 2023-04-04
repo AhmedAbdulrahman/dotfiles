@@ -48,7 +48,7 @@ local lspconfig = require('lspconfig')
 local handlers = {
   ['textDocument/hover'] = vim.lsp.with(
     vim.lsp.handlers.hover,
-    { border = NvimConfig.ui.float.border }
+    { silent = true, border = NvimConfig.ui.float.border }
   ),
   ['textDocument/signatureHelp'] = vim.lsp.with(
     vim.lsp.handlers.signature_help,
