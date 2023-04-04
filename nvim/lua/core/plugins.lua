@@ -194,7 +194,11 @@ return {
 		end,
 	},
       'hrsh7th/cmp-nvim-lsp-signature-help',
-      { 'tzachar/cmp-tabnine', build = './install.sh' },
+      {
+		'tzachar/cmp-tabnine',
+		cond = NvimConfig.plugins.ai.tabnine.enabled,
+		build = './install.sh',
+	},
       {
         'David-Kunz/cmp-npm',
         config = function()
