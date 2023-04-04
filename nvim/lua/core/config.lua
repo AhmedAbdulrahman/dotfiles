@@ -26,6 +26,9 @@ NvimConfig = {
     completion = {
       select_first_on_enter = false,
     },
+	experimental_noice = {
+		enabled = false,
+	},
     dashboard = {
       fuzzy_plugin = 'telescope', -- telescope/clap/fzf
     },

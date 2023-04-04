@@ -486,6 +486,14 @@ return {
     end,
   },
   {
+	"folke/noice.nvim",
+	cond = NvimConfig.plugins.experimental_noice.enabled,
+	lazy = false,
+	config = function()
+		require("plugins.noice")
+	end,
+},
+  {
     'rareitems/printer.nvim',
     lazy = false,
     config = function()
