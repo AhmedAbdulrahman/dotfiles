@@ -495,6 +495,7 @@ return {
       require('plugins.neogen')
     end,
   },
+  -- AI
   {
     'zbirenbaum/copilot.lua',
     disable = not NvimConfig.plugins.copilot.enabled,
@@ -505,6 +506,7 @@ return {
   },
   {
     'jackMort/ChatGPT.nvim',
+	cond = NvimConfig.plugins.ai.chatgpt.enabled,
     dependencies = {
       'MunifTanjim/nui.nvim',
       'nvim-lua/plenary.nvim',

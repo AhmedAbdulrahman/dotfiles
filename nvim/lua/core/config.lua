@@ -9,6 +9,11 @@ NvimConfig = {
     },
   },
   plugins = {
+	ai = {
+		chatgpt = {
+			enabled = false,
+		},
+	},
     completion = {
       select_first_on_enter = false,
     },
