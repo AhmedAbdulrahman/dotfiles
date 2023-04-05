@@ -21,7 +21,6 @@ print_in_purple "\n • Preferences\n"
 ./messages.sh
 ./photos.sh
 ./safari.sh
-./terminal.sh
 ./textedit.sh
 ./time_machine.sh
 ./trackpad.sh
