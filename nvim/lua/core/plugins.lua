@@ -85,6 +85,13 @@ return {
   {
     'nvim-tree/nvim-tree.lua',
     lazy = false,
+    cmd = {
+      'NvimTreeOpen',
+      'NvimTreeClose',
+      'NvimTreeToggle',
+      'NvimTreeFindFile',
+      'NvimTreeFindFileToggle',
+    },
     keys = {
       {
         '<leader>f',
