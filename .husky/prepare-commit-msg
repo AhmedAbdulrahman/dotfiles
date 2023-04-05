@@ -1,0 +1,6 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+if [ "$2" != "message" ] && [ "$2" != "merge" ];then
+  exec < /dev/tty && node_modules/.bin/cz --hook "$1" "$2" "$3" || true
+fi

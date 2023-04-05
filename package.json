@@ -13,14 +13,30 @@
 	"repository": "https://github.com/github:AhmedAbdulrahman/dotfiles",
 	"author": "Ahmed Abdulrahman",
 	"scripts": {
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"stylua:fix": "stylua",
+		"lint:fix": "luacheck",
+		"prettier:fix": "prettier . --write",
+		"prettier": "prettier . --check",
+		"release": "standard-version"
+	},
+	"lint-staged": {
+		"*.lua": [
+			"yarn lint:fix",
+			"yarn stylua:fix"
+		],
+		"*.{json,md,css,html}": [
+			"yarn prettier:fix"
+		]
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^17.0.2",
-		"@commitlint/config-conventional": "^17.0.2",
+		"@commitlint/cli": "^17.0.3",
+		"@commitlint/config-conventional": "^17.0.3",
+		"@commitlint/cz-commitlint": "^17.0.3",
 		"husky": "^8.0.1",
-		"lint-staged": "^13.0.1",
-		"prettier": "^2.7.0"
+		"lint-staged": "^13.0.3",
+		"prettier": "^2.7.1",
+		"standard-version": "^9.3.2"
 	},
 	"license": "MIT"
 }
