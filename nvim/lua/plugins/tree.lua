@@ -1,9 +1,9 @@
 -- luacheck: max line length 150
 
-local tree = require('nvim-tree')
-local treeview = require('nvim-tree.view')
 local utils = require('utils')
+local nvim_tree_events = require('nvim-tree.events')
 local buf_api = require('bufferline.api')
+-- local treeview = require('nvim-tree.view')
 
 local TREE_WIDTH = 30
 
@@ -68,7 +68,7 @@ local keymappings = {
   { key = 'S', action = 'search_node' },
 }
 
-tree.setup({
+require('nvim-tree').setup({
   --false by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree
   respect_buf_cwd = true,
   -- disables netrw completely
@@ -232,27 +232,38 @@ vim.api.nvim_set_keymap(
   { noremap = true, silent = true }
 )
 
-local M = {}
+nvim_tree_events.on_tree_open(function()
+  buf_api.set_offset(
+    TREE_WIDTH + 1,
+    utils.add_whitespaces(13) .. 'File Explorer'
+  )
+end)
 
-M.toggle = function()
-  local view = treeview.is_visible()
-  if not view then
-    buf_api.set_offset(
-      TREE_WIDTH + 1,
-      utils.add_whitespaces(13) .. 'File Explorer'
-    )
-    if vim.bo.filetype == 'dashboard' then
-      tree.open()
-    else
-      tree.find_file(true)
-    end
-    return
-  end
+nvim_tree_events.on_tree_close(function()
+  buf_api.set_offset(0)
+end)
 
-  if view then
-    buf_api.set_offset(0)
-    treeview.close()
-  end
-end
+-- local M = {}
 
-return M
+-- M.toggle = function()
+--   local view = treeview.is_visible()
+--   if not view then
+--     buf_api.set_offset(
+--       TREE_WIDTH + 1,
+--       utils.add_whitespaces(13) .. 'File Explorer'
+--     )
+--     if vim.bo.filetype == 'dashboard' then
+--       tree.open()
+--     else
+--       tree.find_file(true)
+--     end
+--     return
+--   end
+
+--   if view then
+--     buf_api.set_offset(0)
+--     treeview.close()
+--   end
+-- end
+
+-- return M
