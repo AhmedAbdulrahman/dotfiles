@@ -133,4 +133,4 @@ hs.hotkey.bind({ 'cmd', 'shift', 'ctrl' }, 'r', function()
   hs.reload()
 end)
 
-utils.notify('Config loaded.')
+hs.alert('Config loaded.')
