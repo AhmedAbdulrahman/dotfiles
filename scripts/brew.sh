@@ -36,6 +36,7 @@ main() {
 
   print_in_purple "\n   Core\n"
   brew_install "Openssl" "openssl"
+  brew_install "Cmake" "cmake"
   brew_install "Git" "git"
   brew_install "GitHub CLI" "gh"
   brew_install "Git Delta" "delta"
