@@ -22,8 +22,8 @@
 	},
 	"lint-staged": {
 		"*.lua": [
-			"yarn lint:fix",
-			"yarn stylua:fix"
+			"yarn stylua:fix",
+			"yarn lint:fix"
 		],
 		"*.{json,md,css,html}": [
 			"yarn prettier:fix"
