@@ -1,39 +1,39 @@
 # Main Colors
 unrecognized_file: lightcoral
-recognized_file:   greenyellow
-dir:               goldenrod
+recognized_file: greenyellow
+dir: goldenrod
 
 # Link
 dead_link: lightcoral
-link:      turquoise
+link: turquoise
 
 # Access Modes
-write:     turquoise
-read:      greenyellow
-exec:      goldenrod
+write: turquoise
+read: greenyellow
+exec: goldenrod
 no_access: lightcoral
 
 # Age
-day_old:     greenyellow
-hour_old:    turquoise
+day_old: greenyellow
+hour_old: turquoise
 no_modifier: lightcoral
 
 # File Size
-file_large:  orange
+file_large: orange
 file_medium: brightgold
-file_small:  peachpuff
+file_small: peachpuff
 
 # Random
 report: white
-user:   moccasin
-tree:   turquoise
-empty:  goldenrod
-error:  lightcoral
+user: moccasin
+tree: turquoise
+empty: goldenrod
+error: lightcoral
 normal: darkkhaki
 
 # Git
-addition:     lime
+addition: lime
 modification: lightsteelblue
-deletion:     lightcoral
-untracked:    moccasin
-unchanged:    lavender
+deletion: lightcoral
+untracked: moccasin
+unchanged: lavender
