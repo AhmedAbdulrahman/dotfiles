@@ -51,7 +51,7 @@ require('telescope').setup({
       require('telescope.themes').get_cursor(),
     },
     bookmarks = {
-      selected_browser = 'brave',
+      selected_browser = 'chrome',
       url_open_command = 'open',
     },
     command_palette = command_palette,

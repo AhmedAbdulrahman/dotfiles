@@ -60,7 +60,7 @@ return {
       { 'nvim-telescope/telescope-ui-select.nvim' },
       { 'LinArcX/telescope-command-palette.nvim' },
       { 'nvim-telescope/telescope-github.nvim' },
-      { 'dhruvmanila/telescope-bookmarks.nvim' },
+      { 'dhruvmanila/browser-bookmarks.nvim' },
       { 'jvgrootveld/telescope-zoxide' },
     },
   },
