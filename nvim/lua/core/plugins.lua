@@ -30,8 +30,8 @@ return {
       require('plugins.treesitter')
     end,
     dependencies = {
-	  "mrjones2014/nvim-ts-rainbow",
-	  "JoosepAlviste/nvim-ts-context-commentstring",
+      'mrjones2014/nvim-ts-rainbow',
+      'JoosepAlviste/nvim-ts-context-commentstring',
       'nvim-treesitter/nvim-treesitter-textobjects',
       'RRethy/nvim-treesitter-textsubjects',
       -- 'romgrk/nvim-treesitter-context',
@@ -80,9 +80,13 @@ return {
   {
     'kyazdani42/nvim-tree.lua',
     lazy = false,
-	keys = {
-		{ "<leader>f", "<cmd>lua require('nvim-tree.api').tree.toggle()<CR>", desc = "NvimTree" },
-	},
+    keys = {
+      {
+        '<leader>f',
+        "<cmd>lua require('nvim-tree.api').tree.toggle()<CR>",
+        desc = 'NvimTree',
+      },
+    },
     config = function()
       require('plugins.tree')
     end,
@@ -109,9 +113,9 @@ return {
   {
     'neovim/nvim-lspconfig',
     dependencies = {
-      "mason.nvim",
-	  "williamboman/mason-lspconfig.nvim",
-	  "hrsh7th/cmp-nvim-lsp",
+      'mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'hrsh7th/cmp-nvim-lsp',
       {
         'j-hui/fidget.nvim',
         config = function()
@@ -132,26 +136,26 @@ return {
   {
     'williamboman/mason.nvim',
     cmd = 'Mason',
-	keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } }
+    keys = { { '<leader>cm', '<cmd>Mason<cr>', desc = 'Mason' } },
   },
 
   -- Formatters
-	{
-		"jose-elias-alvarez/null-ls.nvim",
-		event = "BufNewFile",
-		dependencies = { "mason.nvim" },
-	},
-	{
-		"jay-babu/mason-null-ls.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			"williamboman/mason.nvim",
-			"jose-elias-alvarez/null-ls.nvim",
-		},
-		config = function()
-			require("plugins.null-ls")
-		end,
-	},
+  {
+    'jose-elias-alvarez/null-ls.nvim',
+    event = 'BufNewFile',
+    dependencies = { 'mason.nvim' },
+  },
+  {
+    'jay-babu/mason-null-ls.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      'williamboman/mason.nvim',
+      'jose-elias-alvarez/null-ls.nvim',
+    },
+    config = function()
+      require('plugins.null-ls')
+    end,
+  },
 
   {
     'stevearc/aerial.nvim',
@@ -181,24 +185,24 @@ return {
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-calc',
       'saadparwaiz1/cmp_luasnip',
-	  {
-		"L3MON4D3/LuaSnip",
-	  	dependencies = "rafamadriz/friendly-snippets",
-		config = function()
-			require('luasnip.loaders.from_vscode').lazy_load({
-				-- I maintain my own snippets for these languages
-				exclude = {
-				'rust',
-				},
-			})
-		end,
-	},
+      {
+        'L3MON4D3/LuaSnip',
+        dependencies = 'rafamadriz/friendly-snippets',
+        config = function()
+          require('luasnip.loaders.from_vscode').lazy_load({
+            -- I maintain my own snippets for these languages
+            exclude = {
+              'rust',
+            },
+          })
+        end,
+      },
       'hrsh7th/cmp-nvim-lsp-signature-help',
       {
-		'tzachar/cmp-tabnine',
-		cond = NvimConfig.plugins.ai.tabnine.enabled,
-		build = './install.sh',
-	},
+        'tzachar/cmp-tabnine',
+        cond = NvimConfig.plugins.ai.tabnine.enabled,
+        build = './install.sh',
+      },
       {
         'David-Kunz/cmp-npm',
         config = function()
@@ -243,11 +247,11 @@ return {
   },
   { 'nvim-lua/popup.nvim' },
   {
-	"SmiteshP/nvim-navic",
-	config = function()
-		require("plugins.navic")
-	end,
-	dependencies = "neovim/nvim-lspconfig",
+    'SmiteshP/nvim-navic',
+    config = function()
+      require('plugins.navic')
+    end,
+    dependencies = 'neovim/nvim-lspconfig',
   },
   { 'jose-elias-alvarez/typescript.nvim' },
   {
@@ -287,30 +291,30 @@ return {
     end,
   },
   {
-	"barrett-ruth/import-cost.nvim",
-	build = "sh install.sh yarn",
-	ft = {
-		"javascript",
-		"typescript",
-		"javascriptreact",
-		"typescriptreact",
-	},
-	config = true,
+    'barrett-ruth/import-cost.nvim',
+    build = 'sh install.sh yarn',
+    ft = {
+      'javascript',
+      'typescript',
+      'javascriptreact',
+      'typescriptreact',
+    },
+    config = true,
   },
   { 'AndrewRadev/switch.vim', lazy = false },
   {
-	"Wansmer/treesj",
-	lazy = true,
-	cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
-	keys = {
-		{ "gJ", "<cmd>TSJToggle<CR>", desc = "Toggle Split/Join" },
-	},
-	config = function()
-		require("treesj").setup({
-			use_default_keymaps = false,
-		})
-	end,
-   },
+    'Wansmer/treesj',
+    lazy = true,
+    cmd = { 'TSJToggle', 'TSJSplit', 'TSJJoin' },
+    keys = {
+      { 'gJ', '<cmd>TSJToggle<CR>', desc = 'Toggle Split/Join' },
+    },
+    config = function()
+      require('treesj').setup({
+        use_default_keymaps = false,
+      })
+    end,
+  },
   {
     'numToStr/Comment.nvim',
     branch = 'jsx',
@@ -401,7 +405,7 @@ return {
   },
   {
     'ggandor/lightspeed.nvim',
-	keys = "s",
+    keys = 's',
     config = function()
       require('plugins.lightspeed')
     end,
@@ -423,8 +427,8 @@ return {
   {
     'romgrk/barbar.nvim',
     dependencies = { 'kyazdani42/nvim-web-devicons' },
-	event = "BufAdd",
-	version = "^1.0.0",
+    event = 'BufAdd',
+    version = '^1.0.0',
     config = function()
       require('plugins.barbar')
     end,
@@ -488,13 +492,13 @@ return {
     end,
   },
   {
-	"folke/noice.nvim",
-	cond = NvimConfig.plugins.experimental_noice.enabled,
-	lazy = false,
-	config = function()
-		require("plugins.noice")
-	end,
-},
+    'folke/noice.nvim',
+    cond = NvimConfig.plugins.experimental_noice.enabled,
+    lazy = false,
+    config = function()
+      require('plugins.noice')
+    end,
+  },
   {
     'rareitems/printer.nvim',
     lazy = false,
@@ -511,19 +515,19 @@ return {
   },
   -- AI
   {
-	"jcdickinson/codeium.nvim",
-	cond = NvimConfig.plugins.ai.codeium.enabled,
-	event = "InsertEnter",
-	cmd = "Codeium",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"hrsh7th/nvim-cmp",
-	},
-	config = true,
+    'jcdickinson/codeium.nvim',
+    cond = NvimConfig.plugins.ai.codeium.enabled,
+    event = 'InsertEnter',
+    cmd = 'Codeium',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'hrsh7th/nvim-cmp',
+    },
+    config = true,
   },
   {
     'zbirenbaum/copilot.lua',
-	cond = NvimConfig.plugins.ai.copilot.enabled,
+    cond = NvimConfig.plugins.ai.copilot.enabled,
     event = 'InsertEnter',
     config = function()
       require('plugins.copilot')
@@ -531,7 +535,7 @@ return {
   },
   {
     'jackMort/ChatGPT.nvim',
-	cond = NvimConfig.plugins.ai.chatgpt.enabled,
+    cond = NvimConfig.plugins.ai.chatgpt.enabled,
     dependencies = {
       'MunifTanjim/nui.nvim',
       'nvim-lua/plenary.nvim',
@@ -559,10 +563,10 @@ return {
     },
     config = function()
       require('chatgpt').setup({
-		keymaps = {
-			close = { "<C-c>", "<Esc>" },
-		}
-	  })
+        keymaps = {
+          close = { '<C-c>', '<Esc>' },
+        },
+      })
     end,
     cmd = { 'ChatGPT', 'ChatGPTEditWithInstructions' },
   },
@@ -576,34 +580,34 @@ return {
   --     --     },
   --     -- },
 
-	{
-		"rcarriga/neotest",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-			"antoinemadec/FixCursorHold.nvim",
-			"haydenmeade/neotest-jest",
-		},
-		config = function()
-			require("plugins.neotest")
-		end,
-	},
-	{
-		"andythigpen/nvim-coverage",
-		dependencies = "nvim-lua/plenary.nvim",
-		cmd = {
-			"Coverage",
-			"CoverageSummary",
-			"CoverageLoad",
-			"CoverageShow",
-			"CoverageHide",
-			"CoverageToggle",
-			"CoverageClear",
-		},
-		config = function()
-			require("coverage").setup()
-		end,
-	},
+  {
+    'rcarriga/neotest',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+      'antoinemadec/FixCursorHold.nvim',
+      'haydenmeade/neotest-jest',
+    },
+    config = function()
+      require('plugins.neotest')
+    end,
+  },
+  {
+    'andythigpen/nvim-coverage',
+    dependencies = 'nvim-lua/plenary.nvim',
+    cmd = {
+      'Coverage',
+      'CoverageSummary',
+      'CoverageLoad',
+      'CoverageShow',
+      'CoverageHide',
+      'CoverageToggle',
+      'CoverageClear',
+    },
+    config = function()
+      require('coverage').setup()
+    end,
+  },
   --     -- Debug
   --     { 'theHamsta/nvim-dap-virtual-text' },
   --     { 'rcarriga/nvim-dap-ui' },
@@ -620,18 +624,19 @@ return {
   },
   {
     'sindrets/diffview.nvim',
-	lazy = false,
+    enabled = false,
+    lazy = true,
     event = 'BufRead',
     config = function()
       require('plugins.diffview')
     end,
   },
   {
-	'akinsho/git-conflict.nvim',
-	lazy = false,
-	config = function()
-		require('plugins.conflict')
-	end
+    'akinsho/git-conflict.nvim',
+    lazy = false,
+    config = function()
+      require('plugins.conflict')
+    end,
   },
   {
     'ThePrimeagen/git-worktree.nvim',
