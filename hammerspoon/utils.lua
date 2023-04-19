@@ -66,7 +66,7 @@ module.toPath = function(...)
   return table.concat({ ... }, '/')
 end
 
-module.getAllValidWindows = function(...)
+module.getAllValidWindows = function()
   local allWindows = hs.window.allWindows()
   local windows = {}
   local index = 1
