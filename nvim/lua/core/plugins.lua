@@ -26,7 +26,16 @@ return {
     end,
   },
   { 'arzg/vim-substrata' },
-
+  {
+    'olivercederborg/poimandres.nvim',
+    config = function()
+      require('poimandres').setup({
+        -- leave this setup function empty for default config
+        -- or refer to the configuration section
+        -- for configuration options
+      })
+    end,
+  },
   -- Treesitter
   {
     'nvim-treesitter/nvim-treesitter',
@@ -184,7 +193,14 @@ return {
       vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
     end,
   },
-
+  -- better "f" and "t"
+  {
+    'ggandor/flit.nvim',
+    config = true,
+    dependencies = {
+      'tpope/vim-repeat',
+    },
+  },
   -- LSP Cmp
   {
     'hrsh7th/nvim-cmp',
@@ -544,6 +560,11 @@ return {
     config = function()
       require('plugins.copilot')
     end,
+  },
+  {
+    'madox2/vim-ai',
+    cond = NvimConfig.plugins.ai.vim_ai.enabled,
+    lazy = false,
   },
   {
     'jackMort/ChatGPT.nvim',

@@ -9,33 +9,35 @@ NvimConfig = {
     },
   },
   plugins = {
-	ai = {
-		chatgpt = {
-			enabled = false,
-		},
-		codeium = {
-			enabled = true,
-		},
-		copilot = {
-			enabled = true,
-		},
-		tabnine = {
-			enabled = false,
-		},
-	},
+    ai = {
+      chatgpt = {
+        enabled = false,
+      },
+      codeium = {
+        enabled = true,
+      },
+      copilot = {
+        enabled = true,
+      },
+      tabnine = {
+        enabled = false,
+      },
+      vim_ai = {
+        enabled = true,
+      },
+    },
     completion = {
       select_first_on_enter = false,
     },
-	experimental_noice = {
-		enabled = false,
-	},
+    experimental_noice = {
+      enabled = false,
+    },
     dashboard = {
       fuzzy_plugin = 'telescope', -- telescope/clap/fzf
     },
     package_info = {
       enabled = false,
     },
-
     rooter = {
       -- Removing package.json from list in Monorepo Frontend Project can be helpful
       -- By that your live_grep will work related to whole project, not specific package
