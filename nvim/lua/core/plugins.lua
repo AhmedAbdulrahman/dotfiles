@@ -1,6 +1,11 @@
 return {
   { 'nvim-lua/plenary.nvim' },
-  { 'kyazdani42/nvim-web-devicons' },
+  {
+    'nvim-tree/nvim-web-devicons',
+    config = function()
+      require('nvim-web-devicons').setup({ default = true })
+    end,
+  },
   {
     'mhinz/vim-startify',
     config = function()
@@ -78,7 +83,7 @@ return {
   },
   --  { 'nvim-pack/nvim-spectre' },
   {
-    'kyazdani42/nvim-tree.lua',
+    'nvim-tree/nvim-tree.lua',
     lazy = false,
     keys = {
       {
