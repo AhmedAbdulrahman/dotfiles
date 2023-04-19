@@ -202,10 +202,32 @@ keymap.set('n', ']l', ':lbelow<CR>', silent)
 -- Buffers and windows are independent.
 -- That means you can navigate through one buffer in one window,
 -- while the other buffer in the other window stays where you left
-
--- Go previous and next buffers in buffer list.
-keymap.set('n', '<M-p>', '<Cmd>bprevious<CR>', silent)
-keymap.set('n', '<M-n>', '<Cmd>bnext<CR>', silent)
+-- Buffers (Barbar)
+-- Go to Next/Previous in buffer list.
+keymap.set('n', '<Tab>', ':BufferNext<CR>', silent)
+-- keymap.set('n', 'gn', ':bn<CR>', silent)
+keymap.set('n', '<S-Tab>', ':BufferPrevious<CR>', silent)
+-- keymap.set('n', 'gp', ':bp<CR>', silent)
+keymap.set('n', '<S-q>', ':BufferClose<CR>', silent)
+-- Move between barbar buffers
+keymap.set('n', '<Space>1', ':BufferGoto 1<CR>', silent)
+keymap.set('n', '<Space>2', ':BufferGoto 2<CR>', silent)
+keymap.set('n', '<Space>3', ':BufferGoto 3<CR>', silent)
+keymap.set('n', '<Space>4', ':BufferGoto 4<CR>', silent)
+keymap.set('n', '<Space>5', ':BufferGoto 5<CR>', silent)
+keymap.set('n', '<Space>6', ':BufferGoto 6<CR>', silent)
+keymap.set('n', '<Space>7', ':BufferGoto 7<CR>', silent)
+keymap.set('n', '<Space>8', ':BufferGoto 8<CR>', silent)
+keymap.set('n', '<Space>9', ':BufferGoto 9<CR>', silent)
+keymap.set('n', '<A-1>', ':BufferGoto 1<CR>', silent)
+keymap.set('n', '<A-2>', ':BufferGoto 2<CR>', silent)
+keymap.set('n', '<A-3>', ':BufferGoto 3<CR>', silent)
+keymap.set('n', '<A-4>', ':BufferGoto 4<CR>', silent)
+keymap.set('n', '<A-5>', ':BufferGoto 5<CR>', silent)
+keymap.set('n', '<A-6>', ':BufferGoto 6<CR>', silent)
+keymap.set('n', '<A-7>', ':BufferGoto 7<CR>', silent)
+keymap.set('n', '<A-8>', ':BufferGoto 8<CR>', silent)
+keymap.set('n', '<A-9>', ':BufferGoto 9<CR>', silent)
 
 -- Horizontal Split with New Buffer
 keymap.set('n', '<leader>bh', ':new<CR>', silent)
