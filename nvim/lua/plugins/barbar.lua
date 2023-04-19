@@ -1,99 +1,68 @@
-local keymap = vim.keymap
-local silent = { silent = true }
-
 -- Set barbar's options
 require('bufferline').setup({
-	-- Enable/disable animations
-	animation = true,
-	-- Enable/disable auto-hiding the tab bar when there is a single buffer
-	auto_hide = false,
-	-- Enable/disable current/total tabpages indicator (top right corner)
-	tabpages = true,
-	-- Enables/disable clickable tabs
-	--  - left-click: go to buffer
-	--  - middle-click: delete buffer
-	clickable = true,
-	-- Excludes buffers from the tabline
-	exclude_ft = { 'qf' },
-	-- exclude_name = ['package.json'],
+  -- Enable/disable animations
+  animation = true,
+  -- Enable/disable auto-hiding the tab bar when there is a single buffer
+  auto_hide = false,
+  -- Enable/disable current/total tabpages indicator (top right corner)
+  tabpages = true,
+  -- Enables/disable clickable tabs
+  --  - left-click: go to buffer
+  --  - middle-click: delete buffer
+  clickable = true,
+  -- Excludes buffers from the tabline
+  exclude_ft = { 'qf' },
+  -- exclude_name = ['package.json'],
 
-	-- Enable/disable icons
-	-- if set to 'numbers', will show buffer index in the tabline
-	-- if set to 'both', will show buffer index and icons in the tabline
-	icons = {
-		separator = {
-			left = '▎',
-		},
-		inactive = {
-			separator = {
-				left = '▎',
-			},
-		},
-		buffer_index = true,
-		filetype = {
-			enabled = true,
-		},
-		modified = {
-			-- Enable/disable close button
-			closable = false,
-			button = '●',
-		},
-		button = '',
-		pinned = {
-			button = '車',
-		},
-	},
-	-- If set, the icon color will follow its corresponding buffer
-	-- highlight group. By default, the Buffer*Icon group is linked to the
-	-- Buffer* group (see Highlighting below). Otherwise, it will take its
-	-- default value as defined by devicons.
-	icon_custom_colors = false,
-	-- Configure icons on the bufferline.
-	-- If true, new buffers will be inserted at the end of the list.
-	-- Default is to insert after current buffer.
-	insert_at_end = false,
-	-- Sets the maximum padding width with which to surround each tab
-	maximum_padding = 2,
-	-- Sets the maximum buffer name length.
-	maximum_length = 30,
-	-- If set, the letters for each buffer in buffer-pick mode will be
-	-- assigned based on their name. Otherwise or in case all letters are
-	-- already assigned, the behavior is to assign letters in order of
-	-- usability (see order below)
-	semantic_letters = true,
-	-- New buffer letters are assigned in this order. This order is
-	-- optimal for the qwerty keyboard layout but might need adjustement
-	-- for other layouts.
-	letters = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP',
-	-- Sets the name of unnamed buffers. By default format is "[Buffer X]"
-	-- where X is the buffer number. But only a static string is accepted here.
-	no_name_title = nil,
+  -- Enable/disable icons
+  -- if set to 'numbers', will show buffer index in the tabline
+  -- if set to 'both', will show buffer index and icons in the tabline
+  icons = {
+    separator = {
+      left = '▎',
+    },
+    inactive = {
+      separator = {
+        left = '▎',
+      },
+    },
+    buffer_index = true,
+    filetype = {
+      enabled = true,
+    },
+    modified = {
+      -- Enable/disable close button
+      closable = false,
+      button = '●',
+    },
+    button = '',
+    pinned = {
+      button = '車',
+    },
+  },
+  -- If set, the icon color will follow its corresponding buffer
+  -- highlight group. By default, the Buffer*Icon group is linked to the
+  -- Buffer* group (see Highlighting below). Otherwise, it will take its
+  -- default value as defined by devicons.
+  icon_custom_colors = false,
+  -- Configure icons on the bufferline.
+  -- If true, new buffers will be inserted at the end of the list.
+  -- Default is to insert after current buffer.
+  insert_at_end = false,
+  -- Sets the maximum padding width with which to surround each tab
+  maximum_padding = 2,
+  -- Sets the maximum buffer name length.
+  maximum_length = 30,
+  -- If set, the letters for each buffer in buffer-pick mode will be
+  -- assigned based on their name. Otherwise or in case all letters are
+  -- already assigned, the behavior is to assign letters in order of
+  -- usability (see order below)
+  semantic_letters = true,
+  -- New buffer letters are assigned in this order. This order is
+  -- optimal for the qwerty keyboard layout but might need adjustement
+  -- for other layouts.
+  letters = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP',
+  -- Sets the name of unnamed buffers. By default format is "[Buffer X]"
+  -- where X is the buffer number. But only a static string is accepted here.
+  no_name_title = nil,
 })
-
--- Buffers (Barbar)
--- Go to Next/Previous Buffer
-keymap.set('n', '<Tab>', ':BufferNext<CR>', silent)
--- keymap.set('n', 'gn', ':bn<CR>', silent)
-keymap.set('n', '<S-Tab>', ':BufferPrevious<CR>', silent)
--- keymap.set('n', 'gp', ':bp<CR>', silent)
-keymap.set('n', '<S-q>', ':BufferClose<CR>', silent)
-
--- Move between barbar buffers
-keymap.set('n', '<Space>1', ':BufferGoto 1<CR>', silent)
-keymap.set('n', '<Space>2', ':BufferGoto 2<CR>', silent)
-keymap.set('n', '<Space>3', ':BufferGoto 3<CR>', silent)
-keymap.set('n', '<Space>4', ':BufferGoto 4<CR>', silent)
-keymap.set('n', '<Space>5', ':BufferGoto 5<CR>', silent)
-keymap.set('n', '<Space>6', ':BufferGoto 6<CR>', silent)
-keymap.set('n', '<Space>7', ':BufferGoto 7<CR>', silent)
-keymap.set('n', '<Space>8', ':BufferGoto 8<CR>', silent)
-keymap.set('n', '<Space>9', ':BufferGoto 9<CR>', silent)
-keymap.set('n', '<A-1>', ':BufferGoto 1<CR>', silent)
-keymap.set('n', '<A-2>', ':BufferGoto 2<CR>', silent)
-keymap.set('n', '<A-3>', ':BufferGoto 3<CR>', silent)
-keymap.set('n', '<A-4>', ':BufferGoto 4<CR>', silent)
-keymap.set('n', '<A-5>', ':BufferGoto 5<CR>', silent)
-keymap.set('n', '<A-6>', ':BufferGoto 6<CR>', silent)
-keymap.set('n', '<A-7>', ':BufferGoto 7<CR>', silent)
-keymap.set('n', '<A-8>', ':BufferGoto 8<CR>', silent)
-keymap.set('n', '<A-9>', ':BufferGoto 9<CR>', silent)
