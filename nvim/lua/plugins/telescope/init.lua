@@ -210,6 +210,7 @@ M.project_files = function()
   gopts.prompt_title = ' Find'
   gopts.prompt_prefix = '  '
   gopts.results_title = ' Repo Files'
+  gopts.show_untracked = true
 
   fopts.hidden = true
   fopts.file_ignore_patterns = {
