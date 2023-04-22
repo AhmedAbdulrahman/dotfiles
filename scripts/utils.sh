@@ -194,7 +194,7 @@ print_error_stream() {
 
 # question reporter
 print_question() {
-    print_in_yellow "   [?] $1"
+    print_in_yellow "   [?] $1\n"
 }
 
 # Warning reporter
