@@ -101,13 +101,6 @@ return {
       'NvimTreeFindFile',
       'NvimTreeFindFileToggle',
     },
-    keys = {
-      {
-        '<leader>f',
-        "<cmd>lua require('nvim-tree.api').tree.toggle()<CR>",
-        desc = 'NvimTree',
-      },
-    },
     config = function()
       require('plugins.tree')
     end,
@@ -454,7 +447,7 @@ return {
   },
   {
     'romgrk/barbar.nvim',
-    dependencies = { 'kyazdani42/nvim-web-devicons' },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = 'BufAdd',
     version = '^1.0.0',
     config = function()
@@ -473,7 +466,9 @@ return {
       local banned_messages = {
         'No information available',
         'LSP[tsserver] Inlay Hints request failed. Requires TypeScript 4.4+.',
+        'LSP[tsserver] Inlay Hints request failed. File not opened in the editor.',
       }
+
       vim.notify = function(msg, ...)
         for _, banned in ipairs(banned_messages) do
           if msg == banned then
