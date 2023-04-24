@@ -71,6 +71,16 @@ local command_palette = {
     },
     { 'Search TODOS', ":lua require'telescope'.search_todos()" },
   },
+  {
+    'Browser',
+    { 'cursor line', ':set cursorline!' },
+    { 'cursor column', ':set cursorcolumn!' },
+    { 'spell checker', ':set spell!' },
+    { 'relative number', ':set relativenumber!' },
+    { 'search highlighting', ':set hlsearch!' },
+    { 'Colorizer', ':ColorToggle' },
+    -- { "Fold Column", ":lua require'joel.settings'.toggle_fold_col()" },
+  },
 }
 
 return command_palette
