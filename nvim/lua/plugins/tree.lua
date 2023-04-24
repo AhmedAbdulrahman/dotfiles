@@ -4,6 +4,11 @@
 -- local buf_api = require('bufferline.api')
 -- local treeview = require('nvim-tree.view')
 
+local gwidth = vim.api.nvim_list_uis()[1].width
+local gheight = vim.api.nvim_list_uis()[1].height
+local width = 80
+local height = 25
+
 local TREE_WIDTH = 30
 
 local git_icons = {
@@ -155,9 +160,13 @@ require('nvim-tree').setup({
   -- hijack the cursor in the tree to put it at the start of the filename
   hijack_cursor = false,
   -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
-  update_cwd = true,
+  update_cwd = false,
   -- opens in place of the unnamed buffer if it's empty
   hijack_unnamed_buffer_when_opening = false,
+  reload_on_bufenter = true,
+  filesystem_watchers = {
+    enable = true,
+  },
   -- show lsp diagnostics in the signcolumn
   diagnostics = {
     enable = false,
@@ -216,13 +225,24 @@ require('nvim-tree').setup({
   view = {
     -- width of the window, can be either a number (columns) or a string in `%`
     width = TREE_WIDTH,
-    hide_root_folder = false,
+    -- hide_root_folder = false,
     -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
     side = 'left',
     -- if true the tree will resize itself after opening a file
     -- auto_resize = false, unknown option
     number = false,
     relativenumber = false,
+    float = {
+      enable = true,
+      open_win_config = {
+        border = 'rounded',
+        relative = 'editor',
+        width = width,
+        height = height,
+        row = (gheight - height) * 0.4,
+        col = (gwidth - width) * 0.5,
+      },
+    },
   },
   trash = {
     cmd = 'trash',
@@ -230,7 +250,7 @@ require('nvim-tree').setup({
   },
   actions = {
     open_file = {
-      quit_on_open = false,
+      quit_on_open = true,
       -- if true the tree will resize itself after opening a file
       resize_window = true,
       window_picker = {
