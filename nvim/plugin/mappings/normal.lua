@@ -16,6 +16,8 @@ keymap.set(
   silent
 )
 
+keymap.set('n', '<leader>lc', ':CccPick<CR>', silent)
+
 -- Refactor with spectre
 keymap.set(
   'n',

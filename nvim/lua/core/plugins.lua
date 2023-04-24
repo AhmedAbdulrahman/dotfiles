@@ -249,6 +249,20 @@ return {
       require('plugins.colorizer')
     end,
   },
+  {
+    'uga-rosa/ccc.nvim',
+    lazy = true,
+    cmd = { 'CccPick' },
+    config = function()
+      local ccc = require('ccc')
+      ccc.setup({
+        highlight_mode = 'bg',
+        highlighter = {
+          auto_enable = true,
+        },
+      })
+    end,
+  },
   { 'RRethy/vim-illuminate' },
   {
     'stevearc/dressing.nvim',
