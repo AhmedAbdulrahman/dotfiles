@@ -222,36 +222,45 @@ print_result() {
 
 # Print Banner
 print_header() {
-    print_in_green "    _____   ____ _______ ______ _____ _      ______  _____  \n"
-    print_in_green "   |  __ \ / __ \__   __|  ____|_   _| |    |  ____|/ ____| \n"
-    print_in_green "   | |  | | |  | | | |  | |__    | | | |    | |__  | (___   \n"
-    print_in_green "   | |  | | |  | | | |  |  __|   | | | |    |  __|  \___ \  \n"
-    print_in_green "   | |__| | |__| | | |  | |     _| |_| |____| |____ ____) | \n"
-    print_in_green "   |_____/ \____/  |_|  |_|    |_____|______|______|_____/  \n"
-    print_in_green "                                                            \n"
-    print_in_green "                   by @AhmedAbdulrahman                     \n"
+			 command cat <<EOF
+$GREEN
+	 _____   ____ _______ ______ _____ _      ______  _____
+    |  __ \ / __ \__   __|  ____|_   _| |    |  ____|/ ____|
+    | |  | | |  | | | |  | |__    | | | |    | |__  | (___
+    | |  | | |  | | | |  |  __|   | | | |    |  __|  \___ \/
+    | |__| | |__| | | |  | |     _| |_| |____| |____ ____) |
+    |_____/ \____/  |_|  |_|    |_____|______|______|_____/
+
+                    by @AhmedAbdulrahman
+EOF
 }
 
 print_macos_header() {
-    print_in_green "                         ____   _____    \n"
-    print_in_green "                        / __ \ / ____|   \n"
-    print_in_green "  _  __  ___   __ _  ___| |  | | (___    \n"
-    print_in_green "  | | _ / _ \ / _\ | / __| |  | |\___ \  \n"
-    print_in_green "  | |  | | | | (_| | (__| |__| |____) |  \n"
-    print_in_green "  |_|  |_| |_|\__,_|\___|\____/|_____/   \n"
-    print_in_green "                                         \n"
-    print_in_green "          by @AhmedAbdulrahman           \n"
+				 command cat <<EOF
+$GREEN
+                           ____   _____
+                          / __ \ / ____|
+    _  __  ___   __ _  ___| |  | | (___
+    | | _ / _ \ / _\ | / __| |  | |\___ \/
+    | |  | | | | (_| | (__| |__| |____) |
+    |_|  |_| |_|\__,_|\___|\____/|_____/
+
+            by @AhmedAbdulrahman
+EOF
 }
 
 print_node_header() {
-    print_in_green "   _   _           _           _  _____  "
-    print_in_green "  | \ | |         | |         | |/ ____| "
-    print_in_green "  |  \| | ___   __| | ___     | | (___   "
-    print_in_green "  | . ' |/ _ \ / _' |/ _ \_   | |\___ \  "
-    print_in_green "  | |\  | (_) | (_| |  __/ |__| |____) | "
-    print_in_green "  |_| \_|\___/ \__,_|\___|\____/|_____/  "
-    print_in_green "                                         "
-    print_in_green "          by @AhmedAbdulrahman           \n"
+				 command cat <<EOF
+$GREEN
+     _   _           _           _  _____
+    | \ | |         | |         | |/ ____|
+    |  \| | ___   __| | ___     | | (___
+    | . ' |/ _ \ / _' |/ _ \_   | |\___ \
+    | |\  | (_) | (_| |  __/ |__| |____) |
+    |_| \_|\___/ \__,_|\___|\____/|_____/
+
+            by @AhmedAbdulrahman           \/
+EOF
 }
 
 # Print repo Info
