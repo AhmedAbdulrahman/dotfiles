@@ -3,10 +3,24 @@
 declare -r GITHUB_REPOSITORY="AhmedAbdulrahman/dotfiles"
 declare -r GITHUB_REPO_URL_BASE="https://github.com/$GITHUB_REPOSITORY"
 declare -r HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
-declare -r LINUXBREW_INSTALLER_URL="https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh"
 declare -r DOTFILES_UTILS_URL="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/master/scripts/utils.sh"
 
 declare -r DOTFILES="$HOME/dotfiles"
+
+SUDO_USER=$(whoami)
+
+# Personal machine is Intell
+ARCH="i386"
+
+if [[ $(arch) == 'arm64' ]]; then
+	ARCH="$(arch)"
+fi
+
+HOMEBREW_BIN="/usr/local/bin/"
+
+if [[ "$ARCH" == 'arm64' ]]; then
+	HOMEBREW_BIN="/opt/homebrew/bin"
+fi
 
 download() {
     local url="$1"
@@ -61,21 +75,23 @@ print_prompt() {
       ;;
     "Symlink files")
       install_package_manager
+	  clone_dotfiles
       symlink_files
       break
       ;;
     "Install macOS Apps")
       install_package_manager
+	  clone_dotfiles
       bootstrap_macOS_apps
       break
       ;;
     "Override macOS System Settings")
+	  clone_dotfiles
       override_macOS_system_settings
       break
       ;;
     "Change shell")
       ask_for_sudo_permission
-      install_package_manager
       install_zsh
       break
       ;;
@@ -126,67 +142,86 @@ install_cli_tools() {
   set_xcode_developer_directory
   agree_with_xcode_licence
 
+	if [[ "$ARCH" == 'arm64' ]]; then
+		print_info "Installing Rosetta"
+		sudo -u "$SUDO_USER" softwareupdate --install-rosetta --agree-to-license
+	fi
+
   finish
 }
 
-install_package_manager() {
-  # macOS
-  if [ `uname` == 'Darwin' ]; then
+install_homebrew() {
+	print_info "Trying to detect if Homebrew is installed..."
 
-    print_info "Trying to detect if Homebrew is installed..."
+	if [ -d "$HOMEBREW_BIN" ]; then
+		print_info "You already have Homebrew installed, nothing to do here skipping ... 💨"
+	else
+		print_warning "Seems like you don't have Homebrew installed!"
+		print_info "Installing Homebrew...This may take a while"
 
-    if ! cmd_exists "brew"; then
-      print_warning "Seems like you don't have Homebrew installed!"
-      print_info "Installing Homebrew...This may take a while"
+		/bin/bash -c "$(curl -fsSL ${HOMEBREW_INSTALLER_URL})"
+		print_result $? "Homebrew"
 
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+		brew_opt_out_of_analytics
 
-      print_result $? "Homebrew"
-
-      brew_opt_out_of_analytics
-
-      # Make sure we’re using the latest Homebrew.
-      brew_update
-      brew_install "Stow" "stow"
-
-    else
-      print_info "You already have Homebrew installed, nothing to do here skipping ... 💨"
-    fi
-
-  # Linux
-  elif [ `uname` == 'Linux' ]; then
-    # You can choose something else for linux specifc like Linuxbrew, apt-get, yum, etc...
-    print_info "Checking if Linuxbrew is installed..."
-
-    if [! -d "$HOME/.linuxbrew" ]; then
-      print_info "Seems like you don't have Linuxbrew installed!"
-      ask_for_confirmation "Do you agree to proceed with Linuxbrew installation?"
-
-      if ! answer_is_yes; then
-        exit 1
-      fi
-
-      print_info "Installing Linuxbrew..."
-      print_info "This may take a while"
-
-      ruby -e "$(curl -fsSL ${LINUXBREW_INSTALLER_URL})"
-      # Make sure we’re using the latest Homebrew.
-      brew update
-      brew install stow
-      brew doctor || true
-
-      mkdir $HOME/.linuxbrew/lib
-      ln -s lib $HOME/.linuxbrew/lib64
-      ln -s $HOME/.linuxbrew/lib $HOME/.linuxbrew/lib64
-      ln -s /usr/lib64/libstdc++.so.6 /lib64/libgcc_s.so.1 $HOME/.linuxbrew/lib/
-
-    else
-      print_info "You already have Linuxbrew installed, nothing to do here skipping... 💨"
-    fi
-
-  fi
+		# Make sure we’re using the latest Homebrew.
+		brew_update
+		"$HOMEBREW_BIN" install stow
+	fi
 
   finish
+}
+
+install_homebrew_linux() {
+	# Linux
+	# You can choose something else for linux specifc like Linuxbrew, apt-get, yum, etc...
+	print_info "Checking if Linuxbrew is installed..."
+
+	if [! -d "$HOME/.linuxbrew" ]; then
+		print_info "Seems like you don't have Linuxbrew installed!"
+		ask_for_confirmation "Do you agree to proceed with Linuxbrew installation?"
+
+		if ! answer_is_yes; then
+		exit 1
+		fi
+
+		print_info "Installing Linuxbrew..."
+		print_info "This may take a while"
+
+		/bin/bash -c "$(curl -fsSL ${HOMEBREW_INSTALLER_URL})"
+
+		if [ -d "/home/linuxbrew/.linuxbrew" ]; then
+			mkdir $HOME/.linuxbrew/lib
+			ln -s lib $HOME/.linuxbrew/lib64
+			ln -s $HOME/.linuxbrew/lib $HOME/.linuxbrew/lib64
+			ln -s /usr/lib64/libstdc++.so.6 /lib64/libgcc_s.so.1 $HOME/.linuxbrew/lib/
+
+			# eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+			# In case it complains about the linked directory
+			mkdir -p /home/linuxbrew/.linuxbrew/var/homebrew/linked
+			chown -R "$SUDO_USER" /home/linuxbrew/.linuxbrew/var/homebrew/linked
+		fi
+
+		# Make sure we’re using the latest Homebrew.
+		brew_update
+		brew doctor
+		"$HOMEBREW_BIN" install stow
+
+	else
+		print_info "You already have Linuxbrew installed, nothing to do here skipping... 💨"
+	fi
+}
+
+install_package_manager() {
+	install_cli_tools
+
+	if [ "$(uname)" == "Darwin" ]; then
+		install_homebrew
+	fi
+
+	if [ `uname` == 'Linux' ]; then
+		install_homebrew_linux
+	fi
 }
 
 install_git() {
@@ -244,52 +279,35 @@ install_zsh() {
 
 	print_info "Trying to detect installed ZSH..."
 
-	if ! cmd_exists "zsh"; then
-		print_info "Seems like you don't have ZSH installed!"
-		ask_for_confirmation "Do you agree to proceed with ZSH installation?"
+	local BREW_ZSH_PATH="/usr/local/bin/zsh"
 
-		if ! answer_is_yes; then
-			return
-		fi
+	if [[ "$ARCH" == 'arm64' ]]; then
+		BREW_ZSH_PATH="/opt/homebrew/bin/zsh"
+	fi
 
-		print_in_purple "\n • Installing ZSH\n\n"
+	if ! grep -q "$BREW_ZSH_PATH" /etc/shells; then
 
-		if [ `uname` == 'Darwin' ] || [ `uname` == 'Linux' ]; then
-			brew install zsh
+		print_in_purple "\n • Switching to ZSH Shell\n\n"
+		local ZSH_PATH=$(which zsh)
+
+		if [ -x "$BREW_ZSH_PATH" ]; then
+			ZSH_PATH="$BREW_ZSH_PATH"
 		else
-			print_error "Failed to install Zsh!"
-			return
+			print_warning "Your system is using (outdated) ZSH shell"
 		fi
 
-		# Switching ZSH shell
-		local BREW_ZSH_PATH="/usr/local/bin/zsh"
-		if ! grep -q "$BREW_ZSH_PATH" /etc/shells; then
-
-			print_in_purple "\n • Switching to ZSH Shell\n\n"
-			local ZSH_PATH=$(which zsh)
-
-			if [ -x "$BREW_ZSH_PATH" ]; then
-				ZSH_PATH="$BREW_ZSH_PATH"
-			else
-				print_warning "Your system is using (outdated) ZSH shell"
-			fi
-
-			echo "$ZSH_PATH" | sudo tee -a /etc/shells >/dev/null
-			chsh -s "$ZSH_PATH" "$(whoami)"
-			print_warning "You'll need to log out for this to take effect!"
-		else
-			print_info "No need to switch shell, you are using Homebrew zsh already"
-		fi
-
+		echo "$ZSH_PATH" | sudo tee -a /etc/shells >/dev/null
+		chsh -s "$ZSH_PATH" "$SUDO_USER"
+		print_warning "You'll need to log out for this to take effect!"
 	else
-		print_info "ZSH already installed, nothing to do here skipping ... 💨"
+		print_info "No need to switch shell, you are using Homebrew zsh already"
 	fi
 
 	finish
 }
 
 clone_dotfiles() {
-  print_question "Trying to detect if Ahmed's dotfiles is installed in $DOTFILES..."
+  print_info "Trying to detect if Ahmed's dotfiles is installed in $DOTFILES..."
 
   if [ ! -d $DOTFILES ]; then
     print_info "Seems like you don't have Ahmed's dotfiles clone!"
@@ -324,26 +342,18 @@ clone_dotfiles() {
 }
 
 symlink_files() {
-  print_info "Trying to detect if you have already cloned Ahmed's dotfiles..."
+	print_in_purple "\n • Create local config files\n\n"
 
-  if [[ -d $DOTFILES ]]; then
-    print_info "Seems like you have Ahmed's dotfiles installed!"
-
-    print_in_purple "\n • Create local config files\n\n"
-
-    create_gitconfig_local
-    create_zshrc_local
-    create_vimrc_local
+	create_gitconfig_local
+	create_zshrc_local
+	create_vimrc_local
 
     print_in_purple "\n • Symlinking files/folders\n\n"
     cd "$DOTFILES" &&
       make --ignore-errors symlink dir=all &&
       make --ignore-errors symlink dir=files &&
       make gpg
-
-  else
-    print_info "You don't Ahmed's dotfiles $DOTFILES in your machine!"
-  fi
+    finish
 }
 
 bootstrap_macOS_apps() {
