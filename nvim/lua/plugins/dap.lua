@@ -187,6 +187,7 @@ dap.adapters.chrome = {
 -- Configurations
 dap.configurations.javascript = {
   {
+    name = 'Node.js',
     type = 'node2',
     request = 'launch',
     program = '${file}',
@@ -199,6 +200,7 @@ dap.configurations.javascript = {
 
 dap.configurations.javascript = {
   {
+    name = 'Chrome (9222)',
     type = 'chrome',
     request = 'attach',
     program = '${file}',
@@ -212,6 +214,7 @@ dap.configurations.javascript = {
 
 dap.configurations.javascriptreact = {
   {
+    name = 'Chrome (9222)',
     type = 'chrome',
     request = 'attach',
     program = '${file}',
@@ -225,6 +228,7 @@ dap.configurations.javascriptreact = {
 
 dap.configurations.typescriptreact = {
   {
+    name = 'Chrome (9222)',
     type = 'chrome',
     request = 'attach',
     program = '${file}',
@@ -233,5 +237,28 @@ dap.configurations.typescriptreact = {
     protocol = 'inspector',
     port = 9222,
     webRoot = '${workspaceFolder}',
+  },
+  {
+    name = 'React Native (8081) (Node2)',
+    type = 'node2',
+    request = 'attach',
+    program = '${file}',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    console = 'integratedTerminal',
+    port = 8081,
+  },
+  {
+    name = 'Attach React Native (8081)',
+    type = 'pwa-node',
+    request = 'attach',
+    processId = require('dap.utils').pick_process,
+    cwd = vim.fn.getcwd(),
+    rootPath = '${workspaceFolder}',
+    skipFiles = { '<node_internals>/**', 'node_modules/**' },
+    sourceMaps = true,
+    protocol = 'inspector',
+    console = 'integratedTerminal',
   },
 }

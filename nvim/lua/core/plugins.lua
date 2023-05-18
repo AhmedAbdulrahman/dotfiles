@@ -650,11 +650,39 @@ return {
       require('coverage').setup()
     end,
   },
-  --     -- Debug
-  --     { 'theHamsta/nvim-dap-virtual-text' },
-  --     { 'rcarriga/nvim-dap-ui' },
-  --     { 'mfussenegger/nvim-dap', config = function() require('plugins.dap') end },
-
+  -- Debug - DAP
+  {
+    'mfussenegger/nvim-dap',
+    config = function()
+      require('plugins.dap')
+    end,
+    keys = {
+      '<Leader>da',
+      '<Leader>db',
+      '<Leader>dc',
+      '<Leader>dd',
+      '<Leader>dh',
+      '<Leader>di',
+      '<Leader>do',
+      '<Leader>dO',
+      '<Leader>dt',
+    },
+    dependencies = {
+      'theHamsta/nvim-dap-virtual-text',
+      'rcarriga/nvim-dap-ui',
+    },
+  },
+  {
+    'LiadOz/nvim-dap-repl-highlights',
+    config = true,
+    dependencies = {
+      'mfussenegger/nvim-dap',
+    },
+    build = {
+      ':TSInstall dap_repl',
+      ':TSUpdate dap_repl',
+    },
+  },
   --     -- Git
   {
     'lewis6991/gitsigns.nvim',
