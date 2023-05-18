@@ -1,5 +1,5 @@
 -- Diagnostic config
-local utils = require('utils')
+-- local utils = require('utils')
 
 local codes = {
   -- Lua
@@ -120,15 +120,15 @@ vim.diagnostic.config({
   virtual_text = {
     prefix = NvimConfig.icons.circle,
   },
---   virtual_text = function()
--- 	return {
--- 		format = function(diagnostic)
--- 			return utils.diagnosticFormat(diagnostic, 'virtual_text')
--- 		end,
--- 		 -- severity = {min = vim.diagnostic.severity.WARN}
--- 		 prefix = NvimConfig.icons.circle,
--- 	}
--- 	end,
+  --   virtual_text = function()
+  -- 	return {
+  -- 		format = function(diagnostic)
+  -- 			return utils.diagnosticFormat(diagnostic, 'virtual_text')
+  -- 		end,
+  -- 		 -- severity = {min = vim.diagnostic.severity.WARN}
+  -- 		 prefix = NvimConfig.icons.circle,
+  -- 	}
+  -- 	end,
 })
 
 -- UI
@@ -139,3 +139,6 @@ for type, icon in pairs(signs) do
   local hl = 'DiagnosticSign' .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
 end
+
+require('lspconfig.ui.windows').default_options.border = NvimConfig.ui.float.border
+  or 'rounded'
