@@ -67,6 +67,7 @@
 	line-numbers-plus-style = 034
 
 [alias]
+	# branches = "!git branch -a | sed -n '/\/HEAD /d; /\/main$/d; /remotes/p;' | xargs -L1 git checkout -t"
 	addall = !sh -c 'git add . && git add -u'
 	amend = commit --amend --no-edit --date now
 	blm = blame -wMC
