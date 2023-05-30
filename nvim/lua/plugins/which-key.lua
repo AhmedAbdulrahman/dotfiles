@@ -174,7 +174,10 @@ local normal_mode_mappings = {
     name = 'LSP',
     a = { 'code action' },
     d = { '<cmd>TroubleToggle<CR>', 'local diagnostics' },
-    D = { '<cmd>Telescope diagnostics<CR>', 'workspace diagnostics' },
+    D = {
+      '<cmd>Telescope diagnostics wrap_results=true<CR>',
+      'workspace diagnostics',
+    },
     f = { 'format' },
     l = { 'line diagnostics' },
     r = { 'rename' },
