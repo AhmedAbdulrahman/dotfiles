@@ -138,17 +138,36 @@ local normal_mode_mappings = {
 
   b = {
     name = 'Buffer',
-    b = { '<cmd>BufferMovePrevious<CR>', 'Move back' },
-    c = { '<cmd>BufferCloseAllButCurrent<CR>', 'Close but current' },
+    b = { '<cmd>BufferLineMovePrev<CR>', 'Move back' },
+    c = {
+      '<cmd>lua require("utils").closeOtherBuffers()<CR>',
+      'Close but current',
+    },
     d = {
       '<cmd>BufferOrderByDirectory<CR>',
       'Order by directory',
     },
     f = { '<cmd>bfirst<CR>', 'First buffer' },
-    l = { '<cmd>BufferCloseBuffersLeft<CR>', 'Close Left' },
-    r = { '<cmd>BufferCloseBuffersRight<CR>', 'Close Right' },
-    n = { '<cmd>BufferMoveNext<CR>', 'Move next' },
-    p = { '<cmd>BufferPick<CR>', 'Pick Buffer' },
+    l = { '<cmd>BufferLineCloseLeft<CR>', 'Close Left' },
+    r = { '<cmd>BufferLineCloseRight<CR>', 'Close Right' },
+    n = { '<cmd>BufferLineMoveNext<CR>', 'Move next' },
+    p = { '<cmd>BufferLinePick<CR>', 'Pick Buffer' },
+    P = { '<cmd>BufferLineTogglePin<CR>', 'Pin/Unpin Buffer' },
+    s = {
+      name = 'Sort',
+      d = {
+        '<cmd>BufferLineSortByDirectory<CR>',
+        'Sort by directory',
+      },
+      e = {
+        '<cmd>BufferLineSortByExtension<CR>',
+        'Sort by extension',
+      },
+      r = {
+        '<cmd>BufferLineSortByRelativeDirectory<CR>',
+        'Sort by relative dir',
+      },
+    },
   },
 
   c = {
@@ -444,24 +463,33 @@ local function attach_zen(bufnr)
 end
 
 local function attach_jest(bufnr)
-	wk.register({
-	  j = {
-		name = "Jest",
-		f = { '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>', 'run current file' },
-		i = { '<cmd>lua require("neotest").summary.toggle()<CR>', 'toggle info panel' },
-		j = { '<cmd>lua require("neotest").run.run()<CR>', 'run nearest test' },
-		l = { '<cmd>lua require("neotest").run.run_last()<CR>', 'run last test' },
-		o = { '<cmd>lua require("neotest").output.open({ enter = true })<CR>', 'open test output'},
-		s = { '<cmd>lua require("neotest").run.stop()<CR>', 'stop' },
-	  }
-	}, {
-	  buffer = bufnr,
-	  mode = "n", -- NORMAL mode
-	  prefix = "<leader>",
-	  silent = true, -- use `silent` when creating keymaps
-	  noremap = true, -- use `noremap` when creating keymaps
-	  nowait = false, -- use `nowait` when creating keymaps
-	})
+  wk.register({
+    j = {
+      name = 'Jest',
+      f = {
+        '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>',
+        'run current file',
+      },
+      i = {
+        '<cmd>lua require("neotest").summary.toggle()<CR>',
+        'toggle info panel',
+      },
+      j = { '<cmd>lua require("neotest").run.run()<CR>', 'run nearest test' },
+      l = { '<cmd>lua require("neotest").run.run_last()<CR>', 'run last test' },
+      o = {
+        '<cmd>lua require("neotest").output.open({ enter = true })<CR>',
+        'open test output',
+      },
+      s = { '<cmd>lua require("neotest").run.stop()<CR>', 'stop' },
+    },
+  }, {
+    buffer = bufnr,
+    mode = 'n', -- NORMAL mode
+    prefix = '<leader>',
+    silent = true, -- use `silent` when creating keymaps
+    noremap = true, -- use `noremap` when creating keymaps
+    nowait = false, -- use `nowait` when creating keymaps
+  })
 end
 
 local function attach_spectre(bufnr)
