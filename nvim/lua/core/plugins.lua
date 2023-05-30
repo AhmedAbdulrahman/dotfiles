@@ -679,10 +679,11 @@ return {
     dependencies = {
       'mfussenegger/nvim-dap',
     },
-    build = {
-      ':TSInstall dap_repl',
-      ':TSUpdate dap_repl',
-    },
+    build = function()
+      if not require('nvim-treesitter.parsers').has_parser('dap_repl') then
+        vim.cmd(':TSInstall dap_repl')
+      end
+    end,
   },
   --     -- Git
   {
