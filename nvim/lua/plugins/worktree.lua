@@ -62,7 +62,7 @@ worktree.on_tree_change(function(op, metadata)
       'Switched from ' .. metadata.prev_path .. ' to ' .. metadata.path,
       'Git Worktree'
     )
-    vim.cmd('BufferCloseAllButCurrent')
+    utils.closeOtherBuffers()
     vim.cmd('e')
   end
 end)
