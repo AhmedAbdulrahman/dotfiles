@@ -16,6 +16,9 @@
 [includeIf "gitdir:~/iKas/"]
 	path = ~/.gitconfig.ikas
 
+[includeIf "gitdir:~/Projects/Polestar/"]
+  path = ~/.gitconfig.polestar
+
 [includeIf "gitdir:~/"]
   path = ~/.gitconfig.local
 
@@ -35,7 +38,7 @@
 	pager = delta_
 
 [interactive]
-	diffFilter = delta_ --color-only
+	diffFilter = delta_ --color-only --features=interactive
 
 [add.interactive]
 	useBuiltin = false # required for delta with git 2.37.0
@@ -151,9 +154,9 @@
   prune = true
   fsckObjects = true
 
-[pager]
-  show-branch = true
-  status = true
+# [pager]
+#   show-branch = true
+#   status = true
 
 # so much color
 [color]
@@ -206,6 +209,7 @@
   insteadOf = "gh:"
   pushInsteadOf = "github:"
   pushInsteadOf = "git://github.com/"
+	insteadOf = https://github.com/
 
 [url "git://github.com/"]
   insteadOf = "github:"

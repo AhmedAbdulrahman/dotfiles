@@ -39,7 +39,7 @@ main() {
   brew_install "Cmake" "cmake"
   brew_install "Git" "git"
   brew_install "GitHub CLI" "gh"
-  brew_install "Git Delta" "delta"
+  brew_install "Git Delta" "git-delta"
   brew_install "Git Tig" "tig"
   brew_install "Exiftool" "exiftool"
   brew_install "Glow -> Render markdown on the CLI, with pizzazz!" "glow"
