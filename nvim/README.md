@@ -21,18 +21,18 @@ Here you can find some of my custom key bindings I use in nvim config. Space `(S
 
 ### Searching
 
-| Key Bindings | Description                     |
-| ------------ | ------------------------------- |
-| `SPC Tab`    | Telescope git files             |
-| `SPC /`      | Telescope live grep             |
-| `s`          | Enables lightspeed forward      |
-| `S`          | Enables lightspeed backward     |
-| `SPC s d`    | Search dotfiles                 |
-| `SPC s h`    | Search file history             |
-| `SPC s s`    | Search history                  |
-| `<C - x>`    | Open selected file as a split   |
-| `<C - v>`    | Open selected file as a vsplit  |
-| `<C-t>`      | Open selected file in a new tab |
+| Key Bindings  | Description                     |
+| ------------- | ------------------------------- |
+| `<SPC - Tab>` | Telescope git files             |
+| `<SPC />`     | Telescope live grep             |
+| `s`           | Enables lightspeed forward      |
+| `S`           | Enables lightspeed backward     |
+| `SPC s d`     | Search dotfiles                 |
+| `SPC s h`     | Search file history             |
+| `SPC s s`     | Search history                  |
+| `<C - x>`     | Open selected file as a split   |
+| `<C - v>`     | Open selected file as a vsplit  |
+| `<C-t>`       | Open selected file in a new tab |
 
 </details>
 
@@ -54,6 +54,24 @@ Here you can find some of my custom key bindings I use in nvim config. Space `(S
 | `SPC c q`                  | Quick fix - when I exactly know if it will fix it |
 | `SPC c d`                  | Local diagnostics list                            |
 | `SPC c o`                  | Organize imports                                  |
+
+</details>
+
+<details>
+<summary>File Explorer</summary>
+
+### File Explorer
+
+| Key Bindings | Description               |
+| ------------ | ------------------------- |
+| `<SPC - f>`  | Open File Explorer        |
+| g?           | Open commands menu        |
+| a            | Create new file/directory |
+| x            | Cut                       |
+| c            | Copy                      |
+| y            | Copy name                 |
+| r            | Rename                    |
+| I            | Toggle git ignore files   |
 
 </details>
 
