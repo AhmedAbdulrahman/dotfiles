@@ -296,7 +296,6 @@ return {
   },
   {
     'pmizio/typescript-tools.nvim',
-    branch = 'fix-request-sequence-error',
     event = { 'BufReadPre', 'BufNewFile' },
     ft = { 'typescript', 'typescriptreact' },
     dependencies = {
