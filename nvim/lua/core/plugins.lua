@@ -332,6 +332,18 @@ return {
     },
   },
 
+  {
+    'antosha417/nvim-lsp-file-operations',
+    event = 'LspAttach',
+    requires = {
+      { 'nvim-lua/plenary.nvim' },
+      { 'kyazdani42/nvim-tree.lua' },
+    },
+    config = function()
+      require('lsp-file-operations').setup()
+    end,
+  },
+
   -- Formatter
   {
     'mhartington/formatter.nvim',
