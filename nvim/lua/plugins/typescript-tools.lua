@@ -28,8 +28,11 @@ local handlers = {
 }
 
 require('typescript-tools').setup({
-  on_attach = function()
-    -- client.server_capabilities.semanticTokensProvider = nil
+  on_attach = function(_, bufnr)
+    if vim.fn.has('nvim-0.10') then
+      -- Enable inlay hints
+      vim.lsp.inlay_hint(bufnr, true)
+    end
   end,
   handlers = handlers,
   settings = {
