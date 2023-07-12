@@ -22,7 +22,7 @@ if vim.fn.has('nvim-0.8') then
   )
   vim.api.nvim_set_hl(0, 'NvimConfigFooter', { bold = true, fg = '#ecc48d' })
 
-  -- Tokyonight Colorscheme Specific Config
+  -- Aylin Colorscheme Specific Config
   if NvimConfig.colorscheme == 'aylin' then
     -- Lines
     vim.api.nvim_set_hl(0, 'CursorLineNR', { link = 'NvimConfigSecondary' })
@@ -50,6 +50,20 @@ if vim.fn.has('nvim-0.8') then
     -- vim.api.nvim_set_hl(0, 'rainbowcol1', { fg = aylin_colors.blue, ctermfg = 9 });
     vim.api.nvim_set_hl(0, 'Boolean', { fg = '#F7768E' })
     vim.api.nvim_set_hl(0, 'BufferOffset', { link = 'NvimConfigSecondary' })
+
+    vim.api.nvim_set_hl(0, 'BufferCurrentSign', { fg = '#7dcfff' })
+    vim.api.nvim_set_hl(
+      0,
+      'BufferInactiveSign',
+      { bg = '#202331', fg = '#545c7e' }
+    )
+    vim.api.nvim_set_hl(0, 'BufferInactiveMod', { bg = 'NONE', fg = '#ecc48d' })
+
+    vim.api.nvim_set_hl(
+      0,
+      'BufferLineOffsetSeparator',
+      { bg = '#16161e', fg = '#16161e' }
+    )
 
     -- Completion Menu Colors
     local highlights = {
