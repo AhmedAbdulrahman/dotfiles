@@ -11,10 +11,10 @@ NvimConfig = {
   plugins = {
     ai = {
       chatgpt = {
-        enabled = false,
+        enabled = true,
       },
       codeium = {
-        enabled = true,
+        enabled = false,
       },
       copilot = {
         enabled = true,

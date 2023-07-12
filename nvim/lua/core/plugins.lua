@@ -132,6 +132,7 @@ return {
       'hrsh7th/cmp-nvim-lsp',
       {
         'j-hui/fidget.nvim',
+        branch = 'legacy',
         config = function()
           require('fidget').setup({
             window = {
@@ -250,6 +251,10 @@ return {
     end,
   },
   {
+    'js-everts/cmp-tailwind-colors',
+    config = true,
+  },
+  {
     'uga-rosa/ccc.nvim',
     lazy = true,
     cmd = { 'CccPick' },
@@ -288,6 +293,19 @@ return {
     end,
     dependencies = 'neovim/nvim-lspconfig',
   },
+  {
+    'pmizio/typescript-tools.nvim',
+    branch = 'fix-request-sequence-error',
+    event = { 'BufReadPre', 'BufNewFile' },
+    ft = { 'typescript', 'typescriptreact' },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'neovim/nvim-lspconfig',
+    },
+    config = function()
+      require('plugins.typescript-tools')
+    end,
+  },
   { 'jose-elias-alvarez/typescript.nvim' },
   {
     'axelvc/template-string.nvim',
@@ -297,10 +315,39 @@ return {
   },
   {
     'lvimuser/lsp-inlayhints.nvim',
-    branch = 'anticonceal',
+    branch = 'anticonceal', -- or "anticonceal"
     config = function()
       require('lsp-inlayhints').setup()
     end,
+  },
+
+  {
+    'dnlhc/glance.nvim',
+    config = function()
+      require('plugins.glance')
+    end,
+    opts = {
+      hooks = {
+        before_open = function(results, open, jump)
+          if #results == 1 then
+            jump(results[1]) -- argument is optional
+          else
+            open(results) -- argument is optional
+          end
+        end,
+      },
+    },
+    cmd = { 'Glance' },
+    keys = {
+      { 'gd', '<cmd>Glance definitions<CR>', desc = 'LSP Definition' },
+      { 'gr', '<cmd>Glance references<CR>', desc = 'LSP References' },
+      { 'gm', '<cmd>Glance implementations<CR>', desc = 'LSP Implementations' },
+      {
+        'gy',
+        '<cmd>Glance type_definitions<CR>',
+        desc = 'LSP Type Definitions',
+      },
+    },
   },
 
   -- Formatter
@@ -405,7 +452,9 @@ return {
     end,
   },
   {
-    'echasnovski/mini.nvim',
+    'echasnovski/mini.align',
+    lazy = false,
+    version = '*',
     config = function()
       require('mini.align').setup()
     end,
@@ -439,11 +488,18 @@ return {
     disable = not NvimConfig.plugins.zen.enabled,
   },
   {
-    'ggandor/lightspeed.nvim',
-    keys = 's',
-    config = function()
-      require('plugins.lightspeed')
-    end,
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    opts = {},
+    keys = {
+      {
+        's',
+        mode = { 'n', 'x', 'o' },
+        function()
+          require('flash').jump()
+        end,
+      },
+    },
   },
   {
     'folke/which-key.nvim',
@@ -460,12 +516,24 @@ return {
     end,
   },
   {
-    'romgrk/barbar.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    event = 'BufAdd',
-    version = '^1.0.0',
+    'echasnovski/mini.bufremove',
+    version = '*',
     config = function()
-      require('plugins.barbar')
+      require('mini.bufremove').setup({
+        silent = true,
+      })
+    end,
+  },
+  {
+    'akinsho/bufferline.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+      'echasnovski/mini.bufremove',
+    },
+    version = '*',
+    config = function()
+      require('plugins.bufferline')
     end,
   },
   { 'antoinemadec/FixCursorHold.nvim' }, -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
