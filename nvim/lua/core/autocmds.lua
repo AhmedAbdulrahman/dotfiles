@@ -12,32 +12,29 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.api.nvim_create_augroup('LspNodeModules', { clear = true })
-vim.api.nvim_create_autocmd('BufRead', {
-  pattern = '*/node_modules/*',
-  command = 'lua vim.diagnostic.disable(0)',
-  group = 'LspNodeModules',
-})
-vim.api.nvim_create_autocmd('BufNewFile', {
-  pattern = '*/node_modules/*',
-  command = 'lua vim.diagnostic.disable(0)',
-  group = 'LspNodeModules',
-})
-vim.api.nvim_create_autocmd('BufEnter,WinEnter', {
+vim.api.nvim_create_autocmd(
+  { 'BufRead', 'BufNewFile' },
+  {
+    pattern = '*/node_modules/*',
+    command = 'lua vim.diagnostic.disable(0)',
+    group = 'LspNodeModules',
+  }
+)
+
+vim.api.nvim_create_autocmd({ 'BufEnter,WinEnter' }, {
   pattern = '*/node_modules/*',
   command = 'LspStop',
   group = 'LspNodeModules',
 })
+
 vim.api.nvim_create_autocmd('BufLeave', {
   pattern = '*/node_modules/*',
   command = 'LspStart',
   group = 'LspNodeModules',
 })
+
 vim.api.nvim_create_autocmd(
-  'BufEnter,WinEnte',
-  { pattern = '*.min.*', command = 'LspStop', group = 'LspNodeModules' }
-)
-vim.api.nvim_create_autocmd(
-  'BufLeave',
+  { 'BufEnter', 'WinEnter', 'BufLeave' },
   { pattern = '*.min.*', command = 'LspStop', group = 'LspNodeModules' }
 )
 
@@ -172,65 +169,68 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd("BufEnter", {
-	pattern = { "*test.js", "*test.ts", "*test.tsx" },
-  	callback = function() pwk.attach_jest(0) end
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = { '*test.js', '*test.ts', '*test.tsx' },
+  callback = function()
+    pwk.attach_jest(0)
+  end,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "spectre_panel",
-	callback = function() pwk.attach_spectre(0) end
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'spectre_panel',
+  callback = function()
+    pwk.attach_spectre(0)
+  end,
 })
-
 
 -- Winbar (for nvim 0.8+)
 if vim.fn.has('nvim-0.8') == 1 then
-	vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
-	  callback = function()
-		local winbar_filetype_exclude = {
-		  "help",
-		  "startify",
-		  "dashboard",
-		  "packer",
-		  "neogitstatus",
-		  "NvimTree",
-		  "Trouble",
-		  "alpha",
-		  "lir",
-		  "Outline",
-		  "spectre_panel",
-		  "TelescopePrompt",
-		  "DressingInput",
-		  "DressingSelect",
-		  "neotest-summary",
-		}
+  vim.api.nvim_create_autocmd({ 'CursorMoved', 'BufWinEnter', 'BufFilePost' }, {
+    callback = function()
+      local winbar_filetype_exclude = {
+        'help',
+        'startify',
+        'dashboard',
+        'packer',
+        'neogitstatus',
+        'NvimTree',
+        'Trouble',
+        'alpha',
+        'lir',
+        'Outline',
+        'spectre_panel',
+        'TelescopePrompt',
+        'DressingInput',
+        'DressingSelect',
+        'neotest-summary',
+      }
 
-		if (vim.api.nvim_win_get_config(0).relative ~= "") then
-		  return
-		end
+      if vim.api.nvim_win_get_config(0).relative ~= '' then
+        return
+      end
 
-		if vim.bo.filetype == 'toggleterm' then
-		  return
-		end
+      if vim.bo.filetype == 'toggleterm' then
+        return
+      end
 
-		if vim.tbl_contains(winbar_filetype_exclude, vim.bo.filetype) then
-		  vim.opt_local.winbar = nil
-		  return
-		end
+      if vim.tbl_contains(winbar_filetype_exclude, vim.bo.filetype) then
+        vim.opt_local.winbar = nil
+        return
+      end
 
-		local winbar_present, winbar = pcall(require, "internal.winbar")
-		if not winbar_present or type(winbar) == "boolean" then
-		  vim.opt_local.winbar = nil
-		  return
-		end
+      local winbar_present, winbar = pcall(require, 'internal.winbar')
+      if not winbar_present or type(winbar) == 'boolean' then
+        vim.opt_local.winbar = nil
+        return
+      end
 
-		local value = winbar.gps()
+      local value = winbar.gps()
 
-		if value == nil then
-		  value = winbar.filename()
-		end
+      if value == nil then
+        value = winbar.filename()
+      end
 
-		vim.opt_local.winbar = value
-	  end,
-	})
-  end
+      vim.opt_local.winbar = value
+    end,
+  })
+end
