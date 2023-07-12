@@ -12,14 +12,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.api.nvim_create_augroup('LspNodeModules', { clear = true })
-vim.api.nvim_create_autocmd(
-  { 'BufRead', 'BufNewFile' },
-  {
-    pattern = '*/node_modules/*',
-    command = 'lua vim.diagnostic.disable(0)',
-    group = 'LspNodeModules',
-  }
-)
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '*/node_modules/*',
+  command = 'lua vim.diagnostic.disable(0)',
+  group = 'LspNodeModules',
+})
 
 vim.api.nvim_create_autocmd({ 'BufEnter,WinEnter' }, {
   pattern = '*/node_modules/*',
@@ -39,6 +36,20 @@ vim.api.nvim_create_autocmd(
 )
 
 vim.api.nvim_create_augroup('Spell', { clear = true })
+
+-- Enable spell checking for certain file types
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = { '*.txt', '*.md', '*.tex' },
+  command = 'setlocal spell',
+  group = 'Spell',
+})
+-- Show `` in specific files
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = { '*.txt', '*.md', '*.json' },
+  command = 'setlocal conceallevel=0',
+  group = 'Spell',
+})
+
 vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = '*/spell/*.add',
   command = 'silent! :mkspell! %',

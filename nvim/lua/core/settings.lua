@@ -181,7 +181,9 @@ opt.showcmd = false -- Disable displaying key presses at the right bottom.
 opt.showmode = false -- Disable native mode indicator.
 opt.showmatch = true -- Highlight matching [{()}]
 opt.backspace = 'indent,eol,start' --- Making sure backspace works
-opt.conceallevel = 0 --- Show `` in markdown files
+--- Concealed text is completely hidden unless it has a custom replacement character defined (needed for dynamically showing tailwind classes)
+opt.conceallevel = 2
+opt.concealcursor = '' --- Set to an empty string to expand tailwind class when on cursorline
 opt.encoding = 'utf-8' --- The encoding displayed
 opt.fileencoding = 'utf-8' --- The encoding written to file
 opt.incsearch = true --- Start searching before pressing enter

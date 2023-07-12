@@ -256,6 +256,12 @@ return {
     config = true,
   },
   {
+    'razak17/tailwind-fold.nvim',
+    opts = {},
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
+  },
+  {
     'uga-rosa/ccc.nvim',
     lazy = true,
     cmd = { 'CccPick' },
