@@ -1,3 +1,7 @@
+require('multicursors').setup({
+  hint_config = false,
+})
+
 local lualine = require('lualine')
 
 -- Color table for highlights
@@ -50,6 +54,27 @@ local conditions = {
         vim.fn.wordcount()['words'],
         'words'
       )
+    end
+    return ''
+  end,
+  diff_source = function()
+    local gitsigns = vim.b.gitsigns_status_dict
+    if gitsigns then
+      return {
+        added = gitsigns.added,
+        modified = gitsigns.changed,
+        removed = gitsigns.removed,
+      }
+    end
+  end,
+  is_hydra_active = function()
+    local ok, hydra = pcall(require, 'hydra.statusline')
+    return ok and hydra.is_active()
+  end,
+  get_hydra_name = function()
+    local ok, hydra = pcall(require, 'hydra.statusline')
+    if ok and hydra.is_active() then
+      return hydra.get_name()
     end
     return ''
   end,
@@ -192,6 +217,12 @@ ins_left({
   color_info = colors.cyan,
 })
 
+ins_left({
+  conditions.get_hydra_name,
+  condition = conditions.is_hydra_active,
+  color = { fg = colors.violet, gui = 'bold' },
+})
+
 --   Insert mid section. You can make any number of sections in neovim :)
 --   for lualine it's any number greater then 2
 ins_left({
@@ -255,7 +286,7 @@ ins_right({
   color_added = colors.green,
   color_modified = colors.orange,
   color_removed = colors.red,
-  condition = conditions.hide_in_width,
+  condition = conditions.diff_source,
 })
 
 ins_right({
