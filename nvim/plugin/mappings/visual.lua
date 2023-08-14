@@ -2,8 +2,6 @@ local keymap = vim.keymap
 local silent = { silent = true }
 
 -- Plugins
--- Refactor with spectre
-keymap.set('x', '<leader>pr', "<cmd>lua require('spectre').open_visual()<CR>")
 
 -- https://github.com/mhinz/vim-galore#dont-lose-selection-when-shifting-sidewards
 keymap.set('x', '<', '<gv')

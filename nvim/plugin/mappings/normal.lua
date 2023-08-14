@@ -1,30 +1,7 @@
 local keymap = vim.keymap
 local silent = { silent = true }
 
--- Plugins
--- Comment Box
-keymap.set(
-  'n',
-  '<leader>ac',
-  "<cmd>lua require('comment-box').lbox()<CR>",
-  silent
-)
-keymap.set(
-  'v',
-  '<leader>ac',
-  "<cmd>lua require('comment-box').lbox()<CR>",
-  silent
-)
-
 keymap.set('n', '<leader>lc', ':CccPick<CR>', silent)
-
--- Refactor with spectre
-keymap.set(
-  'n',
-  '<leader>pr',
-  "<cmd>lua require('spectre').open_visual({select_word=true})<CR>",
-  silent
-)
 
 -- Lsp
 keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', silent)
