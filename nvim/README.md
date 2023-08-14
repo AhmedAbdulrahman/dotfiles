@@ -25,8 +25,6 @@ Here you can find some of my custom key bindings I use in nvim config. Space `(S
 | ------------- | ------------------------------- |
 | `<SPC - Tab>` | Telescope git files             |
 | `<SPC />`     | Telescope live grep             |
-| `s`           | Enables lightspeed forward      |
-| `S`           | Enables lightspeed backward     |
 | `SPC s d`     | Search dotfiles                 |
 | `SPC s h`     | Search file history             |
 | `SPC s s`     | Search history                  |
