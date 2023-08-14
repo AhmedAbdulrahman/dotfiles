@@ -423,19 +423,31 @@ return {
 
   { 'dhruvasagar/vim-table-mode' },
   {
-    'mg979/vim-visual-multi',
-    keys = {
-      '<C-n>',
-      '<C-Up>',
-      '<C-Down>',
-      '<S-Up>',
-      '<S-Down>',
-      '<S-Left>',
-      '<S-Right>',
+    'smoka7/multicursors.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'smoka7/hydra.nvim',
     },
-    config = function()
-      vim.g.VM_leader = ';'
-    end,
+    config = true,
+    keys = {
+      {
+        '<leader>j',
+        '<cmd>MCstart<cr>',
+        desc = 'Create a selection for word under the cursor',
+      },
+      {
+        '<leader>k',
+        '<CMD>MCvisual<CR>',
+        mode = 'v',
+        desc = 'Create a selection for word under the cursor',
+      },
+      {
+        '<C-Down>',
+        '<CMD>MCunderCursor<CR>',
+        desc = 'multicursor down',
+      },
+    },
   },
   {
     'echasnovski/mini.align',
