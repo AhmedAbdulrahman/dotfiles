@@ -90,7 +90,24 @@ return {
       require('neoclip').setup()
     end,
   },
-  --  { 'nvim-pack/nvim-spectre' },
+  {
+    -- Refactor with spectre
+    'nvim-pack/nvim-spectre',
+    lazy = true,
+    keys = {
+      {
+        '<Leader>pr',
+        "<cmd>lua require('spectre').open_visual({select_word=true})<CR>",
+        desc = 'refactor',
+      },
+      {
+        '<Leader>pr',
+        "<cmd>lua require('spectre').open_visual()<CR>",
+        mode = 'v',
+        desc = 'refactor',
+      },
+    },
+  },
   {
     'nvim-tree/nvim-tree.lua',
     lazy = false,
@@ -390,13 +407,37 @@ return {
       require('plugins.comment')
     end,
   },
-  { 'LudoPinelli/comment-box.nvim' },
+  {
+    'LudoPinelli/comment-box.nvim',
+    lazy = false,
+    keys = {
+      {
+        '<leader>ac',
+        "<cmd>lua require('comment-box').lbox()<CR>",
+        desc = 'comment box',
+      },
+      {
+        '<leader>ac',
+        "<cmd>lua require('comment-box').lbox()<CR>",
+        mode = 'v',
+        desc = 'comment box',
+      },
+    },
+  },
   {
     'akinsho/nvim-toggleterm.lua',
+    branch = 'main',
     config = function()
       require('plugins.toggleterm')
     end,
     lazy = false,
+    keys = {
+      {
+        '<leader>at',
+        '<cmd>ToggleTerm direction=float<CR>',
+        desc = 'terminal float',
+      },
+    },
   },
   { 'tpope/vim-repeat' },
   { 'tpope/vim-speeddating' },
@@ -406,6 +447,33 @@ return {
     config = function()
       require('plugins.session-manager')
     end,
+    keys = {
+      {
+        '<leader>/sc',
+        '<cmd>SessionManager load_session<CR>',
+        desc = 'choose session',
+      },
+      {
+        '<leader>/sr',
+        '<cmd>SessionManager delete_session<CR>',
+        desc = 'remove session',
+      },
+      {
+        '<leader>/sd',
+        '<cmd>SessionManager load_current_dir_session<CR>',
+        desc = 'load current dir session',
+      },
+      {
+        '<leader>/sl',
+        '<cmd>SessionManager load_last_session<CR>',
+        desc = 'load last session',
+      },
+      {
+        '<leader>/ss',
+        '<cmd>SessionManager save_current_session<CR>',
+        desc = 'save session',
+      },
+    },
   },
   {
     'kylechui/nvim-surround',
@@ -533,6 +601,71 @@ return {
     config = function()
       require('plugins.bufferline')
     end,
+    keys = {
+      { '<Space>1', '<cmd>BufferLineGoToBuffer 1<CR>' },
+      { '<Space>2', '<cmd>BufferLineGoToBuffer 2<CR>' },
+      { '<Space>3', '<cmd>BufferLineGoToBuffer 3<CR>' },
+      { '<Space>4', '<cmd>BufferLineGoToBuffer 4<CR>' },
+      { '<Space>5', '<cmd>BufferLineGoToBuffer 5<CR>' },
+      { '<Space>6', '<cmd>BufferLineGoToBuffer 6<CR>' },
+      { '<Space>7', '<cmd>BufferLineGoToBuffer 7<CR>' },
+      { '<Space>8', '<cmd>BufferLineGoToBuffer 8<CR>' },
+      { '<Space>9', '<cmd>BufferLineGoToBuffer 9<CR>' },
+      { '<A-1>', '<cmd>BufferLineGoToBuffer 1<CR>' },
+      { '<A-2>', '<cmd>BufferLineGoToBuffer 2<CR>' },
+      { '<A-3>', '<cmd>BufferLineGoToBuffer 3<CR>' },
+      { '<A-4>', '<cmd>BufferLineGoToBuffer 4<CR>' },
+      { '<A-5>', '<cmd>BufferLineGoToBuffer 5<CR>' },
+      { '<A-6>', '<cmd>BufferLineGoToBuffer 6<CR>' },
+      { '<A-7>', '<cmd>BufferLineGoToBuffer 7<CR>' },
+      { '<A-8>', '<cmd>BufferLineGoToBuffer 8<CR>' },
+      { '<A-9>', '<cmd>BufferLineGoToBuffer 9<CR>' },
+      {
+        '<leader>bb',
+        '<cmd>BufferLineMovePrev<CR>',
+        desc = 'Move back',
+      },
+      {
+        '<leader>bl',
+        '<cmd>BufferLineCloseLeft<CR>',
+        desc = 'Close Left',
+      },
+      {
+        '<leader>br',
+        '<cmd>BufferLineCloseRight<CR>',
+        desc = 'Close Right',
+      },
+      {
+        '<leader>bn',
+        '<cmd>BufferLineMoveNext<CR>',
+        desc = 'Move next',
+      },
+      {
+        '<leader>bp',
+        '<cmd>BufferLinePick<CR>',
+        desc = 'Pick Buffer',
+      },
+      {
+        '<leader>bP',
+        '<cmd>BufferLineTogglePin<CR>',
+        desc = 'Pin/Unpin Buffer',
+      },
+      {
+        '<leader>bsd',
+        '<cmd>BufferLineSortByDirectory<CR>',
+        desc = 'Sort by directory',
+      },
+      {
+        '<leader>bse',
+        '<cmd>BufferLineSortByExtension<CR>',
+        desc = 'Sort by extension',
+      },
+      {
+        '<leader>bsr',
+        '<cmd>BufferLineSortByRelativeDirectory<CR>',
+        desc = 'Sort by relative dir',
+      },
+    },
   },
   { 'antoinemadec/FixCursorHold.nvim' }, -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
   {
@@ -759,15 +892,37 @@ return {
       require('plugins.gitsigns')
     end,
     event = 'BufRead',
+    keys = {
+      { '<leader>ghd', desc = 'diff hunk' },
+      { '<leader>ghp', desc = 'preview' },
+      { '<leader>ghR', desc = 'reset buffer' },
+      { '<leader>ghr', desc = 'reset hunk' },
+      { '<leader>ghs', desc = 'stage hunk' },
+      { '<leader>ghS', desc = 'stage buffer' },
+      { '<leader>ght', desc = 'toggle deleted' },
+      { '<leader>ghu', desc = 'undo stage' },
+    },
   },
   {
     'sindrets/diffview.nvim',
-    enabled = false,
+    enabled = true,
     lazy = true,
     event = 'BufRead',
     config = function()
       require('plugins.diffview')
     end,
+    keys = {
+      {
+        '<leader>gd',
+        "<cmd>lua require('plugins.diffview').toggle_file_history()<CR>",
+        desc = 'diff file',
+      },
+      {
+        '<leader>gs',
+        "<cmd>lua require('plugins.diffview').toggle_status()<CR>",
+        desc = 'status',
+      },
+    },
   },
   {
     'akinsho/git-conflict.nvim',
@@ -775,6 +930,33 @@ return {
     config = function()
       require('plugins.conflict')
     end,
+    keys = {
+      {
+        '<leader>gcb',
+        '<cmd>GitConflictChooseBoth<CR>',
+        desc = 'choose both',
+      },
+      {
+        '<leader>gcn',
+        '<cmd>GitConflictNextConflict<CR>',
+        desc = 'move to next conflict',
+      },
+      {
+        '<leader>gco',
+        '<cmd>GitConflictChooseOurs<CR>',
+        desc = 'choose ours',
+      },
+      {
+        '<leader>gcp',
+        '<cmd>GitConflictPrevConflict<CR>',
+        desc = 'move to prev conflict',
+      },
+      {
+        '<leader>gct',
+        '<cmd>GitConflictChooseTheirs<CR>',
+        desc = 'choose theirs',
+      },
+    },
   },
   {
     'ThePrimeagen/git-worktree.nvim',
@@ -782,7 +964,21 @@ return {
       require('plugins.worktree')
     end,
   },
-  { 'kdheepak/lazygit.nvim', lazy = false },
+  {
+    'kdheepak/lazygit.nvim',
+    cmd = {
+      'LazyGit',
+      'LazyGitCurrentFile',
+      'LazyGitFilterCurrentFile',
+      'LazyGitFilter',
+    },
+    keys = {
+      { '<leader>gg', '<cmd>LazyGit<CR>', desc = 'lazygit' },
+    },
+    config = function()
+      vim.g.lazygit_floating_window_scaling_factor = 1
+    end,
+  },
   {
     'ruifm/gitlinker.nvim',
     config = function()
