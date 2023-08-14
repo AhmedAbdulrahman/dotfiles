@@ -402,7 +402,8 @@ return {
   },
   {
     'numToStr/Comment.nvim',
-    branch = 'jsx',
+    lazy = false,
+    dependencies = 'JoosepAlviste/nvim-ts-context-commentstring',
     config = function()
       require('plugins.comment')
     end,
