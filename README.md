@@ -23,7 +23,7 @@ The font is [**JetBrains Mono**](https://www.jetbrains.com/lp/mono/)
 
 ## Table of Contents
 
--   [`Ahmed’s dotfiles` ![luacheck](https://github.com/AhmedAbdulrahman/dotfiles/actions/workflows/luacheck.yml)](#ahmeds-dotfiles-)
+-   [`Ahmed’s dotfiles` ](#ahmeds-dotfiles-)
     -   [Table of Contents](#table-of-contents)
     -   [What's it](#whats-it)
     -   [What's inside](#whats-inside)
