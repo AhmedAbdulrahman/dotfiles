@@ -316,11 +316,12 @@ cmp.setup({
   sorting = {
     --keep priority weight at 2 for much closer matches to appear above copilot
     --set to 1 to make copilot always appear on top
+    priority_weight = 2,
     comparators = {
       deprioritize_snippet,
       cmp.config.compare.exact,
-      has_copilot and copilot_cmp.prioritize or nil,
-      has_copilot and copilot_cmp.score or nil,
+      has_copilot and copilot_cmp.prioritize or function() end,
+      has_copilot and copilot_cmp.score or function() end,
       cmp.config.compare.offset,
       cmp.config.compare.score,
       cmp.config.compare.recently_used,
@@ -352,6 +353,10 @@ cmp.setup({
   experimental = {
     native_menu = false,
     ghost_text = true,
+  },
+
+  performance = {
+    max_view_entries = 100,
   },
 
   preselect = cmp.PreselectMode.Item,
