@@ -11,13 +11,13 @@ Please refer to this [link](https://www.hammerspoon.org).
 ### Quick Application launch commands
 
 | Application Name                |          Chord           |  Activator   |
-| ------------------------------- | :----------------------: | :----------: | --- |
+| ------------------------------- | :----------------------: | :----------: | 
 | `Kittty`                        |       <kbd>⌥</kbd>       | <kbd>t</kbd> |
-| `Finder`                        |       <kbd>⌥</kbd>       | <kbd>/</kbd> |     |
-| `Discord`                       |       <kbd>⌥</kbd>       | <kbd>d</kbd> |     |
-| `Firefox`                       |       <kbd>⌥</kbd>       | <kbd>f</kbd> |     |
+| `Finder`                        |       <kbd>⌥</kbd>       | <kbd>/</kbd> | 
+| `Discord`                       |       <kbd>⌥</kbd>       | <kbd>d</kbd> | 
+| `Firefox`                       |       <kbd>⌥</kbd>       | <kbd>f</kbd> | 
 | `Google Chrome`                 |       <kbd>⌥</kbd>       | <kbd>g</kbd> |
-| `Google Chrome developer tools` |       <kbd>⌘</kbd>       | <kbd>4</kbd> |
+| `Google Chrome Developer Tools` |       <kbd>⌘</kbd>       | <kbd>4</kbd> |
 | `Safari`                        |       <kbd>⌥</kbd>       | <kbd>a</kbd> |
 | `Slack`                         |       <kbd>⌥</kbd>       | <kbd>s</kbd> |
 | `Messages`                      |       <kbd>⌥</kbd>       | <kbd>m</kbd> |
