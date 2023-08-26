@@ -97,6 +97,13 @@ export ZK_NOTEBOOK_DIR="$NOTES_DIR"
 export ZK_NOTEBOOK_DIR=$NOTES_DIR
 export GPG_TTY=`tty`
 
+# Always work in a tmux session if tmux is installed
+if which tmux 2>&1 >/dev/null; then
+  if [ $TERM != "screen-256color" ] && [  $TERM != "screen" ]; then
+    tmux attach -t hack || tmux new -s hack; exit
+  fi
+fi
+
 # Ensure that a non-login, non-interactive shell has a defined environment.
 # (Only once) if it was not sourced before, becuase .zshenv is always sourced
 if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-${HOME}/dotfiles/zsh}/.zprofile" ]]; then
