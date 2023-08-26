@@ -4,8 +4,8 @@
 		"commit": "346ebaba1c537f030505c9e5d92f48c88ee235b4"
 	},
 	"Comment.nvim": {
-		"branch": "jsx",
-		"commit": "55010d5c0c7ce08506fba749c02c01ba9a132e61"
+		"branch": "master",
+		"commit": "0236521ea582747b58869cb72f70ccfa967d2e89"
 	},
 	"FixCursorHold.nvim": {
 		"branch": "master",
@@ -237,7 +237,7 @@
 	},
 	"nvim-cmp": {
 		"branch": "main",
-		"commit": "c4e491a87eeacf0408902c32f031d802c7eafce8"
+		"commit": "51f1e11a89ec701221877532ee1a23557d291dd5"
 	},
 	"nvim-colorizer.lua": {
 		"branch": "master",
