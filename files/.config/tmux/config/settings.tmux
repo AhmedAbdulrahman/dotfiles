@@ -8,9 +8,16 @@ set -g prefix C-Space
 # Dont mess up with other ctrl-a options by pressing ctrl-a twice
 bind C-Space send-prefix
 
-# Default term.
-set-option -g default-terminal "screen-256color"
-# Enable vi style key bindings in command mode.
+if-shell 'test "$TERM" = "xterm-kitty"' \
+  'set -g default-terminal "xterm-kitty"' \
+  'set -g default-terminal "tmux-256color"' # use 256 term for pretty colors
+
+# set Zsh as your default Tmux shell
+set-option -g default-shell /bin/zsh
+
+# Retach userspaces
+set -g default-command "reattach-to-user-namespace -l zsh"
+
 set-option -g mode-keys vi
 set-option -g status-keys vi
 
