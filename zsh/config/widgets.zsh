@@ -40,20 +40,39 @@ bindkey '\ee' fzf-file-edit-widget
 
 # CTRL-R - Paste the selected command from history into the command line
 function fzf-history-widget() {
-    local selected num
-    setopt localoptions noglobsubst noposixbuiltins pipefail 2> /dev/null
-    selected=( $(fc -rl 1 | awk '{FIRST=$1; $1=""; if (!x[$0]++) {$1=FIRST; print $0}}' |
-        FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" $(__fzfcmd)) )
-    local ret=$?
-    if [ -n "$selected" ]; then
-        num=$selected[1]
-        if [ -n "$num" ]; then
-            zle vi-fetch-history -n $num
-        fi
-    fi
-    zle redisplay
-    typeset -f zle-line-init >/dev/null && zle zle-line-init
-    return $ret
+    if ! (( $+commands[fzf] )) {
+    return 1
+  }
+
+  local directory=${${(ps: :)LBUFFER}[-1]}
+  (! [[ -d "$directory" ]]) && unset directory
+
+  local selected=$(
+    find -L ${directory:-'.'} \
+      \( \
+        -fstype 'dev' \
+        -or -fstype 'proc' \
+        -or \( -type d -name 'node_modules' -or -type d -name '.git' \) \
+      \) -prune \
+      -or \( -type 'd' -printf '%p/\n' , -type 'f' -print \) 2>/dev/null \
+    | sed 1d \
+    | ([[ -v directory ]] && cat || cut --bytes=3-) \
+    | fzf \
+      --preview-window='right:60%' \
+      --preview=' \
+        if [ -d {} ]; then; \
+          ls -l --si --almost-all --classify --color=always --group-directories-first --literal {} 2>/dev/null; \
+        else \
+          cat {} 2>/dev/null; \
+        fi \
+      ' \
+  )
+
+  if [[ "$selected" != '' ]] {
+    LBUFFER="${LBUFFER//${directory:-}/}${selected}"
+  }
+
+  zle reset-prompt
 }
 zle     -N   fzf-history-widget
 bindkey '^R' fzf-history-widget
