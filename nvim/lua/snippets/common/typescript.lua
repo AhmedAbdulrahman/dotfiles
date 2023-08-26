@@ -1,16 +1,77 @@
 local luasnip = require('luasnip')
 local fmt = require('luasnip.extras.fmt').fmt
+local rep = require('luasnip.extras').rep
 local docblock = require('snippets.common.docblock')
 
 local d = luasnip.dynamic_node
 local i = luasnip.insert_node
 local s = luasnip.snippet
 local sn = luasnip.snippet_node
+local c = luasnip.choice_node
+local f = luasnip.function_node
+
+local function print_random_emoji()
+  local emoji = {
+    '🦄',
+    '🚧',
+    '📚',
+    '🍯',
+    '📮',
+    '🐌',
+    '🧵',
+    '🧩',
+    '🤖',
+    '🥜',
+    '🍔',
+    '💖',
+    '🍀',
+    '👑',
+    '🔥',
+    '🧤',
+    '🚨',
+    '🚗',
+    '🎃',
+    '💄',
+    '👾',
+    '🧠',
+    '🦷',
+    '🐲',
+    '👒',
+    '🌞',
+    '🌈',
+    '🐝',
+    '🐡',
+    '🌳',
+    '🍇',
+    '🍓',
+    '🥨',
+    '🧀',
+    '🍥',
+    '🏀',
+    '🏓',
+    '🥊',
+    '🎸',
+    '🎯',
+  }
+
+  math.randomseed(os.time())
+  return emoji[math.random(1, 40)]
+end
+
+local console_log = s(
+  'cl',
+  fmt([[console.log('{}  {}', {});]], {
+    f(print_random_emoji),
+    i(1),
+    c(2, { i(3), rep(1) }),
+  })
+)
 
 -- Snippets common to JS and TS.
 local snippets = {
   -- TODO: make these smart about whether to use trailing semi or
   -- not, based on directory (or maybe .editorconfig)
+  console_log,
   s(
     { trig = 'import', dscr = 'import statement' },
     fmt("import {} from '{}{}';", {
