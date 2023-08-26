@@ -12,7 +12,7 @@ local get_nvm_node_dir = function(path)
     for name in iterator do
       local absolute_path = path .. '/' .. name
       local relative_path = vim.fn.fnamemodify(absolute_path, ':.')
-      local version_match = relative_path:match('v16.*')
+      local version_match = relative_path:match('v18.*')
       if version_match ~= nil then
         table.insert(entries, absolute_path)
       end
@@ -52,5 +52,10 @@ require('copilot').setup({
   suggestion = { enabled = false },
   panel = { enabled = false },
   ft_disable = { 'go', 'dap-repl' },
-  copilot_node_command = vim.fn.substitute(vim.fn.system('which node'), '\n', '', '')
+  copilot_node_command = vim.fn.substitute(
+    vim.fn.system('which node'),
+    '\n',
+    '',
+    ''
+  ),
 })
