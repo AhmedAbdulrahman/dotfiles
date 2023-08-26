@@ -14,6 +14,9 @@
 
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath manpath path
+# Syntax highlighting for the shell ZSH
+typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+typeset -gA ZSH_HIGHLIGHT_STYLES
 
 fpath=(
     ${ZDOTDIR:-$HOME}/functions/functions.zwc(N-)
@@ -56,13 +59,12 @@ cdpath=(
 # Set the list of directories that Zsh searches for programs.
 path=(
     ./bin(N-/)
-    ./node_modules/.bin
-    ${ZDOTDIR}/bin(N-/)
+    ${FORGIT_INSTALL_DIR}/bin
+    ${ZDOTDIR:-$HOME}/bin(N-/)
     ${HOME}/.bin/local(N-/)
     ${HOME}/.bin(N-/)
     ${HOME}/.cargo/bin(N-/)
     ${HOME}/.volta/bin(N-/) # https://volta.sh
-    ${XDG_CONFIG_HOME}/yarn/global/node_modules/.bin(N-/)
     ${GOPATH}/bin(N-/)
     ${HOMEBREW_PREFIX:-/opt/homebrew}/opt/coreutils/libexec/gnubin(N-/)
     ${HOMEBREW_PREFIX:-/opt/homebrew}/opt/python/libexec/bin(N-/)
