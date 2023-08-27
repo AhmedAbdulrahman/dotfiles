@@ -80,3 +80,80 @@ export SPROMPT="zsh: correct %F{red}'%R'%f to %F{blue}'%r'%f [%B%Uy%u%bes, %B%Un
 
 # Ensure UID is exported so Docker can use it
 export UID=$UID
+
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
+ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=green,underline'
+ZSH_HIGHLIGHT_STYLES[function]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[command]='fg=green'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=green,underline'
+ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=green,italic'
+ZSH_HIGHLIGHT_STYLES[path]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[path_pathseparator]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[path_prefix]='none'
+ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]='none'
+ZSH_HIGHLIGHT_STYLES[globbing]='bg=black'
+ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='none'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='none'
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[assign]='none,underline'
+ZSH_HIGHLIGHT_STYLES[redirection]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[comment]='fg=black'
+ZSH_HIGHLIGHT_STYLES[arg0]='default'
+ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]='bg=black'	# brackets
+
+# Suggests commands as you type based on history and completions.
+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(vi-forward-word)
+ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(vi-forward-char)
+ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=()
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX='autosuggest-orig-'
+ZSH_AUTOSUGGEST_STRATEGY=('history')
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(
+        history-search-forward
+        history-search-backward
+        history-beginning-search-forward
+        history-beginning-search-backward
+        history-substring-search-up
+        history-substring-search-down
+        up-line-or-beginning-search
+        down-line-or-beginning-search
+        up-line-or-history
+        down-line-or-history
+        accept-line
+    )
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(
+        orig-\*
+        beep
+        run-help
+        set-local-history
+        which-command
+        yank
+        yank-pop
+    )
+
+forgit_log=log
+forgit_diff=diff
+forgit_add=add
+forgit_reset_head=grh
+forgit_ignore=ignore
+forgit_restore=cof
+# forgit_stash_show=stash, Create custom stash function
+FORGIT_FZF_DEFAULT_OPTS="
+--exact
+--border
+--cycle
+--reverse
+--height '100%'
+--preview-window 'down:20:wrap'
+"
