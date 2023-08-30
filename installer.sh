@@ -73,12 +73,6 @@ print_prompt() {
       clone_dotfiles
       break
       ;;
-    "Symlink files")
-      install_package_manager
-	  clone_dotfiles
-      symlink_files
-      break
-      ;;
     "Install macOS Apps")
       install_package_manager
 	  clone_dotfiles
@@ -129,12 +123,6 @@ on_start() {
 }
 
 install_cli_tools() {
-  # Install Cli Tools.
-  # Note:There's not need to install XCode tools on Linux
-  if [ `uname` == 'Linux' ]; then
-    return
-  fi
-
   print_info "Trying to detect installed Command Line Tools..."
 
   install_xcode_command_line_tools
@@ -142,12 +130,22 @@ install_cli_tools() {
   set_xcode_developer_directory
   agree_with_xcode_licence
 
-	if [[ "$ARCH" == 'arm64' ]]; then
-		print_info "Installing Rosetta"
-		sudo -u "$SUDO_USER" softwareupdate --install-rosetta --agree-to-license
-	fi
+  if [[ "$ARCH" == 'arm64' ]]; then
+     print_info "Installing Rosetta"
+     sudo -u "$SUDO_USER" softwareupdate --install-rosetta --agree-to-license
+  fi
 
   finish
+}
+
+install_nix() {
+	if command -v nix >/dev/null; then
+		print_info "Nix already installed"
+	else
+		print_success "Installing Nix"
+		true | sh <(curl -L https://nixos.org/nix/install)
+	fi
+
 }
 
 install_homebrew() {
@@ -213,10 +211,10 @@ install_homebrew_linux() {
 }
 
 install_package_manager() {
-	install_cli_tools
-
 	if [ "$(uname)" == "Darwin" ]; then
+		install_cli_tools
 		install_homebrew
+		install_nix
 	fi
 
 	if [ `uname` == 'Linux' ]; then
@@ -320,10 +318,6 @@ clone_dotfiles() {
 
     print_info "Cloning Ahmed's dotfiles"
     git clone --recursive "$GITHUB_REPO_URL_BASE.git" $DOTFILES
-
-    # Setup repo origin & mirrors
-    cd "$DOTFILES" &&
-      git remote set-url origin git@github.com:AhmedAbdulrahman/dotfiles.git
 
   else
     print_info "You already have Ahmed's dotfiles installed. Skipping..."
