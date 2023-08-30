@@ -103,6 +103,7 @@ main() {
   brew_install "W3M -> A Pager/text based browser" "w3m"
   brew_install "Htop -> Improved top (interactive process viewer)" "htop"
   brew_install "Ffmpeg -> Play, record, convert, and stream audio and video" "ffmpeg"
+  brew_install "Spaceship -> Minimalistic, powerful and extremely customizable Zsh prompt" "spaceship"
   brew_install "LSD" "lsd"
   brew_install "Streamlink -> Streamlink is a command-line utility which pipes video streams from various services into a video player" "streamlink"
   brew_install "YAML Lint" "yamllint"

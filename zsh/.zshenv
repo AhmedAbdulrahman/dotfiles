@@ -26,6 +26,8 @@ export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 # export ZSH=$HOME/.oh-my-zsh
 
+export NVM_DIR="${HOME}/.nvm"
+
 # ---------------------------------------------
 # Homebrew
 # ---------------------------------------------
@@ -112,4 +114,12 @@ fi
 
 if [[ -f ${HOME}/.zshenv.local ]]; then
     source ${HOME}.zshenv.local
+fi
+
+if [[ -f /opt/homebrew/opt/spaceship/Cellar/spaceship.zsh ]]; then
+    source /opt/homebrew/Cellar/spaceship.zsh
+fi
+
+if [[ -d $CARGO_HOME ]]; then
+	source $CARGO_HOME/env
 fi

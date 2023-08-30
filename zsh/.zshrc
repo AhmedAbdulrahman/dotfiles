@@ -34,9 +34,6 @@ fpath=(
     autoload -Uz ${ZDOTDIR:-$HOME}/functions/^*.zwc*
     autoload -Uz ${ZDOTDIR:-$HOME}/completions/^*.zwc*
 
-    autoload -U promptinit; promptinit
-    # Set Spaceship ZSH as a prompt
-    prompt spaceship
 }
 
 # Get the original manpath, then modify it.
@@ -59,6 +56,7 @@ cdpath=(
 # Set the list of directories that Zsh searches for programs.
 path=(
     ./bin(N-/)
+	${HOME}/.zplug/bin(N-/)
     ${FORGIT_INSTALL_DIR}/bin
     ${ZDOTDIR:-$HOME}/bin(N-/)
     ${HOME}/.bin/local(N-/)
@@ -144,3 +142,7 @@ else
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+[ -d /opt/homebrew/Cellar/spaceship ] && source /opt/homebrew/Cellar/spaceship/4.14.0/spaceship.zsh
+
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
