@@ -142,7 +142,3 @@ else
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-[ -d /opt/homebrew/Cellar/spaceship ] && source /opt/homebrew/Cellar/spaceship/4.14.0/spaceship.zsh
-
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm

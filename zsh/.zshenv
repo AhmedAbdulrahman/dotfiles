@@ -5,6 +5,8 @@
 # `zprof` on .zshrc
 # zmodload zsh/zprof
 
+ZSH_DISABLE_COMPFIX=true
+
 # set -o noclobber
 
 # True color
@@ -26,7 +28,8 @@ export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 # export ZSH=$HOME/.oh-my-zsh
 
-export NVM_DIR="${HOME}/.nvm"
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 # ---------------------------------------------
 # Homebrew
@@ -116,10 +119,8 @@ if [[ -f ${HOME}/.zshenv.local ]]; then
     source ${HOME}.zshenv.local
 fi
 
-if [[ -f /opt/homebrew/opt/spaceship/Cellar/spaceship.zsh ]]; then
-    source /opt/homebrew/Cellar/spaceship.zsh
-fi
-
 if [[ -d $CARGO_HOME ]]; then
 	source $CARGO_HOME/env
 fi
+
+source $HOMEBREW_PREFIX/opt/spaceship/spaceship.zsh
