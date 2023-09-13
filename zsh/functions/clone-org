@@ -1,0 +1,37 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Sync Git: Try to sync all repo default branches.
+# Usually its main or master.
+
+if [[ $# -eq 0 ]]; then
+    echo "Usage: clone-org <organization-name> <directory> <github-token>"
+    return 1
+else
+    ORG="$1" # Your organization
+    CLONE_PATH="$2" # Path in your filesystem where you want to clone the repos
+    PER_PAGE=100 # per_page maxes out at 100
+    TOKEN="$3" # Set your token from GH
+
+    for ((PAGE=1; ; PAGE+=1)); do
+      # Page 0 and 1 are the same
+      # Change authorization method as needed
+      INPUT=$(curl -H "Authorization: token $TOKEN" -s "https://api.github.com/orgs/$ORG/repos?per_page=$PER_PAGE&page=$PAGE" | jq -r ".[].clone_url")
+      if [[ -z "$INPUT" ]]; then
+        echo "All repos processed, stopped at page=$PAGE"
+        exit
+      fi
+      while read REPO_URL ; do
+        echo $REPO_URL
+        temp=${REPO_URL##*/}
+        repo_name=${temp%.*}
+        gh repo clone "$REPO_URL" "$CLONE_PATH/$repo_name" -- -q 2>/dev/null || (
+            cd "$CLONE_PATH/$repo_name"
+            # Handle case where local checkout is on a non-main/master branch
+            # - ignore checkout errors because some repos may have zero commits, 
+            # so no main or master
+            git checkout -q main 2>/dev/null || true
+            git checkout -q master 2>/dev/null || true
+            git pull -q
+        )
+      done < <(echo "$INPUT")
+    done
+fi
