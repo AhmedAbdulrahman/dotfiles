@@ -1,0 +1,9 @@
+# vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Sleep the machine
+
+if [[ "$(uname -s)" != 'Darwin' ]]; then
+  echo 'Sorry, this script only works on macOS'
+  exit 1
+fi
+
+exec sudo shutdown -s now
