@@ -1,0 +1,17 @@
+# vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Outputs the URLs for all your open Chrome tabs so you can snapshot them
+
+if [[ "$(uname -s)" != 'Darwin' ]]; then
+  echo 'Sorry, this script only works on macOS'
+  exit 1
+fi
+
+# shellcheck disable=SC2046
+for win in $(seq 0 $(osascript -e 'tell application "Chrome" to get count every window'))
+do
+  for tab in $(seq 0 $(osascript -e "tell application \"Chrome\" to get count every tab of window ${win}"))
+  do
+    echo -n "win $win tab $tab: "
+    osascript -e "tell application \"Chrome\" to get URL of tab $tab of window $win"
+  done
+done
