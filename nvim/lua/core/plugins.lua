@@ -977,9 +977,9 @@ return {
         desc = 'move to next conflict',
       },
       {
-        '<leader>gco',
+        '<leader>gcc',
         '<cmd>GitConflictChooseOurs<CR>',
-        desc = 'choose ours',
+        desc = 'choose current',
       },
       {
         '<leader>gcp',
@@ -987,9 +987,9 @@ return {
         desc = 'move to prev conflict',
       },
       {
-        '<leader>gct',
+        '<leader>gci',
         '<cmd>GitConflictChooseTheirs<CR>',
-        desc = 'choose theirs',
+        desc = 'choose incoming',
       },
     },
   },
