@@ -240,6 +240,7 @@ return {
           require('copilot_cmp').setup()
         end,
       },
+	  "petertriho/cmp-git"
     },
     config = function()
       require('plugins.cmp')
@@ -344,9 +345,9 @@ return {
   {
     'antosha417/nvim-lsp-file-operations',
     event = 'LspAttach',
-    requires = {
-      { 'nvim-lua/plenary.nvim' },
-      { 'kyazdani42/nvim-tree.lua' },
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-tree/nvim-tree.lua" },
     },
     config = function()
       require('lsp-file-operations').setup()
@@ -478,6 +479,8 @@ return {
   },
   {
     'kylechui/nvim-surround',
+	version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
     config = function()
       require('nvim-surround').setup({})
     end,
@@ -498,7 +501,13 @@ return {
       'nvim-treesitter/nvim-treesitter',
       'smoka7/hydra.nvim',
     },
-    config = true,
+    opts = {
+      hint_config = {
+        border = NvimConfig.ui.float.border or "rounded",
+        position = 'bottom',
+        show_name = false,
+      }
+    },
     keys = {
       {
         '<leader>j',
@@ -557,7 +566,11 @@ return {
   {
     'folke/flash.nvim',
     event = 'VeryLazy',
-    opts = {},
+    opts = {
+      char = {
+        keys = { "f", "F", "t", "T" },
+      }
+    },
     keys = {
       {
         's',
@@ -668,7 +681,6 @@ return {
       },
     },
   },
-  { 'antoinemadec/FixCursorHold.nvim' }, -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
   {
     'rcarriga/nvim-notify',
     config = function()
@@ -724,6 +736,8 @@ return {
   { 'potatoesmaster/i3-vim-syntax' },
   {
     'lukas-reineke/indent-blankline.nvim',
+	event = "BufReadPre",
+    main = "ibl",
     config = function()
       require('plugins.indent')
     end,
