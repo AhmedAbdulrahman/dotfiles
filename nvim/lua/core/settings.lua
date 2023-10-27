@@ -11,7 +11,7 @@ local au = require('utils.au')
 local root = env.USER == 'root'
 
 g.mapleader = ' ' --- Map leader key to SPC
-g.maplocalleader = ','
+g.maplocalleader = ',' -- Map local leader key to comma
 g.speeddating_no_mappings = 1 --- Disable default mappings for speeddating
 
 -- opt. them directly if they are installed, otherwise disable them. To avoid the then

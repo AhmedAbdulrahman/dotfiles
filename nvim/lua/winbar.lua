@@ -87,4 +87,87 @@ M.gps = function()
   end
 end
 
+vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
+  callback = function()
+    local winbar_filetype_exclude = {
+      "help",
+      "startify",
+      "dashboard",
+      "packer",
+      "neogitstatus",
+      "NvimTree",
+      "Trouble",
+      "alpha",
+      "lir",
+      "Outline",
+      "spectre_panel",
+      "TelescopePrompt",
+      "DressingInput",
+      "DressingSelect",
+      "neotest-summary",
+      "toggleterm",
+      "octo",
+    }
+
+    if vim.api.nvim_win_get_config(0).relative ~= "" then
+      return
+    end
+    if vim.bo.filetype == "dapui_watches" then
+      local hl_group = "NvimConfigSecondary"
+      vim.opt_local.winbar = " " .. "%#" .. hl_group .. "#" .. require("utils.icons").watch .. "Watches" .. "%*"
+      return
+    end
+    if vim.bo.filetype == "dapui_stacks" then
+      local hl_group = "NvimConfigSecondary"
+      vim.opt_local.winbar = " " .. "%#" .. hl_group .. "#" .. require("utils.icons").git .. "Stacks" .. "%*"
+      return
+    end
+    if vim.bo.filetype == "dapui_breakpoints" then
+      local hl_group = "NvimConfigSecondary"
+      vim.opt_local.winbar = " " .. "%#" .. hl_group .. "#" .. require("utils.icons").bigCircle .. "Breakpoints" .. "%*"
+      return
+    end
+    if vim.bo.filetype == "dapui_scopes" then
+      local hl_group = "NvimConfigSecondary"
+      vim.opt_local.winbar = " " .. "%#" .. hl_group .. "#" .. require("utils.icons").telescope .. "Scopes" .. "%*"
+      return
+    end
+    if vim.bo.filetype == "dap-repl" then
+      local hl_group = "NvimConfigSecondary"
+      vim.opt_local.winbar = " "
+          .. "%#"
+          .. hl_group
+          .. "#"
+          .. require("utils.icons").consoleDebug
+          .. "Debug Console"
+          .. "%*"
+      return
+    end
+    if vim.bo.filetype == "dapui_console" then
+      local hl_group = "NvimConfigSecondary"
+      vim.opt_local.winbar = " " .. "%#" .. hl_group .. "#" .. require("utils.icons").console .. "Console" .. "%*"
+      return
+    end
+    if vim.tbl_contains(winbar_filetype_exclude, vim.bo.filetype) then
+      vim.opt_local.winbar = nil
+      return
+    end
+    if vim.bo.filetype == "GitBlame" then
+      local hl_group = "NvimConfigSecondary"
+      vim.opt_local.winbar = " " .. "%#" .. hl_group .. "#" .. require("utils.icons").git .. "Blame" .. "%*"
+      return
+    end
+    local winbar_present, winbar = pcall(require, "internal.winbar")
+    if not winbar_present or type(winbar) == "boolean" then
+      vim.opt_local.winbar = nil
+      return
+    end
+    local value = winbar.gps()
+    if value == nil then
+      value = winbar.filename()
+    end
+    vim.opt_local.winbar = value
+  end,
+})
+
 return M

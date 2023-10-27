@@ -54,7 +54,7 @@ wk.setup({
   hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', 'call', 'lua', '^:', '^ ' }, -- hide mapping boilerplate
   show_help = true, -- show help message on the command line when the popup is visible
   -- triggers = "auto", -- automatically setup triggers
-  triggers = { '<leader>' }, -- or specify a list manually
+  triggers = { '<leader>', '<LocalLeader>'}, -- or specify a list manually
   triggers_blacklist = {
     -- list of mode / prefixes that should never be hooked by WhichKey
     -- this is mostly relevant for key maps that start with a native binding
@@ -184,6 +184,7 @@ local normal_mode_mappings = {
     h = {
       name = 'Hunk',
     },
+	i = { '<cmd>Octo issue list<CR>', 'Issues List' },
     l = {
       name = 'Log',
       A = {
@@ -204,6 +205,8 @@ local normal_mode_mappings = {
       },
     },
     m = { 'blame line' },
+	S = { '<cmd>Telescope git_status<CR>',                                'telescope status' },
+    p = { '<cmd>Octo pr list<CR>',                                        'Pull Requests List' },
     w = {
       name = 'Worktree',
       w = 'worktrees',

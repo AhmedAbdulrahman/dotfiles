@@ -1015,6 +1015,20 @@ return {
     end,
   },
   {
+    "pwntester/octo.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+    cmd = {
+      "Octo",
+    },
+    config = function()
+      require('plugins.git.octo')
+    end
+  },
+  {
     'ruifm/gitlinker.nvim',
     config = function()
       require('plugins.gitlinker')
