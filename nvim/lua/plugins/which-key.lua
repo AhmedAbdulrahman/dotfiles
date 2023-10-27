@@ -74,7 +74,7 @@ local opts = {
 }
 
 local visual_opts = {
-  mode = 'v', -- NORMAL mode
+  mode = 'v', -- VISUAL mode
   prefix = '<leader>',
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
   silent = true, -- use `silent` when creating keymaps
@@ -145,16 +145,23 @@ local normal_mode_mappings = {
   },
 
   d = {
-    name = 'Debug',
+	name = 'Debug',
     a = { 'attach' },
     b = { 'breakpoint' },
     c = { 'continue' },
+    C = { 'close UI' },
     d = { 'continue' },
     h = { 'visual hover' },
     i = { 'step into' },
     o = { 'step over' },
     O = { 'step out' },
+    r = { 'repl' },
+    s = { 'scopes' },
     t = { 'terminate' },
+    U = { 'open UI' },
+    v = { 'log variable' },
+    V = { 'log variable above' },
+    w = { 'watches' },
   },
 
   g = {
