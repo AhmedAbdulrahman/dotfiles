@@ -62,6 +62,7 @@ return function(opts)
       return flatten({
         args,
         {
+		  '-F',
           '--color=never',
           '--no-heading',
           '--with-filename',
