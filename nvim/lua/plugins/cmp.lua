@@ -14,7 +14,20 @@ if not snip_status_ok then
   return
 end
 
-local has_copilot, copilot_cmp = pcall(require, 'copilot_cmp.comparators')
+local cmp_git_ok, cmp_git = pcall(require, "cmp_git")
+if not cmp_git_ok then
+  print("Failed to load cmp_git")
+  return
+end
+
+cmp_git.setup()
+
+local has_copilot, copilot_cmp = pcall(require, "copilot_cmp.comparators")
+if not has_copilot then
+	print("Failed to load copilot_cmp.comparators")
+  return
+end
+
 
 require('luasnip/loaders/from_vscode').lazy_load()
 
@@ -289,6 +302,11 @@ cmp.setup({
 
   -- You should specify your *installed* sources.
   sources = {
+	{
+      name = "copilot",
+      priority = 10,
+      max_item_count = 3,
+    },
     {
       name = 'nvim_lsp',
       priority = 10,
@@ -298,9 +316,13 @@ cmp.setup({
     { name = 'nvim_lsp_signature_help', priority = 9 },
     { name = 'npm', priority = 9 },
     { name = 'codeium', priority = 9 },
-    { name = 'copilot', priority = 9 },
+	{ name = "git", priority = 7 },
     { name = 'cmp_tabnine', priority = 7 },
-    { name = 'luasnip', priority = 7 },
+    {
+		name = "luasnip",
+		priority = 7,
+		max_item_count = 5,
+	 },
     {
       name = 'buffer',
       priority = 7,
@@ -320,8 +342,8 @@ cmp.setup({
     comparators = {
       deprioritize_snippet,
       cmp.config.compare.exact,
-      has_copilot and copilot_cmp.prioritize or function() end,
-      has_copilot and copilot_cmp.score or function() end,
+      copilot_cmp.prioritize or function() end,
+      copilot_cmp.score or function() end,
       cmp.config.compare.offset,
       cmp.config.compare.score,
       cmp.config.compare.recently_used,
