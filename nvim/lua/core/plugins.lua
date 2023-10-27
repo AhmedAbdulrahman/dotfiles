@@ -266,6 +266,16 @@ return {
     ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact' },
   },
   {
+    "MaximilianLloyd/tw-values.nvim",
+    keys = {
+      { "<Leader>cv", "<CMD>TWValues<CR>", desc = "Tailwind CSS values" },
+    },
+    opts = {
+      border = NvimConfig.ui.float.border or "rounded", -- Valid window border style,
+      show_unknown_classes = true                   -- Shows the unknown classes popup
+    }
+  },
+  {
     'uga-rosa/ccc.nvim',
     lazy = true,
     cmd = { 'CccPick' },
