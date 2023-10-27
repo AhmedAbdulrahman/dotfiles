@@ -19,8 +19,15 @@ return function(opts)
       ['styles'] = '{styles.tsx,styles.ts,styles.js,*.styles.tsx,*.styles.ts,*.styles.js}',
       ['test'] = '*{.test.tsx,.test.ts,.test.js,-test.tsx,-test.ts,-test.js}',
       ['tests'] = '*{.test.tsx,.test.ts,.test.js,-test.tsx,-test.ts,-test.js}',
-      ['ts'] = '*.{ts,tsx}',
-      ['tsx'] = '*.tsx',
+      ["typescript"] = "*.ts",
+        ["ts"] = {
+          "*.{ts,tsx}",
+          "!*{.test.tsx,.test.ts,.test.js,-test.tsx,-test.ts,-test.js}"
+        },
+        ["tsx"] = {
+          "*.tsx",
+          "!*{.test.tsx,.test.ts,.test.js,-test.tsx,-test.ts,-test.js}"
+        },
       ['xml'] = '*.xml',
     }
   opts.pattern = opts.pattern or '%s'
