@@ -20,59 +20,15 @@ local on_attach = function(client, bufnr)
   require('illuminate').on_attach(client)
 end
 
-local filetypes = {
-  'aspnetcorerazor',
-  'astro',
-  'astro-markdown',
-  'blade',
-  'django-html',
-  'edge',
-  'eelixir',
-  'ejs',
-  'erb',
-  'eruby',
-  'gohtml',
-  'haml',
-  'handlebars',
-  'hbs',
-  'html',
-  'html-eex',
-  'jade',
-  'leaf',
-  'liquid',
-  'markdown',
-  'mdx',
-  'mustache',
-  'njk',
-  'nunjucks',
-  'php',
-  'razor',
-  'slim',
-  'twig',
-  'css',
-  'less',
-  'postcss',
-  'sass',
-  'scss',
-  'stylus',
-  'sugarss',
-  'javascript',
-  'javascriptreact',
-  'reason',
-  'rescript',
-  'typescript',
-  'typescriptreact',
-  'vue',
-  'svelte',
-}
+local filetypes = { "html", "mdx", "javascript", "javascriptreact", "typescriptreact", "vue", "svelte" }
 
 local init_options = {
-  userLanguages = {
-    eelixir = 'html-eex',
-    eruby = 'erb',
-    ['javascript.jsx'] = 'javascriptreact',
-    ['typescript.tsx'] = 'typescriptreact',
-  },
+	userLanguages = {
+		eelixir = "html-eex",
+		eruby = "erb",
+		['javascript.jsx'] = 'javascriptreact',
+		['typescript.tsx'] = 'typescriptreact',
+	},
 }
 
 local settings = {
@@ -96,6 +52,7 @@ local settings = {
         { 'clsx\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
         { 'classnames\\(([^)]*)\\)', "'([^']*)'" },
 		{ "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+		{ "cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
       },
     },
     validate = true,
