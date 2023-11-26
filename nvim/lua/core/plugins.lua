@@ -213,12 +213,7 @@ return {
         'L3MON4D3/LuaSnip',
         dependencies = 'rafamadriz/friendly-snippets',
         config = function()
-          require('luasnip.loaders.from_vscode').lazy_load({
-            -- I maintain my own snippets for these languages
-            exclude = {
-              'rust',
-            },
-          })
+			require('plugins.luasnip')
         end,
       },
       'hrsh7th/cmp-nvim-lsp-signature-help',
