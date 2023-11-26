@@ -15,6 +15,7 @@ require('lazy').setup('core.plugins', {
   defaults = { lazy = true },
   install = { colorscheme = { 'aylin' } },
   checker = { enabled = true },
+  concurrency = 5,
   performance = {
     rtp = {
       disabled_plugins = {
