@@ -11,3 +11,7 @@ _G.R = function(name)
   _G.RELOAD(name)
   return require(name)
 end
+
+_G.GIT_CWD = function()
+  return vim.fn.systemlist("git rev-parse --show-toplevel")[1] .. "/"
+end
