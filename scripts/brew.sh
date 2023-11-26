@@ -41,6 +41,8 @@ main() {
   brew_install "GitHub CLI" "gh"
   brew_install "Git Delta" "git-delta"
   brew_install "Git Tig" "tig"
+  brew_install "LazyGit" "jesseduffield/lazygit/lazygit"
+  brew_install "Git Large File Storage" "git-lfs"
   brew_install "Exiftool" "exiftool"
   brew_install "Glow -> Render markdown on the CLI, with pizzazz!" "glow"
 #   brew_install "Python3" "python3"
