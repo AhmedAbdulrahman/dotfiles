@@ -1,0 +1,20 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Simple tool to remove a git repo from somewhere. Just run `git deinit`
+
+unalias unixtime 2> /dev/null
+
+REPO_PATH=$(git rev-parse --show-toplevel)
+
+if [[ -d "${REPO_PATH}/.git" ]]; then
+    read -p "De-initialize this git repo? [y/N]" -n 1 -r
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo
+        echo "Removing ${REPO_PATH}/.git…"
+        rm -rf "${REPO_PATH}/.git"
+        echo "Done ✓"
+    else
+        echo "Aborting…"
+    fi
+else
+    echo "Not in a git repository"
+fi

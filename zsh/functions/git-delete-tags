@@ -1,0 +1,18 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Delete all git remote tags
+
+unalias git-delete-tags 2> /dev/null
+
+# Exit if git is not installed
+(( $+commands[git] )) || return 0
+
+# Taken from https://gist.github.com/okunishinishi/9424779
+
+#Delete local tags.
+git tag -l | xargs git tag -d
+#Fetch remote tags.
+git fetch
+#Delete remote tags.
+git tag -l | xargs git push --delete origin
+#Delete local tags.
+git tag -l | xargs git tag -d

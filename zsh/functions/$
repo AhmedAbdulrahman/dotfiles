@@ -1,0 +1,11 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Ever pasted "$ somecommand" into the terminal and gotten this error?
+# -bash: $: command not found
+
+# Begone, silly errors! Lazy copy + paste forever!! ETCETERA!!!!
+#
+
+unalias $ 2> /dev/null
+
+echo 'Quit pasting in commands from the internet, you lazy bum.'
+"$@"

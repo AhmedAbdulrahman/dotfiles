@@ -1,0 +1,15 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Nukes a branch locally and on the origin remote.
+
+unalias git-nuke 2> /dev/null
+
+# Exit if git is not installed
+(( $+commands[git] )) || return 0
+
+if [[ -z "$1" ]]; then
+    echo "USAGE: git-nuke Branch name"
+    return 1
+fi
+
+git branch -D "$1"
+git push origin :"$1"
