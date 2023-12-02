@@ -1,3 +1,6 @@
+-- luacheck: globals P
+
+-- Requires
 local lspkind = require('lspkind')
 local types = require('cmp.types')
 
@@ -5,33 +8,35 @@ local _, tabnine = pcall(require, 'cmp_tabnine.config')
 
 local cmp_status_ok, cmp = pcall(require, 'cmp')
 if not cmp_status_ok then
-  print('Failed to load cmp')
+  P('Failed to load cmp')
   return
 end
 
 local snip_status_ok, luasnip = pcall(require, 'luasnip')
 if not snip_status_ok then
-  print('Failed to load luasnip')
+  P('Failed to load luasnip')
   return
 end
 
 local cmp_git_ok, cmp_git = pcall(require, 'cmp_git')
 if not cmp_git_ok then
-  print('Failed to load cmp_git')
+  P('Failed to load cmp_git')
   return
 end
 
 cmp_git.setup()
 
-local copilot_comparators_status_ok, copilot_cmp_comparators = pcall(require, 'copilot_cmp.comparators')
+local copilot_comparators_status_ok, copilot_cmp_comparators = pcall(require, "copilot_cmp.comparators")
 if not copilot_comparators_status_ok then
-  print('Failed to load copilot_cmp.comparators')
+  P("Failed to load copilot_cmp.comparators")
   return
 end
 
+require("luasnip/loaders/from_vscode").lazy_load()
 
-require('luasnip/loaders/from_vscode').lazy_load()
-
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ Utils                                                    │
+-- ╰──────────────────────────────────────────────────────────╯
 local check_backspace = function()
   local col = vim.fn.col('.') - 1
   return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
@@ -141,42 +146,22 @@ cmp.setup({
       luasnip.lsp_expand(args.body)
     end,
   },
-
-  -- You must set mapping if you want.
-  mapping = {
-    ['<C-j>'] = cmp.mapping.select_next_item({
-      behavior = cmp.SelectBehavior.Insert,
-    }),
-    ['<C-k>'] = cmp.mapping.select_prev_item({
-      behavior = cmp.SelectBehavior.Insert,
-    }),
-    ['<Down>'] = cmp.mapping.select_next_item({
-      behavior = cmp.SelectBehavior.Select,
-    }),
-    ['<Up>'] = cmp.mapping.select_prev_item({
-      behavior = cmp.SelectBehavior.Select,
-    }),
+  mapping = cmp.mapping.preset.insert({
+    ['<C-k>'] = cmp.mapping.select_prev_item(),
+    ['<C-j>'] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-2), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(2), { 'i', 'c' }),
-    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete({
-        config = {
-          sources = {
-            { name = 'copilot' },
-          },
-        },
-      }),
-      { 'i', 'c' }
-    ),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    ['<C-e>'] = cmp.mapping({
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    }),
     ['<CR>'] = cmp.mapping.confirm({
       -- this is the important line for Copilot
       behavior = cmp.ConfirmBehavior.Replace,
       select = NvimConfig.plugins.completion.select_first_on_enter,
     }),
-    ['<C-e>'] = cmp.mapping({
-      i = cmp.mapping.abort(),
-      c = cmp.mapping.close(),
-    }),
-    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ['<Tab>'] = cmp.mapping(function(fallback)
 		if cmp.visible() then
 			cmp.select_next_item()
@@ -197,44 +182,40 @@ cmp.setup({
 		}
 	),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
-		if cmp.visible() then
-			cmp.select_prev_item()
-		elseif luasnip.jumpable(-1) then
-			luasnip.jump(-1)
-		else
-			fallback()
-		end
-		end, {
-		'i',
-		's',
-		}
-	),
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, {
+      'i',
+      's',
+    }),
     ['<C-l>'] = cmp.mapping(function(fallback)
-		if luasnip.expandable() then
-			luasnip.expand()
-		elseif luasnip.expand_or_jumpable() then
-			luasnip.expand_or_jump()
-		else
-			fallback()
-		end
-		end, {
-		'i',
-		's',
-		}
-	),
+      if luasnip.expandable() then
+        luasnip.expand()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, {
+      'i',
+      's',
+    }),
     ['<C-h>'] = cmp.mapping(function(fallback)
-		if luasnip.jumpable(-1) then
-			luasnip.jump(-1)
-		else
-			fallback()
-		end
-		end, {
-		'i',
-		's',
-		}
-	),
-  },
-
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, {
+      'i',
+      's',
+    }),
+  }),
   formatting = {
     format = function(entry, vim_item)
       -- Set the highlight group for the Codeium source
@@ -347,7 +328,6 @@ cmp.setup({
   },
 
   experimental = {
-    -- native_menu = false,
     ghost_text = true,
   },
 
@@ -359,28 +339,7 @@ cmp.setup({
 })
 
 -- ╭──────────────────────────────────────────────────────────╮
--- │ Cmdline                                                  │
--- ╰──────────────────────────────────────────────────────────╯
-
--- `/` cmdline setup.
--- cmp.setup.cmdline('/', {
---   mapping = cmp.mapping.preset.cmdline(),
---   sources = {
---     { name = 'buffer' },
---   },
--- })
--- -- `:` cmdline setup.
--- cmp.setup.cmdline(':', {
---   mapping = cmp.mapping.preset.cmdline(),
---   sources = cmp.config.sources({
---     { name = 'path' },
---   }, {
---     { name = 'cmdline' },
---   }),
--- })
-
--- ╭──────────────────────────────────────────────────────────╮
--- │ tabnine                                                  │
+-- │ Tabnine Setup                                            │
 -- ╰──────────────────────────────────────────────────────────╯
 
 if NvimConfig.plugins.ai.tabnine.enabled then

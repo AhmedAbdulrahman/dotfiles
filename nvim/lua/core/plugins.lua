@@ -751,7 +751,7 @@ return {
   { 'potatoesmaster/i3-vim-syntax' },
   {
     'lukas-reineke/indent-blankline.nvim',
-	event = "BufReadPre",
+	  event = "BufReadPre",
     main = "ibl",
     config = function()
       require('plugins.indent')

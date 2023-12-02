@@ -1,9 +1,9 @@
-local present_dapui, dapui = pcall(require, 'dapui')
-local present_dap, dap = pcall(require, 'dap')
-local present_virtual_text, dap_vt = pcall(require, 'nvim-dap-virtual-text')
+local present_dapui, dapui = pcall(require, "dapui")
+local present_dap, dap = pcall(require, "dap")
+local present_virtual_text, dap_vt = pcall(require, "nvim-dap-virtual-text")
 local present_dap_utils, dap_utils = pcall(require, "dap.utils")
-
-local _, shade = pcall(require, 'shade')
+-- local _, shade = pcall(require, "shade")
+local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 if not present_dapui or not present_dap or not present_virtual_text or not present_dap_utils then
@@ -11,7 +11,9 @@ if not present_dapui or not present_dap or not present_virtual_text or not prese
   return
 end
 
--- DAP Virtual Text
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ DAP Virtual Text Setup                                   │
+-- ╰──────────────────────────────────────────────────────────╯
 dap_vt.setup({
   enabled = true,                        -- enable this plugin (the default)
   enabled_commands = true,               -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
@@ -29,21 +31,23 @@ dap_vt.setup({
   virt_text_win_col = nil,               -- position the virtual text at a fixed window column (starting from the first text column) ,
 })
 
--- DAP UI
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ DAP UI Setup                                             │
+-- ╰──────────────────────────────────────────────────────────╯
 dapui.setup({
-  icons = { expanded = '▾', collapsed = '▸' },
+  icons = { expanded = "▾", collapsed = "▸" },
   mappings = {
     -- Use a table to apply multiple mappings
-    expand = { '<CR>', '<2-LeftMouse>' },
-    open = 'o',
-    remove = 'd',
-    edit = 'e',
-    repl = 'r',
-    toggle = 't',
+    expand = { "<CR>", "<2-LeftMouse>" },
+    open = "o",
+    remove = "d",
+    edit = "e",
+    repl = "r",
+    toggle = "t",
   },
   -- Expand lines larger than the window
   -- Requires >= 0.7
-  expand_lines = vim.fn.has('nvim-0.7'),
+  expand_lines = vim.fn.has("nvim-0.7"),
   -- Layouts define sections of the screen to place windows.
   -- The position can be "left", "right", "top" or "bottom".
   -- The size specifies the height/width depending on position. It can be an Int
@@ -55,29 +59,29 @@ dapui.setup({
     {
       elements = {
         -- Elements can be strings or table with id and size keys.
-        { id = 'scopes', size = 0.25 },
-        'breakpoints',
-        'stacks',
-        'watches',
+        { id = "scopes", size = 0.25 },
+        "breakpoints",
+        "stacks",
+        "watches",
       },
       size = 40, -- 40 columns
-      position = 'left',
+      position = "left",
     },
     {
       elements = {
-        'repl',
-        'console',
+        "repl",
+        "console",
       },
       size = 0.25, -- 25% of total lines
-      position = 'bottom',
+      position = "bottom",
     },
   },
   floating = {
     max_height = nil,                             -- These can be integers or a float between 0 and 1.
     max_width = nil,                              -- Floats will be treated as percentage of your screen.
-    border = NvimConfig.ui.float.border or 'rounded', -- Border style. Can be "single", "double" or "rounded"
+    border = NvimConfig.ui.float.border or "rounded", -- Border style. Can be "single", "double" or "rounded"
     mappings = {
-      close = { 'q', '<Esc>' },
+      close = { "q", "<Esc>" },
     },
   },
   windows = { indent = 1 },
@@ -86,104 +90,67 @@ dapui.setup({
   },
 })
 
--- DAP Setup
-dap.set_log_level('TRACE')
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ DAP Setup                                                │
+-- ╰──────────────────────────────────────────────────────────╯
+dap.set_log_level("TRACE")
 
 -- Automatically open UI
-dap.listeners.after.event_initialized['dapui_config'] = function()
+dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
-  shade.toggle()
+  -- shade.toggle()
 end
-dap.listeners.before.event_terminated['dapui_config'] = function()
+dap.listeners.after.event_terminated["dapui_config"] = function()
   dapui.close()
-  shade.toggle()
+  -- shade.toggle()
 end
-dap.listeners.before.event_exited['dapui_config'] = function()
+dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
-  shade.toggle()
+  -- shade.toggle()
 end
 
 -- Enable virtual text
 vim.g.dap_virtual_text = true
 
--- Icons
-vim.fn.sign_define(
-  'DapBreakpoint',
-  { text = '🟥', texthl = '', linehl = '', numhl = '' }
-)
-vim.fn.sign_define(
-  'DapStopped',
-  { text = '⭐️', texthl = '', linehl = '', numhl = '' }
-)
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ Icons                                                    │
+-- ╰──────────────────────────────────────────────────────────╯
+vim.fn.sign_define("DapBreakpoint", { text = "🟥", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapStopped", { text = "⭐️", texthl = "", linehl = "", numhl = "" })
 
--- Keybindings
-vim.api.nvim_set_keymap(
-  'n',
-  '<Leader>da',
-  "<CMD>lua require('dap').continue()<CR>", opts )
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ Keybindings                                              │
+-- ╰──────────────────────────────────────────────────────────╯
+keymap("n", "<Leader>da", "<CMD>lua require('dap').continue()<CR>", opts)
+keymap("n", "<Leader>db", "<CMD>lua require('dap').toggle_breakpoint()<CR>", opts)
+keymap("n", "<Leader>dc", "<CMD>lua require('dap').continue()<CR>", opts)
+keymap("n", "<Leader>dd", "<CMD>lua require('dap').continue()<CR>", opts)
+keymap("n", "<Leader>dh", "<CMD>lua require('dapui').eval()<CR>", opts)
+keymap("n", "<Leader>di", "<CMD>lua require('dap').step_into()<CR>", opts)
+keymap("n", "<Leader>do", "<CMD>lua require('dap').step_out()<CR>", opts)
+keymap("n", "<Leader>dO", "<CMD>lua require('dap').step_over()<CR>", opts)
+keymap("n", "<Leader>dt", "<CMD>lua require('dap').terminate()<CR>", opts)
+keymap("n", "<Leader>dU", "<CMD>lua require('dapui').open()<CR>", opts)
+keymap("n", "<Leader>dC", "<CMD>lua require('dapui').close()<CR>", opts)
 
-vim.api.nvim_set_keymap(
-  'n',
-  '<Leader>db',
-  "<CMD>lua require('dap').toggle_breakpoint()<CR>", opts )
+keymap("n", "<Leader>dw", "<CMD>lua require('dapui').float_element('watches', { enter = true })<CR>", opts)
+keymap("n", "<Leader>ds", "<CMD>lua require('dapui').float_element('scopes', { enter = true })<CR>", opts)
+keymap("n", "<Leader>dr", "<CMD>lua require('dapui').float_element('repl', { enter = true })<CR>", opts)
 
-vim.api.nvim_set_keymap(
-  'n',
-  '<Leader>dc',
-  "<CMD>lua require('dap').continue()<CR>", opts )
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ Adapters                                                 │
+-- ╰──────────────────────────────────────────────────────────╯
 
-vim.api.nvim_set_keymap(
-  'n',
-  '<Leader>dd',
-  "<CMD>lua require('dap').continue()<CR>", opts )
-
-vim.api.nvim_set_keymap(
-  'n',
-  '<Leader>dh',
-  "<CMD>lua require('dapui').eval()<CR>", opts )
-
-vim.api.nvim_set_keymap(
-  'n',
-  '<Leader>di',
-  "<CMD>lua require('dap').step_into()<CR>", opts )
-
-vim.api.nvim_set_keymap(
-  'n',
-  '<Leader>do',
-  "<CMD>lua require('dap').step_out()<CR>", opts )
-
-vim.api.nvim_set_keymap(
-  'n',
-  '<Leader>dO',
-  "<CMD>lua require('dap').step_over()<CR>", opts )
-
-vim.api.nvim_set_keymap(
-  'n',
-  '<Leader>dU',
-  "<CMD>lua require('dap').open()<CR>", opts )
-
-vim.api.nvim_set_keymap(
-  'n',
-  '<Leader>dt',
-  "<CMD>lua require('dap').terminate()<CR>", opts )
-
-
--- Adapters
-
--- VSCODE JS
-require('dap-vscode-js').setup({
-  debugger_path = vim.fn.stdpath('data') .. '/mason/packages/js-debug-adapter',
-  debugger_cmd = { 'js-debug-adapter' },
-  adapters = {
-    'pwa-node',
-    'pwa-chrome',
-    'pwa-msedge',
-    'node-terminal',
-    'pwa-extensionHost',
-  },
+-- VSCODE JS (Node/Chrome/Terminal/Jest)
+require("dap-vscode-js").setup({
+  debugger_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter",
+  debugger_cmd = { "js-debug-adapter" },
+  adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
 })
 
--- Configurations
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ Configurations                                           │
+-- ╰──────────────────────────────────────────────────────────╯
 local exts = {
   "javascript",
   "typescript",
@@ -193,7 +160,7 @@ local exts = {
   "svelte",
 }
 
-for i, ext in ipairs(exts) do
+for _, ext in ipairs(exts) do
   dap.configurations[ext] = {
     {
       type = "pwa-chrome",

@@ -1,6 +1,6 @@
 require('printer').setup({
-  keymap = 'gp', -- Plugin doesn't have any keymaps by default
-  behavior = 'insert_below', -- how operator should behave
+  keymap = "gp", -- Plugin doesn't have any keymaps by default
+  behavior = "insert_below", -- how operator should behave
   -- "insert_below" will insert the text below the cursor
   --  "yank" will not insert but instead put text into the default '"' register
   formatters = {
@@ -28,4 +28,4 @@ require('printer').setup({
 
 -- You can use use '<Plug>printer_print' to call the pluging inside more advanced keymaps
 -- for example a keymap that always adds a prnt statement based on 'iw'
-vim.keymap.set('n', 'gP', '<Plug>(printer_print)iw')
+vim.keymap.set("n", "gP", "<Plug>(printer_print)iw")

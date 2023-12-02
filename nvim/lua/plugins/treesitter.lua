@@ -1,4 +1,4 @@
-require('nvim-treesitter.configs').setup({
+require 'nvim-treesitter.configs'.setup {
   ensure_installed = {
     'tsx',
     'typescript',
@@ -16,9 +16,9 @@ require('nvim-treesitter.configs').setup({
     'prisma',
     'lua',
     'vim',
-  }, -- one of "all", or a list of languages
-  sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
-  ignore_install = { 'haskell' }, -- list of parsers to ignore installing
+  },                              -- one of "all", or a list of languages
+  sync_install = false,           -- install languages synchronously (only applied to `ensure_installed`)
+  ignore_install = { "haskell" }, -- list of parsers to ignore installing
   highlight = {
     enable = true,
     -- disable = { "c", "rust" },  -- list of language that will be disabled
@@ -39,15 +39,10 @@ require('nvim-treesitter.configs').setup({
     enable = true,
   },
 
-  rainbow = {
-    enable = true,
-    extended_mode = true,
-  },
-
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  },
+  -- context_commentstring = {
+  --   enable = true,
+  --   enable_autocmd = false,
+  -- },
 
   textobjects = {
     move = {
@@ -98,4 +93,5 @@ require('nvim-treesitter.configs').setup({
       ['<cr>'] = 'textsubjects-smart', -- works in visual mode
     },
   },
-})
+
+}

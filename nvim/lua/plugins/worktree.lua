@@ -1,4 +1,4 @@
-local present, worktree = pcall(require, 'git-worktree')
+local present, worktree = pcall(require, "git-worktree")
 if not present then
   return
 end
@@ -7,25 +7,24 @@ local keymap = vim.keymap.set
 local silent = { silent = true }
 local utils = require('utils')
 
--- Setup
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ Setup                                                    │
+-- ╰──────────────────────────────────────────────────────────╯
 worktree.setup({
-  change_directory_command = 'cd', -- default: "cd",
-  update_on_change = true, -- default: true,
-  update_on_change_command = 'e .', -- default: "e .",
-  clearjumps_on_change = true, -- default: true,
-  autopush = false, -- default: false,
+    change_directory_command = "cd",  -- default: "cd",
+    update_on_change = true,          -- default: true,
+    update_on_change_command = "e .", -- default: "e .",
+    clearjumps_on_change = true,      -- default: true,
+    autopush = false,                 -- default: false,
 })
 
--- Keymappings
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ Keymappings                                              │
+-- ╰──────────────────────────────────────────────────────────╯
 -- <Enter> - switches to that worktree
 -- <c-d> - deletes that worktree
 -- <c-f> - toggles forcing of the next deletion
-keymap(
-  'n',
-  '<Leader>gww',
-  "<CMD>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>",
-  silent
-)
+keymap("n", "<Leader>gww", "<CMD>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", silent)
 
 -- First a telescope git branch window will appear.
 -- Presing enter will choose the selected branch for the branch name.
@@ -36,14 +35,11 @@ keymap(
 
 -- As of now you can not specify the upstream in the telescope create workflow,
 -- however if it finds a branch of the same name in the origin it will use it
-keymap(
-  'n',
-  '<Leader>gwc',
-  "<CMD>lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>",
-  silent
-)
+keymap("n", "<Leader>gwc", "<CMD>lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", silent)
 
--- Hooks
+-- ╭──────────────────────────────────────────────────────────╮
+-- │ Hooks                                                    │
+-- ╰──────────────────────────────────────────────────────────╯
 -- op = Operations.Switch, Operations.Create, Operations.Delete
 -- metadata = table of useful values (structure dependent on op)
 --      Switch
@@ -58,11 +54,8 @@ keymap(
 
 worktree.on_tree_change(function(op, metadata)
   if op == worktree.Operations.Switch then
-    utils.log(
-      'Switched from ' .. metadata.prev_path .. ' to ' .. metadata.path,
-      'Git Worktree'
-    )
+    utils.log("Switched from " .. metadata.prev_path .. " to " .. metadata.path, "Git Worktree")
     utils.closeOtherBuffers()
-    vim.cmd('e')
+    vim.cmd ('e')
   end
 end)

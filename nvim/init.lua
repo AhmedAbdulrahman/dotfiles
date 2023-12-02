@@ -3,10 +3,15 @@ require('utils.globals')
 require('utils.functions')
 -- Core Config
 require('core.config')
+require('core.plugins')
 require('core.settings')
 require('core.colorscheme')
 require('core.lazy')
 require('core.autocmds')
+
+require('internal.winbar')
+require('internal.cursorword')
+
 -- LSP Config
 require('lsp.config')
 require('lsp.run')

@@ -1,7 +1,11 @@
 local M = {}
 
+local on_attach = function(client, _bufnr)
+  client.resolved_capabilities.document_formatting = false
+end
+
 M.filetypes = {
-  'vue',
+  "vue",
 }
 
 M.init_options = {
@@ -21,14 +25,14 @@ M.init_options = {
     vetur = {
       completion = {
         autoImport = true,
-        tagCasing = 'kebab',
+        tagCasing = "kebab",
         useScaffoldSnippets = false,
       },
       format = {
         defaultFormatter = {
-          html = 'none',
-          js = 'none',
-          ts = 'none',
+          html = "none",
+          js = "none",
+          ts = "none",
         },
         defaultFormatterOptions = {},
         scriptInitialIndent = false,
@@ -48,5 +52,7 @@ M.init_options = {
     },
   },
 }
+
+M.on_attach = on_attach
 
 return M

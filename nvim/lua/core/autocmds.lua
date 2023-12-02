@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   group = 'LspNodeModules',
 })
 
-vim.api.nvim_create_autocmd({ 'BufEnter,WinEnter' }, {
+vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
   pattern = '*/node_modules/*',
   command = 'LspStop',
   group = 'LspNodeModules',

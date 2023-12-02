@@ -13,30 +13,30 @@ local M = {}
 --@returns (function, timer) Debounced function and timer. Remember to call
 ---`timer:close()` at the end or you will leak memory!
 function M.debounce_trailing(fn, ms, first)
-  local timer = vim.loop.new_timer()
-  local wrapped_fn
+	local timer = vim.loop.new_timer()
+	local wrapped_fn
 
-  if not first then
-    function wrapped_fn(...)
-      local argv = { ... }
-      local argc = select('#', ...)
+	if not first then
+		function wrapped_fn(...)
+			local argv = {...}
+			local argc = select('#', ...)
 
-      timer:start(ms, 0, function()
-        pcall(vim.schedule_wrap(fn), unpack(argv, 1, argc))
-      end)
-    end
-  else
-    local argv, argc
-    function wrapped_fn(...)
-      argv = argv or { ... }
-      argc = argc or select('#', ...)
+			timer:start(ms, 0, function()
+				pcall(vim.schedule_wrap(fn), unpack(argv, 1, argc))
+			end)
+		end
+	else
+		local argv, argc
+		function wrapped_fn(...)
+			argv = argv or {...}
+			argc = argc or select('#', ...)
 
-      timer:start(ms, 0, function()
-        pcall(vim.schedule_wrap(fn), unpack(argv, 1, argc))
-      end)
-    end
-  end
-  return wrapped_fn, timer
+			timer:start(ms, 0, function()
+				pcall(vim.schedule_wrap(fn), unpack(argv, 1, argc))
+			end)
+		end
+	end
+	return wrapped_fn, timer
 end
 
 return M
