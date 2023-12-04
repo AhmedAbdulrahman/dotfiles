@@ -17,8 +17,4 @@ read_globals = {
   'log'
 }
 
-globals = {
-  "vim.g",
- 'NvimConfig',
- 'hs'
-}
+globals = { "vim", "_", "use", "s", "i", "fmt", "rep", "conds", "f", "c", "t","root", "awesome", "client", "vim.g", "NvimConfig", "hs" }
