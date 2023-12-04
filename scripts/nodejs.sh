@@ -53,22 +53,22 @@ install_global_packages() {
 
 	NPM_PACKAGES=(
 	"bash-language-server"
-	"dockerfile-language-server-nodejs"
+	"dockerfile-language-server"
 	"netlify-cli"
-	"vercel"
+	"vercel@latest"
 	"prettier"
 	"svgo"
 	"dependency-cruiser"
 	"npkill"
-	"expo-cli"
+	"expo"
 	"nodemon"
 	"gatsby-cli"
-	"@sanity/cli"
+	"sanity@latest"
 	"typescript-language-server"
 	"source-map-explorer"
 	"typescript"
 	"vim-language-server"
-	"neovim"
+	# "neovim"
 	"vscode-langservers-extracted"
 	"pyright"
 	"yaml-language-server"
@@ -77,7 +77,7 @@ install_global_packages() {
 	"@volar/vue-language-server" # Vue language server
 	)
 
-	yarn global add "${NPM_PACKAGES[@]}"
+	npm install --global "${NPM_PACKAGES}"
 	unset -v NPM_PACKAGES
 
   finish
