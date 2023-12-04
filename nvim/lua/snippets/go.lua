@@ -1,4 +1,13 @@
 -- local go = require "refactoring.treesitter.langs.go"
+local ls = require('luasnip')
+local fmt = require('luasnip.extras.fmt').fmt
+local conds = require("luasnip.extras.expand_conditions")
+
+local i = ls.insert_node
+local s = ls.snippet
+local t = ls.text_node
+local f = ls.function_node
+
 local utils = require "snippets.utils"
 
 local regular = {}
