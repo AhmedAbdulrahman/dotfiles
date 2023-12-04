@@ -2,7 +2,12 @@
 SHELL:=/bin/zsh
 
 # This can be overriden by doing `make DOTFILES=some/path <task>`
-DOTFILES="$(HOME)/dotfiles"
+DOTFILES := "$(HOME)/dotfiles"
+
+ifeq ($(wildcard $(DOTFILES)),)
+    DOTFILES := ~/Projects/personal/dotfiles
+endif
+
 SCRIPTS="$(DOTFILES)/scripts"
 INSTALL="$(DOTFILES)/installer.sh"
 dir=not_override

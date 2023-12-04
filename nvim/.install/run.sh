@@ -13,7 +13,9 @@ declare -r XDG_DATA_HOME="${XDG_DATA_HOME:-"$HOME/.local/share"}"
 declare -r XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
 declare -r RUNTIME_DIR="${RUNTIME_DIR:-"$XDG_DATA_HOME/nvim"}"
 declare -r CONFIG_DIR="${CONFIG_DIR:-"$XDG_CONFIG_HOME/nvim"}"
-declare -r DOTFILES_DIR="$HOME/dotfiles"
+declare DOTFILES_DIR="$HOME/dotfiles"
+
+[ ! -d "$DOTFILES_DIR" ] && DOTFILES_DIR="$PROJECTS/personal/dotfiles"
 
 # MAIN
 function main() {
