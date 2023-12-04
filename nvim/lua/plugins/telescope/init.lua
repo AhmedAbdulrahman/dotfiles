@@ -10,10 +10,10 @@ local icons = NvimConfig.icons
 local telescope_custom_actions = {}
 
 local git_icons = {
-  added = icons.gitAdd,
-  changed = icons.gitChange,
+  added = icons.git.Add,
+  changed = icons.git.Diff,
   copied = '>',
-  deleted = icons.gitRemove,
+  deleted = icons.git.Remove,
   renamed = '➡',
   unmerged = '‡',
   untracked = '?',

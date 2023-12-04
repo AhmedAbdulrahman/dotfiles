@@ -10,7 +10,7 @@ require('package-info').setup
         enable = true, -- Whether to display icons
         style = {
           up_to_date = icons.checkSquare, -- Icon for up to date packages
-          outdated = icons.gitRemove, -- Icon for outdated packages
+          outdated = icons.git.Remove, -- Icon for outdated packages
         },
       },
       autostart = true, -- Whether to autostart when `package.json` is opened
