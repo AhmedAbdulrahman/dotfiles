@@ -1,8 +1,13 @@
+local status_ok, lualine = pcall(require, 'lualine')
+if not status_ok then
+    return
+end
+
 require('multicursors').setup({
   hint_config = false,
 })
 
-local lualine = require('lualine')
+local icons = NvimConfig.icons
 
 -- Color table for highlights
 local colors = {
@@ -17,6 +22,29 @@ local colors = {
   magenta = '#c792ea',
   blue = '#6cbeff',
   red = '#f45c7f',
+}
+
+local mode_color = {
+  n = colors.red,
+  i = colors.green,
+  v = colors.blue,
+  [''] = colors.blue,
+  V = colors.blue,
+  c = colors.magenta,
+  no = colors.red,
+  s = colors.orange,
+  S = colors.orange,
+  [''] = colors.orange,
+  R = colors.violet,
+  Rv = colors.violet,
+  ic = colors.yellow,
+  cv = colors.red,
+  ce = colors.red,
+  r = colors.cyan,
+  rm = colors.cyan,
+  ['r?'] = colors.cyan,
+  ['!'] = colors.red,
+  t = colors.red,
 }
 
 local conditions = {
@@ -153,28 +181,6 @@ ins_left({
   -- mode component
   fmt = function(str)
     -- auto change color according to neovims mode
-    local mode_color = {
-      n = colors.red,
-      i = colors.green,
-      v = colors.blue,
-      [''] = colors.blue,
-      V = colors.blue,
-      c = colors.magenta,
-      no = colors.red,
-      s = colors.orange,
-      S = colors.orange,
-      [''] = colors.orange,
-      ic = colors.yellow,
-      R = colors.violet,
-      Rv = colors.violet,
-      cv = colors.red,
-      ce = colors.red,
-      r = colors.cyan,
-      rm = colors.cyan,
-      ['r?'] = colors.cyan,
-      ['!'] = colors.red,
-      t = colors.red,
-    }
     vim.api.nvim_command(
       'hi! LualineMode guifg='
         .. mode_color[vim.fn.mode()]
@@ -190,6 +196,7 @@ ins_left({
 ins_left({
   -- filesize component
   'filesize',
+  color = { fg = colors.fg, gui = 'bold' },
   condition = conditions.buffer_not_empty,
 })
 
@@ -210,11 +217,19 @@ ins_left({ 'progress', color = { fg = colors.fg, gui = 'bold' } })
 
 ins_left({
   'diagnostics',
-  sources = { 'nvim_diagnostic' },
-  symbols = { error = ' ', warn = ' ', info = ' ' },
-  color_error = colors.red,
-  color_warn = colors.yellow,
-  color_info = colors.cyan,
+  sources = { 'nvim_lsp', 'nvim_diagnostic', 'nvim_workspace_diagnostic' },
+  symbols = {
+    error = icons.diagnostics.Error,
+    warn = icons.diagnostics.Warning,
+    info = icons.diagnostics.Information,
+    hint = icons.diagnostics.Hint,
+  },
+  diagnostics_color = {
+    color_error = { fg = colors.red },
+    color_warn = { fg = colors.yellow },
+    color_info = { fg = colors.cyan },
+    color_hint = { fg = colors.yellow },
+},
 })
 
 ins_left({
@@ -248,7 +263,7 @@ ins_left({
     end
     return msg
   end,
-  icon = 'LSP:',
+  icon = icons.ui.Gear .. 'LSP:',
   color = { fg = '#ffffff', gui = 'bold' },
 })
 
@@ -268,13 +283,13 @@ ins_right({
     mac = '', -- e711
   },
   upper = true,
-  icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
+  icons_enabled = true, -- I think icons are cool but Eviline doesn't have them. sigh
   color = { fg = colors.green, gui = 'bold' },
 })
 
 ins_right({
   'branch',
-  icon = '',
+  icon = icons.git.Branch,
   condition = conditions.check_git_workspace,
   color = { fg = colors.violet, gui = 'bold' },
 })
