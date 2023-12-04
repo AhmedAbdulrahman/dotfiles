@@ -109,11 +109,11 @@ require('luasnip.loaders.from_lua').load({
 })
 
 require('luasnip.loaders.from_vscode').lazy_load({
-	-- I maintain my own snippets for these languages
-	exclude = {
-	'rust',
-	},
-  	paths = { './lua/snippets/vscode' },
+  -- I maintain my own snippets for these languages
+  exclude = {
+  'rust',
+  },
+  paths = { './lua/snippets/vscode' },
 })
 
 -- require('luasnip.loaders.from_vscode').lazy_load({
