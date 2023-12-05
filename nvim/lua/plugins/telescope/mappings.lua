@@ -33,8 +33,8 @@ keymap.set(
 -- Telescope oldfiles
 keymap.set(
   'n',
-  ',o',
-  [[<Cmd>lua require'telescope.builtin'.oldfiles({results_title='Recent-ish Files'})<CR>]],
+  '<leader>?',
+  [[<Cmd>lua require'telescope.builtin'.oldfiles({results_title='[?] Find recently opened files'})<CR>]],
   silent
 )
 -- Telescope resume (last picker)
@@ -148,21 +148,21 @@ keymap.set(
 keymap.set(
   'n',
   ',b',
-  [[<Cmd>lua require'telescope.builtin'.buffers({prompt_title = '', results_title='﬘', winblend = 3, layout_strategy = 'vertical', layout_config = { width = 0.60, height = 0.55 }})<CR>]],
+  [[<Cmd>lua require'telescope.builtin'.buffers({results_title='[ ] Find existing buffers', winblend = 3, layout_strategy = 'vertical', layout_config = { width = 0.60, height = 0.55 }})<CR>]],
   silent
 )
 -- Find help tags
 keymap.set(
   'n',
   '<leader>h',
-  [[<Cmd>lua require'telescope.builtin'.help_tags({results_title='Help Results'})<CR>]],
+  [[<Cmd>lua require'telescope.builtin'.help_tags({results_title='[!] Help Tags'})<CR>]],
   silent
 )
 -- Find marks
 keymap.set(
   'n',
   '<leader>m',
-  [[<Cmd>lua require'telescope.builtin'.marks({results_title='Marks Results'})<CR>]],
+  [[<Cmd>lua require'telescope.builtin'.marks({results_title='[⏹] Marks'})<CR>]],
   silent
 )
 
