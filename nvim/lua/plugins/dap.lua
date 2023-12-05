@@ -11,9 +11,7 @@ if not present_dapui or not present_dap or not present_virtual_text or not prese
   return
 end
 
--- ╭──────────────────────────────────────────────────────────╮
--- │ DAP Virtual Text Setup                                   │
--- ╰──────────────────────────────────────────────────────────╯
+-- DAP Virtual Text Setup
 dap_vt.setup({
   enabled = true,                        -- enable this plugin (the default)
   enabled_commands = true,               -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
@@ -31,11 +29,22 @@ dap_vt.setup({
   virt_text_win_col = nil,               -- position the virtual text at a fixed window column (starting from the first text column) ,
 })
 
--- ╭──────────────────────────────────────────────────────────╮
--- │ DAP UI Setup                                             │
--- ╰──────────────────────────────────────────────────────────╯
+-- Dap UI setup
 dapui.setup({
-  icons = { expanded = "▾", collapsed = "▸" },
+  icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+  controls = {
+    icons = {
+      pause = '⏸',
+      play = '▶',
+      step_into = '⏎',
+      step_over = '⏭',
+      step_out = '⏮',
+      step_back = 'b',
+      run_last = '▶▶',
+      terminate = '⏹',
+      disconnect = '⏏',
+    },
+  },
   mappings = {
     -- Use a table to apply multiple mappings
     expand = { "<CR>", "<2-LeftMouse>" },
@@ -90,24 +99,12 @@ dapui.setup({
   },
 })
 
--- ╭──────────────────────────────────────────────────────────╮
--- │ DAP Setup                                                │
--- ╰──────────────────────────────────────────────────────────╯
 dap.set_log_level("TRACE")
 
 -- Automatically open UI
-dap.listeners.after.event_initialized["dapui_config"] = function()
-  dapui.open()
-  -- shade.toggle()
-end
-dap.listeners.after.event_terminated["dapui_config"] = function()
-  dapui.close()
-  -- shade.toggle()
-end
-dap.listeners.before.event_exited["dapui_config"] = function()
-  dapui.close()
-  -- shade.toggle()
-end
+dap.listeners.after.event_initialized["dapui_config"] = dapui.open
+dap.listeners.before.event_terminated["dapui_config"] = dapui.close
+dap.listeners.before.event_exited["dapui_config"]     = dapui.close
 
 -- Enable virtual text
 vim.g.dap_virtual_text = true
@@ -121,26 +118,30 @@ vim.fn.sign_define("DapStopped", { text = "⭐️", texthl = "", linehl = "", nu
 -- ╭──────────────────────────────────────────────────────────╮
 -- │ Keybindings                                              │
 -- ╰──────────────────────────────────────────────────────────╯
-keymap("n", "<Leader>da", "<CMD>lua require('dap').continue()<CR>", opts)
-keymap("n", "<Leader>db", "<CMD>lua require('dap').toggle_breakpoint()<CR>", opts)
+keymap("n", "<F5>", "<CMD>lua require('dap').continue()<CR>", { desc = 'Debug: Start/Continue' })
+keymap("n", "<F1>", "<CMD>lua require('dap').step_into()<CR>", { desc = 'Debug: Step Into' })
+keymap("n", "<F2>", "<CMD>lua require('dap').step_over()<CR>", { desc = 'Debug: Step Over' })
+keymap("n", "<F3>", "<CMD>lua require('dap').step_out()<CR>", { desc = 'Debug: Step Out' })
+keymap("n", "<Leader>db", "<CMD>lua require('dap').toggle_breakpoint()<CR>", { desc = 'Debug: Toggle Breakpoint' })
 keymap("n", "<Leader>dc", "<CMD>lua require('dap').continue()<CR>", opts)
 keymap("n", "<Leader>dd", "<CMD>lua require('dap').continue()<CR>", opts)
-keymap("n", "<Leader>dh", "<CMD>lua require('dapui').eval()<CR>", opts)
-keymap("n", "<Leader>di", "<CMD>lua require('dap').step_into()<CR>", opts)
-keymap("n", "<Leader>do", "<CMD>lua require('dap').step_out()<CR>", opts)
-keymap("n", "<Leader>dO", "<CMD>lua require('dap').step_over()<CR>", opts)
 keymap("n", "<Leader>dt", "<CMD>lua require('dap').terminate()<CR>", opts)
+
+keymap("n", "<Leader>dh", "<CMD>lua require('dapui').eval()<CR>", opts)
 keymap("n", "<Leader>dU", "<CMD>lua require('dapui').open()<CR>", opts)
 keymap("n", "<Leader>dC", "<CMD>lua require('dapui').close()<CR>", opts)
-
 keymap("n", "<Leader>dw", "<CMD>lua require('dapui').float_element('watches', { enter = true })<CR>", opts)
 keymap("n", "<Leader>ds", "<CMD>lua require('dapui').float_element('scopes', { enter = true })<CR>", opts)
 keymap("n", "<Leader>dr", "<CMD>lua require('dapui').float_element('repl', { enter = true })<CR>", opts)
 
--- ╭──────────────────────────────────────────────────────────╮
--- │ Adapters                                                 │
--- ╰──────────────────────────────────────────────────────────╯
+keymap('n', '<leader>B', function()
+dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+end, { desc = 'Debug: Set Breakpoint' })
 
+-- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
+keymap('n', '<F7>', "<CMD>lua require('dapui').toggle()<CR>", { desc = 'Debug: See last session result.' })
+
+-- Adapters
 -- VSCODE JS (Node/Chrome/Terminal/Jest)
 require("dap-vscode-js").setup({
   debugger_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter",
@@ -148,9 +149,10 @@ require("dap-vscode-js").setup({
   adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
 })
 
--- ╭──────────────────────────────────────────────────────────╮
--- │ Configurations                                           │
--- ╰──────────────────────────────────────────────────────────╯
+-- Install golang specific config
+require('dap-go').setup()
+
+-- Configurations
 local exts = {
   "javascript",
   "typescript",

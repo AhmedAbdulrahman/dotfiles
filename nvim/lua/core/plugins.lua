@@ -897,9 +897,12 @@ return {
       '<Leader>dt',
     },
     dependencies = {
-      'theHamsta/nvim-dap-virtual-text',
       'rcarriga/nvim-dap-ui',
+      'theHamsta/nvim-dap-virtual-text',
       'mxsdev/nvim-dap-vscode-js',
+
+      -- Add your own debuggers here
+      'leoluz/nvim-dap-go',
     },
   },
   {
