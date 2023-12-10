@@ -195,6 +195,13 @@ local normal_mode_mappings = {
     r = { 'refactor' },
     s = { "<cmd>SessionManager save_current_session<CR>",            'save session' },
     t = { "<cmd>TodoTrouble<CR>",                                    'todo' },
+    h = {
+      name = "Harpoon",
+      h = { '<cmd>Telescope harpoon marks<cr>', 'Harpoon Marks' },
+      a = { require("harpoon.mark").add_file, 'Add file to harpoon' },
+      n = { require("harpoon.ui").nav_next, 'Next harpoon file' },
+      p = { require("harpoon.ui").nav_prev, 'Previous harpoon file' },
+    },
   },
 
   r = {
