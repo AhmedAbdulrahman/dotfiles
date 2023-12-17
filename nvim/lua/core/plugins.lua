@@ -703,6 +703,15 @@ return {
         background_colour = '#000000',
       })
     end,
+    keys = {
+      {
+        "<leader>un",
+        function()
+          require("notify").dismiss({ silent = true, pending = true })
+        end,
+        desc = "Dismiss all Notifications",
+      },
+    },
     init = function()
       local banned_messages = {
         'No information available',
