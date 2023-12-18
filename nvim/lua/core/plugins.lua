@@ -279,6 +279,7 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-lua/plenary.nvim" },
     build = "cd formatter && npm i && npm run build",
     config = true,
+    event = 'CmdlineEnter',
   },
   {
     'uga-rosa/ccc.nvim',

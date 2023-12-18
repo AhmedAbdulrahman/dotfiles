@@ -2,6 +2,8 @@ local M = {}
 
 function M.enable_format_on_save()
     local group = vim.api.nvim_create_augroup("format_on_save", { clear = false })
+    require('tailwind-sorter').toggle_on_save()
+
     vim.api.nvim_create_autocmd("BufWritePre", {
         callback = function()
             local root_dir = vim.fn.getcwd()  -- Adjust this if you have a more accurate way to find the project root
