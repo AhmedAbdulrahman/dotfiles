@@ -1,3 +1,4 @@
+local telescope = require('telescope')
 local themes = require('telescope.themes')
 local builtin = require('telescope.builtin')
 local dropdown_theme = themes.get_dropdown()
@@ -10,42 +11,62 @@ local silent = { silent = true }
 keymap.set(
   'n',
   '<leader>cp',
-  [[<Cmd>lua require('telescope').extensions.command_palette.command_palette()<CR>]],
+  function()
+    telescope.extensions.command_palette.command_palette()
+  end,
   silent
 )
 -- open available commands & run it
 keymap.set(
   'n',
   ',c',
-  [[<Cmd>lua require'telescope.builtin'.commands({results_title='Commands Results'})<CR>]],
+  function()
+    builtin.commands({
+      results_title = 'Commands Results',
+      prompt_title = 'Search Commands',
+    })
+  end,
   silent
 )
 -- telescope notify history
 keymap.set(
   'n',
   '<leader>nh',
-  [[<Cmd>lua require('telescope').extensions.notify.notify({results_title='Notification History', prompt_title='Search Messages'})<CR>]],
+  function()
+    telescope.extensions.notify.notify({
+      results_title='Notification History',
+      prompt_title='Search Messages'
+    })
+  end,
   silent
 )
 -- show Workspace Diagnostics
 keymap.set(
   'n',
   ',d',
-  [[<Cmd>lua require'telescope.builtin'.diagnostics()<CR>]],
+  function()
+    builtin.diagnostics()
+  end,
   silent
 )
 -- Telescope oldfiles
 keymap.set(
   'n',
   '<leader>?',
-  [[<Cmd>lua require'telescope.builtin'.oldfiles({results_title='[?] Find recently opened files'})<CR>]],
+  function()
+    builtin.oldfiles({
+      results_title = '[?] Find recently opened files',
+    })
+  end,
   silent
 )
 -- Telescope resume (last picker)
 keymap.set(
   'n',
   '<leader>tr',
-  [[<Cmd>lua require'telescope.builtin'.resume()<CR>]],
+  function()
+    builtin.resume()
+  end,
   silent
 )
 
@@ -54,7 +75,9 @@ keymap.set(
 keymap.set(
   'n',
   '<leader>ti',
-  [[<Cmd>lua require'telescope.builtin'.lsp_implementations()<CR>]],
+  function()
+    builtin.lsp_implementations()
+  end,
   silent
 )
 keymap.set(
@@ -69,14 +92,27 @@ keymap.set(
 keymap.set(
   'n',
   '<leader>td',
-  [[<Cmd>lua require'telescope.builtin'.lsp_definitions({layout_config = { preview_width = 0.50, width = 0.92 }, path_display = { "shorten" }, results_title='Definitions'})<CR>]],
+  function()
+    builtin.lsp_definitions({
+      layout_config = {
+        preview_width = 0.50,
+        width = 0.92,
+      },
+      path_display = {
+        'shorten',
+      },
+      results_title = 'Definitions',
+    })
+  end,
   silent
 )
 -- show DOCUMENT Symbols
 keymap.set(
   'n',
   ',ws',
-  [[<Cmd>lua require'telescope.builtin'.lsp_document_symbols()<CR>]],
+  function()
+    builtin.lsp_document_symbols()
+  end,
   silent
 )
 
@@ -85,21 +121,27 @@ keymap.set(
 keymap.set(
   'n',
   '<leader>is',
-  [[<Cmd>lua require'plugins.telescope'.gh_issues()<CR>]],
+  function()
+    require'plugins.telescope'.gh_issues()
+  end,
   silent
 )
 -- Pull Requests - PRs
 keymap.set(
   'n',
   '<leader>pl',
-  [[<Cmd>lua require'plugins.telescope'.gh_prs()<CR>]],
+  function()
+    require'plugins.telescope'.gh_prs()
+  end,
   silent
 )
 -- telescope-repo
 keymap.set(
   'n',
   '<leader>rl',
-  [[<Cmd>lua require('plugins.telescope').repo_list()<CR>]],
+  function()
+    require'plugins.telescope'.repo_list()
+  end,
   silent
 )
 -- git telescope goodness
@@ -107,7 +149,12 @@ keymap.set(
 keymap.set(
   'n',
   '<leader>gb',
-  [[<Cmd>lua require'telescope.builtin'.git_branches({prompt_title = ' ', results_title='Git Branches'})<CR>]],
+  function()
+    builtin.git_branches({
+      prompt_title = '',
+      results_title = 'Git Branches',
+    })
+  end,
   {
     noremap = true,
     silent = true,
@@ -117,21 +164,30 @@ keymap.set(
 keymap.set(
   'n',
   '<leader>gfc',
-  [[<Cmd>lua require'telescope.builtin'.git_bcommits({prompt_title = '  ', results_title='Git File Commits'})<CR>]],
+  function()
+    builtin.git_bcommits({
+      prompt_title = '  ',
+      results_title = 'Git File Commits',
+    })
+  end,
   silent
 )
 -- git_commits (log) git log
 keymap.set(
   'n',
   '<leader>gc',
-  [[<Cmd>lua require'telescope.builtin'.git_commits()<CR>]],
+  function()
+    builtin.git_commits()
+  end,
   silent
 )
 -- git_status - <tab> to toggle staging
 keymap.set(
   'n',
   '<leader>gs',
-  [[<Cmd>lua require'telescope.builtin'.git_status()<CR>]],
+  function()
+    builtin.git_status()
+  end,
   silent
 )
 
@@ -139,42 +195,68 @@ keymap.set(
 keymap.set(
   'n',
   '<leader>r',
-  [[<Cmd>lua require'telescope.builtin'.registers()<CR>]],
+  function()
+    builtin.registers()
+  end,
   silent
 )
 -- Find current buffer
 keymap.set(
   'n',
   ',bf',
-  [[<Cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find()<CR>]],
+  function()
+    builtin.current_buffer_fuzzy_find()
+  end,
   silent
 )
 -- Find keymaps
 keymap.set(
   'n',
   ',k',
-  [[<Cmd>lua require'telescope.builtin'.keymaps({results_title='Key Maps Results'})<CR>]],
+  function()
+    builtin.keymaps({
+      results_title = 'Key Maps Results',
+    })
+  end,
   silent
 )
 -- Find buffers
 keymap.set(
   'n',
   ',b',
-  [[<Cmd>lua require'telescope.builtin'.buffers({results_title='[ ] Find existing buffers', winblend = 3, layout_strategy = 'vertical', layout_config = { width = 0.60, height = 0.55 }})<CR>]],
+  function()
+    builtin.buffers({
+      results_title='[ ] Find existing buffers',
+      winblend = 3,
+      layout_strategy = 'vertical',
+      layout_config = {
+        width = 0.60,
+        height = 0.55
+      }
+    })
+  end,
   silent
 )
 -- Find help tags
 keymap.set(
   'n',
   '<leader>h',
-  [[<Cmd>lua require'telescope.builtin'.help_tags({results_title='[!] Help Tags'})<CR>]],
+  function()
+    builtin.help_tags({
+      results_title = '[!] Help Tags',
+    })
+  end,
   silent
 )
 -- Find marks
 keymap.set(
   'n',
   '<leader>m',
-  [[<Cmd>lua require'telescope.builtin'.marks({results_title='[⏹] Marks'})<CR>]],
+  function()
+    builtin.marks({
+      results_title = '[⏹] Marks',
+    })
+  end,
   silent
 )
 
@@ -182,14 +264,18 @@ keymap.set(
 keymap.set(
   'n',
   '<leader><TAB>',
-  [[<Cmd>lua require'plugins.telescope'.project_files()<CR>]],
+  function()
+    require'plugins.telescope'.project_files()
+  end,
   silent
 )
 -- Find files including gitignored
 keymap.set(
   'n',
   ',<leader>',
-  [[<Cmd>lua require'telescope.builtin'.find_files({find_command={'fd','--no-ignore-vcs'}})<CR>]],
+  function()
+    builtin.find_files({ find_command={'fd','--no-ignore-vcs'} })
+  end,
   silent
 )
 
@@ -197,14 +283,18 @@ keymap.set(
 keymap.set(
   'n',
   '<leader>e',
-  [[<Cmd>lua require'plugins.telescope'.file_explorer()<CR>]],
+  function()
+    require'plugins.telescope'.file_browser()
+  end,
   silent
 )
 -- Browse files from cwd - File Browser
 keymap.set(
   'n',
   '<leader>fb',
-  [[<Cmd>lua require'telescope'.extensions.file_browser.file_browser()<CR>]],
+  function()
+    telescope.extensions.file_browser.file_browser()
+  end,
   silent
 )
 -- Grep word under cursor
@@ -218,14 +308,20 @@ keymap.set(
 keymap.set(
   'n',
   '<leader>gw',
-  [[<Cmd>lua require'telescope.builtin'.grep_string({word_match='-w'})<CR>]],
+  function()
+    builtin.grep_string({
+      word_match = '-w',
+    })
+  end,
   silent
 )
 -- Grep for a string
 keymap.set(
   'n',
   '<leader>gp',
-  [[<Cmd>lua require'plugins.telescope'.grep_prompt()<CR>]],
+  function()
+    require'plugins.telescope'.grep_prompt()
+  end,
   silent
 )
 
@@ -233,7 +329,9 @@ keymap.set(
 keymap.set(
   'n',
   '<leader>/',
-  "<CMD>lua require('plugins.telescope.pickers.multi-rg')()<CR>",
+  function()
+    require'plugins.telescope'.pickers.multi_rg()
+  end,
   silent
 )
 
@@ -241,7 +339,12 @@ keymap.set(
 keymap.set(
   'n',
   '<leader>lg',
-  [[<Cmd>lua require('telescope.builtin').live_grep({grep_open_files=true, preview=true})<CR>]],
+  function()
+    builtin.live_grep({
+      grep_open_files = true,
+      preview = true,
+    })
+  end,
   silent
 )
 
@@ -249,14 +352,18 @@ keymap.set(
 keymap.set(
   'n',
   '<leader>fc',
-  [[<Cmd>lua require'plugins.telescope'.find_configs()<CR>]],
+  function()
+    require'plugins.telescope'.find_configs()
+  end,
   silent
 )
 -- find or create neovim configs
 keymap.set(
   'n',
   '<leader>nc',
-  [[<Cmd>lua require'plugins.telescope'.nvim_config()<CR>]],
+  function()
+    require'plugins.telescope'.nvim_config()
+  end,
   silent
 )
 
@@ -264,6 +371,8 @@ keymap.set(
 keymap.set(
   'n',
   '<leader>ce',
-  [[<Cmd>lua require('telescope').extensions.neoclip.default()<CR>]],
+  function()
+    telescope.extensions.neoclip.default()
+  end,
   silent
 )
