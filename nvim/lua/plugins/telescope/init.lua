@@ -66,6 +66,27 @@ require('telescope').setup({
       selected_browser = 'chrome',
       url_open_command = 'open',
     },
+    extensions = {
+      media_files = {
+        -- filetypes whitelist
+        -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+        filetypes = { "png", "webp", "jpg", "jpeg", "mp4", "pdf"},
+        find_cmd = "rg", -- find command (defaults to `fd`)
+      },
+      zoxide = {
+        ['<CR>'] = {
+          keepinsert = true,
+          action = function(selection)
+            require('telescope').extensions.file_browser.file_browser { cwb = selection.path }
+          end
+        },
+      },
+      -- Your extension configuration goes here:
+      -- extension_name = {
+      --   extension_config_key = value,
+      -- }
+      -- please take a look at the readme of the extension you want to configure
+    },
     command_palette = command_palette,
   },
   defaults = {
@@ -208,6 +229,8 @@ require('telescope').load_extension('neoclip')
 
 -- GitHub CLI → local version
 require('telescope').load_extension('gh')
+
+require('telescope').load_extension('zoxide')
 
 -- my telescopic customizations
 local M = {}

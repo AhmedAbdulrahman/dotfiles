@@ -76,6 +76,7 @@ return {
       { 'nvim-telescope/telescope-github.nvim' },
       { 'dhruvmanila/browser-bookmarks.nvim' },
       { 'jvgrootveld/telescope-zoxide' },
+      { 'nvim-telescope/telescope-media-files.nvim' }
     },
   },
 
