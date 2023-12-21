@@ -370,6 +370,11 @@ return {
       require('lsp-file-operations').setup()
     end,
   },
+  {
+    'nanotee/sqls.nvim',
+    ft = { 'sql', 'pgsql' },
+    module = true,
+  },
 
   -- Formatter
   {
