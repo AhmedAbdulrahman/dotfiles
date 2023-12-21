@@ -1,4 +1,12 @@
 -- Telescope 🔭 - setup and customized pickers
+
+local status_ok, telescope = pcall(require, "telescope")
+if not status_ok then
+  return
+end
+
+telescope.load_extension("media_files")
+
 require('plugins.telescope.mappings')
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
@@ -31,6 +39,10 @@ end
 
 function telescope_custom_actions.multi_selection_open(prompt_bufnr)
   telescope_custom_actions._multiopen(prompt_bufnr, 'edit')
+end
+
+function get_workspace_folder ()
+  return vim.lsp.buf.list_workspace_folders()[1] or vim.fn.systemlist('git rev-parse --show-toplevel')[1]
 end
 
 -- @TODOUA: create a git history keyword search picker
@@ -74,12 +86,13 @@ require('telescope').setup({
     },
     prompt_prefix = ' 🔍 ',
     selection_caret = '❯ ',
+    path_display = { "smart" },
     sorting_strategy = 'ascending',
     color_devicons = true,
     git_icons = git_icons,
     layout_config = {
-      prompt_position = 'bottom',
       horizontal = {
+        prompt_position = 'top',
         width_padding = 0.04,
         height_padding = 0.1,
         preview_width = 0.6,
@@ -95,21 +108,72 @@ require('telescope').setup({
     -- https://github.com/nvim-telescope/telescope.nvim/issues/1048
     mappings = {
       n = {
-        ['<Del>'] = actions.close,
-        ['<C-A>'] = telescope_custom_actions.multi_selection_open,
+        ["<esc>"] = actions.close,
+
+        ["<CR>"] = actions.select_default,
+        ["<C-x>"] = actions.select_horizontal,
+        ["<C-v>"] = actions.select_vertical,
+        ["<C-t>"] = actions.select_tab,
+        ['<M-q>'] = telescope_custom_actions.multi_selection_open,
         ['<C-s>'] = actions.cycle_previewers_next,
         ['<C-a>'] = actions.cycle_previewers_prev,
+
+        ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+        ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+        ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
+
+        ["j"] = actions.move_selection_next,
+        ["k"] = actions.move_selection_previous,
+        ["H"] = actions.move_to_top,
+        ["M"] = actions.move_to_middle,
+        ["L"] = actions.move_to_bottom,
+
+        ["<Down>"] = actions.move_selection_next,
+        ["<Up>"] = actions.move_selection_previous,
+        ["gg"] = actions.move_to_top,
+        ["G"] = actions.move_to_bottom,
+
+        ["<C-u>"] = actions.preview_scrolling_up,
+        ["<C-d>"] = actions.preview_scrolling_down,
+
+        ["<PageUp>"] = actions.results_scrolling_up,
+        ["<PageDown>"] = actions.results_scrolling_down,
+
+        ["?"] = actions.which_key,
       },
       i = {
-        ['<esc>'] = actions.close,
-        ['<C-A>'] = telescope_custom_actions.multi_selection_open,
-        ['<C-j>'] = actions.move_selection_next,
-        ['<C-k>'] = actions.move_selection_previous,
+        ["<C-n>"] = actions.cycle_history_next,
+        ["<C-p>"] = actions.cycle_history_prev,
+
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<Down>"] = actions.move_selection_next,
+        ["<Up>"] = actions.move_selection_previous,
+
+        ["<C-u>"] = actions.preview_scrolling_up,
+        ["<C-d>"] = actions.preview_scrolling_down,
+
+        ["<PageUp>"] = actions.results_scrolling_up,
+        ["<PageDown>"] = actions.results_scrolling_down,
+
+        ["<C-c>"] = actions.close,
+
+        ["<CR>"] = actions.select_default,
+        ["<C-x>"] = actions.select_horizontal,
+        ["<C-v>"] = actions.select_vertical,
+        ["<C-t>"] = actions.select_tab,
+
+        ["<Tab>"] = actions.toggle_selection + actions.move_selection_worse,
+        ["<S-Tab>"] = actions.toggle_selection + actions.move_selection_better,
+
+        ['<M-q>'] = telescope_custom_actions.multi_selection_open,
+
         ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
         ['<C-s>'] = actions.cycle_previewers_next,
         ['<C-a>'] = actions.cycle_previewers_prev,
-        ['<C-h>'] = 'which_key',
-        ['<ESC>'] = actions.close,
+
+        ["<C-l>"] = actions.complete_tag,
+        ["<C-_>"] = actions.which_key, -- keys from pressing <C-/>
       },
     },
     dynamic_preview_title = true,
@@ -149,26 +213,24 @@ require('telescope').load_extension('gh')
 local M = {}
 
 -- requires repo extension
-function M.repo_list()
+M.repo_list = function()
   local opts = {}
   opts.prompt_title = ' Repos'
   require('telescope').extensions.repo.list(opts)
 end
 
 -- requires GitHub extension
-function M.gh_issues()
+M.gh_issues = function()
   local opts = {}
   opts.prompt_title = ' Issues'
   require('telescope').extensions.gh.issues(opts)
 end
 
-function M.gh_prs()
+M.gh_prs = function()
   local opts = {}
   opts.prompt_title = ' Pull Requests'
   require('telescope').extensions.gh.pull_request(opts)
 end
-
--- end github functions
 
 -- grep_string pre-filtered from grep_prompt
 local function grep_filtered(opts)
@@ -180,14 +242,14 @@ local function grep_filtered(opts)
 end
 
 -- open vim.ui.input dressing prompt for initial filter
-function M.grep_prompt()
+M.grep_prompt = function()
   vim.ui.input({ prompt = 'Rg ' }, function(input)
     grep_filtered({ filter_word = input })
   end)
 end
 
 -- search Neovim related todos
-function M.search_todos()
+M.search_todos = function()
   require('telescope.builtin').grep_string({
     prompt_title = ' Search TODOUAs',
     prompt_prefix = ' ',
@@ -226,6 +288,8 @@ M.project_files = function()
     '.cargo/registry/',
   }
 
+  fopts.cwd = get_workspace_folder()
+
   if ret == 0 then
     require('telescope.builtin').git_files(gopts)
   else
@@ -235,7 +299,7 @@ M.project_files = function()
 end
 
 -- @TODOUA: break up notes and configs
-function M.grep_notes()
+M.grep_notes = function()
   local opts = {}
   opts.hidden = true
   opts.search_dirs = {
@@ -247,7 +311,7 @@ function M.grep_notes()
   require('telescope.builtin').live_grep(opts)
 end
 
-function M.find_notes()
+M.find_notes = function()
   require('telescope.builtin').find_files({
     prompt_title = ' Find Notes',
     path_display = { 'smart' },
@@ -257,7 +321,7 @@ function M.find_notes()
   })
 end
 
-function M.browse_notes()
+M.browse_notes = function()
   require('telescope').extensions.file_browser.file_browser({
     prompt_title = ' Browse Notes',
     prompt_prefix = ' ﮷ ',
@@ -267,7 +331,7 @@ function M.browse_notes()
   })
 end
 
-function M.find_configs()
+M.find_configs = function()
   require('telescope.builtin').find_files({
     prompt_title = ' NVim & Term Config Find',
     results_title = 'Config Files Results',
@@ -283,7 +347,7 @@ function M.find_configs()
   })
 end
 
-function M.edit_dotfiles()
+M.edit_dotfiles = function()
   require('telescope.builtin').git_files({
     cwd = '~/dotfiles',
     prompt_title = '~ dotfiles ~',
@@ -293,7 +357,7 @@ function M.edit_dotfiles()
   })
 end
 
-function M.file_explorer()
+M.file_explorer = function()
   require('telescope').extensions.file_browser.file_browser({
     prompt_title = ' File Browser',
     path_display = { 'smart' },
