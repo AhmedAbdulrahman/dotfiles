@@ -1,3 +1,7 @@
+local themes = require('telescope.themes')
+local builtin = require('telescope.builtin')
+local dropdown_theme = themes.get_dropdown()
+
 local keymap = vim.keymap
 local silent = { silent = true }
 
@@ -51,6 +55,14 @@ keymap.set(
   'n',
   '<leader>ti',
   [[<Cmd>lua require'telescope.builtin'.lsp_implementations()<CR>]],
+  silent
+)
+keymap.set(
+  'n',
+  '<leader>w',
+  function()
+    builtin.lsp_references(dropdown_theme)
+  end,
   silent
 )
 -- show LSP definitions
