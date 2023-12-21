@@ -955,6 +955,14 @@ return {
       end
     end,
   },
+  {
+    "Vigemus/iron.nvim",
+    ft = { "python", "javascript", "typescript"},
+    lazy = false,
+    config = function()
+      require('plugins.iron')
+    end,
+  },
   --     -- Git
   {
     'lewis6991/gitsigns.nvim',

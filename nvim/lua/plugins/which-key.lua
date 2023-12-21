@@ -101,7 +101,7 @@ local normal_mode_mappings = {
 	["q"] = { "quicklist" },
 
 	["/"] = {
-		name = "Ecovim",
+		name = "Nvim",
 		["/"] = { "<cmd>Alpha<CR>", "open dashboard" },
 		c = { "<cmd>e $MYVIMRC<CR>", "open config" },
 		i = { "<cmd>Lazy<CR>", "manage plugins" },
@@ -241,7 +241,11 @@ local normal_mode_mappings = {
 	},
 
 	r = {
-		name = "Refactor",
+		name = "+Repl",
+    f = { "<cmd>IronFocus <CR>", "Focus on Iron.Nvim split" },
+    h = { "<cmd>IronHide <CR>", "Hide Iron.Nvim split" },
+    r = { "<cmd>IronRestart <CR>", "Restart Iron.Nvim REPL" },
+    R = { "<cmd>IronRepl <CR>", "New Iron.Nvim REPL" },
 	},
 
 	s = {
