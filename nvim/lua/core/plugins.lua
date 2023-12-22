@@ -769,6 +769,8 @@ return {
       })
 
       pcall(require('telescope').load_extension, 'harpoon')
+
+      vim.keymap.set( "n", "<leader>hm", require('harpoon.mark').add_file)
     end,
   },
   --
