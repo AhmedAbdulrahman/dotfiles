@@ -48,6 +48,7 @@ return {
       'JoosepAlviste/nvim-ts-context-commentstring',
       'nvim-treesitter/nvim-treesitter-textobjects',
       'RRethy/nvim-treesitter-textsubjects',
+      'windwp/nvim-ts-autotag',
       -- 'romgrk/nvim-treesitter-context',
       -- 'nvim-treesitter/playground',
     },
@@ -786,6 +787,10 @@ return {
   -- 	},
   {
     'windwp/nvim-autopairs',
+    event = { "InsertEnter" },
+    dependencies = {
+      "hrsh7th/nvim-cmp",
+    },
     config = function()
       require('plugins.autopairs')
     end,
