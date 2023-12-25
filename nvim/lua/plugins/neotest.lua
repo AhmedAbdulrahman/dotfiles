@@ -45,9 +45,6 @@ neotest.setup({
       return s .. " "
     end, { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }),
   },
-  floating = {
-    border = NvimConfig.ui.float.border,
-  },
   output = {
     enabled = true,
     open_on_run = false,
