@@ -104,6 +104,31 @@ require('telescope').setup({
       '--column',
       '--smart-case',
       '--hidden',
+      '--trim', -- add this value
+    },
+    pickers = {
+      find_files = {
+        theme = "dropdown",
+        find_command = {
+          "fd",
+          "--type",
+          "f",
+          "--no-ignore",
+          "--hidden",
+          "--strip-cwd-prefix",
+          "--exclude",
+          "**/.git/*",
+        },
+      },
+      live_grep = {
+        glob_pattern = {
+          "!.git/*",
+        },
+        additional_args = {
+          "--no-ignore",
+          "--hidden",
+        },
+      },
     },
     prompt_prefix = ' 🔍 ',
     selection_caret = '❯ ',
