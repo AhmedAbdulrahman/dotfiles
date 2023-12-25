@@ -20,7 +20,7 @@ signs.setup {
   linehl                       = false, -- Toggle with `:Gitsigns toggle_linehl`
   word_diff                    = false, -- Toggle with `:Gitsigns toggle_word_diff`
   watch_gitdir                 = {
-    interval = 700,
+    interval = 1000,
     follow_files = true
   },
   attach_to_untracked          = true,
@@ -33,7 +33,7 @@ signs.setup {
   },
   current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
   sign_priority                = 6,
-  update_debounce              = 100,
+  update_debounce              = 200,
   status_formatter             = nil, -- Use default
   max_file_length              = 40000,
   preview_config               = {
