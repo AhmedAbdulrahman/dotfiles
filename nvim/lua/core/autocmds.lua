@@ -181,7 +181,7 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 vim.api.nvim_create_autocmd('BufEnter', {
-  pattern = { '*test.js', '*test.ts', '*test.tsx' },
+  pattern = { '*test.js', '*test.ts', '*test.tsx', '*.spec.ts', '*.spec.js' },
   callback = function()
     pwk.attach_jest(0)
   end,
