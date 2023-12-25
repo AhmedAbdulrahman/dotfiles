@@ -163,6 +163,9 @@ opt.foldopen = { -- Specifies for which type of commands folds will be opened.
 }
 opt.grepprg = 'grep ' -- Program to use for the :grep command.
   .. '--line-number '
+  .. '--column -I'
+  .. '--ignore-case'
+  .. '--untracked'
   .. '--binary-file="without-match" '
   .. '--no-messages '
   .. '--recursive '
