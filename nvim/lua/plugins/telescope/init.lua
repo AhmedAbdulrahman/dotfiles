@@ -41,7 +41,7 @@ function telescope_custom_actions.multi_selection_open(prompt_bufnr)
   telescope_custom_actions._multiopen(prompt_bufnr, 'edit')
 end
 
-function get_workspace_folder ()
+local function get_workspace_folder ()
   return vim.lsp.buf.list_workspace_folders()[1] or vim.fn.systemlist('git rev-parse --show-toplevel')[1]
 end
 
