@@ -170,7 +170,6 @@ vim.g.startify_custom_header_quotes =
 
 vim.g.startify_bookmarks = {
   { t = '.git/todo.md' },
-  { v = '~/dotfiles/nvim/init.vim' },
   { g = '~/.gitconfig' },
   { i = '~/.gitignore' },
   { r = '~/.taskrc' },
@@ -180,6 +179,8 @@ vim.g.startify_commands = {
   { s = { 'Lazy Sync', ':Lazy sync' } },
   { u = { 'Lazy Update', ':Lazy update' } },
   { c = { 'Lazy Clean', ':Lazy clean' } },
+  { t = { "Treesitter Update", ":TSUpdate" } },
+  { h = { "Check Health", ":checkhealth" } }
 }
 
 vim.g.startify_lists = {
@@ -190,7 +191,7 @@ vim.g.startify_lists = {
     },
     type = 'dir',
   },
-  { header = { ' Files' }, type = 'files' },
+  -- { header = { ' Files' }, type = 'files' },
   { header = { ' Commands' }, type = 'commands' },
   { header = { ' Bookmarks' }, type = 'bookmarks' },
 }
