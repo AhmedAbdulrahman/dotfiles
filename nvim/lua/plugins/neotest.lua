@@ -9,15 +9,14 @@ end
 neotest.setup({
   adapters = {
     require("neotest-jest")({
-      jestCommand = "npm test --",
-      env = { CI = true },
-      cwd = function(_path)
-        return vim.fn.getcwd()
-      end,
+      cwd = require("neotest-jest").root,
     }),
   },
+  discovery = {
+    enabled = true,
+  },
   diagnostic = {
-    enabled = false
+    enabled = true
   },
   floating = {
     border = NvimConfig.ui.float.border or "rounded",
@@ -40,33 +39,29 @@ neotest.setup({
     test = "NeotestTest"
   },
   icons = {
-    child_indent = "│",
-    child_prefix = "├",
-    collapsed = "─",
-    expanded = "╮",
-    failed = "✖",
-    final_child_indent = " ",
-    final_child_prefix = "╰",
-    non_collapsible = "─",
-    passed = "✔",
-    running = "",
-    skipped = "ﰸ",
-    unknown = "?"
+    running = "󰥔 ",
+    unknown = "?",
+    running_animated = vim.tbl_map(function(s)
+      return s .. " "
+    end, { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }),
+  },
+  floating = {
+    border = NvimConfig.ui.float.border,
   },
   output = {
     enabled = true,
-    open_on_run = true,
+    open_on_run = false,
   },
   run = {
     enabled = true
   },
   status = {
-    enabled = true
+    virtual_text = true,
+    signs = false,
   },
   strategies = {
     integrated = {
-      height = 40,
-      width = 120
+      width = 180
     }
   },
   summary = {
