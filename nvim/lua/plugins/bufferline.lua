@@ -10,7 +10,9 @@ bufferline.setup({
     end,
     show_buffer_close_icons = false,
     separator_style = { "|", "|" },
-    always_show_bufferline = true,
+    always_show_bufferline = false,
+    modified_icon = '✥',
+    buffer_close_icon = '',
     style_preset = bufferline.style_preset.no_italic,
     numbers = function(opts)
       return string.format("%s", opts.ordinal)
