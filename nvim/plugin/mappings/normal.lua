@@ -1,6 +1,7 @@
 local keymap = vim.keymap
 local silent = { silent = true }
 
+table.unpack = table.unpack or unpack -- 5.1 compatibility
 
 keymap.set('n', '<leader>lc', ':CccPick<CR>', silent)
 
@@ -8,45 +9,26 @@ keymap.set('n', '<leader>lc', ':CccPick<CR>', silent)
 keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', silent)
 keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', silent)
 keymap.set('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', silent)
-keymap.set(
-  'n',
-  'gr',
-  '<cmd>lua vim.lsp.buf.references({ includeDeclaration = false })<CR>',
-  silent
-)
+keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references({ includeDeclaration = false })<CR>', silent)
 keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', silent)
-keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', silent)
-keymap.set(
-  'v',
-  '<leader>ca',
-  "<cmd>'<,'>lua vim.lsp.buf.code_action()<CR>",
-  silent
-)
-keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', silent)
-keymap.set(
-  'n',
-  '<leader>F',
-  '<cmd>lua vim.lsp.buf.format({async = true})<CR>',
-  silent
-)
-keymap.set(
-  'n',
-  '<leader>cf',
-  '<cmd>lua vim.lsp.buf.format({ async = true })<CR>',
-  silent
-)
-keymap.set(
-  'v',
-  '<leader>cf',
-  "<cmd>'<.'>lua vim.lsp.buf.formatexpr()<CR>",
-  silent
-)
-keymap.set(
-  'n',
-  'gl',
-  "<cmd>lua vim.diagnostic.open_float(nil, { focusable = false, scope = 'line', header = false, border = 'rounded', max_width = 100, close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' }})<CR>",
-  silent
-)
+keymap.set('v', '<leader>ca', "<cmd>'<,'>lua vim.lsp.buf.code_action()<CR>", silent)
+
+keymap.set('n', '<leader>cr', '<cmd>lua vim.lsp.buf.rename()<CR>', silent)
+
+-- keymap.set("n", "<leader>cf", "<cmd>lua vim.lsp.buf.format({ async = true, filter = function(client) return client.name ~= 'typescript-tools' end })<CR>", silent)
+keymap.set('v', '<leader>cf', function()
+  local start_row, _ = table.unpack(vim.api.nvim_buf_get_mark(0, '<'))
+  local end_row, _ = table.unpack(vim.api.nvim_buf_get_mark(0, '>'))
+
+  vim.lsp.buf.format {
+    range = {
+      ['start'] = { start_row, 0 },
+      ['end'] = { end_row, 0 },
+    },
+    async = true,
+  }
+end, silent)
+
 keymap.set('n', 'K', function()
   local winid = require('ufo').peekFoldedLinesUnderCursor()
   if not winid then
@@ -54,12 +36,7 @@ keymap.set('n', 'K', function()
   end
 end)
 
-keymap.set(
-  'n',
-  'gj',
-  "<cmd>lua require'utils'.diagnostic_toggle_virtual_text()<CR>",
-  { noremap = true, silent = true }
-)
+keymap.set('n', 'gj', "<cmd>lua require'utils'.diagnostic_toggle_virtual_text()<CR>", { noremap = true, silent = true })
 keymap.set('n', 'L', '<cmd>lua vim.lsp.buf.signature_help()<CR>', silent)
 keymap.set(
   'n',
@@ -75,10 +52,10 @@ keymap.set(
 )
 
 -- Avoid issues because of remapping <c-a> and <c-x> below
-vim.cmd([[
+vim.cmd [[
   nnoremap <Plug>SpeedDatingFallbackUp <c-a>
   nnoremap <Plug>SpeedDatingFallbackDown <c-x>
-]])
+]]
 
 keymap.set('n', '<leader>Q', ':quitall<CR>', {
   silent = true,
@@ -99,12 +76,7 @@ keymap.set('x', '<leader>p', '"_dP')
 keymap.set('i', '<C-c>', '<ESC>')
 
 -- Print Current Datetime
-keymap.set(
-  'n',
-  '<leader>ncd',
-  ':lua require("utils.functions").notify_current_datetime()<CR>',
-  silent
-)
+keymap.set('n', '<leader>ncd', ':lua require("utils.functions").notify_current_datetime()<CR>', silent)
 
 -- Better window movement
 -- keymap.set('n', '<C-h>', '<C-w>h', silent)
@@ -126,19 +98,10 @@ keymap.set('n', 'x', '"_x', silent)
 keymap.set('n', 'X', '"_X', silent)
 
 -- ** Copy/Paste ** --
-keymap.set(
-  'n',
-  '<Leader>v',
-  ':lua require("utils.functions").smart_paste()<CR>',
-  { noremap = true, silent = true }
-)
+keymap.set('n', '<Leader>v', ':lua require("utils.functions").smart_paste()<CR>', { noremap = true, silent = true })
 keymap.set('v', '<Leader>c', '"+y', { noremap = true, silent = true })
 
-keymap.set(
-  'n',
-  '<leader>s',
-  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]
-)
+keymap.set('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 -- Make file executable.
 keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { silent = true })
 
@@ -147,12 +110,7 @@ keymap.set('n', 'c*', '/\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgn')
 keymap.set('n', 'c#', '?\\<<C-r>=expand("<cword>")<CR>\\>\\C<CR>``cgN')
 
 -- Reveal syntax group under cursor.
-keymap.set(
-  'n',
-  '<F10>',
-  "<Cmd>lua require('mappings/normal/syntax').reveal_syntax_group()<CR>",
-  silent
-)
+keymap.set('n', '<F10>', "<Cmd>lua require('mappings/normal/syntax').reveal_syntax_group()<CR>", silent)
 
 -- Construct grep search.
 keymap.set('n', 'g/', ':Grep<Space>')
@@ -188,7 +146,7 @@ keymap.set('n', '<Tab>', ':BufferLineCycleNext<CR>', silent)
 -- keymap.set('n', 'gn', ':bn<CR>', silent)
 keymap.set('n', '<S-Tab>', ':BufferLineCyclePrev<CR>', silent)
 -- keymap.set('n', 'gp', ':bp<CR>', silent)
-keymap.set("n", "<S-q>", ":lua require('mini.bufremove').delete(0, false)<CR>", silent)
+keymap.set('n', '<S-q>', ":lua require('mini.bufremove').delete(0, false)<CR>", silent)
 
 -- Horizontal Split with New Buffer
 keymap.set('n', '<leader>bh', ':new<CR>', silent)
@@ -197,12 +155,7 @@ keymap.set('n', '<leader>bh', ':new<CR>', silent)
 keymap.set('n', '<leader>bv', ':vnew<CR>', silent)
 
 -- Vertical Split with New Buffer
-keymap.set(
-  'n',
-  '<leader>b',
-  ':set nomore <Bar> :ls <Bar> :set more <CR>:b<Space>',
-  silent
-)
+keymap.set('n', '<leader>b', ':set nomore <Bar> :ls <Bar> :set more <CR>:b<Space>', silent)
 
 -- Vertical split with current buffer
 keymap.set('n', '<leader>vs', '<C-W>v', silent)
@@ -210,32 +163,17 @@ keymap.set('n', '<leader>vs', '<C-W>v', silent)
 keymap.set('n', '<leader>hl', '<C-W>s', silent)
 
 -- Zoom a buffer split
-keymap.set(
-  'n',
-  '<Leader>-',
-  ':wincmd _<CR>:wincmd |<CR>',
-  { noremap = true, silent = true }
-)
+keymap.set('n', '<Leader>-', ':wincmd _<CR>:wincmd |<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>=', ':wincmd =<CR>', { noremap = true, silent = true })
 
 -- Space to NOP to prevent Leader issues
 keymap.set('n', '<Space>', '<NOP>', silent)
 
 -- Open links under cursor in browser with gx
-if vim.fn.has('macunix') == 1 then
-  keymap.set(
-    'n',
-    'gx',
-    "<cmd>silent execute '!open ' . shellescape('<cWORD>')<CR>",
-    silent
-  )
+if vim.fn.has 'macunix' == 1 then
+  keymap.set('n', 'gx', "<cmd>silent execute '!open ' . shellescape('<cWORD>')<CR>", silent)
 else
-  keymap.set(
-    'n',
-    'gx',
-    "<cmd>silent execute '!xdg-open ' . shellescape('<cWORD>')<CR>",
-    silent
-  )
+  keymap.set('n', 'gx', "<cmd>silent execute '!xdg-open ' . shellescape('<cWORD>')<CR>", silent)
 end
 
 -- Make arrowkey do something usefull, resize the viewports accordingly
@@ -261,12 +199,7 @@ keymap.set('n', '<Space>,', ':cp<CR>', silent)
 keymap.set('n', '<Space>.', ':cn<CR>', silent)
 
 -- Toggle quicklist
-keymap.set(
-  'n',
-  '<leader>q',
-  '<cmd>lua require("utils").toggle_quicklist()<CR>',
-  { noremap = true, silent = true }
-)
+keymap.set('n', '<leader>q', '<cmd>lua require("utils").toggle_quicklist()<CR>', { noremap = true, silent = true })
 
 -- highlight last inserted text
 keymap.set('n', 'gV', [[`[v`]']])
@@ -275,18 +208,8 @@ keymap.set('n', 'gV', [[`[v`]']])
 -- The `zzzv` keeps search matches in the middle of the window.
 -- and make sure n will go forward when searching with ? or #
 -- https://vi.stackexchange.com/a/2366/4600
-keymap.set(
-  'n',
-  'n',
-  [[(v:searchforward ? 'n' : 'N') . 'zzzv']],
-  { expr = true }
-)
-keymap.set(
-  'n',
-  'N',
-  [[(v:searchforward ? 'N' : 'n') . 'zzzv']],
-  { expr = true }
-)
+keymap.set('n', 'n', [[(v:searchforward ? 'n' : 'N') . 'zzzv']], { expr = true })
+keymap.set('n', 'N', [[(v:searchforward ? 'N' : 'n') . 'zzzv']], { expr = true })
 
 -- Center { & } movements
 keymap.set('n', '{', '{zz')
@@ -295,33 +218,13 @@ keymap.set('n', '}', '}zz')
 -- Move by 'display lines' rather than 'logical lines' if no v:count was
 -- provided.  When a v:count is provided, move by logical lines.
 -- Store relative line number jumps in the jumplist if they exceed a threshold.
-keymap.set(
-  'n',
-  'j',
-  [[v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj']],
-  { expr = true }
-)
-keymap.set(
-  'x',
-  'j',
-  [[v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj']],
-  { expr = true }
-)
-keymap.set(
-  'n',
-  'k',
-  [[v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk']],
-  { expr = true }
-)
-keymap.set(
-  'x',
-  'k',
-  [[v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk']],
-  { expr = true }
-)
+keymap.set('n', 'j', [[v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj']], { expr = true })
+keymap.set('x', 'j', [[v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj']], { expr = true })
+keymap.set('n', 'k', [[v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk']], { expr = true })
+keymap.set('x', 'k', [[v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk']], { expr = true })
 
 -- Make `Y` behave like `C` and `D` (to the end of line)
-if not vim.fn.has('nvim-0.6') then
+if not vim.fn.has 'nvim-0.6' then
   keymap.set('n', 'Y', 'y$')
 end
 
@@ -362,12 +265,7 @@ keymap.set('n', '<Leader>n', [[:e <C-R>=expand("%:p:h") . "/" <CR>]])
 keymap.set('n', '<CR>', ':noh<CR><CR>', silent)
 
 -- Manually invoke speeddating in case switch.vim didn't work
-keymap.set(
-  'n',
-  '<C-a>',
-  ':if !switch#Switch() <bar> call speeddating#increment(v:count1) <bar> endif<CR>',
-  silent
-)
+keymap.set('n', '<C-a>', ':if !switch#Switch() <bar> call speeddating#increment(v:count1) <bar> endif<CR>', silent)
 keymap.set(
   'n',
   '<C-x>',
