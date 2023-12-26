@@ -53,12 +53,12 @@ local icons = {
     Untrack = '  ',
   },
   diagnostics = {
-    Error = '  ',
-    Hint = ' ',
-    Information = '  ',
-    InformationOutline = '  ',
+    Error = ' ',
+    Hint = ' ',
+    Information = ' ',
+    InformationOutline = ' ',
     Question = ' ',
-    Warning = ' ',
+    Warning = ' ',
   },
   ui = {
     Arrow = ' ➜',
