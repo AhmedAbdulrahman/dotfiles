@@ -95,7 +95,6 @@ return {
   {
     -- Refactor with spectre
     'nvim-pack/nvim-spectre',
-    lazy = true,
     keys = {
       {
         '<Leader>pr',
@@ -112,7 +111,6 @@ return {
   },
   {
     'nvim-tree/nvim-tree.lua',
-    lazy = false,
     cmd = {
       'NvimTreeOpen',
       'NvimTreeClose',
@@ -138,6 +136,7 @@ return {
   },
   {
     'gbprod/stay-in-place.nvim',
+    lazy = false,
     config = function()
       require('stay-in-place').setup({})
     end,
@@ -413,7 +412,6 @@ return {
   { 'AndrewRadev/switch.vim', lazy = false },
   {
     'Wansmer/treesj',
-    lazy = true,
     cmd = { 'TSJToggle', 'TSJSplit', 'TSJJoin' },
     keys = {
       { 'gJ', '<cmd>TSJToggle<CR>', desc = 'Toggle Split/Join' },
@@ -435,19 +433,10 @@ return {
   {
     'LudoPinelli/comment-box.nvim',
     lazy = false,
-    keys = {
-      {
-        '<leader>ac',
-        "<cmd>lua require('comment-box').lbox()<CR>",
-        desc = 'comment box',
-      },
-      {
-        '<leader>ac',
-        "<cmd>lua require('comment-box').lbox()<CR>",
-        mode = 'v',
-        desc = 'comment box',
-      },
-    },
+    config = function()
+      vim.keymap.set( "n", "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>")
+      vim.keymap.set( "v", "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>")
+    end,
   },
   {
     'akinsho/nvim-toggleterm.lua',
@@ -464,8 +453,8 @@ return {
       },
     },
   },
-  { 'tpope/vim-repeat' },
-  { 'tpope/vim-speeddating' },
+  { "tpope/vim-repeat",           lazy = false },
+  { "tpope/vim-speeddating",      lazy = false },
   {
     'Shatur/neovim-session-manager',
     lazy = false,
@@ -708,7 +697,11 @@ return {
     'rcarriga/nvim-notify',
     config = function()
       require('notify').setup({
-        background_colour = '#000000',
+        -- Animation style
+        stages = "fade_in_slide_out",
+        -- Default timeout for notifications
+        timeout = 1500,
+        background_colour = "#2E3440",
       })
     end,
     keys = {
@@ -783,10 +776,10 @@ return {
     end,
   },
 
-  --     -- Snippets & Language & Syntax
-  -- 	{ 'Saecki/crates.nvim', dependencies = { 'nvim-lua/plenary.nvim' }, config = function()
-  -- 		require('plugins.crates') end
-  -- 	},
+      -- Snippets & Language & Syntax
+  	{ 'Saecki/crates.nvim', dependencqies = { 'nvim-lua/plenary.nvim' }, config = function()
+  		require('plugins.crates') end
+  	},
   {
     'windwp/nvim-autopairs',
     event = { "InsertEnter" },
@@ -844,7 +837,9 @@ return {
   {
     'zbirenbaum/copilot.lua',
     cond = NvimConfig.plugins.ai.copilot.enabled,
-    event = 'InsertEnter',
+    cmd = "Copilot",
+    build = ":Copilot auth",
+    event = "InsertEnter",
     config = function()
       require('plugins.copilot')
     end,
@@ -903,6 +898,7 @@ return {
 
   {
     'rcarriga/neotest',
+    lazy = true,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
@@ -1051,6 +1047,7 @@ return {
   },
   {
     'ThePrimeagen/git-worktree.nvim',
+    lazy = false,
     config = function()
       require('plugins.worktree')
     end,
