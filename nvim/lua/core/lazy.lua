@@ -18,11 +18,12 @@ require('lazy').setup('core.plugins', {
   concurrency = 5,
   performance = {
     rtp = {
+      -- disable some rtp plugins
       disabled_plugins = {
         'gzip',
-        'matchit',
-        'matchparen',
-        'netrwPlugin',
+        -- 'matchit',
+        -- 'matchparen',
+        -- 'netrwPlugin',
         'tarPlugin',
         'tohtml',
         'tutor',
@@ -32,6 +33,7 @@ require('lazy').setup('core.plugins', {
   },
   debug = false,
   ui = {
+    size = { width = 0.8, height = 0.6 },
     border = NvimConfig.ui.float.border,
     icons = {
       cmd = '⌘',
