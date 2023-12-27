@@ -168,6 +168,13 @@ return {
     },
   },
   {
+    "kosayoda/nvim-lightbulb",
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      require('plugins.lightbulb')
+    end,
+  },
+  {
     'williamboman/mason.nvim',
     cmd = 'Mason',
     keys = { { '<leader>cm', '<cmd>Mason<cr>', desc = 'Mason' } },
