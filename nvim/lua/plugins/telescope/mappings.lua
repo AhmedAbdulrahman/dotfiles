@@ -194,7 +194,7 @@ keymap.set(
 -- Find registers
 keymap.set(
   'n',
-  '<leader>r',
+  '<leader>fr',
   function()
     builtin.registers()
   end,
@@ -203,7 +203,7 @@ keymap.set(
 -- Find current buffer
 keymap.set(
   'n',
-  ',bf',
+  '<leader>fb',
   function()
     builtin.current_buffer_fuzzy_find()
   end,
@@ -282,32 +282,25 @@ keymap.set(
 -- Explore files starting at $HOME
 keymap.set(
   'n',
-  '<leader>e',
+  '<leader>fe',
   function()
-    require'plugins.telescope'.file_browser()
+    require'plugins.telescope'.file_explorer()
   end,
   silent
 )
 -- Browse files from cwd - File Browser
 keymap.set(
   'n',
-  '<leader>fb',
+  '<leader>fa',
   function()
     telescope.extensions.file_browser.file_browser()
   end,
   silent
 )
--- Grep word under cursor
--- keymap.set(
---   'n',
---   '<leader>g',
---   [[<Cmd>lua require'telescope.builtin'.grep_string()<CR>]],
---   silent
--- )
 -- Grep word under cursor - case-sensitive (exact word) - made for use with Replace All - see <leader>ra
 keymap.set(
   'n',
-  '<leader>gw',
+  '<leader>fw',
   function()
     builtin.grep_string({
       word_match = '-w',
@@ -316,29 +309,27 @@ keymap.set(
   silent
 )
 -- Grep for a string
-keymap.set(
-  'n',
-  '<leader>gp',
-  function()
-    require'plugins.telescope'.grep_prompt()
-  end,
-  silent
-)
+-- keymap.set(
+--   'n',
+--   '<leader>gp',
+--   function()
+--     require'plugins.telescope'.grep_prompt()
+--   end,
+--   silent
+-- )
 
 -- Multi grep
 keymap.set(
   'n',
-  '<leader>/',
-  function()
-    require'plugins.telescope'.pickers.multi_rg()
-  end,
+  '<leader>fl',
+  "<CMD>lua require('plugins.telescope.pickers.multi_rg')()<CR>",
   silent
 )
 
 -- Grep open files
 keymap.set(
   'n',
-  '<leader>lg',
+  '<leader>fg',
   function()
     builtin.live_grep({
       grep_open_files = true,
