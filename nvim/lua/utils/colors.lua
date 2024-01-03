@@ -1,0 +1,16 @@
+return {
+  black = "#000000",
+  transparent = "#333840",
+  background = "#1f2335",
+  background_light = "#1f2430",
+  green = "#9ece6a",
+  purple = "#c792ea",
+  yellow = "#ecc48d",
+  blue = "#7aa2f7",
+  white = "#ebefff",
+  orange = "#ff9e64",
+  red = "#FD98B9",
+  grey = "#5c6370",
+  grey_light = "#3e4452",
+  grey_lighter = "#2c323c",
+}
