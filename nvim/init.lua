@@ -16,9 +16,10 @@ require('internal.cursorword')
 require('lsp.config')
 require('lsp.run')
 require('lsp.functions')
+require("keymaps")
 require('floating_man')
 
-require('snippets')
+-- require('snippets')
 
 local g = vim.g
 
@@ -63,3 +64,24 @@ g.markdown_fenced_languages = {
   'less=css',
   'viml=vim',
 }
+
+-- -- Some basic autocommands
+-- if g.vscode == nil then
+--   augroup { name = 'NvimBasics', cmds = {
+--     {{ 'BufEnter', 'FocusGained', 'CursorHold', 'CursorHoldI' }, {
+--       pattern = '*',
+--       desc = 'Check if file has changed on disk, if it has and buffer has no changes, reload it.',
+--       command = 'checktime',
+--     }},
+--     { 'BufWritePre' , {
+--       pattern = '*',
+--       desc = 'Remove trailing whitespace before write.',
+--       command = [[%s/\s\+$//e]],
+--     }},
+--     { 'TextYankPost', {
+--       pattern = '*',
+--       desc = 'Highlight yanked text.',
+--       callback = function() vim.highlight.on_yank { higroup='Search', timeout=150 } end,
+--     }},
+--   }}
+-- end
