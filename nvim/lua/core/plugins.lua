@@ -1085,7 +1085,7 @@ return {
       "Octo",
     },
     config = function()
-      require('plugins.git.octo')
+      require('plugins.gitocto')
     end
   },
   {
