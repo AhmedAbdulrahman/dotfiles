@@ -132,7 +132,7 @@ local normal_mode_mappings = {
     h = { '<cmd>nohlsearch<CR>', 'No Highlight' },
     n = { '<cmd>set nonumber!<CR>', 'Line numbers' },
     r = { '<cmd>set norelativenumber!<CR>', 'Relative number' },
-    q = { 'quicklist' },
+    q = { require('utils').toggle_quicklist, 'Toggle quicklist' },
   },
 
   c = {
@@ -175,11 +175,11 @@ local normal_mode_mappings = {
   l = {
     name = '+LSP',
     a = { vim.lsp.buf.code_action, 'Code Action' },
-    d = { '<cmd>TroubleToggle<CR>', 'local diagnostics' },
+    d = { '<cmd>TroubleToggle<CR>', 'Trouble local diagnostics' },
+    q = { "<cmd>TroubleToggle quickfix<CR>", 'Trouble quickfix list' },
     D = { '<cmd>Telescope diagnostics wrap_results=true<CR>', 'workspace diagnostics' },
     t = { '<cmd>LspToggleAutoFormat<CR>', 'toggle format on save' },
     cl = { vim.lsp.codelens.run, 'CodeLens Action' },
-    q = { vim.diagnostic.setloclist, 'Quickfix' },
     s = { '<cmd>Telescope lsp_document_symbols<cr>', 'Document Symbols' },
     i = { '<cmd>LspInfo<cr>', 'Info' },
     h = { "<cmd>lua require('lsp.functions').toggle_inlay_hints()<cr>", 'Hints' },
