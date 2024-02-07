@@ -1,5 +1,6 @@
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+local lazyIsInstalled = vim.loop.fs_stat(lazypath) ~= nil
+if not lazyIsInstalled then
   vim.fn.system({
     'git',
     'clone',
@@ -14,26 +15,37 @@ vim.opt.runtimepath:prepend(lazypath)
 require('lazy').setup('core.plugins', {
   defaults = { lazy = true },
   install = { colorscheme = { 'aylin' } },
-  checker = { enabled = true },
+  checker = {
+    enabled = true, -- automatically check for plugin updates
+		notify = false, -- done on my own to use minimum condition for less noise
+		frequency = 60 * 60 * 24, -- = 1 day
+  },
+  diff = { cmd = "browser" }, -- view diffs with "d" in the browser
+  change_detection = { notify = false },
+  readme = { enabled = true },
   concurrency = 5,
   performance = {
     rtp = {
-      -- disable some rtp plugins
+      -- Disable unused builtin plugins from neovim
+      -- INFO do not disable `rplugin`, as it breaks plugins like magma.nvim
       disabled_plugins = {
-        'gzip',
-        -- 'matchit',
-        -- 'matchparen',
-        -- 'netrwPlugin',
-        'tarPlugin',
-        'tohtml',
-        'tutor',
-        'zipPlugin',
+        "matchparen",
+				"matchit",
+				"netrwPlugin",
+				"man",
+				"tutor",
+				"health",
+				"gzip",
+				"zipPlugin",
+				"tarPlugin",
       },
     },
   },
   debug = false,
   ui = {
-    size = { width = 0.8, height = 0.6 },
+    wrap = true,
+    pills = false,
+    size = { width = 1, height = 0.93 }, -- not full height, so search is visible
     border = NvimConfig.ui.float.border,
     icons = {
       cmd = '⌘',
