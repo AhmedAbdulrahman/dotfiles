@@ -413,6 +413,14 @@ return {
 
   -- General
   {
+    "mistricky/codesnap.nvim",
+    build = "make",
+    cmd = "CodeSnapPreviewOn",
+    opts = {
+      watermark = nil
+    }
+  },
+  {
     'iamcco/markdown-preview.nvim',
     build = 'cd app && npm install',
     setup = function()
