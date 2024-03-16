@@ -448,10 +448,9 @@ return {
   {
     'LudoPinelli/comment-box.nvim',
     lazy = false,
-    config = function()
-      vim.keymap.set( "n", "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>")
-      vim.keymap.set( "v", "<leader>ac", "<cmd>lua require('comment-box').lbox()<CR>")
-    end,
+    keys = {
+      { "<leader>ac", "<cmd>lua require('comment-box').llbox()<CR>", desc = "comment box" },
+      { "<leader>ac", "<cmd>lua require('comment-box').llbox()<CR>", mode = "v", desc = "comment box" },
   },
   {
     'akinsho/nvim-toggleterm.lua',
