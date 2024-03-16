@@ -504,14 +504,6 @@ return {
       require('nvim-surround').setup({})
     end,
   },
-  {
-    'sunjon/shade.nvim',
-    config = function()
-      require('shade').setup()
-      require('shade').toggle()
-    end,
-  },
-
   { 'dhruvasagar/vim-table-mode' },
   {
     'smoka7/multicursors.nvim',

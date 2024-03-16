@@ -2,7 +2,6 @@ local present_dapui, dapui = pcall(require, "dapui")
 local present_dap, dap = pcall(require, "dap")
 local present_virtual_text, dap_vt = pcall(require, "nvim-dap-virtual-text")
 local present_dap_utils, dap_utils = pcall(require, "dap.utils")
--- local _, shade = pcall(require, "shade")
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
@@ -121,6 +120,7 @@ vim.fn.sign_define("DapStopped", { text = "⭐️", texthl = "", linehl = "", nu
 keymap("n", "<F5>", "<CMD>lua require('dap').continue()<CR>", { desc = 'Debug: Start/Continue' })
 keymap("n", "<F1>", "<CMD>lua require('dap').step_into()<CR>", { desc = 'Debug: Step Into' })
 keymap("n", "<F2>", "<CMD>lua require('dap').step_over()<CR>", { desc = 'Debug: Step Over' })
+keymap("n", "<F2>", "<CMD>lua require('dap').step_back()<CR>", { desc = 'Debug: Step Back' })
 keymap("n", "<F3>", "<CMD>lua require('dap').step_out()<CR>", { desc = 'Debug: Step Out' })
 keymap("n", "<Leader>db", "<CMD>lua require('dap').toggle_breakpoint()<CR>", { desc = 'Debug: Toggle Breakpoint' })
 keymap("n", "<Leader>dc", "<CMD>lua require('dap').continue()<CR>", opts)
@@ -144,8 +144,8 @@ keymap('n', '<F7>', "<CMD>lua require('dapui').toggle()<CR>", { desc = 'Debug: S
 -- Adapters
 -- VSCODE JS (Node/Chrome/Terminal/Jest)
 require("dap-vscode-js").setup({
-  debugger_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter",
-  debugger_cmd = { "js-debug-adapter" },
+  -- debugger_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter",
+  -- debugger_cmd = { "js-debug-adapter" },
   adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
 })
 
@@ -175,7 +175,8 @@ for _, ext in ipairs(exts) do
       type = "pwa-node",
       request = "launch",
       name = "Launch Current File (pwa-node)",
-      cwd = vim.fn.getcwd(),
+      -- cwd = vim.fn.getcwd(),
+      cwd = "${workspaceFolder}",
       args = { "${file}" },
       sourceMaps = true,
       protocol = "inspector",
