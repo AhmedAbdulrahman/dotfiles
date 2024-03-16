@@ -188,7 +188,23 @@ return {
   },
 
   -- Formatters
-
+  {
+    "stevearc/conform.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require('plugins.formatting')
+    end,
+  },
+  {
+    "mfussenegger/nvim-lint",
+    event = {
+      "BufReadPre",
+      "BufNewFile",
+    },
+    config = function()
+      require('plugins.linting')
+    end,
+  },
   {
     'stevearc/aerial.nvim',
     config = function()
@@ -211,6 +227,10 @@ return {
     dependencies = {
       'tpope/vim-repeat',
     },
+  },
+  {
+    'mhartington/formatter.nvim',
+    config = "require('plugins.formatter')",
   },
   -- LSP Cmp
   {
@@ -391,12 +411,6 @@ return {
     module = true,
   },
 
-  -- Formatter
-  {
-    'mhartington/formatter.nvim',
-    config = "require('plugins.formatter')",
-  },
-
   -- General
   {
     'iamcco/markdown-preview.nvim',
@@ -451,6 +465,7 @@ return {
     keys = {
       { "<leader>ac", "<cmd>lua require('comment-box').llbox()<CR>", desc = "comment box" },
       { "<leader>ac", "<cmd>lua require('comment-box').llbox()<CR>", mode = "v", desc = "comment box" },
+    }
   },
   {
     'akinsho/nvim-toggleterm.lua',
