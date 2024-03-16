@@ -499,31 +499,8 @@ return {
       require('plugins.session-manager')
     end,
     keys = {
-      {
-        '<leader>/sc',
-        '<cmd>SessionManager load_session<CR>',
-        desc = 'choose session',
-      },
-      {
-        '<leader>/sr',
-        '<cmd>SessionManager delete_session<CR>',
-        desc = 'remove session',
-      },
-      {
-        '<leader>/sd',
-        '<cmd>SessionManager load_current_dir_session<CR>',
-        desc = 'load current dir session',
-      },
-      {
-        '<leader>/sl',
-        '<cmd>SessionManager load_last_session<CR>',
-        desc = 'load last session',
-      },
-      {
-        '<leader>/ss',
-        '<cmd>SessionManager save_current_session<CR>',
-        desc = 'save session',
-      },
+      { "<Leader>ps", "<cmd>SessionManager available_commands<CR>",   desc = "session manager" },
+      { "<Leader>pS", "<cmd>SessionManager save_current_session<CR>", desc = "save session" },
     },
   },
   {
