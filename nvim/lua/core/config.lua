@@ -10,7 +10,7 @@ NvimConfig = {
 	plugins = {
 		ai = {
 			chatgpt = {
-				enabled = true,
+				enabled = false,
 			},
 			codeium = {
 				enabled = false,
@@ -45,7 +45,7 @@ NvimConfig = {
 		zen = {
 			alacritty_enabled = false,
 			kitty_enabled = false,
-			wezterm_enabled = true,
+			wezterm_enabled = false,
 			enabled = true, -- sync after change
 		},
 	},
