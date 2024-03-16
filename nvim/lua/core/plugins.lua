@@ -65,7 +65,6 @@ return {
       -- Telescope Extensions
       { 'nvim-lua/popup.nvim' },
       { 'nvim-lua/plenary.nvim' },
-      { 'kevinhwang91/nvim-bqf', ft = 'qf' },
       {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
@@ -79,6 +78,14 @@ return {
       { 'jvgrootveld/telescope-zoxide' },
       { 'nvim-telescope/telescope-media-files.nvim' }
     },
+  },
+
+  {
+    "kevinhwang91/nvim-bqf",
+    ft = "qf",
+    init = function()
+      require('plugins.bqf')
+    end,
   },
 
   {
