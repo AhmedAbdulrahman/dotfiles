@@ -1,4 +1,4 @@
-vim.g.skip_ts_context_commentstring_module = true
+require('ts_context_commentstring').setup()
 
 require('Comment').setup({
   ---Add a space b/w comment and the line
