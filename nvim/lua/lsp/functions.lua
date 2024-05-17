@@ -28,7 +28,7 @@ function M.enable_format_on_save()
     require('tailwind-sorter').toggle_on_save()
 
     vim.api.nvim_create_autocmd("BufWritePre", {
-        callback = M.format(),
+        callback = M.format,
         group = group,
     })
     require("notify")("Enabled format on save", "info", { title = "LSP", timeout = 2000 })
