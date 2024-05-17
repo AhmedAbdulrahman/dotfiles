@@ -117,32 +117,49 @@ set_keymap({
       {
         key = "L",
         actions = function()
-          local winid = require('ufo').peekFoldedLinesUnderCursor()
-          if not winid then
+          -- local winid = require('ufo').peekFoldedLinesUnderCursor()
+          -- if not winid then
             vim.lsp.buf.hover()
-          end
+          -- end
         end,
         description = "Show variable documentation in floating buffer",
       },
-      -- {
-      --   key = "<leader>l",
-      --   actions = vim.lsp.buf.signature_help,
-      --   description = "Displays signature information about the symbol under the cursor",
-      -- },
+      {
+        key = "<leader>K",
+        actions = vim.lsp.buf.signature_help,
+        description = "Displays signature information about the symbol under the cursor",
+      },
       {
         key = "<leader>rn",
         actions = vim.lsp.buf.rename,
         description = "Rename variable",
       },
       {
-        key = "<leader>fl",
-        actions = vim.lsp.buf.format,
+        key = "<leader>D",
+        actions = vim.lsp.buf.type_definition,
+        description = "LSP Type Definition",
+    },
+      {
+        key = "<leader>vD",
+        actions = "<cmd>vsplit <BAR> lua vim.lsp.buf.type_definition()<CR>",
+        description = "Open type definition in vertical split",
+      },
+      {
+        key = "<leader>hD",
+        actions = "<cmd>split <BAR> lua vim.lsp.buf.type_definition()<CR>",
+        description = "Open type definition in horizontal split",
+      },
+      {
+        key = "<leader>cf",
+        actions = function()
+          require('lsp.functions').format()
+        end,
         description = "Format with LSP",
       },
       {
         key = "H",
         actions = function()
-            vim.diagnostic.open_float(0, { scope = "line" })
+            vim.diagnostic.open_float(0, { scope = "line"  })
         end,
         description = "Show diagnostic in a floating buffer",
       },
@@ -152,16 +169,19 @@ set_keymap({
         description = "Display code action list menu in floating buffer",
       },
       {
-        key = "<leader>v",
+        key = "<leader>th",
         actions = function()
-          require'utils'.diagnostic_toggle_virtual_text()
+          require'utils'.diagnostic_toggle_virtual_text({
+            buffer = true
+          })
         end,
         description = "Display diagnostics for the given namespace and buffer",
       },
       {
-        key = "gn",
+        key = "[d",
         actions = function()
           vim.diagnostic.goto_next({
+            buffer = true,
             wrap = true,
             float = {
               border = 'rounded',
@@ -172,9 +192,10 @@ set_keymap({
         description = "Go to next diagnostic in current buffer",
       },
       {
-        key = "gp",
+        key = "]d",
         actions = function()
           vim.diagnostic.goto_prev({
+            buffer = true,
             wrap = true,
             float = {
               border = 'rounded',
@@ -327,18 +348,16 @@ set_keymap({
       actions = ":quitall",
       description = "Quit all windows",
     },
-    {
-      key = "<leader>rs",
-      actions = function()
-          vim.cmd("luafile %")
-      end,
-      description = "Resource current lua buffer",
-    },
+    -- {
+    --   key = "<leader>rs",
+    --   actions = function()
+    --       vim.cmd("luafile %")
+    --   end,
+    --   description = "Resource current lua buffer",
+    -- },
     {
         key = "<LEADER>sw",
-        actions = function()
-            vim.cmd("set wrap")
-        end,
+        actions = ":set wrap<CR>",
         description = "Enable wrapping in the buffer",
     },
     {
@@ -384,7 +403,7 @@ set_keymap({
       description = "Easy regex replace for current word",
     },
     {
-      key = "<Leader>v",
+      key = "<Leader>V",
       actions = function()
         require("utils.functions").smart_paste()
       end,
