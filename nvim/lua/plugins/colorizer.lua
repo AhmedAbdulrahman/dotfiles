@@ -1,8 +1,22 @@
 return {
   {
-    "brenoprata10/nvim-highlight-colors",
-    opts = {
-      enable_tailwind = false,
-    }
+    'NvChad/nvim-colorizer.lua',
+    config = function()
+      require('colorizer').setup({
+        filetypes = {
+          'html',
+          'css',
+          'javascript',
+          'typescript',
+          'typescriptreact',
+          'javascriptreact',
+          'lua',
+        },
+        user_default_options = {
+          mode = 'background',
+          tailwind = false, -- Enable tailwind colors
+        },
+      })
+    end,
   },
 }

@@ -18,12 +18,12 @@ local command_palette = {
       ":lua require('telescope.builtin').live_grep()",
       1,
     },
-    { 'Project Files', ":lua require'telescope'.project_files()", 1 },
+    { 'Project Files', ":lua require'utils.telescope'.project_files()", 1 },
   },
   {
     'Git(Hub)',
-    { ' Issues', "lua require'plugins.telescope'.gh_issues()", 1 },
-    { ' Pulls', "lua require'plugins.telescope'.gh_prs()", 1 },
+    { ' Issues', "lua require'utils.telescope'.gh_issues()", 1 },
+    { ' Pulls', "lua require'utils.telescope'.gh_prs()", 1 },
     { ' Status', "lua require'telescope.builtin'.git_status()", 1 },
     { ' Diff Split Vertical', ':Gvdiffsplit!', 1 },
     { ' Log', "lua require'telescope.builtin'.git_commits()", 1 },
@@ -39,9 +39,9 @@ local command_palette = {
   },
   {
     'Notes',
-    { 'Browse Notes', "lua require'telescope'.browse_notes()", 1 },
-    { 'Find Notes', "lua require'telescope'.find_notes()", 1 },
-    { 'Search/Grep Notes', "lua require'telescope'.grep_notes()", 1 },
+    { 'Browse Notes', "lua require'utils.telescope'.browse_notes()", 1 },
+    { 'Find Notes', "lua require'utils.telescope'.find_notes()", 1 },
+    { 'Search/Grep Notes', "lua require'utils.telescope'.grep_notes()", 1 },
   },
   {
     'Toggle',
@@ -69,7 +69,7 @@ local command_palette = {
       'search history',
       ":lua require('telescope.builtin').search_history()",
     },
-    { 'Search TODOS', ":lua require'telescope'.search_todos()" },
+    { 'Search TODOS', ":lua require'utils.telescope'.search_todos()" },
   },
   {
     'Browser',

@@ -1,4 +1,5 @@
 -- Diagnostic config
+local set_sign = require("utils.set-sign")
 
 local codes = {
   -- Lua
@@ -119,12 +120,14 @@ vim.diagnostic.config({
 
 -- UI
 
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
+set_sign({
+  list = {
+      { name = "DiagnosticSignError", sign = NvimConfig.icons.diagnostics.Error, highlight_group = "DiagnosticSignError" },
+      { name = "DiagnosticSignWarn", sign = NvimConfig.icons.diagnostics.Warning, highlight_group = "DiagnosticSignWarn" },
+      { name = "DiagnosticSignInfo", sign = NvimConfig.icons.diagnostics.Information, highlight_group = "DiagnosticSignInfo" },
+      { name = "DiagnosticSignHint", sign = NvimConfig.icons.diagnostics.Hint, highlight_group = "DiagnosticSignHint" },
+  },
+})
 
 local lspui_ok, lspui = pcall(require, 'lspconfig.ui.windows')
 if not lspui_ok then

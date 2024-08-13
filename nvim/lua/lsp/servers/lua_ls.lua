@@ -1,5 +1,9 @@
 local M = {}
 
+-- if server == "lua_ls" then
+--   require("neodev").setup {}
+-- end
+
 M.settings = {
   Lua = {
     diagnostics = {

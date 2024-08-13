@@ -78,6 +78,56 @@ vim.api.nvim_create_autocmd('CursorHold', {
   group = 'ClearLuasnipSession',
 })
 
+vim.api.nvim_create_augroup('Files', { clear = true })
+
+-- When editing a file, always jump to the last cursor position
+vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
+  pattern = '*',
+  callback = function(opts)
+    local last_position = vim.api.nvim_buf_get_mark(opts.buf, '"')
+    local line, _ = unpack(last_position)
+    local total_lines = vim.api.nvim_buf_line_count(opts.buf)
+    if line ~= 0 and line <= total_lines
+        and vim.bo.filetype ~= 'fugitive'
+        and vim.bo.filetype ~= 'gitcommit'
+        and vim.bo.filetype ~= 'gitrebase'
+    then
+      -- print(vim.bo.filetype)
+      vim.api.nvim_feedkeys([[g`"]], 'nx', false)
+    end
+  end,
+  group = 'Files',
+})
+
+vim.api.nvim_create_augroup('FileTypeOverrides', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = {
+    "netrw",
+    "Jaq",
+    "qf",
+    "git",
+    "help",
+    "man",
+    "lspinfo",
+    "oil",
+    "spectre_panel",
+    "lir",
+    "DressingSelect",
+    "tsplayground",
+    "",
+  },
+  callback = function()
+    vim.cmd [[
+      nnoremap <silent> <buffer> q :close<CR>
+      set nobuflisted
+    ]]
+  end,
+  group = 'FileTypeOverrides',
+})
+
+-- Check if we need to reload the file when it changed
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, { command = "checktime" })
+
 -- vim.api.nvim_create_augroup('__myautocmds__', { clear = true })
 -- -- Save the current buffer after any changes.
 -- vim.api.nvim_create_autocmd('InsertLeave,TextChanged', {
@@ -171,14 +221,14 @@ vim.api.nvim_create_autocmd('BufEnter', {
   end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = '*',
-  callback = function()
-    if NvimConfig.plugins.zen.enabled and vim.bo.filetype ~= 'alpha' then
-      pwk.attach_zen(0)
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd('FileType', {
+--   pattern = '*',
+--   callback = function()
+--     if NvimConfig.plugins.zen.enabled and vim.bo.filetype ~= 'alpha' then
+--       pwk.attach_zen(0)
+--     end
+--   end,
+-- })
 
 vim.api.nvim_create_autocmd('BufEnter', {
   pattern = { '*test.js', '*test.ts', '*test.tsx', '*.spec.ts', '*.spec.js' },

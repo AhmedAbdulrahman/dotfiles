@@ -122,7 +122,7 @@ keymap.set(
   'n',
   '<leader>is',
   function()
-    require'plugins.telescope'.gh_issues()
+    require'utils.telescope'.gh_issues()
   end,
   silent
 )
@@ -131,7 +131,7 @@ keymap.set(
   'n',
   '<leader>pl',
   function()
-    require'plugins.telescope'.gh_prs()
+    require'utils.telescope'.gh_prs()
   end,
   silent
 )
@@ -140,7 +140,7 @@ keymap.set(
   'n',
   '<leader>rl',
   function()
-    require'plugins.telescope'.repo_list()
+    require'utils.telescope'.repo_list()
   end,
   silent
 )
@@ -203,7 +203,7 @@ keymap.set(
 -- Find current buffer
 keymap.set(
   'n',
-  '<leader>fb',
+  '<leader>ff',
   function()
     builtin.current_buffer_fuzzy_find()
   end,
@@ -265,7 +265,7 @@ keymap.set(
   'n',
   '<leader><TAB>',
   function()
-    require'plugins.telescope'.project_files()
+    require'utils.telescope'.project_files()
   end,
   silent
 )
@@ -284,7 +284,7 @@ keymap.set(
   'n',
   '<leader>fe',
   function()
-    require'plugins.telescope'.file_explorer()
+    require'utils.telescope'.file_explorer()
   end,
   silent
 )
@@ -297,6 +297,16 @@ keymap.set(
   end,
   silent
 )
+
+keymap.set(
+  'n',
+  '<leader>fb',
+  require('browser_bookmarks').select,
+  {
+    desc = 'Fuzzy search browser bookmarks',
+  }
+)
+
 -- Grep word under cursor - case-sensitive (exact word) - made for use with Replace All - see <leader>ra
 keymap.set(
   'n',
@@ -344,7 +354,7 @@ keymap.set(
   'n',
   '<leader>fc',
   function()
-    require'plugins.telescope'.find_configs()
+    require'utils.telescope'.find_configs()
   end,
   silent
 )
@@ -353,7 +363,7 @@ keymap.set(
   'n',
   '<leader>nc',
   function()
-    require'plugins.telescope'.nvim_config()
+    require'utils.telescope'.nvim_config()
   end,
   silent
 )
@@ -361,9 +371,12 @@ keymap.set(
 -- neoclip
 keymap.set(
   'n',
-  '<leader>ce',
+  '<leader>cb',
   function()
     telescope.extensions.neoclip.default()
   end,
-  silent
+  {
+    silent = true,
+    desc = 'Fuzzy search Clipboard (neoclip)'
+  }
 )

@@ -3,7 +3,8 @@
 -- Setup installer & lsp configs
 local mason_ok, mason = pcall(require, "mason")
 local mason_lsp_ok, mason_lsp = pcall(require, "mason-lspconfig")
-local ufo_config_handler = require("plugins.nvim-ufo").handler
+local ufo_utils = require("utils._ufo")
+local ufo_config_handler = ufo_utils.handler
 
 if not mason_ok or not mason_lsp_ok then
   return
@@ -27,7 +28,8 @@ mason_lsp.setup({
     "jsonls",
     "lua_ls",
     "prismals",
-    "tailwindcss"
+    "tailwindcss",
+    -- "gopls"
   },
   -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
   -- This setting has no relation with the `ensure_installed` setting.
@@ -40,6 +42,7 @@ mason_lsp.setup({
 })
 
 local lspconfig = require("lspconfig")
+local util = require("lspconfig/util")
 
 local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
@@ -111,6 +114,16 @@ lspconfig.vuels.setup({
   settings = require("lsp.servers.vuels").settings,
 })
 
+-- lspconfig.gopls.setup({
+--   capabilities = capabilities,
+--   handlers = handlers,
+--   filetypes = require("lsp.servers.gopls").filetypes,
+--   on_attach = on_attach,
+--   settings = require("lsp.servers.gopls").settings,
+--   cmd = {"gopls"},
+--   root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+-- })
+
 for _, server in ipairs({ "bashls", "emmet_ls", "graphql", "html", "prismals" }) do
   lspconfig[server].setup({
     on_attach = on_attach,
@@ -119,7 +132,7 @@ for _, server in ipairs({ "bashls", "emmet_ls", "graphql", "html", "prismals" })
   })
 end
 
-require("ufo").setup({
-  fold_virt_text_handler = ufo_config_handler,
-  close_fold_kinds = { "imports" },
-})
+-- require("ufo").setup({
+--   fold_virt_text_handler = ufo_config_handler,
+--   close_fold_kinds_for_ft = { default = { "imports" } },
+-- })

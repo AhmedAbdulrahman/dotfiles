@@ -12,7 +12,18 @@ if not lazyIsInstalled then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-require('lazy').setup('core.plugins', {
+-- If opening from inside neovim terminal then do not load all the other plugins
+if os.getenv("NVIM") ~= nil then
+  require("lazy").setup({
+    {
+      "willothy/flatten.nvim",
+      opts = {},
+    },
+  })
+  return
+end
+
+require('lazy').setup('plugins', {
   defaults = { lazy = true },
   install = { colorscheme = { 'aylin' } },
   checker = {
@@ -21,7 +32,10 @@ require('lazy').setup('core.plugins', {
 		frequency = 60 * 60 * 24, -- = 1 day
   },
   diff = { cmd = "browser" }, -- view diffs with "d" in the browser
-  change_detection = { notify = false },
+  change_detection = {
+    enabled = true,
+    notify = false,
+  },
   readme = { enabled = true },
   concurrency = 5,
   performance = {
@@ -29,22 +43,31 @@ require('lazy').setup('core.plugins', {
       -- Disable unused builtin plugins from neovim
       -- INFO do not disable `rplugin`, as it breaks plugins like magma.nvim
       disabled_plugins = {
-        "matchparen",
-				"matchit",
-				"netrwPlugin",
-				"man",
-				"tutor",
-				"health",
-				"gzip",
-				"zipPlugin",
-				"tarPlugin",
+        "2html_plugin",
+        "getscript",
+        "getscriptPlugin",
+        "gzip",
+        "logipat",
+        "matchit",
+        "netrw",
+        "netrwFileHandlers",
+        "netrwPlugin",
+        "netrwSettings",
+        "tar",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "vimball",
+        "vimballPlugin",
+        "zip",
+        "zipPlugin",
       },
     },
   },
   debug = false,
   ui = {
     wrap = true,
-    pills = false,
+    pills = true,
     size = { width = 1, height = 0.93 }, -- not full height, so search is visible
     border = NvimConfig.ui.float.border,
     icons = {

@@ -1,10 +1,10 @@
 -- luacheck: max line length 160
 
 local utils = require('utils')
-local async_present, async = pcall(require, 'plenary.async')
+-- local async_present, async = pcall(require, 'plenary.async')
 
 
-local Job = require('plenary.job')
+-- local Job = require('plenary.job')
 local keymap = vim.keymap
 
 -- Exported functions
@@ -174,25 +174,25 @@ M.highlight_overlength = function()
 end
 
 M.yank_current_file_name = function()
-  local file_name = vim.api.nvim_buf_get_name(0)
-  local input_pipe = vim.loop.new_pipe(false)
+  -- local file_name = vim.api.nvim_buf_get_name(0)
+  -- local input_pipe = vim.loop.new_pipe(false)
 
-  local yanker = Job:new({
-    writer = input_pipe,
-    command = 'pbcopy',
-  })
+  -- local yanker = Job:new({
+  --   writer = input_pipe,
+  --   command = 'pbcopy',
+  -- })
 
-  -- @TODOUA: This works perfectly but double-check if it could be better(less)
-  yanker:start()
-  input_pipe:write(file_name)
-  input_pipe:close()
-  yanker:shutdown()
+  -- -- @TODOUA: This works perfectly but double-check if it could be better(less)
+  -- yanker:start()
+  -- input_pipe:write(file_name)
+  -- input_pipe:close()
+  -- yanker:shutdown()
 
-  require('notify')(
-    'Yanked: ' .. file_name,
-    'info',
-    { title = 'File Name Yanker', timeout = 1000 }
-  )
+  -- require('notify')(
+  --   'Yanked: ' .. file_name,
+  --   'info',
+  --   { title = 'File Name Yanker', timeout = 1000 }
+  -- )
 end
 
 -- Project specific override
@@ -327,20 +327,20 @@ M.notify_current_datetime = function()
 end
 
 M.first_nvim_run = function()
-  local is_first_run = utils.file_exists('/tmp/first-nvim-run')
+  -- local is_first_run = utils.file_exists('/tmp/first-nvim-run')
 
-  if is_first_run then
-    async.run(function()
-      require('notify')("Welcome to vim config! Hope you'll have a nice experience!", "info",
-        { title = "Nvim", timeout = 5000 })
-      require('notify')("Please install treesitter servers manually by :TSInstall command.", "info",
-        { title = "Installation", timeout = 10000 })
-    end)
-    local suc = os.remove('/tmp/first-nvim-run')
-    if not suc then
-      print("Error: Couldn't remove /tmp/first-nvim-run!")
-    end
-  end
+  -- if is_first_run then
+  --   async.run(function()
+  --     require('notify')("Welcome to vim config! Hope you'll have a nice experience!", "info",
+  --       { title = "Nvim", timeout = 5000 })
+  --     require('notify')("Please install treesitter servers manually by :TSInstall command.", "info",
+  --       { title = "Installation", timeout = 10000 })
+  --   end)
+  --   local suc = os.remove('/tmp/first-nvim-run')
+  --   if not suc then
+  --     print("Error: Couldn't remove /tmp/first-nvim-run!")
+  --   end
+  -- end
 end
 
 -- M.first_nvim_run()

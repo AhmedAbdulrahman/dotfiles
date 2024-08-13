@@ -48,7 +48,11 @@ g.loaded_perl_provider = 0
 -- g:errorformat = '%f:%l:%c: %trror: %m,' . '%f:%l:%c: %tarning: %m,' . '%f:%l:%c: %tote: %m'
 
 -- Correct terminal colors
-opt.termguicolors = true -- Enables 24-bit RGB color support.
+-- uses "gui" highlights instead of "cterm"
+opt.termguicolors = true -- Enables 24-bit RGB color support in TUI.
+
+-- Set font to be used in GUIs (Neovide, etc)
+opt.guifont = "Cascadia Code PL"
 
 -- Global Options
 opt.mouse = table.concat({ -- Enable mouse support for normal and visual modes.
@@ -85,7 +89,7 @@ opt.viewoptions = 'cursor,folds' -- save/restore just these (with `:{mk,load}vie
 opt.sidescroll = 3 -- Columns to scroll horizontally when cursor is moved off the screen.
 opt.sidescrolloff = 5 -- Minimum number of screen columns to keep to cursor right.
 -- Fix slight delay after pressing ESC then O http://ksjoberg.com/vim-esckeys.html
-opt.timeoutlen = 200 -- Faster completion (cannot be lower than 200 because then commenting doesn't work)
+opt.timeoutlen = 300 -- Faster completion (cannot be lower than 200 because then commenting doesn't work)
 opt.ttimeoutlen = 0 -- Time in milliseconds to wait for a key code sequence to complete.
 opt.updatetime = 100 -- Trigger CursorHold event faster.
 opt.updatecount = 0 -- Update swapfiles every 80 typed chars (I don't use swap files anymore)
@@ -120,7 +124,6 @@ opt.fillchars = { -- Characters to be used in various user-interface elements.
   foldsep = '│',
   foldclose = '▸',
 }
-opt.ruler = true -- Disable showing line and column numbers in command line.
 opt.tildeop = true -- Make tilde command behave like an operator.
 opt.list = true -- Show characters in 'listchars' in place of certain special characters.
 opt.listchars = { -- Strings to use when 'list' option set.
@@ -129,6 +132,7 @@ opt.listchars = { -- Strings to use when 'list' option set.
   extends = '»', -- Character to show in the last column, when 'wrap' is off.
   precedes = '«', -- Character to show in the first visible column.
   trail = '␣',
+  lead = "·",
 }
 
 if not vim.fn.has('nvim-0.6') then
@@ -181,7 +185,6 @@ opt.splitbelow = true -- Splitting a window will put the new window below of the
 opt.splitright = true -- Splitting a window will put the new window right of the current one.
 opt.switchbuf = 'useopen' -- Jump to the first open window that contains the specified buffer.
 opt.showcmd = false -- Disable displaying key presses at the right bottom.
-opt.showmode = false -- Disable native mode indicator.
 opt.showmatch = true -- Highlight matching [{()}]
 opt.backspace = 'indent,eol,start' --- Making sure backspace works
 --- Concealed text is completely hidden unless it has a custom replacement character defined (needed for dynamically showing tailwind classes)
@@ -241,9 +244,9 @@ opt.tagcase = 'followscs'
 opt.tags:prepend('./.git/tags;')
 
 -- https://robots.thoughtbot.com/opt-in-project-specific-vim-spell-checking-and-word-completion
-opt.spelllang = 'en'
+opt.spelllang = 'en_us'
 opt.spellsuggest = '30'
-opt.spellfile = string.format('%s%s', fn.stdpath('config'), '/spell/spell.add')
+opt.spellfile = string.format('%s%s', fn.stdpath('config'), '/spell/en.utf-8.add')
 
 -- Disable unsafe commands. Only run autocommands owned by me http://andrew.stwrt.ca/posts/project-specific-vimrc/
 opt.secure = true
@@ -320,4 +323,18 @@ local vimrc_local = string.format('%s%s', env.HOME, '/.nvimrc.lua')
 
 if fn.filereadable(vimrc_local) == 1 then
   cmd(string.format('silent source %s', vimrc_local))
+end
+
+if vim.g.neovide then
+  vim.opt.title = true
+  vim.opt.guifont = NvimConfig.ui.font
+  vim.g.neovide_scale_factor = 1.1
+  vim.g.neovide_refresh_rate = 144
+  vim.g.neovide_underline_stroke_scale = 0.5
+  vim.g.neovide_input_use_logo = 1
+  vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
+
+  vim.keymap.set({ 'n', 'v' }, '<D-c>', '"+y')  -- Copy
+  vim.keymap.set({'n', 'v'}, '<D-v>', '"*p')    -- Paste normal/visual mode
+  vim.keymap.set({'c', 'i'}, '<D-v>', '<C-R>+') -- Paste command/insert mode
 end

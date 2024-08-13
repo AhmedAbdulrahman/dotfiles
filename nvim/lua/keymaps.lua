@@ -117,10 +117,10 @@ set_keymap({
       {
         key = "L",
         actions = function()
-          -- local winid = require('ufo').peekFoldedLinesUnderCursor()
-          -- if not winid then
+          local winid = require("ufo").peekFoldedLinesUnderCursor()
+          if not winid then
             vim.lsp.buf.hover()
-          -- end
+          end
         end,
         description = "Show variable documentation in floating buffer",
       },
@@ -138,7 +138,21 @@ set_keymap({
         key = "<leader>D",
         actions = vim.lsp.buf.type_definition,
         description = "LSP Type Definition",
-    },
+      },
+      {
+        key = "gd",
+        actions = function()
+          vim.lsp.buf.definition()
+        end,
+        description = "LSP Definition",
+      },
+      {
+        key = "gr",
+        actions = function()
+          vim.lsp.buf.references({ includeDeclaration = false })
+        end,
+        description = "LSP References",
+      },
       {
         key = "<leader>vD",
         actions = "<cmd>vsplit <BAR> lua vim.lsp.buf.type_definition()<CR>",
@@ -153,6 +167,23 @@ set_keymap({
         key = "<leader>cf",
         actions = function()
           require('lsp.functions').format()
+        end,
+        description = "Format with LSP",
+      },
+      {
+        key = "<leader>cf",
+        modes = { "v" },
+        actions = function()
+          local start_row, _ = table.unpack(vim.api.nvim_buf_get_mark(0, "<"))
+          local end_row, _ = table.unpack(vim.api.nvim_buf_get_mark(0, ">"))
+
+          vim.lsp.buf.format({
+            range = {
+              ["start"] = { start_row, 0 },
+              ["end"] = { end_row, 0 },
+            },
+            async = true,
+          })
         end,
         description = "Format with LSP",
       },
@@ -271,12 +302,12 @@ set_keymap({
           description = "Highlight the whole line",
       },
       {
-          key = "J",
+          key = "rb",
           actions = "jddk",
           description = "Remove the line below",
       },
       {
-          key = "K",
+          key = "ra",
           actions = "kdd",
           description = "Remove the line above",
       },
@@ -286,20 +317,16 @@ set_keymap({
           description = "Fold line by line and keep current position",
       },
       {
-        modes = { "x" },
+        modes = { "v" },
         key = "K",
-        actions = function()
-          require'utils'.mappingsVisualMoveUp()
-        end,
+        actions = '<Cmd>lua require("utils").mappingsVisualMoveUp()<CR>',
         -- actions = ":call mappings#visual#movelines#moveup()<CR>",
         description = "Move highlighted lines vertically",
       },
       {
-        modes = { "x" },
+        modes = { "v" },
         key = "J",
-        actions = function()
-          require'utils'.mappingsVisualMoveDown()
-        end,
+        actions = '<Cmd>lua require("utils").mappingsVisualMoveDown()<CR>',
         -- actions = ":call mappings#visual#movelines#movedown()<CR>",
         description = "Move highlighted lines horizontally",
       },
@@ -587,9 +614,14 @@ set_keymap({
           description = "Go to first misspell, fix it and go back to the end of line in insert mode",
       },
       {
-        key = "cos",
-        actions = ":set spell!<CR>",
-        description = "Toggle spellcheck",
+        key = "<leader>us",
+        actions = ":setlocal spell!<CR>",
+        description = "Toggle spellchecker",
+      },
+      {
+        key = "<leader>up",
+        actions = ":setlocal paste!<CR>",
+        description = "Toggle paste mode",
       },
       {
         key = "coH",

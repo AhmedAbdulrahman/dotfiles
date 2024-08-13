@@ -1,90 +1,130 @@
-local present, signs = pcall(require, "gitsigns")
-if not present then
-  return
-end
+return {
+  {
+    'lewis6991/gitsigns.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      local gitsigns = require('gitsigns')
 
--- ╭──────────────────────────────────────────────────────────╮
--- │ Setup                                                    │
--- ╰──────────────────────────────────────────────────────────╯
-signs.setup {
-  signs                        = {
-    add          = { hl = 'GitSignsAdd', text = '▎', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
-    change       = { hl = 'GitSignsChange', text = '▎', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-    delete       = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-    topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-    changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-    untracked    = { hl = 'GitSignsAdd', text = '┆', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
-  },
-  signcolumn                   = true, -- Toggle with `:Gitsigns toggle_signs`
-  numhl                        = false, -- Toggle with `:Gitsigns toggle_numhl`
-  linehl                       = false, -- Toggle with `:Gitsigns toggle_linehl`
-  word_diff                    = false, -- Toggle with `:Gitsigns toggle_word_diff`
-  watch_gitdir                 = {
-    interval = 1000,
-    follow_files = true
-  },
-  attach_to_untracked          = true,
-  current_line_blame           = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
-  current_line_blame_opts      = {
-    virt_text = true,
-    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-    delay = 700,
-    ignore_whitespace = false,
-  },
-  current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
-  sign_priority                = 6,
-  update_debounce              = 200,
-  status_formatter             = nil, -- Use default
-  max_file_length              = 40000,
-  preview_config               = {
-    -- Options passed to nvim_open_win
-    border = NvimConfig.ui.float.border,
-    style = 'minimal',
-    relative = 'cursor',
-    row = 0,
-    col = 1
-  },
-  yadm                         = {
-    enable = false
-  },
-  on_attach                    = function(bufnr)
-    local gs = package.loaded.gitsigns
+      local line = vim.fn.line
 
-    local function map(mode, l, r, opts)
-      opts = opts or {}
-      opts.buffer = bufnr
-      vim.keymap.set(mode, l, r, opts)
-    end
+      vim.keymap.set('n', 'M', '<cmd>Gitsigns debug_messages<cr>')
+      vim.keymap.set('n', 'mm', '<cmd>Gitsigns dump_cache<cr>')
 
-    -- ╭──────────────────────────────────────────────────────────╮
-    -- │ Keymappings                                              │
-    -- ╰──────────────────────────────────────────────────────────╯
+      local function on_attach(bufnr)
+        local function map(mode, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
 
-    -- Navigation
-    map('n', ']c', function()
-      if vim.wo.diff then return ']c' end
-      vim.schedule(function() gs.next_hunk() end)
-      return '<Ignore>'
-    end, { expr = true })
+        map('n', ']c', function()
+          if vim.wo.diff then
+            vim.cmd.normal({']c', bang = true})
+          else
+            gitsigns.nav_hunk('next')
+          end
+        end)
 
-    map('n', '[c', function()
-      if vim.wo.diff then return '[c' end
-      vim.schedule(function() gs.prev_hunk() end)
-      return '<Ignore>'
-    end, { expr = true })
+        map('n', '[c', function()
+          if vim.wo.diff then
+            vim.cmd.normal({'[c', bang = true})
+          else
+            gitsigns.nav_hunk('prev')
+          end
+        end)
 
-    -- Actions
-    map({ 'n', 'v' }, '<leader>ghs', gs.stage_hunk)
-    map({ 'n', 'v' }, '<leader>ghr', gs.reset_hunk)
-    map('n', '<leader>ghS', gs.stage_buffer)
-    map('n', '<leader>ghu', gs.undo_stage_hunk)
-    map('n', '<leader>ghR', gs.reset_buffer)
-    map('n', '<leader>ghp', gs.preview_hunk)
-    map('n', '<leader>gm', function() gs.blame_line { full = true } end)
-    map('n', '<leader>ghd', gs.diffthis)
-    map('n', '<leader>ght', gs.toggle_deleted)
+        map('n', '<leader>hs', gitsigns.stage_hunk)
+        map('n', '<leader>hr', gitsigns.reset_hunk)
 
-    -- Text object
-    map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-  end
+        map('v', '<leader>hs', function()
+          gitsigns.stage_hunk({ line('.'), line('v') })
+        end)
+
+        map('v', '<leader>hr', function()
+          gitsigns.reset_hunk({ line('.'), line('v') })
+        end)
+
+        map('n', '<leader>hS', gitsigns.stage_buffer)
+        map('n', '<leader>hu', gitsigns.undo_stage_hunk)
+        map('n', '<leader>hR', gitsigns.reset_buffer)
+        map('n', '<leader>hp', gitsigns.preview_hunk)
+
+        map('n', '<leader>hb', function()
+          gitsigns.blame_line({full=true})
+        end)
+
+        map('n', '<leader>hg', function()
+          gitsigns.blame()
+        end)
+
+        map('n', '<leader>hi', gitsigns.preview_hunk_inline)
+        map('n', '<leader>hd', gitsigns.diffthis)
+        map('n', '<leader>hD', ':Gitsigns diffthis ~')
+
+        map('n', '<leader>hld', function()
+          gitsigns.diffthis(vim.b.gitsigns_blame_line_dict.sha..'~1')
+        end)
+
+        map('n', '<leader>hB', ':Gitsigns change_base ~')
+
+        -- Toggles
+        map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
+        map('n', '<leader>td', gitsigns.toggle_deleted)
+        map('n', '<leader>tw', gitsigns.toggle_word_diff)
+
+        map('n', '<leader>hQ', function() gitsigns.setqflist('all') end)
+        map('n', '<leader>hq', gitsigns.setqflist)
+
+        map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+      end
+
+      gitsigns.setup({
+        debug_mode = true,
+        max_file_length = 100000,
+        signs = {
+          add = { show_count = false },
+          change = { show_count = false },
+          delete = { show_count = true },
+          topdelete = { show_count = true },
+          changedelete = { show_count = true },
+        },
+        on_attach = on_attach,
+        preview_config = {
+          border = 'rounded',
+        },
+        current_line_blame = true,
+        current_line_blame_opts = {
+          delay = 50,
+        },
+        count_chars = {
+          '⒈',
+          '⒉',
+          '⒊',
+          '⒋',
+          '⒌',
+          '⒍',
+          '⒎',
+          '⒏',
+          '⒐',
+          '⒑',
+          '⒒',
+          '⒓',
+          '⒔',
+          '⒕',
+          '⒖',
+          '⒗',
+          '⒘',
+          '⒙',
+          '⒚',
+          '⒛',
+        },
+        sign_priority = 100,
+        attach_to_untracked = true,
+        update_debounce = 50,
+        word_diff = true,
+        trouble = true,
+      })
+    end,
+    event = 'BufRead',
+  }
 }

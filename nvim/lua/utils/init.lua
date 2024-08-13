@@ -264,4 +264,46 @@ M.closeOtherBuffers = function()
   end
 end
 
+local function isVisual()
+  return vim.fn.mode() == 'v' or vim.fn.mode() == 'V' or vim.fn.mode() == ''
+end
+
+-- Function to move lines
+local function getMove(address, shouldMove)
+  if isVisual() and shouldMove then
+    -- Execute move command with visual range
+    vim.cmd(":'<,'>move " .. address)
+    -- Re-select visual area and re-indent
+    vim.cmd("normal! gv=")
+  end
+end
+
+-- Move lines up
+M.mappingsVisualMoveUp = function()
+  if not isVisual() then return end
+
+  local count = vim.v.count ~= 0 and -vim.v.count or -1
+  local firstline = vim.fn.line("'<")
+  local max = (firstline - 1) * -1
+  local movement = math.max(count, max)
+  local address = "'<" .. (movement - 1)
+  local shouldMove = movement < 0
+
+  getMove(address, shouldMove)
+end
+
+-- Move lines down
+M.mappingsVisualMoveDown = function()
+  if not isVisual() then return end
+
+  local count = vim.v.count ~= 0 and vim.v.count or 1
+  local lastline = vim.fn.line("'>")
+  local max = vim.fn.line('$') - lastline
+  local movement = math.min(count, max)
+  local address = "'>+" .. movement
+  local shouldMove = movement > 0
+
+  getMove(address, shouldMove)
+end
+
 return M
