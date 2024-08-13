@@ -37,9 +37,10 @@ return {
           -- additional_vim_regex_highlighting = false,
         },
         -- enable autotagging (w/ nvim-ts-autotag plugin)
-        autotag = {
-          enable = true,
-        },
+        -- https://github.com/windwp/nvim-ts-autotag/issues/186#issuecomment-2133992469
+        -- autotag = {
+        --   enable = true,
+        -- },
 
         incremental_selection = {
           enable = false,
