@@ -94,19 +94,6 @@ return {
     config = true,
   },
   {
-    'uga-rosa/ccc.nvim',
-    cmd = { 'CccPick' },
-    config = function()
-      local ccc = require('ccc')
-      ccc.setup({
-        highlight_mode = 'bg',
-        highlighter = {
-          auto_enable = true,
-        },
-      })
-    end,
-  },
-  {
     'AckslD/nvim-neoclip.lua',
     dependencies = {
       {'kkharji/sqlite.lua', module = 'sqlite'},
