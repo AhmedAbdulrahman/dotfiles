@@ -11,7 +11,7 @@ return {
 
       local view = require("iron.view")
 
-      require('iron').setup({
+      require('iron.core').setup({
         config = {
           buflisted = true,
           -- Whether a repl should be discarded or not
