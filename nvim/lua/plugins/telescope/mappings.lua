@@ -116,34 +116,6 @@ keymap.set(
   silent
 )
 
--- Github
--- issues
-keymap.set(
-  'n',
-  '<leader>is',
-  function()
-    require'utils.telescope'.gh_issues()
-  end,
-  silent
-)
--- Pull Requests - PRs
-keymap.set(
-  'n',
-  '<leader>pl',
-  function()
-    require'utils.telescope'.gh_prs()
-  end,
-  silent
-)
--- telescope-repo
-keymap.set(
-  'n',
-  '<leader>rl',
-  function()
-    require'utils.telescope'.repo_list()
-  end,
-  silent
-)
 -- git telescope goodness
 -- git_branches
 keymap.set(
@@ -260,15 +232,6 @@ keymap.set(
   silent
 )
 
--- Find files with gitfiles & fallback on find_files
-keymap.set(
-  'n',
-  '<leader><TAB>',
-  function()
-    require'utils.telescope'.project_files()
-  end,
-  silent
-)
 -- Find files including gitignored
 keymap.set(
   'n',
@@ -279,15 +242,6 @@ keymap.set(
   silent
 )
 
--- Explore files starting at $HOME
-keymap.set(
-  'n',
-  '<leader>fe',
-  function()
-    require'utils.telescope'.file_explorer()
-  end,
-  silent
-)
 -- Browse files from cwd - File Browser
 keymap.set(
   'n',
@@ -318,15 +272,6 @@ keymap.set(
   end,
   silent
 )
--- Grep for a string
--- keymap.set(
---   'n',
---   '<leader>gp',
---   function()
---     require'plugins.telescope'.grep_prompt()
---   end,
---   silent
--- )
 
 -- Multi grep
 keymap.set(
@@ -345,25 +290,6 @@ keymap.set(
       grep_open_files = true,
       preview = true,
     })
-  end,
-  silent
-)
-
--- Find files in config dirs
-keymap.set(
-  'n',
-  '<leader>fc',
-  function()
-    require'utils.telescope'.find_configs()
-  end,
-  silent
-)
--- find or create neovim configs
-keymap.set(
-  'n',
-  '<leader>nc',
-  function()
-    require'utils.telescope'.nvim_config()
   end,
   silent
 )
