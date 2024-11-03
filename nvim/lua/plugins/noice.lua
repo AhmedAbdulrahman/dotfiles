@@ -5,6 +5,7 @@ return {
     lazy = false,
     opts = {
       messages = { enabled = false },
+      cmdline = { enabled = false },
       lsp = {
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
         override = {
@@ -16,7 +17,25 @@ return {
           enabled = false,
         },
         hover = {
-          enabled = false,
+          enabled = true,
+          silent = true,
+        },
+        signature = { enabled = false },
+        message = { enabled = false },
+      },
+      markdown = {
+        hover = {
+          ["|(%S-)|"] = vim.cmd.help, -- vim help links
+          ["%[.-%]%((%S-)%)"] = require("noice.util").open, -- markdown links
+        },
+        highlights = {
+          ["|%S-|"] = "@text.reference",
+          ["@%S+"] = "@parameter",
+          ["^%s*(Parameters:)"] = "@text.title",
+          ["^%s*(Return:)"] = "@text.title",
+          ["^%s*(See also:)"] = "@text.title",
+          ["{%S-}"] = "@parameter",
+          ["%[.-%]%((%S-)%)"] = "@macro",
         },
       },
       -- you can enable a preset for easier configuration
