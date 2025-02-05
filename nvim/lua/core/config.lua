@@ -12,18 +12,12 @@ NvimConfig = {
 			chatgpt = {
 				enabled = false,
 			},
-			codeium = {
-				enabled = false,
-			},
-			copilot = {
-				enabled = true,
-			},
-			tabnine = {
-				enabled = false,
-			},
-			vim_ai = {
-				enabled = false,
-			},
+			codecompanion = {
+        enabled = true,
+      },
+      copilot = {
+        enabled = true,
+      },
 		},
 		completion = {
 			select_first_on_enter = false,

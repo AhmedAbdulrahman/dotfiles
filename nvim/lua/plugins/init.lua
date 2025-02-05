@@ -1,20 +1,20 @@
 return {
   -- Add subdirectories here
-  -- {
-  --   { import = "plugins.ai" },
-  --   { import = "plugins.languages" },
-  -- },
+  {
+    { import = "plugins.ai" },
+    { import = "plugins.languages" },
+  },
 
   -- ╭─────────────────────────────────────────────────────────╮
   -- │ General plugins                                         │
   -- ╰─────────────────────────────────────────────────────────╯
-  { 'nvim-lua/plenary.nvim' },
   { "AndrewRadev/switch.vim",     lazy = false },
   { "tpope/vim-repeat",           lazy = false },
   { "tpope/vim-speeddating",      lazy = false },
-  { "dhruvasagar/vim-table-mode", lazy = false },
+
+    -- Detect tabstop and shiftwidth automatically
+  { 'tpope/vim-sleuth',            lazy = false },
   { 'RRethy/vim-illuminate' },
-  { 'nvim-lua/popup.nvim' },
   {
     "airblade/vim-rooter",
     event = "VeryLazy",
@@ -25,35 +25,13 @@ return {
     end,
   },
   {
-    'LudoPinelli/comment-box.nvim',
-    keys = {
-      { "<leader>ac", "<cmd>lua require('comment-box').llbox()<CR>", desc = "comment box" },
-      { "<leader>ac", "<cmd>lua require('comment-box').llbox()<CR>", mode = "v", desc = "comment box" },
-    }
-  },
-  {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = true,
   },
   {
-    'echasnovski/mini.align',
-    version = '*',
-    config = function()
-      require('mini.align').setup()
-    end,
-  },
-  {
-    'echasnovski/mini.bufremove',
-    version = '*',
-    config = function()
-      require('mini.bufremove').setup({
-        silent = true,
-      })
-    end,
-  },
-  {
+    -- Discord Rich Presence for Neovim
     'andweeb/presence.nvim',
     config = function()
       require('presence').setup({
@@ -61,7 +39,7 @@ return {
       })
     end,
   },
-   -- better "f" and "t"
+   -- Enhanced f/t motions for Leap (better "f" and "t")
    {
     'ggandor/flit.nvim',
     config = true,
@@ -69,19 +47,7 @@ return {
       'tpope/vim-repeat',
     },
   },
-  {
-    'nanotee/sqls.nvim',
-    ft = { 'sql', 'pgsql' },
-    module = true,
-  },
-  {
-    "mistricky/codesnap.nvim",
-    build = "make",
-    cmd = "CodeSnapPreviewOn",
-    opts = {
-      watermark = nil
-    }
-  },
+  -- Display javascript import costs inside of neovim
   {
     'barrett-ruth/import-cost.nvim',
     build = 'sh install.sh yarn',
@@ -93,6 +59,7 @@ return {
     },
     config = true,
   },
+  -- Clipboard manager neovim plugin with telescope integration
   {
     'AckslD/nvim-neoclip.lua',
     dependencies = {
