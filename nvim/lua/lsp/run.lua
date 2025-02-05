@@ -1,14 +1,9 @@
--- luacheck: no unused
-
 -- Setup installer & lsp configs
-local mason_ok, mason = pcall(require, "mason")
-local mason_lsp_ok, mason_lsp = pcall(require, "mason-lspconfig")
+local mason = require("mason")
+local mason_lsp = require("mason-lspconfig")
 local ufo_utils = require("utils._ufo")
 local ufo_config_handler = ufo_utils.handler
-
-if not mason_ok or not mason_lsp_ok then
-  return
-end
+local lspconfig = require("lspconfig")
 
 mason.setup({
   ui = {
@@ -29,7 +24,6 @@ mason_lsp.setup({
     "lua_ls",
     "prismals",
     "tailwindcss",
-    -- "gopls"
   },
   -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
   -- This setting has no relation with the `ensure_installed` setting.
@@ -41,8 +35,6 @@ mason_lsp.setup({
   automatic_installation = true,
 })
 
-local lspconfig = require("lspconfig")
-local util = require("lspconfig/util")
 
 local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
@@ -50,89 +42,117 @@ local handlers = {
     border = NvimConfig.ui.float.border,
   }),
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = NvimConfig.ui.float.border }),
-  ["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    { virtual_text = NvimConfig.lsp.virtual_text }
-  ),
 }
+
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 local function on_attach(client, bufnr)
-  -- set up buffer keymaps, etc.
+  vim.lsp.inlay_hint.enable(true, { bufnr })
 end
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- Global override for floating preview border
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+  opts = opts or {}
+  opts.border = opts.border or NvimConfig.ui.float.border or "rounded" -- default to NvimConfig border
+  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
 
-capabilities.textDocument.foldingRange = {
-  dynamicRegistration = false,
-  lineFoldingOnly = true,
+require("mason-lspconfig").setup_handlers {
+  -- The first entry (without a key) will be the default handler
+  -- and will be called for each installed server that doesn't have
+  -- a dedicated handler.
+  function(server_name)
+    require("lspconfig")[server_name].setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      handlers = handlers,
+    }
+  end,
+
+  ["ts_ls"] = function()
+    require("typescript-tools").setup({
+      capabilities = capabilities or vim.lsp.protocol.make_client_capabilities(),
+      handlers = require("lsp.servers.tsserver").handlers,
+      on_attach = require("lsp.servers.tsserver").on_attach,
+      settings = require("lsp.servers.tsserver").settings,
+    })
+  end,
+
+  ["tailwindcss"] = function()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.colorProvider = { dynamicRegistration = false }
+    capabilities.textDocument.foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true,
+    }
+
+    lspconfig.tailwindcss.setup({
+      capabilities = capabilities,
+      filetypes = require("lsp.servers.tailwindcss").filetypes,
+      handlers = handlers,
+      init_options = require("lsp.servers.tailwindcss").init_options,
+      on_attach = require("lsp.servers.tailwindcss").on_attach,
+      settings = require("lsp.servers.tailwindcss").settings,
+      flags = {
+        debounce_text_changes = 1000,
+      },
+    })
+  end,
+
+  ["cssls"] = function()
+    lspconfig.cssls.setup({
+      capabilities = capabilities,
+      handlers = handlers,
+      on_attach = require("lsp.servers.cssls").on_attach,
+      settings = require("lsp.servers.cssls").settings,
+    })
+  end,
+
+  ["eslint"] = function()
+    lspconfig.eslint.setup({
+      capabilities = capabilities,
+      handlers = handlers,
+      on_attach = require("lsp.servers.eslint").on_attach,
+      settings = require("lsp.servers.eslint").settings,
+      flags = {
+        allow_incremental_sync = false,
+        debounce_text_changes = 1000,
+        exit_timeout = 1500,
+      },
+    })
+  end,
+
+  ["jsonls"] = function()
+    lspconfig.jsonls.setup({
+      capabilities = capabilities,
+      handlers = handlers,
+      on_attach = on_attach,
+      settings = require("lsp.servers.jsonls").settings,
+    })
+  end,
+
+  ["lua_ls"] = function()
+    lspconfig.lua_ls.setup({
+      capabilities = capabilities,
+      handlers = handlers,
+      on_attach = on_attach,
+      settings = require("lsp.servers.lua_ls").settings,
+    })
+  end,
+
+  ["vuels"] = function()
+    lspconfig.vuels.setup({
+      filetypes = require("lsp.servers.vuels").filetypes,
+      handlers = handlers,
+      init_options = require("lsp.servers.vuels").init_options,
+      on_attach = require("lsp.servers.vuels").on_attach,
+      settings = require("lsp.servers.vuels").settings,
+    })
+  end
 }
 
--- Order matters
-
-lspconfig.tailwindcss.setup({
-  capabilities = require("lsp.servers.tailwindcss").capabilities,
-  filetypes = require("lsp.servers.tailwindcss").filetypes,
-  handlers = handlers,
-  init_options = require("lsp.servers.tailwindcss").init_options,
-  on_attach = require("lsp.servers.tailwindcss").on_attach,
-  settings = require("lsp.servers.tailwindcss").settings,
+require("ufo").setup({
+  fold_virt_text_handler = ufo_config_handler,
+  close_fold_kinds_for_ft = { default = { "imports" } },
 })
-
-lspconfig.cssls.setup({
-  capabilities = capabilities,
-  handlers = handlers,
-  on_attach = require("lsp.servers.cssls").on_attach,
-  settings = require("lsp.servers.cssls").settings,
-})
-
-lspconfig.eslint.setup({
-  capabilities = capabilities,
-  handlers = handlers,
-  on_attach = require("lsp.servers.eslint").on_attach,
-  settings = require("lsp.servers.eslint").settings,
-})
-
-lspconfig.jsonls.setup({
-  capabilities = capabilities,
-  handlers = handlers,
-  on_attach = on_attach,
-  settings = require("lsp.servers.jsonls").settings,
-})
-
-lspconfig.lua_ls.setup({
-  capabilities = capabilities,
-  handlers = handlers,
-  on_attach = on_attach,
-  settings = require("lsp.servers.lua_ls").settings,
-})
-
-lspconfig.vuels.setup({
-  filetypes = require("lsp.servers.vuels").filetypes,
-  handlers = handlers,
-  init_options = require("lsp.servers.vuels").init_options,
-  on_attach = require("lsp.servers.vuels").on_attach,
-  settings = require("lsp.servers.vuels").settings,
-})
-
--- lspconfig.gopls.setup({
---   capabilities = capabilities,
---   handlers = handlers,
---   filetypes = require("lsp.servers.gopls").filetypes,
---   on_attach = on_attach,
---   settings = require("lsp.servers.gopls").settings,
---   cmd = {"gopls"},
---   root_dir = util.root_pattern("go.work", "go.mod", ".git"),
--- })
-
-for _, server in ipairs({ "bashls", "emmet_ls", "graphql", "html", "prismals" }) do
-  lspconfig[server].setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-    handlers = handlers,
-  })
-end
-
--- require("ufo").setup({
---   fold_virt_text_handler = ufo_config_handler,
---   close_fold_kinds_for_ft = { default = { "imports" } },
--- })

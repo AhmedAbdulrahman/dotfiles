@@ -1,7 +1,8 @@
 local M = {}
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = require('blink.cmp').get_lsp_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = false
 capabilities.textDocument.colorProvider = { dynamicRegistration = false }
 capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
@@ -10,7 +11,10 @@ capabilities.textDocument.foldingRange = {
 
 -- Settings
 
-local filetypes = { "html", "mdx", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" }
+local on_attach = function(client, bufnr)
+end
+
+local filetypes = { "html", "mdx", "javascript", "typescript", "javascriptreact", "typescriptreact", "vue", "svelte" }
 
 local init_options = {
 	userLanguages = {

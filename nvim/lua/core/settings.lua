@@ -16,33 +16,6 @@ g.speeddating_no_mappings = 1 --- Disable default mappings for speeddating
 
 -- opt. them directly if they are installed, otherwise disable them. To avoid the then
 -- runtime check cost, which can be slow.
--- Python This must be here becasue it makes loading vim VERY SLOW otherwise
-g.python_host_skip_check = 1
--- Disable python2 provider
-g.loaded_python_provider = 0
-
-g.python3_host_skip_check = 1
-
-if fn.executable('python3') == 1 then
-  -- set the default python PATH, to supposedly boost 🏎  performance
-  g.python3_host_prog = fn.exepath('python3')
-else
-  g.loaded_python3_provider = 0
-end
-
-if fn.executable('neovim-node-host') == 1 then
-  g.node_host_prog = fn.exepath('neovim-node-host')
-else
-  g.loaded_node_provider = 0
-end
-
-if fn.executable('neovim-ruby-host') == 1 then
-  g.ruby_host_prog = fn.exepath('neovim-ruby-host')
-else
-  g.loaded_ruby_provider = 0
-end
-
-g.loaded_perl_provider = 0
 
 -- settings for displaying errors
 -- g:errorformat = '%f:%l:%c: %trror: %m,' . '%f:%l:%c: %tarning: %m,' . '%f:%l:%c: %tote: %m'
@@ -101,11 +74,11 @@ opt.diffopt = { -- Option settings for diff mode.
   'indent-heuristic',
   'hiddenoff',
 }
-opt.cmdheight = 2 --- Give more space for displaying messages
+opt.cmdheight = 0 --- Give more space for displaying messages
 opt.completeopt = { -- Options for insert mode completion.
   'menu', -- Use the pop-up menu.
   'menuone', -- Use the pop-up menu also when there is only one match.
-  'noselect', -- Do not select a match in the menu.
+  'preview', -- Better autocompletion.
 }
 
 opt.virtualedit = 'block' -- Allow cursor to move where there is no text in visual block mode
@@ -116,6 +89,7 @@ opt.fillchars = { -- Characters to be used in various user-interface elements.
   stl = ' ', -- Status line of the current window.
   stlnc = ' ', -- Status line of the non-current windows.
   vert = '┃', -- Vertical separator to be used with :vsplit.
+  vertleft = '┃', -- Vertical separator to be used with :vsplit.
   fold = '─', -- Character to be used with 'foldtext'.
   diff = '⣿', -- Deleted lines of the 'diff' option.
   msgsep = '‾', -- Message separator for 'display' option.
@@ -134,10 +108,6 @@ opt.listchars = { -- Strings to use when 'list' option set.
   trail = '␣',
   lead = "·",
 }
-
-if not vim.fn.has('nvim-0.6') then
-  vim.opt.joinspaces = false
-end
 
 opt.concealcursor = 'n'
 -- cursor behavior:
@@ -219,9 +189,9 @@ opt.clipboard = 'unnamed,unnamedplus' -- yank and paste between vim and everythi
 
 -- Buffer Options
 opt.modeline = false -- Disable modeline feature altogether.
-opt.softtabstop = -1 -- Number of spaces that a <Tab> counts.
 opt.expandtab = true -- Use spaces instead of tab characters.
 opt.shiftwidth = 2 -- Number of spaces to use for each step of auto indent.
+opt.softtabstop = 2 -- Number of spaces that a <Tab> counts.
 opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for.
 opt.undofile = true -- Persist undo history to an undo file.
 -- Use cmd until https://github.com/neovim/neovim/issues/14670 is fixed.
@@ -273,23 +243,17 @@ else
   opt.undodir:append('.')
 end
 
+-- Shada Defaults:
+--   Neovim: !,'100,<50,s10,h
+-- - ! save/restore global variables (only all-uppercase variables)
+-- - '100 save/restore marks from last 100 files
+-- - <50 save/restore 50 lines from each register
+-- - s10 max item size 10KB
+-- - h do not save/restore 'hlsearch' setting
+
 if root then -- don't create root-owned files then
-  opt.shada = ''
-  opt.shadafile = 'NONE'
-else
-  -- Defaults:
-  --   Neovim: !,'100,<50,s10,h
-  -- - ! save/restore global variables (only all-uppercase variables)
-  -- - '100 save/restore marks from last 100 files
-  -- - <50 save/restore 50 lines from each register
-  -- - s10 max item size 10KB
-  -- - h do not save/restore 'hlsearch' setting
-  au.group('MyNeovimShada', function(gr)
-    gr(
-      { 'CursorHold', 'FocusGained', 'FocusLost' },
-      { '*', [[if &bt == '' | rshada|wshada | endif]] }
-    )
-  end)
+	vim.o.shada = ''
+	vim.o.shadafile = 'NONE'
 end
 
 -- PLUGINS
