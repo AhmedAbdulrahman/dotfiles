@@ -57,16 +57,8 @@ return {
             '--trim', -- add this value to remove whitespace from the beginning of the line
           },
           layout_config     = {
-            horizontal = {
-              prompt_position = 'top',
-              width_padding = 0.04,
-              height_padding = 0.1,
-              preview_width = 0.6,
-            },
             vertical = {
-              width_padding = 0.05,
-              height_padding = 1,
-              preview_height = 0.5,
+              preview_cutoff = 120,
             },
             prompt_position = "top",
           },
