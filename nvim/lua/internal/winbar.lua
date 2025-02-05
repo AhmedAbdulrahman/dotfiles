@@ -2,7 +2,6 @@
 
 local M = {}
 
-
 local function isempty(s)
   return s == nil or s == ""
 end
@@ -143,7 +142,7 @@ vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost" }, {
       return
     end
 
-    if vim.bo.filetype == "GitBlame" then
+    if vim.bo.filetype == "blame" then
       local hl_group = "AylinNvimSecondary"
       vim.opt_local.winbar = " " .. "%#" .. hl_group .. "#" .. require("utils.icons").git .. "Blame" .. "%*"
       return

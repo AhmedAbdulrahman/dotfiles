@@ -24,13 +24,17 @@ return {
       },
       { 'folke/lua-dev.nvim' },
     },
-    servers = nil,
+    config = function()
+      require('lsp.run')
+      require('lsp.config')
+      require('lsp.functions')
+    end
   },
   {
     "williamboman/mason.nvim",
     cmd = "Mason",
     keys = {
-      { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" },
+      { "<leader>cm", "<cmd>Mason<CR>", desc = "Mason" },
     },
   },
   {
