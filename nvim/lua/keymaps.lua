@@ -105,6 +105,13 @@ set_keymap({
       actions = ":BufferLineCyclePrev<CR>",
       description = "Go to Previous in buffer list"
     },
+    {
+      key = "gp",
+      actions = function()
+        Snacks.bufdelete(n)
+      end,
+      description = "Delete buffer"
+    },
   },
 })
 
@@ -320,14 +327,12 @@ set_keymap({
         modes = { "v" },
         key = "K",
         actions = '<Cmd>lua require("utils").mappingsVisualMoveUp()<CR>',
-        -- actions = ":call mappings#visual#movelines#moveup()<CR>",
         description = "Move highlighted lines vertically",
       },
       {
         modes = { "v" },
         key = "J",
         actions = '<Cmd>lua require("utils").mappingsVisualMoveDown()<CR>',
-        -- actions = ":call mappings#visual#movelines#movedown()<CR>",
         description = "Move highlighted lines horizontally",
       },
   },
@@ -691,13 +696,6 @@ set_keymap({
 
 -- vim.keymap.set('n', '<Leader>p', [[:t.<left><left>]])
 -- vim.keymap.set('n', '<leader>e', [[:exe getline(line('.'))<cr>]])
-
--- keymap.set('n', '<C-g>', ':call ahmed#utils#SynStack()<cr>')
-
--- maintain the same shortcut as vim-gtfo becasue it's in my muscle memory.
--- keymap.set('n', 'gof', ':call ahmed#utils#OpenFileFolder()<cr>', {
---   silent = true,
--- })
 
 -- Quick note taking per project
 -- keymap.set('n', '<Localleader>t', ':tab drop .git/todo.md<CR>')
