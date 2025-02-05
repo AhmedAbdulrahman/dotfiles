@@ -86,12 +86,16 @@ function M.file_exists(path)
   end
 end
 
+function M.log(message, title)
+  vim.notify(message, "info", { title = title or "Info" })
+end
+
 function M.warnlog(message, title)
-  require('notify')(message, 'warn', { title = title or 'Warning' })
+  vim.notify(message, "warn", { title = title or "Warning" })
 end
 
 function M.errorlog(message, title)
-  require('notify')(message, 'error', { title = title or 'Error' })
+  vim.notify(message, 'error', { title = title or 'Error' })
 end
 
 function M.toggle_quicklist()
