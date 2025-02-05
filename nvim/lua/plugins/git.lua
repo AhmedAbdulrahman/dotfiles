@@ -1,5 +1,233 @@
 return {
   {
+    'akinsho/git-conflict.nvim',
+    lazy = false,
+    event = "BufRead",
+    version = "*", -- Load the latest release
+    config = function()
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "GitConflictDetected",
+        callback = function()
+          vim.notify("Conflict detected in " .. vim.fn.expand("<afile>"))
+        end,
+      })
+
+      require('conflict').setup({
+        default_mappings = true,    -- disable buffer local mapping created by this plugin
+        default_commands = true,    -- disable commands created by this plugin
+        disable_diagnostics = true, -- This will disable the diagnostics in a buffer whilst it is conflicted
+        list_opener = 'copen',      -- command or function to open the conflicts list
+        highlights = {              -- They must have background color, otherwise the default color will be used
+          incoming = "DiffText",
+          current = "DiffAdd",
+        },
+			})
+
+      vim.api.nvim_set_hl(0, "GitConflictIncoming", { bg = "#293919" })
+      vim.api.nvim_set_hl(0, "GitConflictIncomingLabel", { bold = true, bg = "#698F3F" })
+
+    end,
+    keys = {
+      {
+        '<leader>gcb',
+        '<cmd>GitConflictChooseBoth<CR>',
+        desc = 'choose both',
+      },
+      {
+        '<leader>gcn',
+        '<cmd>GitConflictNextConflict<CR>',
+        desc = 'move to next conflict',
+      },
+      {
+        '<leader>gcc',
+        '<cmd>GitConflictChooseOurs<CR>',
+        desc = 'choose current',
+      },
+      {
+        '<leader>gcp',
+        '<cmd>GitConflictPrevConflict<CR>',
+        desc = 'move to prev conflict',
+      },
+      {
+        '<leader>gci',
+        '<cmd>GitConflictChooseTheirs<CR>',
+        desc = 'choose incoming',
+      },
+    },
+  },
+  {
+    'sindrets/diffview.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+    enabled = true,
+    event = 'BufRead',
+    config = function()
+      local lib = require('diffview.lib')
+      local diffview = require('diffview')
+
+      local keymap = vim.keymap
+      local silent = { silent = true }
+
+     -- Toggle file history function via <leader>gd
+      toggle_file_history = function()
+        local view = lib.get_current_view()
+        if view == nil then
+          diffview.file_history()
+          return
+        end
+
+        if view then
+          view:close()
+          lib.dispose_view(view)
+        end
+      end
+      -- Toggle status function via <leader>gs
+      toggle_status = function()
+        local view = lib.get_current_view()
+        if view == nil then
+          diffview.open()
+          return
+        end
+
+        if view then
+          view:close()
+          lib.dispose_view(view)
+        end
+      end
+
+      keymap.set('n', '<leader>gd', '<cmd>lua toggle_file_history()<CR>', silent)
+      keymap.set('n', '<leader>gs', '<cmd>lua toggle_status()<CR>', silent)
+
+    end,
+  },
+  {
+    'lewis6991/gitsigns.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      local gitsigns = require('gitsigns')
+
+      local line = vim.fn.line
+
+      vim.keymap.set('n', 'M', '<cmd>Gitsigns debug_messages<cr>')
+      vim.keymap.set('n', 'mm', '<cmd>Gitsigns dump_cache<cr>')
+
+      gitsigns.setup({
+        debug_mode = true,
+        max_file_length = 100000,
+        signs = {
+          add = { show_count = false },
+          change = { show_count = false },
+          delete = { show_count = true },
+          topdelete = { show_count = true },
+          changedelete = { show_count = true },
+        },
+        on_attach = function(bufnr)
+          local gs = package.loaded.gitsigns
+
+          local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
+          end
+
+          map('n', ']c', function()
+            if vim.wo.diff then
+              vim.cmd.normal({']c', bang = true})
+            else
+              gs.nav_hunk('next')
+            end
+          end)
+
+          map('n', '[c', function()
+            if vim.wo.diff then
+              vim.cmd.normal({'[c', bang = true})
+            else
+              gs.nav_hunk('prev')
+            end
+          end)
+
+          map('n', '<leader>hs', gs.stage_hunk)
+          map('n', '<leader>hr', gs.reset_hunk)
+
+          map('v', '<leader>hs', function()
+            gs.stage_hunk({ line('.'), line('v') })
+          end)
+
+          map('v', '<leader>hr', function()
+            gs.reset_hunk({ line('.'), line('v') })
+          end)
+
+          map('n', '<leader>hS', gs.stage_buffer)
+          map('n', '<leader>hu', gs.undo_stage_hunk)
+          map('n', '<leader>hR', gs.reset_buffer)
+          map('n', '<leader>hp', gs.preview_hunk)
+
+          map('n', '<leader>hb', function()
+            gs.blame_line({full=true})
+          end)
+
+          map('n', '<leader>hg', function()
+            gs.blame()
+          end)
+
+          map('n', '<leader>hi', gs.preview_hunk_inline)
+          map('n', '<leader>hd', gs.diffthis)
+          map('n', '<leader>hD', ':Gitsigns diffthis ~')
+
+          map('n', '<leader>hld', function()
+            gs.diffthis(vim.b.gitsigns_blame_line_dict.sha..'~1')
+          end)
+
+          map('n', '<leader>hB', ':Gitsigns change_base ~')
+
+          -- Toggles
+          map('n', '<leader>tb', gs.toggle_current_line_blame)
+          map('n', '<leader>td', gs.toggle_deleted)
+          map('n', '<leader>tw', gs.toggle_word_diff)
+
+          map('n', '<leader>hQ', function() gs.setqflist('all') end)
+          map('n', '<leader>hq', gs.setqflist)
+
+          map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+        end,
+        preview_config = {
+          border = 'rounded',
+        },
+        current_line_blame = true,
+        current_line_blame_opts = {
+          delay = 50,
+        },
+        count_chars = {
+          '⒈',
+          '⒉',
+          '⒊',
+          '⒋',
+          '⒌',
+          '⒍',
+          '⒎',
+          '⒏',
+          '⒐',
+          '⒑',
+          '⒒',
+          '⒓',
+          '⒔',
+          '⒕',
+          '⒖',
+          '⒗',
+          '⒘',
+          '⒙',
+          '⒚',
+          '⒛',
+        },
+        sign_priority = 100,
+        attach_to_untracked = true,
+        update_debounce = 50,
+        word_diff = true,
+        trouble = true,
+      })
+    end,
+    event = 'BufRead',
+  },
+  {
     "pwntester/octo.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -201,4 +429,97 @@ return {
       })
     end
   },
+  {
+    'ruifm/gitlinker.nvim',
+    config = function()
+      local gitlinker = require('gitlinker')
+      local keymap = vim.keymap
+      local silent = { silent = true }
+
+      gitlinker.setup()
+
+      keymap.set('n', '<leader>gl', function()
+        gitlinker.get_buf_range_url(
+          'n',
+          { action_callback = gitlinker.actions.open_in_browser }
+        )
+      end, silent)
+
+      keymap.set('v', '<leader>gl', function()
+        gitlinker.get_buf_range_url(
+          'v',
+          { action_callback = gitlinker.actions.open_in_browser }
+        )
+      end, silent)
+
+      keymap.set('n', 'gY', gitlinker.get_repo_url, silent)
+      keymap.set('v', '<leader>gL', function()
+        gitlinker.get_repo_url({
+          action_callback = gitlinker.actions.open_in_browser,
+        })
+      end, silent)
+    end,
+    keys = {
+      { "<Leader>gL", "<cmd>GitLink<CR>", mode = "x", desc = "get url for selection" }
+    },
+    cmd = "GitLink",
+  },
+  {
+    'ThePrimeagen/git-worktree.nvim',
+    config = function()
+      local keymap = vim.keymap.set
+      local silent = { silent = true }
+
+      local utils = require('utils')
+
+      require('git-worktree').setup({
+        change_directory_command = "cd",  -- default: "cd",
+        update_on_change = true,          -- default: true,
+        update_on_change_command = "e .", -- default: "e .",
+        clearjumps_on_change = true,      -- default: true,
+        autopush = false,                 -- default: false,
+      })
+
+      -- ╭──────────────────────────────────────────────────────────╮
+      -- │ Hooks                                                    │
+      -- ╰──────────────────────────────────────────────────────────╯
+      -- op = Operations.Switch, Operations.Create, Operations.Delete
+      -- metadata = table of useful values (structure dependent on op)
+      --      Switch
+      --          path = path you switched to
+      --          prev_path = previous worktree path
+      --      Create
+      --          path = path where worktree created
+      --          branch = branch name
+      --          upstream = upstream remote name
+      --      Delete
+      --          path = path where worktree deleted
+      require('git-worktree').on_tree_change(function(op, metadata)
+        if op == worktree.Operations.Switch then
+          utils.log("Switched from " .. metadata.prev_path .. " to " .. metadata.path, "Git Worktree")
+          Snacks.bufdelete.other()
+          vim.cmd ('e')
+        end
+      end)
+
+      -- ╭──────────────────────────────────────────────────────────╮
+      -- │ Keymappings                                              │
+      -- ╰──────────────────────────────────────────────────────────╯
+      -- <Enter> - switches to that worktree
+      -- <c-d> - deletes that worktree
+      -- <c-f> - toggles forcing of the next deletion
+      keymap("n", "<Leader>gww", "<CMD>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", silent)
+
+      -- First a telescope git branch window will appear.
+      -- Presing enter will choose the selected branch for the branch name.
+      -- If no branch is selected, then the prompt will be used as the branch name.
+
+      -- After the git branch window,
+      -- a prompt will be presented to enter the path name to write the worktree to.
+
+      -- As of now you can not specify the upstream in the telescope create workflow,
+      -- however if it finds a branch of the same name in the origin it will use it
+      keymap("n", "<Leader>gwc", "<CMD>lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", silent)
+    end,
+  }
 }
