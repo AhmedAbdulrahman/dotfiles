@@ -32,6 +32,36 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     config = function()
+       -- Telescope 🔭 - setup and customized pickers
+       require('telescope').load_extension('fzf')
+       require('telescope').load_extension('repo')
+       require("telescope").load_extension("git_worktree")
+       require("telescope").load_extension("media_files")
+       -- 🔭 Extensions --
+       -- https://github.com/nvim-telescope/telescope-file-browser.nvim
+       require('telescope').load_extension('file_browser')
+       -- https://github.com/nvim-telescope/telescope-ui-select.nvim
+       require('telescope').load_extension('ui-select')
+       -- https://github.com/nvim-telescope/telescope-fzf-native.nvim#telescope-fzf-nativenvim
+       require('telescope').load_extension('fzf')
+       -- https://github.com/LinArcX/telescope-command-palette.nvim
+       require('telescope').load_extension('command_palette')
+       -- https://github.com/dhruvmanila/telescope-bookmarks.nvim
+       -- <space>b
+       require('telescope').load_extension('bookmarks')
+       -- https://github.com/jvgrootveld/telescope-zoxide
+       -- <leader>z
+       require('telescope').load_extension('zoxide')
+       -- https://github.com/cljoly/telescope-repo.nvim
+       -- <leader>rl
+       -- require('telescope').load_extension('repo')
+       -- https://github.com/AckslD/nvim-neoclip.lua
+       -- <C-n>
+       require('telescope').load_extension('neoclip')
+       -- GitHub CLI → local version
+       require('telescope').load_extension('gh')
+       require('telescope').load_extension('zoxide')
+
       local actions = require('telescope.actions')
       local action_state = require('telescope.actions.state')
       local utils = require('telescope.utils')
@@ -161,36 +191,6 @@ return {
       }
 
       require('plugins.telescope.mappings')
-
-      -- Telescope 🔭 - setup and customized pickers
-      require('telescope').load_extension('fzf')
-      require('telescope').load_extension('repo')
-      require("telescope").load_extension("git_worktree")
-      require("telescope").load_extension("media_files")
-      -- 🔭 Extensions --
-      -- https://github.com/nvim-telescope/telescope-file-browser.nvim
-      require('telescope').load_extension('file_browser')
-      -- https://github.com/nvim-telescope/telescope-ui-select.nvim
-      require('telescope').load_extension('ui-select')
-      -- https://github.com/nvim-telescope/telescope-fzf-native.nvim#telescope-fzf-nativenvim
-      require('telescope').load_extension('fzf')
-      -- https://github.com/LinArcX/telescope-command-palette.nvim
-      require('telescope').load_extension('command_palette')
-      -- https://github.com/dhruvmanila/telescope-bookmarks.nvim
-      -- <space>b
-      require('telescope').load_extension('bookmarks')
-      -- https://github.com/jvgrootveld/telescope-zoxide
-      -- <leader>z
-      require('telescope').load_extension('zoxide')
-      -- https://github.com/cljoly/telescope-repo.nvim
-      -- <leader>rl
-      -- require('telescope').load_extension('repo')
-      -- https://github.com/AckslD/nvim-neoclip.lua
-      -- <C-n>
-      require('telescope').load_extension('neoclip')
-      -- GitHub CLI → local version
-      require('telescope').load_extension('gh')
-      require('telescope').load_extension('zoxide')
 
     end,
     dependencies = {
