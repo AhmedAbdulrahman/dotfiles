@@ -1,29 +1,25 @@
 return {
   {
-    'smoka7/multicursors.nvim',
-    event = 'VeryLazy',
+    "smoka7/multicursors.nvim",
+    event = "VeryLazy",
     dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-      'smoka7/hydra.nvim',
+      "nvim-treesitter/nvim-treesitter",
+      "Cathyprime/hydra.nvim"
     },
     opts = {
-      hint_config = {
-        border = NvimConfig.ui.float.border or "rounded",
-        position = 'bottom',
-        show_name = false,
-      }
     },
+    cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
     keys = {
       {
-        '<leader>j',
-        '<cmd>MCstart<cr>',
-        desc = 'Create a selection for word under the cursor',
+        '<Leader>m',
+        '<CMD>MCstart<CR>',
+        desc = 'multicursor',
       },
       {
-        '<leader>k',
+        '<Leader>m',
         '<CMD>MCvisual<CR>',
-        mode = 'v',
-        desc = 'Create a selection for word under the cursor',
+        mode = "v",
+        desc = 'multicursor',
       },
       {
         '<C-Down>',

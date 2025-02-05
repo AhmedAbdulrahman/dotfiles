@@ -32,7 +32,7 @@ return {
             {
               filetype = "NvimTree",
               text = "File Explorer",
-              highlight = "EcovimNvimTreeTitle",
+              highlight = "NvimConfigNvimTreeTitle",
               text_align = "center",
               separator = true,
             },
