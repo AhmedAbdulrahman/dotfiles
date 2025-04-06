@@ -1,14 +1,37 @@
 #!/usr/bin/env sh
 
-__WIFI_NAME=$(wifi)
+_load_weather() {
+	# check for internet connection
+	ping -q -c 1 1.1.1.1 >/dev/null && {
+		weather "" "format=%c+%t+%h+%w+%m" >"$TMP_WEATHER_FILE"
+		printf "\n$(date +'%s')" >>"$TMP_WEATHER_FILE"
+	}
+}
 
-case $__WIFI_NAME in
-LS* | Lightspeed*)
-  __LOCATION="Stockholm"
-  ;;
-*)
-  __LOCATION=""
-  ;;
-esac
+# Weather data
+weather_segment() {
+	local -r TMP_WEATHER_FILE="$TMPDIR/weather.tmp"
+	local -r REFRESH_RATE=$((60 * 60))
 
-printf "%s#[fg=#8d929b] ⦁ " "$(curl -s "https://wttr.in/$__LOCATION?format=%c+%t" 2>/dev/null)"
+	[[ -f "$TMP_WEATHER_FILE" ]] || _load_weather
+
+	local now
+	now="$(date +'%s')"
+	local epoch
+	epoch="$(tail -n 1 "$TMP_WEATHER_FILE")"
+	local delta
+	delta="$((now - epoch))"
+
+	# check if it's time to update the data
+	[[ $delta -gt $REFRESH_RATE ]] && _load_weather
+
+	local weather
+	weather="$(head -n 1 "$TMP_WEATHER_FILE")"
+	weather="$(echo "${weather//+/}")"
+
+	echo
+
+	printf "%s" "$weather"
+}
+
+weather_segment
