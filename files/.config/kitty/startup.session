@@ -1,0 +1,50 @@
+os_window_state maximized
+
+# Create a new tab
+new_tab Work
+
+# Set the layout for the tab (enabled_layouts sets grid as default)
+layout splits
+
+# Set the working directory for windows in the current tab
+cd ~/Projects/work
+
+# First window, set a user variable on it so we can focus it later
+launch --var window=first zsh -c "if [ -f ~/.zshrc ]; then source ~/.zshrc; fi && nvim ."
+# resize_window --match window=first shorter 10
+
+# Create additional terminals
+launch --var window=first --location=vsplit --bias=30 zsh
+launch --location=hsplit --bias=50 zsh
+
+# Create a 2nd tab
+new_tab Development
+
+# Set the working directory for windows in the current tab
+#cd ~/Projects/personal
+
+# First window, set a user variable on it so we can focus it later
+launch --var window=first zsh
+# Create additional terminals
+launch --var window=first --location=vsplit --bias=30 zsh
+launch --location=hsplit --bias=50 zsh
+
+# Create a new tab
+new_tab Dotfiles
+
+# Set the working directory for windows in the current tab
+cd ~/Projects/personal/dotfiles
+
+# First window, set a user variable on it so we can focus it later
+launch --var window=first zsh -c "source ~/.zshrc && nvim ."
+# Create additional terminals
+launch --var window=first --location=vsplit --bias=30 zsh
+launch --location=hsplit --bias=50 zsh
+
+# Create a new tab
+new_tab BTOP
+
+# Set the working directory for windows in the current tab
+cd ~
+launch --bias=60 btop
+launch --location=vsplit htop
