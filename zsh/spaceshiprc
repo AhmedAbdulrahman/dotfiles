@@ -1,0 +1,183 @@
+#!/usr/bin/env zsh
+
+# ------------------------
+# Generate Random Emojis
+# ------------------------
+
+EMOJIS=(👻 🚀 🐞 🎨 🍕 🐭 ☕️ 💀 👀 🐼 🐶 🐬 🐳 💰 💞 🍪 🐌 🍄 )
+
+SPACESHIP_DIR_TRUNC='1' # show only last directory
+SPACESHIP_DIR_TRUNC_PREFIX="${EMOJIS[$RANDOM % ${#EMOJIS[@]} + 1]} "
+SPACESHIP_CHAR_SYMBOL="» %b"
+SPACESHIP_DIR_TRUNC_REPO=false
+
+SPACESHIP_PACKAGE_SHOW=false
+SPACESHIP_NODE_SHOW=false
+SPACESHIP_RUBY_SHOW=false
+SPACESHIP_ELM_SHOW=false
+SPACESHIP_ELIXIR_SHOW=false
+SPACESHIP_XCODE_SHOW_LOCAL=false
+SPACESHIP_XCODE_SHOW_GLOBAL=false
+SPACESHIP_SWIFT_SHOW_LOCAL=false
+SPACESHIP_SWIFT_SHOW_GLOBAL=false
+SPACESHIP_GOLANG_SHOW=true
+SPACESHIP_PHP_SHOW=false
+SPACESHIP_RUST_SHOW=true
+SPACESHIP_HASKELL_SHOW=false
+SPACESHIP_JULIA_SHOW=false
+SPACESHIP_DOCKER_SHOW=true
+SPACESHIP_AWS_SHOW=false
+SPACESHIP_VENV_SHOW=false
+SPACESHIP_CONDA_SHOW=false
+SPACESHIP_PYTHON_SHOW=false
+SPACESHIP_DOTNET_SHOW=false
+SPACESHIP_EMBER_SHOW=false
+SPACESHIP_KUBECTL_CONTEXT_SHOW=false
+SPACESHIP_TERRAFORM_SHOW=false
+SPACESHIP_BATTERY_SHOW=false
+SPACESHIP_VI_MODE_SHOW=false
+SPACESHIP_JOBS_SHOW=true
+SPACESHIP_EXIT_CODE_SHOW=false
+
+# REACT
+SPACESHIP_REACT_SHOW="${SPACESHIP_REACT_SHOW=true}"
+SPACESHIP_REACT_ASYNC="${SPACESHIP_REACT_ASYNC=true}"
+SPACESHIP_REACT_PREFIX="${SPACESHIP_REACT_PREFIX="• "}"
+SPACESHIP_REACT_SUFFIX="${SPACESHIP_REACT_SUFFIX=" "}"
+SPACESHIP_REACT_SYMBOL="${SPACESHIP_REACT_SYMBOL="⚛ "}"
+SPACESHIP_REACT_COLOR="${SPACESHIP_REACT_COLOR="blue"}"
+
+# ------------------
+# Section
+# ------------------
+
+spaceship_react() {
+  [[ $SPACESHIP_REACT_SHOW == false ]] && return
+
+  # Upsearch for react package.json file
+  local react_package="$(spaceship::upsearch node_modules/react/package.json)"
+
+  # If package.json file is not found, exit
+  [[ -z "$react_package" ]] && return
+
+  # Get react version from package.json file
+  local react_version="$(spaceship::datafile --json $react_package version)"
+
+  # Check if tool version is correct
+  [[ -z $react_version || "$react_version" == "null" || "$react_version" == "undefined" ]] && return
+
+  # Display react section
+  spaceship::section::v4 \
+    --color "$SPACESHIP_REACT_COLOR" \
+    --prefix "$SPACESHIP_REACT_PREFIX" \
+    --suffix "$SPACESHIP_REACT_SUFFIX" \
+    --symbol "$SPACESHIP_REACT_SYMBOL" \
+    "v$react_version"
+}
+
+SPACESHIP_NEXT_SHOW="${SPACESHIP_NEXT_SHOW=true}"
+SPACESHIP_NEXT_ASYNC="${SPACESHIP_NEXT_ASYNC=true}"
+SPACESHIP_NEXT_PREFIX="${SPACESHIP_NEXT_PREFIX="• "}"
+SPACESHIP_NEXT_SUFFIX="${SPACESHIP_NEXT_SUFFIX=" "}"
+SPACESHIP_NEXT_SYMBOL="${SPACESHIP_NEXT_SYMBOL="▲ "}"
+SPACESHIP_NEXT_COLOR="${SPACESHIP_NEXT_COLOR="cyan"}"
+
+# ------------------
+# Section
+# ------------------
+
+spaceship_nextjs() {
+  [[ $SPACESHIP_NEXT_SHOW == false ]] && return
+
+  # Upsearch for react package.json file
+  local next_package="$(spaceship::upsearch node_modules/next/package.json)"
+
+  # If package.json file is not found, exit
+  [[ -z "$next_package" ]] && return
+
+  local next_version="$(spaceship::datafile --json $next_package version)"
+
+  # Check if tool version is correct
+  [[ -z $next_version || "$next_version" == "null" || "$next_version" == "undefined" ]] && return
+
+  # Display react section
+  spaceship::section::v4 \
+    --color "$SPACESHIP_NEXT_COLOR" \
+    --prefix "$SPACESHIP_NEXT_PREFIX" \
+    --suffix "$SPACESHIP_NEXT_SUFFIX" \
+    --symbol "$SPACESHIP_NEXT_SYMBOL" \
+    "v$next_version"
+}
+
+SPACESHIP_GIT_USER_PREFIX="${SPACESHIP_GIT_USER_PREFIX="as "}"
+SPACESHIP_GIT_USER_SYMBOL="${SPACESHIP_GIT_USER_SYMBOL="| "}"
+SPACESHIP_GIT_EMAIL_SYMBOL="${SPACESHIP_GIT_EMAIL_SYMBOL=" "}"
+SPACESHIP_GIT_USER_COLOR="${SPACESHIP_GIT_USER_COLOR="cyan"}"
+
+spaceship_git_user() {
+  spaceship::is_git || return
+
+  local section=""
+  local username="$(git config user.name)"
+  local email="$(git config user.email)"
+
+  if [[ -n $email ]]; then
+    section+="$SPACESHIP_GIT_EMAIL_SYMBOL "
+  fi
+
+  if [[ -n $username ]]; then
+    section+="$SPACESHIP_GIT_USER_SYMBOL$username "
+  fi
+
+  if [[ -n $section ]]; then
+    spaceship::section::v4 \
+      --color "$SPACESHIP_GIT_USER_COLOR" \
+      --prefix "$SPACESHIP_GIT_USER_PREFIX" \
+      "$section"
+  fi
+}
+
+SPACESHIP_VI_MODE_SHOW="${SPACESHIP_VI_MODE_SHOW=true}"
+SPACESHIP_VI_MODE_PREFIX="${SPACESHIP_VI_MODE_PREFIX=""}"
+SPACESHIP_VI_MODE_SUFFIX="${SPACESHIP_VI_MODE_SUFFIX="$SPACESHIP_PROMPT_DEFAULT_SUFFIX"}"
+SPACESHIP_VI_MODE_INSERT="${SPACESHIP_VI_MODE_INSERT="[I]"}"
+SPACESHIP_VI_MODE_NORMAL="${SPACESHIP_VI_MODE_NORMAL="[N]"}"
+SPACESHIP_VI_MODE_COLOR="${SPACESHIP_VI_MODE_COLOR="white"}"
+
+# ------------------------------------------------------------------------------
+# Section
+# ------------------------------------------------------------------------------
+
+# Show current vi-mode mode
+spaceship_vi_mode() {
+  [[ $SPACESHIP_VI_MODE_SHOW == true ]] || return
+
+  if bindkey | grep "vi-quoted-insert" > /dev/null 2>&1; then # check if vi-mode enabled
+    local mode_indicator="${SPACESHIP_VI_MODE_INSERT}"
+
+    case "${KEYMAP}" in
+      main|viins)
+      mode_indicator="${SPACESHIP_VI_MODE_INSERT}"
+      ;;
+      vicmd)
+      mode_indicator="${SPACESHIP_VI_MODE_NORMAL}"
+      ;;
+    esac
+
+    spaceship::section::v4 \
+      --color "$SPACESHIP_VI_MODE_COLOR" \
+      --prefix "$SPACESHIP_VI_MODE_PREFIX" \
+      "$mode_indicator" \
+      --suffix "$SPACESHIP_VI_MODE_SUFFIX"
+  fi
+}
+
+SPACESHIP_PROMPT_ORDER=(
+  dir
+  git
+  vi_mode
+  react
+  nextjs
+  line_sep
+  char
+)

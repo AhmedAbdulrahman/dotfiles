@@ -1,0 +1,418 @@
+#!/usr/bin/env zsh
+
+(( ${+color} )) || autoload -Uz colors && colors
+
+function ltrim()    { sed 's/^\s\+//g' }
+function rtrim()    { sed 's/\s\+$//g' }
+function trim()     { ltrim | rtrim    }
+function trimtrim() { trim | tr -s ' ' }
+alias trimcut='trimtrim | cut -d" "'
+
+# Call default program to open something
+function xopen() {
+    emulate -L zsh
+    setopt shwordsplit
+    local open
+    case "$OSTYPE" in
+        (linux*) open='xdg-open'                              ;;
+        (darwin*) open='open'                                 ;;
+        (cygwin*) open='cygstart'                             ;;
+        (msys*) open='start ""'                               ;;
+        (*) echo "Platform $OSTYPE not supported" && return 1 ;;
+    esac
+    if [[ "$OSTYPE" == darwin* ]]; then
+        "$open" "$@" &>/dev/null
+    else
+        (nohup "$open" "$@" &; disown; exit 0) &>/dev/null
+    fi
+} && alias o='xopen'
+
+# remove broken symbolics
+function wfxr::rm-broken-links() {
+    local ls links
+    [[ $+commands[eza] ]] && ls=eza || ls=ls
+    IFS=$'\n' links=(`eval "find $1 -xtype l"`)
+    [[ -z $links ]] && return
+    $ls -l --color=always ${links[@]}
+    echo -n "Remove? [y/N]: "
+    read -q && rm -- ${links[@]}
+}
+function rm-broken-links-all() { wfxr::rm-broken-links               }
+function rm-broken-links()     { wfxr::rm-broken-links '-maxdepth 1' }
+
+# Tmux switch session
+function wfxr::tmux-switch() {
+    [[ ! $TMUX ]] && return 1 # Not in tmux session
+    local preview curr choice &&
+        preview='<<< {} awk "{print \$2}" | xargs tmux list-windows -t | sed "s/\[.*\]//g" | column -t | sed "s/  \(\S\)/ \1/g"' &&
+        curr=$(tmux display-message -p "#S") &&
+        choice=$(tmux ls -F "#{session_name}" | grep -v $curr | nl -w2 -s' ' \
+            | fzf-tmux +s -e -1 -0 --height=14 --header="  * $curr" \
+                              --bind 'alt-t:down' --cycle \
+                              --preview="$preview" \
+                              --preview-window=right:60%) &&
+        tmux switch-client -t $(awk '{print $2}' <<<"$choice") 2>/dev/null
+}
+# Tmux attach session
+function wfxr::tmux-attach() {
+    [[ $TMUX ]] && return 1 # Already in tmux session
+    local preview choice &&
+        preview='<<< {} awk "{print \$2}" | xargs tmux list-windows -t | sed "s/\[.*\]//g" | column -t | sed "s/  \(\S\)/ \1/g"' &&
+        choice=$(tmux ls -F "#{session_name}" | nl -w2 -s' ' \
+            | fzf +s -e -1 -0 --height=14 \
+                              --bind 'alt-t:down' --cycle \
+                              --preview="$preview" \
+                              --preview-window=right:60%) &&
+        tmux attach-session -t $(awk '{print $2}' <<<"$choice") 2>/dev/null
+}
+# Tmux select window
+function wfxr::tmux-select-window() {
+    [[ ! $TMUX ]] && return 1
+    local curr choice &&
+        curr=$(tmux display-message -p "#W") &&
+        choice=$(tmux list-windows -F "#I #W #F" | grep -v '*' | awk '{printf "%2d %s\n", $1, $2}' \
+        | fzf-tmux +s -e -1 -0 --height=10 --header=" * $curr"\
+                          --bind 'alt-w:down' --cycle) &&
+        tmux select-window -t $(awk '{print $2}' <<<"$choice") 2>/dev/null
+        zle redisplay 2>/dev/null || true
+}
+# Tmux attach or create target session
+function t() {
+    if [[ $# -eq 0 ]]; then
+        if [[ $TMUX ]]; then
+            wfxr::tmux-switch
+        else
+            if tmux list-sessions &>/dev/null; then
+                wfxr::tmux-attach
+            else
+                tmux new-session -A -s "misc"
+            fi
+        fi
+    else
+        if [[ $TMUX ]]; then
+            if ! tmux has-session -t "$1" 2>/dev/null; then
+                tmux new-session -d -s "$1"
+            fi
+            tmux switch-client -t "$1"
+        else
+            tmux new-session -A -s "$1"
+        fi
+    fi
+    zle redisplay 2>/dev/null || true
+}
+# https://issue.life/questions/37597191
+bindkey -s '^[t' 't\n'
+if [[ $TMUX ]]; then
+    zle -N t
+    bindkey '^[t' t
+    zle -N wfxr::tmux-select-window
+    bindkey '^[w' wfxr::tmux-select-window
+fi
+
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^[v' edit-command-line
+
+# requires https://github.com/wfxr/clitrans
+# brew tap wfxr/clitrans
+# brew install clitrans
+
+function wfxr::translate() {
+    WORD=$(cat /usr/share/dict/words | fzf \
+        --preview='CLICOLOR_FORCE=1 clitrans {}' \
+        --preview-window='default:right:wrap:80%')
+    if [[ -n "$WORD" ]]; then
+        BUFFER="$BUFFER$WORD"
+        CURSOR="$#BUFFER"
+        zle redisplay
+    fi
+}
+zle     -N    wfxr::translate
+bindkey '^[y' wfxr::translate
+
+function wfxr::yank() {
+    <<< "$LBUFFER" | pbcopy
+    BUFFER="$LBUFFER"
+    CURSOR="$#BUFFER"
+    zle redisplay
+}
+zle     -N   wfxr::yank
+bindkey '^Y' wfxr::yank
+
+function wfxr::paste() {
+    LBUFFER="${LBUFFER}$(pbpaste)"
+    zle redisplay
+}
+zle     -N   wfxr::paste
+bindkey '^V' wfxr::paste
+
+function cip() { curl -fsSL 'cip.cc' }
+function ipshow() { ip addr show | grep 'inet\s\+' | grep -v "127.0.0.1" | awk '{print $2,$9}' | column -t }
+
+# reference: https://github.com/stark/Color-Scripts/blob/master/color-scripts/colortest
+function colortest::palette() {
+    # The text for the color test, At least 3 characters
+    T=${1:-'•••'}; [ ${#T} -lt 3 ] && T=$(cut -c 1-3 <<< "$T$T$T"); TLEN=${#T};
+    RP=$(((TLEN - 3) / 2  + 3)); R=$(head -c $RP </dev/zero | tr '\0', ' ') # right padding
+    LP=$(((TLEN - 3) - RP + 5)); L=$(head -c $LP </dev/zero | tr '\0', ' ') # left padding
+    printf "\n       ${L}def${R}${L}40m${R}${L}41m${R}${L}42m${R}${L}43m${R}${L}44m${R}${L}45m${R}${L}46m${R}${L}47m${R}\n"
+    for FGs in 'm' '1m' '30m' '1;30m' '31m' '1;31m' '32m' '1;32m' '33m' '1;33m' '34m' '1;34m' '35m' '1;35m' '36m' '1;36m' '37m' '1;37m';
+    do FG=${FGs// /}
+        printf "%6s \033[%s  %s  " $FG $FG $T
+        for BG in 40m 41m 42m 43m 44m 45m 46m 47m;
+            do printf "$EINS \033[$FG\033[$BG  $T  \033[0m";
+        done
+        echo;
+    done
+    echo
+}
+function colortest::truecolor() {
+    awk 'BEGIN{
+    s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
+    for (colnum = 0; colnum<77; colnum++) {
+        r = 255-(colnum*255/76);
+        g = (colnum*510/76);
+        b = (colnum*255/76);
+        if (g>255) g = 510-g;
+            printf "\033[48;2;%d;%d;%dm", r,g,b;
+            printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b;
+            printf "%s\033[0m", substr(s,colnum+1,1);
+        }
+        printf "\n";
+    }'
+}
+function colortest::ansi() { curl -s 'https://raw.githubusercontent.com/stark/Color-Scripts/master/test-color-support/ansi'           | bash }
+function colortest::256()  { curl -s 'https://raw.githubusercontent.com/stark/Color-Scripts/master/test-color-support/color-support2' | bash }
+
+function __unicode_translate() {
+    local CODE=$BUFFER[-4,-1]
+    [[ ! ${(U)CODE} =~ [0-9A-F]{4} ]] && return
+    CHAR=`echo -e "\\u$CODE"`
+    BUFFER=$BUFFER[1,-5]$CHAR
+    CURSOR=$#BUFFER
+    zle redisplay
+}
+zle -N __unicode_translate
+bindkey '^[u' __unicode_translate
+
+function unicode-map() {
+    ruby -e '0x100.upto(0xFFFF) do |i| puts "%04X%8d%6s" % [i, i, i.chr("UTF-8")] rescue true end' | fzf -m
+}
+
+# function theme-gnome() { wget -O gogh https://git.io/vQgMr && chmod +x gogh && ./gogh && rm gogh }
+
+function lswifi() { nmcli device wifi }
+
+function lsdelete() { lsof -n | grep -i deleted }
+
+function backup-t()  { rename -n 's/^(.*)$/$1.bak/g' $@ }
+function backup()    { rename    's/^(.*)$/$1.bak/g' $@ }
+function restore-t() { rename -n 's/^(.*).bak$/$1/g' $@ }
+function restore()   { rename    's/^(.*).bak$/$1/g' $@ }
+
+# Inline calculator
+function = { echo "$@" | tr 'x' '*' | bc -l }
+
+function d() {
+    local a=$1 b=$2
+    d=$(= "(($b) - ($a)) / ($a) * 100")
+    if [[ $d -lt 0 ]]; then
+        ratio_color='\e[1;31m'
+    else
+        ratio_color='\e[1;32m'
+    fi
+    printf "delta: ${ratio_color}%+.2f%%\e[0m\n" "$d"
+}
+
+# cd downloads quickly
+function dwn {
+    [[ -d ~/Downloads ]] && cd ~/Downloads && return
+    [[ -d ~/downloads ]] && cd ~/downloads && return
+    mkdir ~/downloads    && cd ~/downloads && return
+}
+
+(( $+commands[numfmt] )) || alias numfmt=gnumfmt
+function num() {
+    if [[ $# -eq 0 ]]; then
+        tr '[:lower:]' '[:upper:]' | numfmt --from iec
+    else
+        numfmt --from iec "${(U)@}"
+    fi
+}
+
+function fnum() {
+    if [[ $# -eq 0 ]]; then
+        numfmt --to iec
+    else
+        numfmt --to iec "${@}"
+    fi
+}
+
+function wfxr::wrapper::jq() {
+    [[ -t 1 ]] && jq -C "$@" | less -FR || jq "$@"
+} && alias jq='wfxr::wrapper::jq'
+
+function diffdays() {
+    d1=$(date -d "$1" +%s)
+    d2=$(date -d "$2" +%s)
+    echo $(( (d1 - d2) / 86400 ))
+}
+
+function rolling-times() {
+    local beg="$(date -I -d "$(head -n1 /var/log/pacman.log | grep -Po '(?<=^\[).*?(?=\])')")"
+    local now="$(date -I)"
+    echo "from $beg to $now, rolling $fg_bold[green]$(diffdays "$now" "$beg")$reset_color days."
+    echo -n "full system upgrade $fg_bold[cyan]$(grep -c "full system upgrade" /var/log/pacman.log)$reset_color times, "
+    echo "install package $fg[yellow]$(grep -c " installed " /var/log/pacman.log)$reset_color times."
+}
+
+function prepo() {
+    local url
+    if [[ "$#" -ne 0 ]]; then
+        url="https://github.com/${(j:/:)@}"
+    else
+        url=$(git remote get-url origin) || return $?
+        [[ "$url" =~ '^git@' ]] && url=$(echo "$url" | sed -e 's#:#/#' -e 's#git@#https://#')
+    fi
+    echo "$url"
+}
+function grepo() { xopen "$(prepo $@)" }
+
+function gsearch() {
+    local header list repos
+    header='["Repostory", "Stars", "Description"]'
+    list="$(curl -fsSL "https://api.github.com/search/repositories?q=$1" |
+        command jq -r "$header, (.items[] | [.full_name, .stargazers_count, .description]) | @tsv" |
+        column -t -s $'\t')"
+    repos=("${(@f)$(echo "$list" | fzf -m -0 -1 --header-lines=1 | awk '{print $1}')}")
+    for repo in $repos; do
+        xopen "https://github.com/$repo"
+    done
+}
+
+function hhkb() {
+    setxkbmap -print | grep 'xkb_symbols.*+ctrl(swapcaps)' &>/dev/null && setxkbmap -option || setxkbmap -option "ctrl:swapcaps"
+}
+
+function passgen() { openssl rand -base64 ${1:-10} | tr -d '=' }
+
+function md5gen() { printf "${@:-$(passgen 128)}" | md5sum | awk '{print $1}' }
+
+function iptables-uniq() { sudo iptables-save | awk '/^COMMIT$/ { delete x; }; !x[$0]++' }
+
+function iptables-traffic-monitor() { sudo iptables -nvL | grep spt | awk '{print $10,$3,$2,$1}' | column -t }
+
+function handshake() { curl -w "TCP handshake: %{time_connect}, SSL handshake: %{time_appconnect}\n" -so /dev/null "$@" }
+
+function en() { trans zh:en "$*" }
+function cn() { trans en:zh "$*" }
+
+function get-xwindow-class() { xprop | grep -i class }
+
+zsh_history_dedup() {
+    nl ~/.zsh_history | sort -t ';' -uk2 | sort -nk1 | cut -f2 > /tmp/zsh_history_short &&
+        mv ~/.zsh_history "$HOME/.zsh_history_$(date -I)" &&
+        mv /tmp/zsh_history_short ~/.zsh_history
+}
+
+has_external_kbd() { find /dev/input/by-id/ | grep -i 'kbd' | grep -iv 'mouse' &>/dev/null }
+disable_touch_pad() { xinput disable $(xinput | grep -i 'touchpad' | grep -Po '(?<=id=)\d+') }
+enable_touch_pad() { xinput enable $(xinput | grep -i 'touchpad' | grep -Po '(?<=id=)\d+') }
+
+disable_kbd_internal() {
+    ! has_external_kbd && echo 'abort: no external keyboard found' && return 1
+    xinput disable $(xinput | grep -i 'AT Translated Set 2 keyboard' | grep -Po '(?<=id=)\d+')
+}
+enable_kbd_internal() {
+    xinput enable $(xinput | grep -i 'AT Translated Set 2 keyboard' | grep -Po '(?<=id=)\d+')
+}
+
+# $1: #RRGGBB
+is_bright() {
+    local r g b
+    r=$((16#${1:1:2}))
+    g=$((16#${1:3:2}))
+    b=$((16#${1:5:2}))
+    return "$(bc -l <<<"(0.299 * $r + 0.587 * $g + 0.114 * $b) / 255 < 0.5")"
+}
+
+function aurview() {
+    [ -d "/tmp/$1" ] || git clone "ssh://aur@aur.archlinux.org/$1" "/tmp/$1"
+
+    echo "PKGBUILD:"
+    cat "/tmp/$1/PKGBUILD"
+
+    printf "\nFiles in aur repo:\n"
+    ls -a "/tmp/$1"
+}
+
+function docker_cleanup() {
+    [ $# -ne 1 ] && return 1
+    docker image prune -a -f --filter "until=$1"
+}
+
+function webrt() {
+    local rt url
+    url=${1:-https://google.com}
+    rt=$(curl -fs -w '%{time_total}' "$url" -o /dev/null) || return 1
+    (( rt = rt * 1000 ))
+    printf "$url: %.02f ms\n" $rt
+}
+
+function po() {
+    local message=$1
+    [ $# -eq 0 ] && message=$(</dev/stdin)
+    local response
+    response=$(curl -fsS \
+        -F "token=$PUSHOVER_TOKEN" \
+        -F "user=$PUSHOVER_USER" \
+        -F "priority=-1" \
+        -F "message=$message" \
+        https://api.pushover.net/1/messages.json
+    ) && echo "$(date -Iseconds) - $response" >>/tmp/pushover.log
+}
+
+function ansi_strip() { sed -e 's/\x1b\[[0-9;]*[a-zA-Z]//g' }
+
+function zt_members() {
+    local green="[01;32m"
+    local red="[01;31m"
+    curl -fsSL -H "Authorization: bearer $ZT_TOKEN" \
+        https://my.zerotier.com/api/network/8bd5124fd6374d27/member |
+        jq '.[] | [.name, .config.ipAssignments[], .physicalAddress, .online] | @tsv' -r |
+        sed -e "s/true/${green}online/g" -e "s/false/${red}offline/g" |
+        csview -tH --style none
+}
+
+function font_list() { fc-list -f '%{family}\n' | awk '!x[$0]++' }
+
+function myip() { curl https://api.myip.com }
+
+###################
+#  greenclip-fzf  #
+###################
+# https://github.com/gotbletu/shownotes/blob/master/fzf_clipboard_greenclip.md
+if (( $+commands[greenclip] )); then
+    function clipboard-fzf() {
+        CONTENT=$(greenclip print | grep -v '^\s*$' | nl -w2 -s' ' | fzf | sed -E 's/^ *[0-9]+ //')
+        BUFFER="$BUFFER$CONTENT"
+        CURSOR="$#BUFFER"
+        zle redisplay
+    }
+    zle     -N    clipboard-fzf
+    bindkey '^[;' clipboard-fzf
+
+    function greenclip-cfg() { killall greenclip; $EDITOR ~/.config/greenclip.cfg && nohup greenclip daemon &>/dev/null & }
+    function greenclip-reload() { killall greenclip; nohup greenclip daemon &>/dev/null & }
+    function greenclip-clear() { killall greenclip; rm ~/.cache/greenclip.history && nohup greenclip daemon &>/dev/null & }
+fi
+
+###################
+#  virtualbox     #
+###################
+function vmstart() {
+    local vm=$1
+    [[ -z $vm ]] && vm=$(VBoxManage list vms | fzf | awk '{print $2}')
+    [[ -z $vm ]] && return 1
+    vboxmanage startvm "$vm" --type headless
+}

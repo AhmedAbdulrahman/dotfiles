@@ -1,5 +1,6 @@
-#!/usr/bin/env sh
-
+#!/usr/bin/env bash
+# Modified version of the generated one from `curl wttr.in/:bash.function`
+#
 # Simple function to get weather data
 #
 # Usage:
@@ -7,8 +8,32 @@
 #   $ weather <city>
 # Check curl wttr.in/:help for more info
 
-weather () {
-  curl -H "Accept-Language: ${LANG%_*}" wttr.in/"${1:-$(corelocationcli -format '%locality')}"?0qm
+# Intentionally not setting -e because we want the script to continue if getting the location data fails
+set -u -o pipefail
+
+if [[ -n "${DEBUG-}" ]]; then
+	set -x
+fi
+
+LOCATION_DATA="$TMPDIR/.location.json"
+FALLBACK=""
+
+if jq -e . "$LOCATION_DATA" >/dev/null 2>&1; then
+	FALLBACK=$(jq -r '.locality' "$LOCATION_DATA")
+fi
+
+weather() {
+    local location="${1:-$FALLBACK}"
+    local format="${2:-}"
+
+    echo "Fetching weather data for $location..."
+    echo format: "$format"
+
+    if [[ -n "$format" ]]; then
+        local weather = curl -fGsSL --compressed -H "User-Agent: curl" "wttr.in/${location}?${format}&lang=en"
+    else
+        curl -fGsSL --compressed -H "User-Agent: curl" "wttr.in/${location}?m&lang=en&0qm"
+    fi
 }
 
 weather "$@"

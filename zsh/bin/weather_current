@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+_load_weather() {
+	local location="${1:-stockholm}"
+  local cache_file="$TMPDIR/weather_cache"
+  local cache_time=600  # Cache for 10 minutes (600 seconds)
+
+  if [[ -f "$cache_file" && $(( $(date +%s) - $(stat -f %m "$cache_file") )) -lt $cache_time ]]; then
+    cat "$cache_file"
+    return
+  fi
+
+  # check for internet connection
+  if ping -q -c 1 1.1.1.1 >/dev/null; then
+    weather "$location" "%c+%t+%h+%w+%m" >"$cache_file"
+  fi
+  cat "$cache_file"
+}
+
+# Weather data
+weather_segment() {
+	local -r TMP_WEATHER_FILE="$TMPDIR/weather.tmp"
+	local -r REFRESH_RATE=$((60 * 60))
+
+	[[ -f "$TMP_WEATHER_FILE" ]] || _load_weather
+
+	local now
+	now="$(date +'%s')"
+	local epoch
+	epoch="$(tail -n 1 "$TMP_WEATHER_FILE")"
+	local delta
+	delta="$((now - epoch))"
+
+ 	# check if it's time to update the data
+	[[ $delta -gt $REFRESH_RATE ]] && _load_weather
+
+	local weather
+  weather="$(head -n 1 "$TMP_WEATHER_FILE")"
+  weather="$(echo "${weather//+/}")"
+
+	echo $weather
+}
+
+weather_segment

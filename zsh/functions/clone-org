@@ -25,12 +25,13 @@ else
         repo_name=${temp%.*}
         gh repo clone "$REPO_URL" "$CLONE_PATH/$repo_name" -- -q 2>/dev/null || (
             cd "$CLONE_PATH/$repo_name"
-            # Handle case where local checkout is on a non-main/master branch
-            # - ignore checkout errors because some repos may have zero commits, 
-            # so no main or master
-            git checkout -q main 2>/dev/null || true
-            git checkout -q master 2>/dev/null || true
-            git pull -q
+            # Fetch all branches
+            git fetch -q --all
+            # Pull updates for all branches
+            for branch in $(git branch -r | grep -v '\->'); do
+                git checkout -q --track "${branch#origin/}" 2>/dev/null || git checkout -q "${branch#origin/}" 2>/dev/null
+                git pull -q
+            done
         )
       done < <(echo "$INPUT")
     done

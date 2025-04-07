@@ -1,7 +1,0 @@
-.zcompdump*
-.zcompcache
-.zsh_history
-.zcalc_history
-*.zwc.old
-.zcompdump*
-.zhistory

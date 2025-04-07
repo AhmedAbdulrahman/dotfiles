@@ -1,0 +1,88 @@
+[[ $- != *i* ]] && return
+
+if [[ -f ~/.fzf.zsh ]]; then
+    source ~/.fzf.zsh
+else
+    [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+    [ -f /usr/share/fzf/completion.zsh   ] && source /usr/share/fzf/completion.zsh
+fi
+
+#  ┌────────────────────────────────────────────────────────┐
+#  │ Make sure git completions are the good ones            │
+#  │ For reference: https://github.com/github/hub/pull/1962 │
+#  └────────────────────────────────────────────────────────┘
+if [ "$(uname)" = "Darwin" ]; then
+    if [[ -d /opt/homebrew ]]; then
+        (
+        if [ -e /opt/homebrew/zsh/site-functions/_git ]; then
+            command mv -f /opt/homebrew/share/zsh/site-functions/{,disabled.}_git 2>/dev/null
+            command mv -f /opt/homebrew/share/zsh/site-functions/{,disabled.}git-completion.bash 2>/dev/null
+        fi
+        ) &!
+    fi
+
+    if [[ -d /usr/local ]]; then
+        (
+        if [ -e /usr/local/share/zsh/site-functions/_git ]; then
+            command mv -f /usr/local/share/zsh/site-functions/{,disabled.}_git 2>/dev/null
+            command mv -f /usr/local/share/zsh/site-functions/{,disabled.}git-completion.bash 2>/dev/null
+        fi
+        ) &!
+    fi
+fi
+
+# -----------------
+# ENV
+# -----------------
+typeset -AU __FZF
+
+export VIM_FZF_LOG=$(git config --get alias.l 2>/dev/null | awk '{$1=""; print $0;}' | tr -d '\r')
+
+FZF_DIR_HIGHLIGHTER='ls -l --color=always'
+(( $+commands[tree] )) && FZF_DIR_HIGHLIGHTER='tree -CtrL2'
+(( $+commands[lsd]  )) && FZF_DIR_HIGHLIGHTER='lsd --color=always'
+export FZF_DIR_HIGHLIGHTER
+
+if (( $+commands[fd] )); then
+    __FZF[CMD]="fd --hidden --follow --no-ignore-vcs -E '*.git' -E '*node_modules' -E '*.next' -E '*tags' -E '*dist' -E '.DS_Store'"
+    __FZF[DEFAULT]="${__FZF[CMD]} --type f"
+    __FZF[ALT_C]="${__FZF[CMD]} --type d ."
+    __FZF[ALT_E]="${__FZF[CMD]} --type f"
+elif (( $+commands[rg] )); then
+    __FZF[CMD]='rg --no-messages --no-ignore-vcs'
+    __FZF[DEFAULT]="${__FZF[CMD]} --files"
+elif (( $+commands[fdfind] )); then
+    __FZF[CMD]='fdfind --hidden --follow --exclude .git 2>/dev/null'
+    __FZF[DEFAULT]="${__FZF[CMD]} --type f"
+else
+    __FZF[DEFAULT]='git ls-tree -r --name-only HEAD || find .'
+fi
+
+export FZF_DEFAULT_COMMAND="${__FZF[DEFAULT]}"  # FZF DEFAULT CMD
+export FZF_DEFAULT_OPTS="--prompt='» '--pointer='▶' --marker='✓ ' --min-height 30 --bind esc:cancel --height 50% --reverse --tabstop 2 --multi --color=bg+:-1 --preview-window wrap --cycle --bind '?:toggle-preview'"
+export FZF_PREVIEW_COMMAND="bat --style=numbers,changes --wrap never --color always {} || cat {} || tree -C {}"
+
+export FZF_CTRL_T_COMMAND="${__FZF[CMD]} | iconful -f "    # FZF: Ctrl + T
+export FZF_CTRL_T_OPTS="--preview '($FZF_PREVIEW_COMMAND) 2> /dev/null'"
+
+
+export FZF_ALT_C_COMMAND="${__FZF[ALT_C]} | iconful -d"  # FZF: ALT + C
+export FZF_ALT_C_OPTS="--preview 'tree -C {} 2> /dev/null'"
+
+export FZF_ALT_E_COMMAND="${__FZF[ALT_E]} | iconful -f"  # FZF: ALT + E
+
+export FZF_CTRL_R_OPTS="
+--preview 'bat --color=always -lzsh <<<{2..} || echo -n {2..}'
+--preview-window down:2:hidden:wrap --bind '?:toggle-preview'
+--bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+--header 'Press CTRL-Y to copy command into clipboard'
+--border
+--exact
+"
+
+export FZF_ALT_E_OPTS="
+--preview \"($FZF_FILE_HIGHLIGHTER {} || $FZF_DIR_HIGHLIGHTER {}) 2>/dev/null | head -200\"
+--bind 'alt-e:execute($EDITOR {} >/dev/tty </dev/tty)'
+--bind \"ctrl-y:execute-silent(ruby -e 'puts ARGV' {+} | pbcopy)+abort\"
+--preview-window=down:60%
+"

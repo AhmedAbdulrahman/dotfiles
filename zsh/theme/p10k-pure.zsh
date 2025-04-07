@@ -1,0 +1,1 @@
+p10k-pure-catppuccin.zsh

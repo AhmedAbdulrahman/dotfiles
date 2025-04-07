@@ -1,0 +1,85 @@
+shell = "zsh"
+
+[templates]
+defer = "{% for file in files %} zsh-defer source \"{{ file }}\"\n {% endfor %}"
+defer-more = "{% for file in files %} zsh-defer -t 0.5 source \"{{ file }}\"\n {% endfor %}"
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+[plugins.spaceship]
+github = "spaceship-prompt/spaceship-prompt"
+
+# [plugins.powerlevel10k]
+# github = "romkatv/powerlevel10k"
+# [plugins.powerlevel10k.hooks]
+# post = '''
+# source ~/.config/zsh/theme/gruvbox-material-dark.zsh
+# '''
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+use = ["{{ name }}.zsh"]
+apply = ["defer"]
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+apply = ["defer"]
+
+[plugins.fast-syntax-highlighting]
+github = "zdharma-continuum/fast-syntax-highlighting"
+apply = ["defer"]
+
+[plugins.zsh-autopair]
+github = "hlissner/zsh-autopair"
+apply = ["defer"]
+
+[plugins.forgit]
+github = "wfxr/forgit"
+apply = ["defer"]
+
+[plugins.forepos]
+github = "wfxr/forepos"
+apply = ["defer"]
+
+[plugins.epoch-cli]
+github = "wfxr/epoch-cli"
+apply = ["defer"]
+
+[plugins.formarks]
+github = "wfxr/formarks"
+apply = ["defer"]
+
+[plugins.git]
+remote = "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh"
+apply = ["fpath"]
+
+[plugins.zsh-you-should-use]
+github = "MichaelAquilina/zsh-you-should-use"
+apply = ["defer"]
+
+[plugins.zoxide]
+inline = '''
+(( $+commands[zoxide] )) && zsh-defer zi::cache::cmd 'zoxide init zsh'
+'''
+
+[plugins.python]
+inline = '''
+(( $+commands[pyenv] )) && zsh-defer zi::cache::cmd 'pyenv init - zsh'
+(( $+commands[pip] ))   && zsh-defer zi::cache::cmd 'pip completion --zsh'
+'''
+
+[plugins.node]
+inline = '''
+(( $+commands[fnm] )) && zsh-defer zi::cache::cmd 'fnm env'
+'''
+
+[plugins.compinit]
+inline = '''
+autoload -Uz compinit
+# once a day
+for dump in ~/.zcompdump(N.mh+24); do
+    compinit; return
+done
+compinit -C
+'''

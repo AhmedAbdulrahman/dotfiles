@@ -1,0 +1,183 @@
+# zmodload zsh/zprof
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Syntax highlighting for the shell ZSH
+typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+typeset -gA ZSH_HIGHLIGHT_STYLES
+
+which_term(){
+    ps -p $(ps -p $$ -o ppid=) -o args=
+}
+
+if [[ $(which_term) == *"kitty" ]]; then
+    export TERM="xterm-kitty"
+else
+    export TERM=xterm-256color
+fi
+
+[[ $OSTYPE =~ darwin ]] && {
+    # Make sure homebrew has higher priority
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+}
+
+(( $+commands[sheldon] )) || {
+    echo "Installing Sheldon..."
+    if [[ $OSTYPE =~ darwin ]]; then
+        brew install sheldon
+    elif [[ `uname` = "Linux" ]]; then
+        curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh |
+            bash -s -- --repo rossmacarthur/sheldon --to ~/bin
+    fi
+}
+
+# theme
+# source <(starship init zsh) || warn "failed loading starship."
+# export STARSHIP_CONFIG=~/.config/starship.toml
+# export STARSHIP_CACHE=~/.starship/cache
+# export SPACESHIP_CONFIG=~/.config/zsh/config/zsh_theme
+
+# You Should Use
+export YSU_MODE=ALL
+
+# forgit config
+export FORGIT_FZF_DEFAULT_OPTS="--exact --border --cycle --reverse --preview-window='right:60%:nohidden'"
+export FORGIT_LOG_FZF_OPTS="--height '95%'"
+export FORGIT_CHECKOUT_BRANCH_BRANCH_GIT_OPTS='--all --sort=-committerdate'
+export FORGIT_LOG_FORMAT='%C(#ea999c)%h%C(auto)%d %s %C(black)%C(bold)%cr%Creset'
+
+# autosuggest config
+export ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(forward-word forward-char)
+export ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(end-of-line)
+# Suggests commands as you type based on history and completions.
+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(vi-forward-word)
+ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(vi-forward-char)
+ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=()
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+ZSH_AUTOSUGGEST_ORIGINAL_WIDGET_PREFIX='autosuggest-orig-'
+ZSH_AUTOSUGGEST_STRATEGY=('history')
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(
+        history-search-forward
+        history-search-backward
+        history-beginning-search-forward
+        history-beginning-search-backward
+        history-substring-search-up
+        history-substring-search-down
+        up-line-or-beginning-search
+        down-line-or-beginning-search
+        up-line-or-history
+        down-line-or-history
+        accept-line
+    )
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(
+        orig-\*
+        beep
+        run-help
+        set-local-history
+        which-command
+        yank
+        yank-pop
+    )
+
+source ~/.config/zsh/config/completion
+source ~/.config/zsh/config/keybindings
+source ~/.config/zsh/config/aliases
+source ~/.config/zsh/config/widget
+source ~/.config/zsh/config/custom
+source ~/.config/zsh/config/fzf_extra
+source ~/.config/zsh/config/history
+
+# ┌────────────────────┐
+# │ Load local configs │
+# └────────────────────┘
+
+if [[ -f ${HOME}/.zshrc.local ]]; then
+    source $HOME/.zshrc.local
+else
+    [[ -z "${HOMEBREW_GITHUB_API_TOKEN}" ]] && echo "⚠ HOMEBREW_GITHUB_API_TOKEN not set." && _has_unset_config=yes
+    [[ -z "${GITHUB_TOKEN}" ]] && echo "⚠ GITHUB_TOKEN not set." && _has_unset_config=yes
+    [[ -z "${NPM_REGISTRY_TOKEN}" ]] && echo "⚠ NPM_REGISTRY_TOKEN not set." && _has_unset_config=yes
+    [[ -z "${GITHUB_REGISTRY_TOKEN}" ]] && echo "⚠ GITHUB_REGISTRY_TOKEN not set." && _has_unset_config=yes
+    [[ -z "${GH_PASS}" ]] && echo "⚠ GH_PASS not set." && _has_unset_config=yes
+    [[ ${_has_unset_config:-no} == "yes" ]] && echo "Set the missing configs in ~/.zshrc.local"
+fi
+
+
+if [[ -f ~/.config/zsh/config/local_secret ]]; then
+    if head -1 ~/.config/zsh/config/local_secret | grep unlocked &>/dev/null; then
+        source ~/.config/zsh/config/local_secret
+    fi
+fi
+
+function synchronized() {
+    local lock="$1" handler="$2" fallback="$3"
+    [ -e "$lock" ] && kill -0 "$(command cat "$lock" 2>/dev/null)" && return 1
+
+    trap "command rm -f $lock" INT TERM EXIT
+    mkdir -p "${lock%/*}" && echo $$ > "$lock"
+
+    eval "$handler"
+    command rm -f "$lock"
+}
+
+# cache directory for zinit
+ZINIT_CACHE="/tmp/zinit::cache:$UID"
+function zi::cache() {
+    local srcgen="$1" dest="$ZINIT_CACHE/${2:-$1}.zi::cache" lock="$ZINIT_CACHE/lock"
+    local handler="
+        [ -f '$dest' ] && return # double check
+        eval '$srcgen' > '$dest'
+        zcompile '$dest'
+    "
+    if [ ! -f "$dest" ]; then
+        if ! synchronized "$lock" "$handler"; then
+            source <($rc_gen_cmd) && return
+        fi
+    fi
+    source "$dest"
+}
+
+function zi::cache::cmd()   { zi::cache "$1"                      }
+function zi::cache::file()  { zi::cache "< $1" "$(basename "$1")" }
+function zi::cache::clean() { rm -rf "$ZINIT_CACHE" ~/.zcompdump* }
+
+# Source all the plugins ✨
+eval "$(sheldon source)"
+
+# catppuccin frappe palette
+# ┌────────────┬──────────┬─────────────────────┬────────────────────┐
+# │  Labels    │   Hex    │        RGB          │        HSL         │
+# ├────────────┼──────────┼─────────────────────┼────────────────────┤
+# │ Rosewater  │ #f2d5cf  │ rgb(242, 213, 207)  │ hsl(10, 57%, 88%)  │
+# │ Flamingo   │ #eebebe  │ rgb(238, 190, 190)  │ hsl(0, 59%, 84%)   │
+# │ Pink       │ #f4b8e4  │ rgb(244, 184, 228)  │ hsl(316, 73%, 84%) │
+# │ Mauve      │ #ca9ee6  │ rgb(202, 158, 230)  │ hsl(277, 59%, 76%) │
+# │ Red        │ #e78284  │ rgb(231, 130, 132)  │ hsl(359, 68%, 71%) │
+# │ Maroon     │ #ea999c  │ rgb(234, 153, 156)  │ hsl(358, 66%, 76%) │
+# │ Peach      │ #ef9f76  │ rgb(239, 159, 118)  │ hsl(20, 79%, 70%)  │
+# │ Yellow     │ #e5c890  │ rgb(229, 200, 144)  │ hsl(40, 62%, 73%)  │
+# │ Green      │ #a6d189  │ rgb(166, 209, 137)  │ hsl(96, 44%, 68%)  │
+# │ Teal       │ #81c8be  │ rgb(129, 200, 190)  │ hsl(172, 39%, 65%) │
+# │ Sky        │ #99d1db  │ rgb(153, 209, 219)  │ hsl(189, 48%, 73%) │
+# │ Sapphire   │ #85c1dc  │ rgb(133, 193, 220)  │ hsl(199, 55%, 69%) │
+# │ Blue       │ #8caaee  │ rgb(140, 170, 238)  │ hsl(222, 74%, 74%) │
+# │ Lavender   │ #babbf1  │ rgb(186, 187, 241)  │ hsl(239, 66%, 84%) │
+# │ Text       │ #c6d0f5  │ rgb(198, 208, 245)  │ hsl(227, 70%, 87%) │
+# │ Subtext1   │ #b5bfe2  │ rgb(181, 191, 226)  │ hsl(227, 44%, 80%) │
+# │ Subtext0   │ #a5adce  │ rgb(165, 173, 206)  │ hsl(228, 29%, 73%) │
+# │ Overlay2   │ #949cbb  │ rgb(148, 156, 187)  │ hsl(228, 22%, 66%) │
+# │ Overlay1   │ #838ba7  │ rgb(131, 139, 167)  │ hsl(227, 17%, 58%) │
+# │ Overlay0   │ #737994  │ rgb(115, 121, 148)  │ hsl(229, 13%, 52%) │
+# │ Surface2   │ #626880  │ rgb(98, 104, 128)   │ hsl(228, 13%, 44%) │
+# │ Surface1   │ #51576d  │ rgb(81, 87, 109)    │ hsl(227, 15%, 37%) │
+# │ Surface0   │ #414559  │ rgb(65, 69, 89)     │ hsl(230, 16%, 30%) │
+# │ Base       │ #303446  │ rgb(48, 52, 70)     │ hsl(229, 19%, 23%) │
+# │ Mantle     │ #292c3c  │ rgb(41, 44, 60)     │ hsl(231, 19%, 20%) │
+# │ Crust      │ #232634  │ rgb(35, 38, 52)     │ hsl(229, 20%, 17%) │
+# └────────────┴──────────┴─────────────────────┴────────────────────┘
+
+PATH=~/.console-ninja/.bin:$PATH

@@ -1,3 +1,80 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
+set -ue -o pipefail
 
-printf "%s" "$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk -F': ' '/ SSID/{print $2}')"
+# Function to check if the interface is Wi-Fi
+is_wifi() {
+	local interface="$1"
+	local wifi_status
+	wifi_status=$(networksetup -getinfo "$interface" | grep "Wi-Fi ID" || true)
+	[ -n "$wifi_status" ]
+}
+
+# Function to check if the interface is Ethernet
+is_ethernet() {
+	local interface="$1"
+	local ethernet_status
+	ethernet_status=$(networksetup -getinfo "$interface" | grep "Ethernet Address" || true)
+	[ -n "$ethernet_status" ]
+}
+
+# Function to check if the interface is connected
+is_connected() {
+	local interface="$1"
+	local other_status
+	other_status=$(networksetup -getinfo "$interface" | grep -E "IP address: [0-9]+" || true)
+	[ -n "$other_status" ]
+}
+
+# Function to get the currently used network interface
+get_current_interface() {
+	local interfaces
+	interfaces=$(networksetup -listnetworkserviceorder | grep -E "^\([0-9]+\)" | awk -F'[()]' '{gsub(/^[ \t]+|[ \t]+$/, "", $3); print $3}')
+
+	while IFS= read -r interface; do
+		if is_connected "$interface"; then
+			echo -n "$interface"
+			return
+		fi
+	done <<<"$interfaces"
+}
+
+# Function to get SSID of the connected Wi-Fi network
+get_wifi_ssid() {
+	local ssid
+	ssid=$(networksetup -getairportnetwork en0 | awk -F ": " '{print $2}')
+
+	if [ -z "$ssid" ]; then
+		# Sequoia has a bug with networksetup command. But the following works
+		ssid=$(ipconfig getsummary en0 | awk -F ' SSID : ' '/ SSID : / {print $2}')
+	fi
+
+	echo -n "$ssid"
+}
+
+# icon codes here are PragmataPro related
+get_formatted_output() {
+	local interface
+	interface=$(get_current_interface)
+
+	if [ -n "$interface" ]; then
+		if is_wifi "$interface"; then
+			ssid=$(get_wifi_ssid)
+			echo -ne "\UF05A9  $ssid"
+		elif is_ethernet "$interface"; then
+			# echo -ne "\UF0200  $interface"
+			echo -ne "\UF0200 "
+		else
+			# echo -ne "\UF06F5  $interface"
+			echo -ne "\UF06F5 " # Icon for other interfaces
+		fi
+	else
+		if [ -n "${TMUX-}" ]; then
+			echo -ne "#[fg=red]\UF0C9C "
+		else
+			echo -ne "\UF0C9C "
+		fi
+	fi
+}
+
+# Print the currently used network interface and its status with icon
+echo -ne "$(get_formatted_output)"

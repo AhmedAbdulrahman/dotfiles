@@ -1,0 +1,24 @@
+#  vim: set ts=4 sw=4 tw=80 ft=zsh et :
+# Find PORT in use
+# Usage: fp <port>
+
+unalias fp 2> /dev/null
+
+if [ -z "$1" ]; then
+  echo "Usage: fp <port>"
+  return 1
+fi
+
+netstat -vanp tcp | grep ":$1"
+
+echo "Enter PID to kill or press Enter to skip:"
+read pid
+
+echo "You entered: $pid"  # Debugging line to check the input
+
+if [ -n "$pid" ]; then
+  kill -9 $pid
+  echo "Process $pid killed."
+else
+  echo "No process killed."
+fi
