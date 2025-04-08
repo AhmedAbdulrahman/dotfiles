@@ -1,0 +1,151 @@
+# #!/bin/bash
+# # This script fetches specific branches from all git repositories in subdirectories
+
+# # Store the original directory
+# ROOT_DIR=$(pwd)
+# echo "Starting git fetch in subdirectories of: $ROOT_DIR"
+
+# # Branches to fetch
+# BRANCHES=("main" "master" "development" "develop")
+
+# # Loop through all immediate subdirectories
+# for dir in */; do
+#   # Remove trailing slash
+#   dir=${dir%/}
+
+#   # Check if this is a git repository
+#   if [ -d "$dir/.git" ]; then
+#     echo "📁 Processing: $dir"
+
+#     # Change to subdirectory
+#     cd "$dir"
+
+#     # Fetch the specified branches
+#     for branch in "${BRANCHES[@]}"; do
+#       echo "  • Fetching branch: $branch"
+#       git fetch origin $branch 2>/dev/null || echo "    Branch '$branch' not found"
+#     done
+
+#     # Return to the root directory
+#     cd "$ROOT_DIR"
+#     echo "✅ Done with $dir"
+#     echo ""
+#   fi
+# done
+
+# echo "All repositories processed!"
+
+# #!/bin/bash
+# # This script fetches all remote branches from all git repositories in subdirectories
+
+# # Store the original directory
+# ROOT_DIR=$(pwd)
+# echo "Starting git fetch in subdirectories of: $ROOT_DIR"
+
+# # Loop through all immediate subdirectories
+# for dir in */; do
+#   # Remove trailing slash
+#   dir=${dir%/}
+
+#   # Check if this is a git repository
+#   if [ -d "$dir/.git" ]; then
+#     echo "📁 Processing: $dir"
+
+#     # Change to subdirectory
+#     cd "$dir"
+
+#     # Fetch all remotes
+#     echo "  • Fetching all remote branches"
+#     git fetch --all
+
+#     # List all fetched remote branches for information
+#     echo "  • Remote branches:"
+#     git branch -r | grep -v '\->' | sed 's/origin\//  /'
+
+#     # Return to the root directory
+#     cd "$ROOT_DIR"
+#     echo "✅ Done with $dir"
+#     echo ""
+#   fi
+# done
+
+# echo "All repositories processed!"
+
+#!/bin/bash
+# This script fetches all remote branches from all git repositories in subdirectories
+
+# Store the original directory
+ROOT_DIR=$(pwd)
+echo "Starting git fetch in subdirectories of: $ROOT_DIR"
+
+# Loop through all immediate subdirectories
+for dir in */; do
+  # Remove trailing slash
+  dir=${dir%/}
+
+  # Check if this is a git repository
+  if [ -d "$dir/.git" ]; then
+    echo "📁 Processing: $dir"
+
+    # Change to subdirectory
+    cd "$dir"
+
+    # Check if remote is HTTPS and convert to SSH if needed
+    echo "  • Checking remote URL format"
+    REMOTE_URL=$(git remote get-url origin 2>/dev/null)
+
+    if [[ $REMOTE_URL == https://* ]]; then
+      echo "  • Converting HTTPS remote to SSH"
+
+      # Handle GitHub URLs
+      if [[ $REMOTE_URL == https://github.com* ]]; then
+        REPO_PATH=${REMOTE_URL#https://github.com/}
+        SSH_URL="git@github.com:$REPO_PATH"
+      # Handle other Git providers (generic approach)
+      else
+        DOMAIN=$(echo "$REMOTE_URL" | sed -E 's|https://([^/]+)/.*|\1|')
+        REPO_PATH=$(echo "$REMOTE_URL" | sed -E 's|https://[^/]+/(.*)|\1|')
+        SSH_URL="git@$DOMAIN:$REPO_PATH"
+      fi
+
+      # Update remote URL
+      git remote set-url origin "$SSH_URL"
+      echo "  • Remote URL updated to: $SSH_URL"
+    else
+      echo "  • Remote already using SSH format"
+    fi
+
+    # Fetch all remotes
+    echo "  • Fetching all remote branches"
+    git fetch --all
+
+    # Update local tracking branches to match their remotes
+    echo "  • Updating local branches"
+    # Get current branch name
+    CURRENT_BRANCH=$(git branch --show-current)
+
+    # Update all tracking branches
+    git for-each-ref --format="%(refname:short)" refs/heads | while read branch; do
+      # Skip branches that don't have a remote tracking branch
+      if git rev-parse --verify -q origin/$branch > /dev/null; then
+        echo "    Updating branch: $branch"
+        git checkout -q $branch
+        git pull -q --ff-only || echo "      ⚠️ Could not fast-forward $branch"
+      fi
+    done
+
+    # Return to original branch
+    git checkout -q "$CURRENT_BRANCH"
+
+    # List all fetched remote branches for information
+    echo "  • Remote branches:"
+    git branch -r | grep -v '\->' | sed 's/origin\//  /'
+
+    # Return to the root directory
+    cd "$ROOT_DIR"
+    echo "✅ Done with $dir"
+    echo ""
+  fi
+done
+
+echo "All repositories processed!"

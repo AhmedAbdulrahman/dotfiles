@@ -1,0 +1,216 @@
+#!/bin/bash
+# This script clones all repositories from a GitHub organization and updates all branches
+
+# Initialize default values
+ORG_NAME=""
+DEST_DIR=""
+GITHUB_TOKEN=""
+MAX_REPOS=0
+
+# Display help message
+show_help() {
+    echo "Usage: clone-all-repos --org-name <organization> [OPTIONS]"
+    echo ""
+    echo "Options:"
+    echo "  --org-name, -o VALUE   Name of the GitHub organization (required)"
+    echo "  --dest, -d VALUE       Destination directory (default: organization name)"
+    echo "  --token, -t VALUE      GitHub token for private repos"
+    echo "  --max-repos, -m VALUE  Maximum number of repositories to clone (default: all)"
+    echo "  --help, -h             Show this help message"
+    echo ""
+    echo "Example:"
+    echo "  clone-all-repos --org-name my-org --dest ~/Projects/my-org --token ghp_token --max-repos 5"
+    echo ""
+    echo "  Clone all repos from an organization"
+    echo "  clone-all-repos --org-name my-organization"
+    echo ""
+    echo ""
+    echo "  Clone to a specific directory"
+    echo "  clone-all-repos --org-name my-organization --dest ~/Projects/my-org"
+    echo ""
+    echo ""
+    echo "  Use a GitHub token and limit to 3 repos"
+    echo "  clone-all-repos --org-name my-organization --token ghp_yourtoken123 --max-repos 3"
+    echo ""
+    echo ""
+    echo "  Using short flags"
+    echo "  clone-all-repos -o my-organization -d ~/Projects/my-org -t ghp_yourtoken123 -m 5"
+}
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    key="$1"
+
+    case $key in
+        --org-name|-o)
+            ORG_NAME="$2"
+            shift 2
+            ;;
+        --dest|-d)
+            DEST_DIR="$2"
+            shift 2
+            ;;
+        --token|-t)
+            GITHUB_TOKEN="$2"
+            shift 2
+            ;;
+        --max-repos|-m)
+            MAX_REPOS="$2"
+            shift 2
+            ;;
+        --help|-h)
+            show_help
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option $1"
+            show_help
+            exit 1
+            ;;
+    esac
+done
+
+# Check for required arguments
+if [[ -z "$ORG_NAME" ]]; then
+    echo "Error: Organization name is required"
+    show_help
+    exit 1
+fi
+
+# Set destination directory if not provided
+if [[ -z "$DEST_DIR" ]]; then
+    DEST_DIR="$ORG_NAME"
+fi
+
+# Create destination directory if it doesn't exist
+mkdir -p "$DEST_DIR"
+cd "$DEST_DIR"
+ROOT_DIR=$(pwd)
+
+echo "🚀 Cloning repositories from organization: $ORG_NAME"
+echo "📁 Destination directory: $ROOT_DIR"
+if [[ "$MAX_REPOS" -gt 0 ]]; then
+    echo "⚙️ Max repositories to clone: $MAX_REPOS"
+fi
+
+# Handle GitHub token
+if [[ -n "$GITHUB_TOKEN" ]]; then
+    echo "🔑 Using provided GitHub token"
+else
+    echo "ℹ️ No GitHub token provided, only public repositories will be accessible"
+fi
+
+# Counter for repositories processed
+REPOS_PROCESSED=0
+
+# Fetch repositories page by page
+PAGE=1
+while true; do
+    echo "📋 Fetching page $PAGE of repositories..."
+
+    # Use GitHub API to get repos
+    if [[ -n "$GITHUB_TOKEN" ]]; then
+        REPOS=$(curl -H "Authorization: token $GITHUB_TOKEN" -s "https://api.github.com/orgs/$ORG_NAME/repos?per_page=100&page=$PAGE" | jq -r '.[].ssh_url')
+    else
+        REPOS=$(curl -s "https://api.github.com/orgs/$ORG_NAME/repos?per_page=100&page=$PAGE" | jq -r '.[].ssh_url')
+    fi
+
+    # Check if we got any repos back
+    if [[ -z "$REPOS" ]]; then
+        echo "No more repositories found."
+        break
+    fi
+
+    # Clone each repository
+    while read -r REPO_URL; do
+        if [[ -z "$REPO_URL" ]]; then
+            continue
+        fi
+
+        # Exit if we've reached the maximum number of repos
+        if [[ "$MAX_REPOS" -gt 0 && "$REPOS_PROCESSED" -ge "$MAX_REPOS" ]]; then
+            echo "🛑 Reached maximum number of repositories ($MAX_REPOS)"
+            break 2  # Break out of both loops
+        fi
+
+        # Extract repo name from SSH URL
+        REPO_NAME=$(basename "$REPO_URL" .git)
+
+        echo "🔄 Processing repository: $REPO_NAME"
+        REPOS_PROCESSED=$((REPOS_PROCESSED + 1))
+
+        if [[ -d "$REPO_NAME" ]]; then
+            echo "  • Repository already exists, updating..."
+            cd "$REPO_NAME"
+        else
+            echo "  • Cloning repository..."
+            git clone "$REPO_URL" "$REPO_NAME"
+            cd "$REPO_NAME"
+        fi
+
+        # Check if remote is HTTPS and convert to SSH if needed
+        echo "  • Checking remote URL format"
+        REMOTE_URL=$(git remote get-url origin 2>/dev/null)
+
+        if [[ $REMOTE_URL == https://* ]]; then
+            echo "  • Converting HTTPS remote to SSH"
+
+            # Handle GitHub URLs
+            if [[ $REMOTE_URL == https://github.com* ]]; then
+                REPO_PATH=${REMOTE_URL#https://github.com/}
+                SSH_URL="git@github.com:$REPO_PATH"
+            # Handle other Git providers (generic approach)
+            else
+                DOMAIN=$(echo "$REMOTE_URL" | sed -E 's|https://([^/]+)/.*|\1|')
+                REPO_PATH=$(echo "$REMOTE_URL" | sed -E 's|https://[^/]+/(.*)|\1|')
+                SSH_URL="git@$DOMAIN:$REPO_PATH"
+            fi
+
+            # Update remote URL
+            git remote set-url origin "$SSH_URL"
+            echo "  • Remote URL updated to: $SSH_URL"
+        else
+            echo "  • Remote already using SSH format"
+        fi
+
+        # Fetch all remotes
+        echo "  • Fetching all remote branches"
+        git fetch --all
+
+        # Update local tracking branches to match their remotes
+        echo "  • Updating local branches"
+        # Get current branch name
+        CURRENT_BRANCH=$(git branch --show-current)
+
+        # Update all tracking branches
+        git for-each-ref --format="%(refname:short)" refs/heads | while read branch; do
+            # Skip branches that don't have a remote tracking branch
+            if git rev-parse --verify -q origin/$branch > /dev/null; then
+                echo "    Updating branch: $branch"
+                git checkout -q $branch
+                git pull -q --ff-only || echo "      ⚠️ Could not fast-forward $branch"
+            fi
+        done
+
+        # Return to original branch
+        git checkout -q "$CURRENT_BRANCH"
+
+        # List all fetched remote branches for information
+        echo "  • Remote branches:"
+        git branch -r | grep -v '\->' | sed 's/origin\//  /'
+
+        # Return to root directory for next repo
+        cd "$ROOT_DIR"
+        echo "✅ Done with $REPO_NAME"
+        echo ""
+    done <<< "$REPOS"
+
+    # Move to next page if we haven't hit the limit
+    if [[ "$MAX_REPOS" -gt 0 && "$REPOS_PROCESSED" -ge "$MAX_REPOS" ]]; then
+        break
+    fi
+
+    PAGE=$((PAGE+1))
+done
+
+echo "🎉 All repositories processed! Total: $REPOS_PROCESSED"
