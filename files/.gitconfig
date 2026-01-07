@@ -13,12 +13,13 @@
 	useconfigonly = true
 
 # use separate file for username / github token / etc
-[includeIf "gitdir:~/iKas/"]
-	path = ~/.gitconfig.ikas
+[includeIf "gitdir:~/Projects/personal/"]
+  path = ~/Projects/personal/.gitconfig
 
-[includeIf "gitdir:~/Projects/Polestar/"]
-  path = ~/.gitconfig.polestar
+[includeIf "gitdir:~/Projects/hm-group/"]
+  path = ~/Projects/hm-group/.gitconfig
 
+# Fallback for other locations
 [includeIf "gitdir:~/"]
   path = ~/.gitconfig.local
 
