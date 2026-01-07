@@ -132,9 +132,14 @@ PATH="$HOME/.pyenv/shims:$PYENV_ROOT/bin:$PATH"
     export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 }
 
-# node
-# export PATH="$HOME/.nodenv/shims:$HOME/.nodenv/bin:$PATH"
-# eval "$(nodenv init -)"
+# node (nodenv)
+# Add shims to PATH immediately for basic node access
+export PATH="$HOME/.nodenv/shims:$HOME/.nodenv/bin:$PATH"
+# Defer full init to background (handles .node-version detection on cd)
+# This runs after shell is ready, so it won't slow startup
+if (( $+commands[nodenv] )); then
+    zsh-defer eval "$(nodenv init - --no-rehash)"
+fi
 
 export PATH="$PATH:$HOME/.yarn/bin"
 
