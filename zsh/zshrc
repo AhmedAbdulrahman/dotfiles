@@ -1,10 +1,5 @@
 # zmodload zsh/zprof
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# NOTE: Powerlevel10k instant prompt is now in zprofile (login shell)
 
 # Syntax highlighting for the shell ZSH
 typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
@@ -20,10 +15,7 @@ else
     export TERM=xterm-256color
 fi
 
-[[ $OSTYPE =~ darwin ]] && {
-    # Make sure homebrew has higher priority
-    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
-}
+# NOTE: Homebrew PATH is now consolidated in zshenv
 
 (( $+commands[sheldon] )) || {
     echo "Installing Sheldon..."
@@ -82,6 +74,26 @@ ZSH_AUTOSUGGEST_IGNORE_WIDGETS=(
         yank
         yank-pop
     )
+
+# ┌─────────────────────────────────────────────────┐
+# │ Interactive shell setup (moved from zshenv)    │
+# └─────────────────────────────────────────────────┘
+
+# GPG TTY (requires terminal, not safe in zshenv)
+export GPG_TTY="$(tty)"
+
+# bat MANPAGER (interactive only)
+(( $+commands[bat] )) && {
+    export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+}
+
+# kubectl config aggregation
+(( $+commands[kubectl] )) && [ -d ~/.kube ] && {
+    for config in ~/.kube/config*; do
+        KUBECONFIG="$KUBECONFIG:$config"
+    done
+    export KUBECONFIG
+}
 
 source ~/.config/zsh/config/completion
 source ~/.config/zsh/config/keybindings
@@ -147,6 +159,11 @@ function zi::cache::clean() { rm -rf "$ZINIT_CACHE" ~/.zcompdump* }
 
 # Source all the plugins ✨
 eval "$(sheldon source)"
+
+# nodenv full init (deferred for faster startup, must be after sheldon loads zsh-defer)
+if (( $+commands[nodenv] )); then
+    zsh-defer eval "$(nodenv init - --no-rehash)"
+fi
 
 # catppuccin frappe palette
 # ┌────────────┬──────────┬─────────────────────┬────────────────────┐

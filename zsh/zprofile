@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+# vim: foldmethod=marker foldenable:
+# zprofile - Login shell initialization (runs once per login session)
+# This file is sourced BEFORE zshrc for login shells
+
+# ┌───────────────────────────────────────────────────────────────────┐
+# │ Powerlevel10k Instant Prompt                                      │
+# │ Should stay close to the top. Code requiring console input        │
+# │ (password prompts, [y/n] confirmations) must go above this block. │
+# └───────────────────────────────────────────────────────────────────┘
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi

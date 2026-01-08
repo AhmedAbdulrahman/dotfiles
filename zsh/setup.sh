@@ -11,8 +11,9 @@ mkdir -p "$confdir"
 echo "✓ ZSH folder created successfully! \\n"
 
 echo "→ Symlinking files..."
-ln -sf "$SCRIPT_DIR/zshrc"  ~/.zshrc
-ln -sf "$SCRIPT_DIR/zshenv" ~/.zshenv
+ln -sf "$SCRIPT_DIR/zshrc"    ~/.zshrc
+ln -sf "$SCRIPT_DIR/zshenv"   ~/.zshenv
+ln -sf "$SCRIPT_DIR/zprofile" ~/.zprofile
 ln -sf "$SCRIPT_DIR/spaceshiprc" ~/.spaceshiprc
 
 # Make sure target directory exists
