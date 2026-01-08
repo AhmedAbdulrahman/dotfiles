@@ -25,7 +25,7 @@ export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin
 
 if [[ $OSTYPE =~ darwin ]]; then
     export HOMEBREW_PREFIX=/opt/homebrew
-    export HOMEBREW_PREFIX=/opt/homebrew/Cellar
+    export HOMEBREW_CELLAR=/opt/homebrew/Cellar
     export HOMEBREW_REPOSITORY=/opt/homebrew
 
     export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
