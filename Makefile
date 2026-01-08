@@ -1,11 +1,13 @@
 # use zsh
 SHELL:=/bin/zsh
 
-# This can be overriden by doing `make DOTFILES=some/path <task>`
-DOTFILES := $(HOME)/dotfiles
-
-ifeq ($(wildcard $(DOTFILES)),)
+# Detect DOTFILES location
+# Can be overridden: make DOTFILES=/custom/path <target>
+# Uses ~/Projects/personal/dotfiles if it exists, otherwise ~/dotfiles
+ifneq ($(wildcard $(HOME)/Projects/personal/dotfiles),)
     DOTFILES := $(HOME)/Projects/personal/dotfiles
+else
+    DOTFILES := $(HOME)/dotfiles
 endif
 
 SCRIPTS := $(DOTFILES)/scripts
@@ -25,24 +27,61 @@ DIRS   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 
 all: node python macos
 
+# ┌──────────────────────────────────────────────────────────────────┐
+# │ Individual symlink targets (cleaner, explicit)                   │
+# └──────────────────────────────────────────────────────────────────┘
+
+symlink-zsh:
+	@echo "→ Setting up ZSH"
+	@sh $(DOTFILES)/zsh/setup.sh
+
+symlink-nvim:
+	@echo "→ Setting up Neovim"
+	@sh $(DOTFILES)/nvim/.install/run.sh
+
+symlink-hammerspoon:
+	@echo "→ Setting up Hammerspoon"
+	@mkdir -p $(HOME)/.hammerspoon
+	@sh $(DOTFILES)/hammerspoon/setup.sh
+	@$(STOW) --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)/.hammerspoon" --dir="$(DOTFILES)" hammerspoon
+
+symlink-tmux:
+	@echo "→ Setting up Tmux"
+	@mkdir -p $(HOME)/.tmux
+	@[ -f $(DOTFILES)/tmux/setup.sh ] && sh $(DOTFILES)/tmux/setup.sh || true
+	@$(STOW) --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)/.tmux" --dir="$(DOTFILES)" tmux
+
+symlink-newsboat:
+	@echo "→ Setting up Newsboat"
+	@mkdir -p $(HOME)/.newsboat
+	@sh $(DOTFILES)/newsboat/setup.sh
+	@$(STOW) --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)/.newsboat" --dir="$(DOTFILES)" newsboat
+
+symlink-files:
+	@echo "→ Symlinking files to HOME"
+	@$(STOW) --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)" --dir="$(DOTFILES)" files
+
+# ┌──────────────────────────────────────────────────────────────────┐
+# │ Symlink everything at once                                       │
+# └──────────────────────────────────────────────────────────────────┘
+
+symlink-all: symlink-zsh symlink-nvim symlink-hammerspoon symlink-tmux symlink-newsboat symlink-files
+	@echo "✓ All symlinks created!"
+
+# Legacy target for backwards compatibility
 symlink:
 	@echo "→ Setup Environment Settings"
-
 ifeq "$(dir)" "all"
-	@echo "→ Symlinking $(DIRS) files"
-	@$(foreach val, $(DIRS), mkdir -p $(HOME)/.$(val) && sh $(DOTFILES)/$(val)/setup.sh && $(STOW) --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)/.$(val)" --dir="$(DOTFILES)" $(val);)
+	@$(MAKE) symlink-all
 else ifeq "$(dir)" "files"
-	@echo "→ Symlinking files dir"
-	$(STOW) --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)" --dir="$(DOTFILES)" files
+	@$(MAKE) symlink-files
 else ifeq "$(dir)" "nvim"
-	sh $(DOTFILES)/nvim/.install/run.sh
+	@$(MAKE) symlink-nvim
 else ifeq "$(dir)" "zsh"
-	@echo "→ Setting up ZSH (via setup.sh)"
-	sh $(DOTFILES)/zsh/setup.sh
+	@$(MAKE) symlink-zsh
 else
 	@echo "→ Symlinking $(dir) dir"
-	sh $(DOTFILES)/$(dir)/setup.sh
-	$(STOW) --restow -vv --ignore ".DS_Store" --ignore ".+.local" --target="$(HOME)/.$(dir)" --dir="$(DOTFILES)" $(dir)
+	@$(MAKE) symlink-$(dir)
 endif
 
 gpg: symlink
@@ -70,4 +109,4 @@ node:
 macos:
 	sh $(DOTFILES)/extras/macos/setup.sh
 
-.PHONY: all symlink homebrew homebrew-personal homebrew-work node python macos
+.PHONY: all symlink symlink-all symlink-zsh symlink-nvim symlink-hammerspoon symlink-tmux symlink-newsboat symlink-files gpg homebrew homebrew-personal homebrew-work node python macos

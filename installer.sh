@@ -5,7 +5,16 @@ declare -r GITHUB_REPO_URL_BASE="https://github.com/$GITHUB_REPOSITORY"
 declare -r HOMEBREW_INSTALLER_URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 declare -r DOTFILES_UTILS_URL="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/master/scripts/utils.sh"
 
-declare -r DOTFILES="$HOME/dotfiles"
+# Default dotfiles location (can be overridden)
+# Check common locations in order of preference
+if [ -d "$HOME/Projects/personal/dotfiles" ]; then
+    DOTFILES="$HOME/Projects/personal/dotfiles"
+elif [ -d "$HOME/dotfiles" ]; then
+    DOTFILES="$HOME/dotfiles"
+else
+    # Default for fresh installs
+    DOTFILES="$HOME/dotfiles"
+fi
 
 SUDO_USER=$(whoami)
 
@@ -71,6 +80,11 @@ print_prompt() {
       ;;
     "Clone Ahmed's dotfiles")
       clone_dotfiles
+      break
+      ;;
+    "Symlink files")
+      clone_dotfiles
+      symlink_files
       break
       ;;
     "Install macOS Apps")
@@ -305,10 +319,19 @@ install_zsh() {
 }
 
 clone_dotfiles() {
-  print_info "Trying to detect if Ahmed's dotfiles is installed in $DOTFILES..."
+  print_info "Trying to detect if Ahmed's dotfiles is installed..."
 
-  if [ ! -d $DOTFILES ]; then
-    print_info "Seems like you don't have Ahmed's dotfiles clone!"
+  # Check if dotfiles already exist in known locations
+  if [ -d "$HOME/Projects/personal/dotfiles" ]; then
+    DOTFILES="$HOME/Projects/personal/dotfiles"
+    print_info "Found dotfiles at $DOTFILES"
+  elif [ -d "$HOME/dotfiles" ]; then
+    DOTFILES="$HOME/dotfiles"
+    print_info "Found dotfiles at $DOTFILES"
+  fi
+
+  if [ ! -d "$DOTFILES" ]; then
+    print_info "Seems like you don't have Ahmed's dotfiles cloned!"
 
     ask_for_confirmation "Do you agree to proceed with Ahmed's dotfiles installation?"
 
@@ -316,11 +339,19 @@ clone_dotfiles() {
       return
     fi
 
-    print_info "Cloning Ahmed's dotfiles"
-    git clone --recursive "$GITHUB_REPO_URL_BASE.git" $DOTFILES
+    # Ask user where to clone
+    print_question "Where would you like to clone dotfiles? (default: $HOME/dotfiles): "
+    read -r custom_path
+    if [ -n "$custom_path" ]; then
+      DOTFILES="${custom_path/#\~/$HOME}"  # Expand ~ if used
+    fi
+
+    print_info "Cloning Ahmed's dotfiles to $DOTFILES"
+    mkdir -p "$(dirname "$DOTFILES")"
+    git clone --recursive "$GITHUB_REPO_URL_BASE.git" "$DOTFILES"
 
   else
-    print_info "You already have Ahmed's dotfiles installed. Skipping..."
+    print_info "You already have Ahmed's dotfiles installed at $DOTFILES"
     print_info "Pulling latest update..."
 
     cd "$DOTFILES" &&
@@ -332,6 +363,9 @@ clone_dotfiles() {
       git stash pop
   fi
 
+  # Export for other functions to use
+  export DOTFILES
+
   finish
 }
 
@@ -342,12 +376,13 @@ symlink_files() {
 	create_zshrc_local
 	create_vimrc_local
 
-    print_in_purple "\n • Symlinking files/folders\n\n"
-    cd "$DOTFILES" &&
-      make --ignore-errors symlink dir=all &&
-      make --ignore-errors symlink dir=files &&
-      make gpg
-    finish
+	print_in_purple "\n • Symlinking all dotfiles\n\n"
+	cd "$DOTFILES" && make symlink-all
+
+	print_in_purple "\n • Fixing GPG permissions\n\n"
+	cd "$DOTFILES" && make gpg
+
+	finish
 }
 
 bootstrap_macOS_apps() {
