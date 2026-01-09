@@ -1,0 +1,200 @@
+{
+	"$schema": "https://json.schemastore.org/claude-code-settings.json",
+	"alwaysThinkingEnabled": false,
+	"includeCoAuthoredBy": false,
+	"cleanupPeriodDays": 99999,
+	"permissions": {
+		"allow": [
+			"Bash(fd:*)",
+			"Bash(rg:*)",
+			"Bash(find:*)",
+			"Bash(grep:*)",
+			"Bash(cat:*)",
+			"Bash(bat:*)",
+			"Bash(yarn:*)",
+			"Bash(pnpm:*)",
+			"Bash(mkdir:*)",
+			"Bash(echo:*)",
+			"Bash(tail:*)",
+			"Bash(head:*)",
+			"Bash(cd:*)",
+			"Bash(uniq:*)",
+			"Bash(sort:*)",
+			"Bash(awk:*)",
+			"Bash(pwd:*)",
+			"Bash(nix flake check:*)",
+			"Bash(nix flake show:*)",
+			"Bash(nix fmt:*)",
+			"Bash(command git:*)",
+			"Bash(git:*)",
+			"Bash(gh pr view:*)",
+			"Bash(gh issue view:*)",
+			"Bash(gh repo view:*)",
+			"Bash(gh run view:*)",
+			"Bash(ast-grep:*)",
+			"Bash(grit:*)",
+			"Bash(make:*)",
+			"WebSearch"
+		],
+		"deny": [
+			"Read(.env)",
+			"Read(.envrc)",
+			"Read(.env.*)",
+			"Read(.zshrc)",
+			"Read(.zshenv)",
+			"Read(.bashrc)",
+			"Read(.profile)",
+			"Read(node_modules)",
+			"Read(.git)",
+			"Grep",
+			"Glob"
+		],
+		"ask": [
+			"Bash(mv:*)",
+			"Bash(cp:*)",
+			"Bash(node:*)",
+			"Bash(xargs:*)",
+			"Bash(git branch:*)",
+			"Bash(git checkout:*)",
+			"Bash(git clean:*)",
+			"Bash(git filter-branch:*)",
+			"Bash(git gc:*)",
+			"Bash(git prune:*)",
+			"Bash(git push:*)",
+			"Bash(git rebase:*)",
+			"Bash(git reflog:*)",
+			"Bash(git reset:*)",
+			"Bash(git restore:*)",
+			"Bash(command git branch:*)",
+			"Bash(command git checkout:*)",
+			"Bash(command git clean:*)",
+			"Bash(command git filter-branch:*)",
+			"Bash(command git gc:*)",
+			"Bash(command git prune:*)",
+			"Bash(command git push:*)",
+			"Bash(command git rebase:*)",
+			"Bash(command git reflog:*)",
+			"Bash(command git reset:*)",
+			"Bash(command git restore:*)",
+			"Bash(curl:*)"
+		]
+	},
+	"sandbox": {
+		"enabled": true,
+		"autoAllowBashIfSandboxed": false,
+		"allowUnsandboxedCommands": false
+	},
+	"statusLine": {
+		"type": "command",
+		"command": "~/.claude/scripts/statusline.sh"
+	},
+	"hooks": {
+		"SessionStart": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "~/.claude/hooks/log-event.sh SessionStart"
+					}
+				]
+			}
+		],
+		"SessionEnd": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "~/.claude/hooks/log-event.sh SessionEnd"
+					}
+				]
+			}
+		],
+		"UserPromptSubmit": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "~/.claude/hooks/log-event.sh UserPromptSubmit"
+					},
+					{
+						"type": "command",
+						"command": "~/.claude/hooks/aggregate-prompt.sh UserPromptSubmit"
+					}
+				]
+			}
+		],
+		"PreToolUse": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "~/.claude/hooks/log-event.sh PreToolUse"
+					}
+				]
+			},
+			{
+				"matcher": "Bash",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "~/.claude/hooks/validate-bash.sh"
+					}
+				]
+			}
+		],
+		"PostToolUse": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "~/.claude/hooks/log-event.sh PostToolUse"
+					}
+				]
+			}
+		],
+		"Stop": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "~/.claude/hooks/log-event.sh Stop"
+					}
+				]
+			}
+		],
+		"SubagentStop": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "~/.claude/hooks/log-event.sh SubagentStop"
+					}
+				]
+			}
+		],
+		"Notification": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "~/.claude/hooks/log-event.sh Notification"
+					},
+					{
+						"type": "command",
+						"command": "jq -r '.message' | xargs -I {} hs -c 'hs.notify.new({title=\"Claude\", informativeText=\"{}\"}):send()'"
+					}
+				]
+			}
+		],
+		"PreCompact": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "~/.claude/hooks/log-event.sh PreCompact"
+					}
+				]
+			}
+		]
+	}
+}
